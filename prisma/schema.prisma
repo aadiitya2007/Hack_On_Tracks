@@ -1,15 +1,107 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String          @id @default(uuid())
+  pan           String          @unique
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accounts      LinkedAccount[]
+  holdings      Holding[]
+  trades        Trade[]
+  consents      ConsentLog[]
+  attempts      Attempt[]
+}
+
+model LinkedAccount {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  broker      String   // e.g., "Zerodha", "Groww", "Upstox"
+  status      String   // e.g., "CONNECTED", "PENDING"
+  syncSource  String   @default("API") // "API" or "MAIL"
+  lastSynced  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  holdings    Holding[]
+  trades      Trade[]
+
+  @@unique([userId, broker])
+}
+
+model Holding {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  accountId    String
+  account      LinkedAccount @relation(fields: [accountId], references: [id])
+  symbol       String
+  isin         String
+  assetType    String        // "EQUITY", "DEBT", "MUTUAL_FUND", "COMMODITY", "REIT"
+  quantity     Float
+  avgBuyPrice  Float?
+  currentPrice Float
+  source       String        @default("API") // "API", "Mail Sync", "Statement"
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([accountId, symbol])
+}
+
+model Trade {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  accountId    String
+  account      LinkedAccount @relation(fields: [accountId], references: [id])
+  symbol       String
+  type         String        // "BUY" or "SELL"
+  quantity     Float
+  price        Float
+  date         DateTime      @default(now())
+  source       String        @default("API") // "API", "Mail Sync", "Practice"
+}
+
+model ConsentLog {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  broker     String
+  scope      String
+  ipAddress  String?
+  timestamp  DateTime @default(now())
+}
+
+model PriceHistory {
+  id         String   @id @default(uuid())
+  symbol     String
+  date       DateTime
+  price      Float
+
+  @@unique([symbol, date])
+}
+
+model Question {
+  id            String   @id @default(uuid())
+  topic         String
+  difficulty    String   // "EASY", "MEDIUM", "HARD"
+  text          String
+  options       String
+  correctIndex  Int
+  explanation   String
+}
+
+model Attempt {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  score         Int
+  total         Int
+  levelAssigned String
+  date          DateTime @default(now())
 }
