@@ -25,7 +25,7 @@ export async function getDashboardData() {
 
     let allHoldings: any[] = [];
     
-    user.linkedAccounts.forEach(acc => {
+    user.linkedAccounts.forEach((acc: any) => {
       const brokerName = acc.broker.name.toLowerCase();
       
       let normalized;
@@ -36,7 +36,7 @@ export async function getDashboardData() {
       } else if (brokerName === 'groww') {
         normalized = normalizeGrowwHoldings(acc.holdings);
       } else {
-        normalized = acc.holdings.map(h => normalizeHolding(h, acc.broker.name));
+        normalized = acc.holdings.map((h: any) => normalizeHolding(h, acc.broker.name));
       }
       
       allHoldings = [...allHoldings, ...normalized];

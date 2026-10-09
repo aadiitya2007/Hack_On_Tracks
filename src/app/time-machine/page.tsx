@@ -59,6 +59,7 @@ export default function TimeMachine() {
   const [asset, setAsset] = useState('RELIANCE');
   const [startYear, setStartYear] = useState(2018);
   const [amount, setAmount] = useState(100000);
+  const [chartData, setChartData] = useState<{date: string, price: number}[]>([]);
 
   const assets = [
     { id: 'RELIANCE', name: 'Reliance Industries', listing: 1995 },
@@ -69,8 +70,8 @@ export default function TimeMachine() {
 
   const selectedAssetInfo = assets.find(a => a.id === asset)!;
 
-  const chartData = useMemo(() => {
-    return generateMockHistory(asset, startYear);
+  useEffect(() => {
+    setChartData(generateMockHistory(asset, startYear));
   }, [asset, startYear]);
 
   const initialPrice = chartData[0]?.price || 1;
@@ -130,7 +131,7 @@ export default function TimeMachine() {
                   value={startYear}
                   onChange={handleYearChange}
                   min={selectedAssetInfo.listing}
-                  max={new Date().getFullYear()}
+                  max={2026}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
                 />
                 <p className="text-xs text-slate-500 mt-1">Listed in {selectedAssetInfo.listing}</p>
@@ -178,7 +179,7 @@ export default function TimeMachine() {
                   <Tooltip 
                     contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
                     itemStyle={{ color: '#f8fafc' }}
-                    formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Portfolio Value']}
+                    formatter={(value: any) => [`₹${value.toLocaleString('en-IN')}`, 'Portfolio Value']}
                     labelStyle={{ color: '#94a3b8' }}
                   />
                   <Area 
