@@ -107,18 +107,23 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-end">
+    <div className="space-y-8 pb-10">
+      {/* Ambient background glow */}
+      <div className="pointer-events-none absolute -top-12 left-1/4 h-72 w-96 rounded-full bg-primary/10 blur-[120px]"></div>
+      
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 relative z-10">
         <div>
-          <h1 className="text-3xl font-bold">Portfolio Dashboard</h1>
-          <p className="text-muted-foreground mt-1 flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${syncing ? 'bg-emerald-400 animate-ping' : 'bg-blue-400'}`}></span>
-            Live Sync {syncing && 'Active'}
+          <h1 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight bg-gradient-to-r from-white via-[#E0E7FF] to-[#22D3EE] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
+            Portfolio Dashboard
+          </h1>
+          <p className="text-muted-foreground mt-3 flex items-center gap-2 font-medium">
+            <span className={`w-2 h-2 rounded-full ${syncing ? 'bg-emerald-400 animate-ping' : 'bg-primary'}`}></span>
+            SEBI Backtest Engine v2.4 {syncing && ' (Syncing...)'}
           </p>
         </div>
         <button 
           onClick={handleSimulate}
-          className="relative px-4 py-2 bg-primary hover:bg-primary/90 rounded-lg text-sm font-medium overflow-hidden"
+          className="relative px-6 py-2.5 bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] hover:from-[#7C3AED]/90 hover:to-[#3B82F6]/90 rounded-xl text-white text-sm font-bold shadow-[0_0_15px_rgba(124,58,237,0.5)] transition-all overflow-hidden border border-white/10"
         >
           {syncing && (
             <motion.div 
@@ -147,22 +152,25 @@ export default function Dashboard() {
       )}
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <FloatingCard className="p-6">
-          <p className="text-sm text-muted-foreground font-medium">Current Value</p>
-          <h2 className="text-3xl font-bold mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <FloatingCard className="p-6 overflow-hidden relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Current Value</p>
+          <h2 className="text-4xl md:text-5xl font-black mt-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/80 tabular-nums tracking-tighter">
             <AnimatedNumber value={totalValue} prefix="₹" />
           </h2>
         </FloatingCard>
-        <FloatingCard className="p-6">
-          <p className="text-sm text-muted-foreground font-medium">Total Invested</p>
-          <h2 className="text-3xl font-bold mt-2 text-foreground/90">
+        <FloatingCard className="p-6 overflow-hidden relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Total Invested</p>
+          <h2 className="text-4xl md:text-5xl font-black mt-3 text-white/80 tabular-nums tracking-tighter">
             <AnimatedNumber value={totalInvested} prefix="₹" />
           </h2>
         </FloatingCard>
-        <FloatingCard className="p-6">
-          <p className="text-sm text-muted-foreground font-medium">Total P&L</p>
-          <h2 className={`text-3xl font-bold mt-2 ${totalPnl >= 0 ? 'text-[var(--chart-2)]' : 'text-destructive'}`}>
+        <FloatingCard className="p-6 overflow-hidden relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#10E5A0]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Total P&L</p>
+          <h2 className={`text-4xl md:text-5xl font-black mt-3 tabular-nums tracking-tighter ${totalPnl >= 0 ? 'text-[#10E5A0] drop-shadow-[0_0_12px_rgba(16,229,160,0.4)]' : 'text-[#FF5C7A]'}`}>
             {totalPnl >= 0 ? '+' : ''}
             <AnimatedNumber value={totalPnl} prefix="₹" />
           </h2>
