@@ -1,113 +1,15 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model User {
-  id           String        @id @default(cuid())
-  maskedPan    String
-  name         String?
-  createdAt    DateTime      @default(now())
-  linkedAccounts LinkedAccount[]
-  consentLogs    ConsentLog[]
-}
-
-enum BrokerType {
-  BROKER
-  DEPOSITORY
-}
-
-model Broker {
-  id             String          @id @default(cuid())
-  name           String
-  type           BrokerType
-  linkedAccounts LinkedAccount[]
-  consentLogs    ConsentLog[]
-}
-
-enum LinkSource {
-  MOCK_API
-  STATEMENT_UPLOAD
-  MAIL_NOTES
-}
-
-model LinkedAccount {
-  id           String     @id @default(cuid())
-  userId       String
-  brokerId     String
-  status       String
-  connectedAt  DateTime   @default(now())
-  lastSyncedAt DateTime?
-  source       LinkSource
-  
-  user         User       @relation(fields: [userId], references: [id])
-  broker       Broker     @relation(fields: [brokerId], references: [id])
-  
-  holdings     Holding[]
-  trades       Trade[]
-}
-
-enum AssetType {
-  STOCK
-  BOND
-  REIT
-  INVIT
-  ETF
-}
-
-model Holding {
-  id              String        @id @default(cuid())
-  linkedAccountId String
-  symbol          String
-  isin            String
-  assetType       AssetType
-  quantity        Float
-  avgBuyPrice     Float?
-  currentPrice    Float
-  updatedAt       DateTime      @updatedAt
-
-  linkedAccount   LinkedAccount @relation(fields: [linkedAccountId], references: [id])
-}
-
-enum TradeSide {
-  BUY
-  SELL
-}
-
-model Trade {
-  id              String        @id @default(cuid())
-  linkedAccountId String
-  symbol          String
-  side            TradeSide
-  quantity        Float
-  price           Float
-  tradedAt        DateTime      @default(now())
-
-  linkedAccount   LinkedAccount @relation(fields: [linkedAccountId], references: [id])
-}
-
-model PriceHistory {
-  id        String   @id @default(cuid())
-  symbol    String
-  date      DateTime
-  close     Float
-}
-
-model ConsentLog {
-  id        String   @id @default(cuid())
-  userId    String
-  brokerId  String
-  scope     String
-  grantedAt DateTime @default(now())
-  expiresAt DateTime?
-
-  user      User     @relation(fields: [userId], references: [id])
-  broker    Broker   @relation(fields: [brokerId], references: [id])
 }

@@ -1,61 +1,36 @@
-# InvestDash
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-**[🚀 View Live Demo on Render](https://hack-on-tracks.onrender.com)**  
-*(Note: Initial load may take 50 seconds on Render's free tier as the server spins up)*
+## Getting Started
 
-A unified investment dashboard for Indian retail investors, built as a hackathon prototype. It aggregates holdings across multiple brokers (Zerodha, Upstox, Groww, CDSL), highlights duplicates, calculates cross-broker P&L, and features a "Time Machine" simulator to see historical performance.
+First, run the development server:
 
-## Tech Stack
-
-- **Frontend**: Next.js (App Router), Tailwind CSS, Framer Motion, Recharts, shadcn/ui
-- **Backend**: Next.js Server Actions
-- **Database**: PostgreSQL with Prisma ORM
-
-## Local Setup
-
-1. **Prerequisites**: Ensure you have Node.js 20+ and a running PostgreSQL instance.
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-3. **Database Setup**:
-   Create a `.env` file and set your PostgreSQL connection string:
-   ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/investment_db?schema=public"
-   ```
-4. **Generate Prisma Client & Push Schema**:
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
-5. **Seed the Database**:
-   Populate the database with mock accounts, trades, and time machine history:
-   ```bash
-   npm run db:seed
-   ```
-6. **Run Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) to view the app.
-
-## Tests
-
-To run the unit tests (e.g. data adapter logic):
 ```bash
-npm run test
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Render Deployment Steps
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-This project includes a `render.yaml` blueprint for one-click deployment on [Render](https://render.com).
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-1. Commit all your code to a GitHub repository.
-2. Log in to your Render Dashboard.
-3. Go to **Blueprints** and click **New Blueprint Instance**.
-4. Connect your GitHub repository.
-5. Render will automatically detect the `render.yaml` file and provision:
-   - A free **PostgreSQL Database** (`investment-db`)
-   - A free **Web Service** (`indian-investment-dashboard`) running Node.
-   - It will automatically link the database URL securely via `DATABASE_URL`.
-6. Once deployed, the web service build command will automatically run `npm install`, generate the Prisma client, deploy migrations, and build the Next.js app.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
