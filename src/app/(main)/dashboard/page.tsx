@@ -1,10 +1,19 @@
-export default function DashboardPage() {
-  return (
-    <div>
-      <h1 className="heading-hero text-4xl mb-4">Dashboard (Under Construction)</h1>
-      <div className="glass-card p-6">
-        <p>Phase 1 Layout Shell is complete.</p>
-      </div>
-    </div>
-  )
+export const instant = false;
+
+import { connection } from "next/server";
+
+
+import { getDashboardData } from "@/lib/actions";
+import DashboardClient from "./DashboardClient";
+import { redirect } from "next/navigation";
+
+export default async function DashboardPage() {
+  await connection();
+  const data = await getDashboardData();
+  
+  if (!data) {
+    redirect("/onboarding");
+  }
+
+  return <DashboardClient initialData={data} />;
 }
