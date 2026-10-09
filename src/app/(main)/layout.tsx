@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import AssistantWidget from "./AssistantWidget";
 import { LayoutDashboard, WalletCards, Compass, History, Settings, Search, Bell } from "lucide-react";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -39,6 +40,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <span className="text-[10px] text-success font-medium">240ms</span>
           </div>
           <p className="text-[10px] text-foreground/40 mt-1 truncate">Zerodha · Groww · Angel · Upstox</p>
+          <div className="mt-4 pt-4 border-t border-white/5 text-[8px] text-foreground/30 leading-tight">
+            Logos belong to their respective owners, used for identification in a demo.
+          </div>
         </div>
       </aside>
 
@@ -91,6 +95,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <div className="p-8 relative">
           {children}
         </div>
+        <AssistantWidget />
       </main>
     </div>
   );

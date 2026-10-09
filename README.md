@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VaultIQ - Unified Investment Dashboard
 
-## Getting Started
+VaultIQ is a desktop-first hackathon prototype for Indian retail investors, built with Next.js (App Router), Tailwind CSS v4, shadcn/ui, Framer Motion, Recharts, and Prisma.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Simulated Onboarding**: Mock PAN validation, OTP, and Aadhaar consent with clear "simulated" warnings.
+2. **Unified Dashboard**: Live multi-broker telemetry, asset allocation donut charts, PnL tracking, and a cross-broker duplication alert.
+3. **Time Machine**: Deterministic historical trajectory calculator demonstrating the power of long-term compounding across asset classes.
+4. **Knowledge Check**: 15-question interactive financial literacy MCQ with dynamic feedback and investor leveling.
+5. **Practice Trading**: Virtual ₹10,00,000 portfolio sandbox with a "Time-Warp" engine simulating market crashes, rate hikes, and SIP rupee-cost averaging.
+6. **Mail Sync (Beta)**: An independent parser module for users without API-enabled brokers. Features a "Demo Mailbox" mode simulating Gmail OAuth read-only extraction of PDF contract notes.
+7. **Ask VaultIQ**: Floating AI Assistant mock to answer portfolio queries (non-advisory).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Local Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository and install dependencies:
+   ```bash
+   npm install
+   ```
+2. Setup the Prisma SQLite database and seed the mock data:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   npx tsx prisma/seed.ts
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ☁️ Deployment (Render)
 
-## Learn More
+This repository includes a `render.yaml` blueprint.
+1. Connect your GitHub repository to [Render.com](https://render.com).
+2. Choose "Blueprint" -> Connect `render.yaml`.
+3. Render will automatically build the Next.js app, run the Prisma generation, and start the web service using the provided commands.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Privacy & Safety
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **No Real Data Storage**: Aadhaar and PAN inputs are purely for the front-end simulation flow.
+- **Read-Only Scope**: The Mail Sync module utilizes `gmail.readonly` scopes and processes logic exclusively on-server. Passwords for PDFs are never stored in plain text.
+- **No Financial Advice**: All assistant interactions and practice scenarios carry clear disclaimers that they are educational tools.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Logos belong to their respective owners, used for identification in a demo.*
