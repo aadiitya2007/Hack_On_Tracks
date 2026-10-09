@@ -1,5 +1,8 @@
 # InvestDash
 
+**[🚀 View Live Demo on Render](https://hack-on-tracks.onrender.com)**  
+*(Note: Initial load may take 50 seconds on Render's free tier as the server spins up)*
+
 A unified investment dashboard for Indian retail investors, built as a hackathon prototype. It aggregates holdings across multiple brokers (Zerodha, Upstox, Groww, CDSL), highlights duplicates, calculates cross-broker P&L, and features a "Time Machine" simulator to see historical performance.
 
 ## Tech Stack
