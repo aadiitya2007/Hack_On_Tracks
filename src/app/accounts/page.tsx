@@ -61,7 +61,7 @@ export default function Accounts() {
     <div className="py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Link Accounts</h1>
-        <p className="text-slate-400 mt-2">Connect your brokers or upload statements to sync your portfolio.</p>
+        <p className="text-muted-foreground mt-2">Connect your brokers or upload statements to sync your portfolio.</p>
       </div>
 
       <motion.div 
@@ -73,25 +73,25 @@ export default function Accounts() {
         {brokers.map((broker) => (
           <motion.div key={broker.id} variants={item}>
             <FloatingCard className="p-6 h-full flex flex-col group">
-              <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
                 {broker.logo}
               </div>
               <h3 className="text-lg font-semibold mb-1">{broker.name}</h3>
-              <p className="text-sm text-slate-400 mb-6 flex-1">{broker.type}</p>
+              <p className="text-sm text-muted-foreground mb-6 flex-1">{broker.type}</p>
               
               {connected[broker.id] ? (
-                <div className="py-2 px-4 rounded-lg bg-emerald-500/10 text-emerald-400 text-sm font-medium text-center border border-emerald-500/20">
+                <div className="py-2 px-4 rounded-lg bg-[var(--chart-2)]/10 text-[var(--chart-2)] text-sm font-medium text-center border border-emerald-500/20">
                   Connected
                 </div>
               ) : (
                 <div className="flex gap-2">
                   <button 
                     onClick={() => handleConnect(broker.id)}
-                    className="flex-1 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
+                    className="flex-1 py-2 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium transition-colors"
                   >
                     Connect
                   </button>
-                  <button className="flex-1 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition-colors">
+                  <button className="flex-1 py-2 rounded-lg bg-secondary hover:bg-secondary text-white text-sm font-medium transition-colors">
                     Upload
                   </button>
                 </div>
@@ -123,17 +123,17 @@ export default function Accounts() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
             onClick={() => !connecting && setSelectedBroker(null)}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="relative bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-md shadow-2xl"
+            className="relative bg-card border border-border/80 rounded-2xl p-6 w-full max-w-md shadow-2xl"
           >
             <h3 className="text-xl font-bold mb-4">Authorize {brokers.find(b => b.id === selectedBroker)?.name}</h3>
-            <p className="text-sm text-slate-300 mb-6">
+            <p className="text-sm text-foreground/90 mb-6">
               You are about to electronically sign a consent form granting read-only access to your holdings for this session.
             </p>
             
@@ -141,14 +141,14 @@ export default function Accounts() {
               <button 
                 onClick={() => setSelectedBroker(null)}
                 disabled={connecting}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-50"
+                className="px-4 py-2 rounded-lg bg-secondary text-foreground/90 hover:bg-secondary disabled:opacity-50"
               >
                 Cancel
               </button>
               <button 
                 onClick={confirmConnect}
                 disabled={connecting}
-                className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 disabled:opacity-80"
+                className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 flex items-center gap-2 disabled:opacity-80"
               >
                 {connecting && <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
                 E-Sign & Connect

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"deep-ink":"#0A0720","accent-magenta":"#EC4899","accent-cyan":"#22D3EE","accent-violet":"#7C3AED","accent-amber":"#FBBF24","accent-emerald":"#34D399","accent-blue":"#3B82F6","outline":"#958da1","on-surface-variant":"#ccc3d8","surface-container-highest":"#2a244d","surface-container-low":"#120e2e","on-background":"#e5deff","surface-container-lowest":"#070517","surface-container-high":"#211c42","background":"#0A0720","surface-container":"#181338","secondary":"#22D3EE","error":"#ffb4ab","primary":"#d2bbff","primary-container":"#7c3aed","surface":"#0A0720","on-surface":"#f1ecff"},borderRadius:{"DEFAULT":"0.25rem","2xl":"1rem","3xl":"1.5rem","full":"9999px"},fontFamily:{"headline-xl":["Plus Jakarta Sans","Inter"],"body-md":["Inter"],"body-lg":["Inter"],"metric-tabular":["Plus Jakarta Sans","Inter"],"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans","Inter"],"badge-label":["Inter"],"label-uppercase":["Inter"],"headline-md":["Plus Jakarta Sans","Inter"],"headline-sm":["Plus Jakarta Sans","Inter"],"display-currency":["Plus Jakarta Sans","Inter"]}}}};</script>
+<style>
+  .glass-card {
+    background: rgba(18, 14, 46, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(124, 58, 237, 0.28);
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 1px 20px 0 rgba(124, 58, 237, 0.08);
+  }
+  .glass-card-magenta {
+    background: rgba(18, 14, 46, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.6), 0 0 24px -4px rgba(236, 72, 153, 0.16) inset, 0 0 25px -4px rgba(236, 72, 153, 0.12);
+  }
+  .glass-card-cyan {
+    background: rgba(18, 14, 46, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.6), 0 0 24px -4px rgba(34, 211, 238, 0.16) inset, 0 0 25px -4px rgba(34, 211, 238, 0.12);
+  }
+  .glass-card-amber {
+    background: rgba(18, 14, 46, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.6), 0 0 24px -4px rgba(251, 191, 36, 0.16) inset, 0 0 25px -4px rgba(251, 191, 36, 0.12);
+  }
+  .glass-gradient-border {
+    position: relative;
+    background: linear-gradient(145deg, rgba(24, 19, 56, 0.8), rgba(12, 9, 32, 0.85));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .glass-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.6), rgba(34, 211, 238, 0.45), rgba(236, 72, 153, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+</style>
+</head><body class="bg-[#0A0720] text-[#f1ecff] font-body-md text-body-md antialiased selection:bg-[#7C3AED] selection:text-white min-h-screen relative overflow-x-hidden"><div class="pointer-events-none fixed inset-0 z-0 overflow-hidden"><div class="absolute -left-32 -top-24 h-[650px] w-[650px] rounded-full bg-[#7C3AED]/20 blur-[150px]"></div><div class="absolute right-0 top-1/4 h-[550px] w-[550px] rounded-full bg-[#22D3EE]/15 blur-[160px]"></div><div class="absolute top-[48%] left-1/4 h-[500px] w-[500px] rounded-full bg-[#EC4899]/18 blur-[160px]"></div><div class="absolute bottom-10 right-1/4 h-[600px] w-[600px] rounded-full bg-[#7C3AED]/18 blur-[160px]"></div></div><aside class="fixed left-0 top-0 bottom-0 w-[260px] bg-[#070517]/85 backdrop-blur-2xl z-40 flex flex-col justify-between border-r border-[#7C3AED]/15 shadow-[0_4px_30px_rgba(0,0,0,0.6)]"><div class="flex flex-col"><div class="h-16 px-6 flex items-center gap-3"><img alt="VaultIQ Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WwFWQTCEY2tRipyVZxMLUCLKGdOpYnvMaJ-tvUahnxrsq6Ys22Qm-PjeZAeSXn2izPJBoVB1ikAUo1AcZ7t-kElfHFsb9KAUiJPbFVDBKzdXvZY_YSKAD3f1YYc9CLb7Y5tjZgBj37Jh203sGnVai7Nn6oDpUg_JDzTTE_Ur46ujpahZwJBN43XsQSDSB2_TUC_M2fqQoHc7JqD72hXMWDY0flDf6rv5MtV89otNfS-CDTfXz2CoFF6Q"/><span class="font-headline-sm text-[19px] tracking-tight text-white font-bold bg-gradient-to-r from-white via-primary to-accent-cyan bg-clip-text text-transparent">VaultIQ</span></div><nav class="px-4 py-2 flex flex-col gap-1" data-active-classes="bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-semibold shadow-[0_0_20px_rgba(124,58,237,0.45)]"><a class="flex items-center justify-between px-4 py-2.5 rounded-xl text-[#ccc3d8] hover:bg-white/5 hover:text-white transition-all" data-path="dashboard" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-body-md text-body-md font-medium">Dashboard</span></div></a><a class="flex items-center justify-between px-4 py-2.5 rounded-xl text-[#ccc3d8] hover:bg-white/5 hover:text-white transition-all" data-path="linked-accounts" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-body-md text-body-md font-medium">Linked Accounts</span></div><span class="px-2 py-0.5 rounded-full bg-accent-cyan/15 text-accent-cyan font-semibold text-[11px] border border-accent-cyan/30">4 Connected</span></a><a class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#7C3AED]/90 to-[#3B82F6]/90 text-white font-semibold shadow-[0_0_22px_rgba(124,58,237,0.4)] border border-white/10" data-path="explore" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">explore</span><span class="font-body-md text-body-md">Explore</span></div><span class="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse"></span></a><a class="flex items-center justify-between px-4 py-2.5 rounded-xl text-[#ccc3d8] hover:bg-white/5 hover:text-white transition-all" data-path="time-machine" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">history_toggle_off</span><span class="font-body-md text-body-md font-medium">Time Machine</span></div></a><a class="flex items-center justify-between px-4 py-2.5 rounded-xl text-[#ccc3d8] hover:bg-white/5 hover:text-white transition-all" data-path="settings" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-md text-body-md font-medium">Settings</span></div></a></nav></div><div class="p-4 flex flex-col gap-2.5"><div class="p-3.5 rounded-2xl bg-[#120e2e]/90 backdrop-blur-md border border-[#7C3AED]/25 shadow-[0_8px_25px_rgba(0,0,0,0.4)]"><div class="flex items-center justify-between mb-1.5"><div class="flex items-center gap-2"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-80"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan shadow-[0_0_8px_#22D3EE]"></span></span><span class="font-semibold text-xs text-white">All 4 brokers live</span></div><span class="font-mono text-xs text-accent-cyan">240ms</span></div><p class="text-xs text-[#ccc3d8] truncate">Zerodha · Groww · Angel · Upstox</p></div><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[#ccc3d8] hover:bg-white/5 hover:text-white transition-colors" data-path="help-support" href="#"><span class="material-symbols-outlined text-[18px]">help_outline</span><span class="font-body-sm text-body-sm font-medium">Help &amp; Support</span></a></div></aside><div class="pl-[260px] relative z-10 min-h-screen flex flex-col"><header class="fixed top-0 left-[260px] right-0 h-16 bg-[#070517]/80 backdrop-blur-2xl z-30 border-b border-[#7C3AED]/15 shadow-[0_2px_15px_rgba(0,0,0,0.5)]"><div class="h-16 w-full px-8 flex items-center justify-between gap-4"><div class="flex items-center gap-4 flex-1 max-w-xl"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-3.5 text-[18px] text-[#958da1] pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-12 rounded-xl bg-[#120e2e]/80 border border-[#7C3AED]/20 text-[#f1ecff] placeholder:text-[#958da1] font-body-md text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/60 focus:border-accent-cyan transition-all shadow-inner" placeholder="Search holdings, NSE/BSE tickers, mutual funds, or brokers..." type="text"/><span class="absolute right-3 px-1.5 py-0.5 rounded bg-[#211c42] border border-white/5 text-[#ccc3d8] text-[10px] font-semibold pointer-events-none">⌘K</span></div></div><div class="flex items-center gap-4 shrink-0"><div class="hidden xl:flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#120e2e]/80 border border-white/5 shadow-sm"><div class="flex items-center gap-1.5"><span class="text-[11px] font-bold text-[#958da1]">NIFTY 50</span><span class="text-xs text-accent-cyan font-bold font-mono">24,834.15</span><span class="text-[11px] text-accent-cyan font-semibold">(+0.62%)</span></div><span class="w-px h-3 bg-white/10"></span><div class="flex items-center gap-1.5"><span class="text-[11px] font-bold text-[#958da1]">SENSEX</span><span class="text-xs text-accent-cyan font-bold font-mono">81,392.40</span><span class="text-[11px] text-accent-cyan font-semibold">(+0.54%)</span></div></div><div class="hidden 2xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#7C3AED]/15 border border-[#7C3AED]/30 text-primary text-xs font-semibold"><span class="material-symbols-outlined text-[14px]">science</span><span>Simulated demo data</span></div><div class="hidden lg:flex items-center gap-2 text-[#ccc3d8] text-xs"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-emerald opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-accent-emerald shadow-[0_0_8px_#34D399]"></span></span><span class="material-symbols-outlined text-[15px] text-accent-emerald">schedule</span><span>Last synced: Today, 3:24 PM IST</span></div><button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.3)]" type="button"><span class="material-symbols-outlined text-[16px] text-accent-cyan">sync</span><span>Sync All</span></button><button class="relative p-2 rounded-full text-[#ccc3d8] hover:bg-white/10 hover:text-white transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent-magenta shadow-[0_0_8px_#EC4899]"></span></button><div class="flex items-center gap-2 pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-accent-violet/60 shadow-[0_0_12px_rgba(124,58,237,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfRI0UMPWihpwE79xsaDzNw4QSiP9aC44wLMN9vJF5Fs3paXnPbOE-BmWTN1vzZp7A_hmbQ7MDqn-iY0EM4Lrzl_F527MWYV9TPl4kH2TUTQBKkUY9TVU4hwM4Q0RPvFmheZaiPTt6CeM92cLV44MXFca9zLi14pH_jXqASxKDlHYnVLe46D3ybYxa85Oow6XzVcnS8OZY8Kpl2aYO7STe8AaH_nsbc6KXn33PhsGqlo36n8h1UIhk"/><div class="hidden sm:flex flex-col text-left"><span class="font-bold text-sm text-white leading-tight">Arjun Sharma</span><span class="text-[11px] text-accent-cyan font-medium leading-tight">Pro Investor</span></div></div></div></div></header><main class="w-full pt-20 flex-1 bg-transparent max-w-[1440px] mx-auto px-8"><div class="flex flex-col w-full pb-12">
+<!-- PAGE HEADER & AMBIENT HERO BANNER -->
+<section class="glass-gradient-border rounded-3xl p-6 lg:p-8 relative overflow-hidden mb-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+<div class="pointer-events-none absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[#EC4899]/20 blur-[130px]"></div>
+<div class="pointer-events-none absolute left-1/3 -bottom-24 w-80 h-80 rounded-full bg-[#22D3EE]/20 blur-[120px]"></div>
+<div class="pointer-events-none absolute left-10 top-0 w-72 h-72 rounded-full bg-[#7C3AED]/25 blur-[120px]"></div>
+<div class="relative z-10 flex flex-col gap-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<div class="max-w-3xl flex flex-col gap-2">
+<div class="flex items-center gap-2.5 flex-wrap">
+<span class="px-3 py-1 rounded-full bg-accent-violet/20 border border-accent-violet/40 text-primary font-semibold text-xs tracking-wider flex items-center gap-1.5 shadow-[0_0_12px_rgba(124,58,237,0.25)]">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+              SEBI Regulated &amp; Exchange Listed (NSE/BSE)
+            </span>
+<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] font-medium text-xs flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse shadow-[0_0_6px_#22D3EE]"></span>
+              Live Order Routing via OBPP &amp; Depository
+            </span>
+</div>
+<h1 class="font-headline-xl text-3xl lg:text-4xl text-white tracking-tight font-extrabold mt-1">
+            Explore Yield &amp; <span class="bg-gradient-to-r from-accent-cyan via-white to-accent-magenta bg-clip-text text-transparent">Alternative Assets</span>
+</h1>
+<p class="font-body-lg text-[#ccc3d8] leading-relaxed text-sm lg:text-base">
+            Broaden your portfolio beyond equities with steady dividend yields, inflation-hedging infrastructure trusts, and fixed-income debt instruments.
+          </p>
+</div>
+<!-- Metric Snapshot Pill Box -->
+<div class="flex items-center gap-5 shrink-0 bg-[#070517]/80 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+<div class="flex flex-col text-left">
+<span class="text-[11px] font-bold text-[#958da1] tracking-wider uppercase">Avg. Category Yield</span>
+<span class="font-display-currency text-2xl lg:text-3xl text-accent-cyan font-bold tracking-tight drop-shadow-[0_0_12px_rgba(34,211,238,0.4)]">9.42%</span>
+<span class="text-xs text-[#ccc3d8]">Quarterly Net Cashflow</span>
+</div>
+<div class="w-px h-12 bg-gradient-to-b from-transparent via-[#7C3AED]/40 to-transparent"></div>
+<div class="flex flex-col text-left">
+<span class="text-[11px] font-bold text-[#958da1] tracking-wider uppercase">Alternative Index</span>
+<span class="font-metric-tabular text-lg text-white font-bold flex items-center gap-1.5">
+              3,412.80
+              <span class="text-accent-emerald text-xs font-semibold px-1.5 py-0.5 rounded bg-accent-emerald/15">+0.84%</span>
+</span>
+<span class="text-xs text-[#ccc3d8]">Nifty REITs &amp; InvITs</span>
+</div>
+</div>
+</div>
+<!-- Quick Filter Pills & Sub-nav -->
+<div class="flex items-center justify-between gap-4 pt-1 flex-wrap">
+<div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full" id="categoryFilterBar">
+<button class="px-4 py-2 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-semibold text-sm shadow-[0_0_20px_rgba(124,58,237,0.45)] transition-all whitespace-nowrap active:scale-95 border border-white/15" data-filter="all">
+            All Instruments
+          </button>
+<button class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] hover:text-white hover:bg-white/10 hover:border-accent-magenta/40 text-sm font-medium transition-all whitespace-nowrap" data-filter="reits">
+            Real Estate (REITs)
+          </button>
+<button class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] hover:text-white hover:bg-white/10 hover:border-accent-cyan/40 text-sm font-medium transition-all whitespace-nowrap" data-filter="invits">
+            Infrastructure (InvITs)
+          </button>
+<button class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] hover:text-white hover:bg-white/10 hover:border-accent-amber/40 text-sm font-medium transition-all whitespace-nowrap" data-filter="bonds">
+            High-Yield Bonds &amp; SGBs
+          </button>
+<button class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] hover:text-white hover:bg-white/10 hover:border-primary/40 text-sm font-medium transition-all whitespace-nowrap" data-filter="taxfree">
+            Tax-Free Debt (54EC)
+          </button>
+</div>
+<div class="flex items-center gap-2 text-[#ccc3d8] text-xs">
+<span class="material-symbols-outlined text-[16px] text-accent-cyan">monetization_on</span>
+<span>T+1 Settlement into Zerodha / Groww</span>
+</div>
+</div>
+</div>
+</section>
+<!-- TOP ROW - THREE BESPOKE FEATURE CARDS -->
+<section class="relative grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="pointer-events-none absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#EC4899]/15 blur-[120px]"></div>
+<div class="pointer-events-none absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#22D3EE]/15 blur-[120px]"></div>
+<div class="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#FBBF24]/15 blur-[120px]"></div>
+<!-- CARD 1: REITs (MAGENTA THEMED) -->
+<div class="glass-card-magenta rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#EC4899] hover:shadow-[0_20px_50px_rgba(236,72,153,0.22)] transition-all duration-300">
+<div class="pointer-events-none absolute -right-12 -top-12 w-48 h-48 rounded-full bg-[#EC4899]/20 blur-[70px] group-hover:bg-[#EC4899]/30 transition-all"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<!-- Header & Visual Stamp -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-[#EC4899]/15 border border-[#EC4899]/30 flex items-center justify-center text-accent-magenta shadow-[0_0_15px_rgba(236,72,153,0.3)]">
+<span class="material-symbols-outlined text-[26px]">corporate_fare</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-accent-magenta uppercase tracking-wider">Asset Class 01</span>
+<h2 class="font-headline-md text-xl font-bold text-white">REITs</h2>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#EC4899]/15 border border-[#EC4899]/30 text-accent-magenta font-semibold text-xs">Grade-A Commercial</span>
+</div>
+<p class="font-body-md text-sm text-[#ccc3d8] leading-relaxed">
+          Real Estate Investment Trusts owning tech parks, retail malls, and office assets across Bengaluru, Mumbai, and NCR.
+        </p>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-[#070517]/70 border border-white/5">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Typical Yield</span>
+<span class="font-metric-tabular text-lg text-accent-magenta font-extrabold drop-shadow-[0_0_8px_rgba(236,72,153,0.35)]">6.8% – 8.2%</span>
+<span class="text-[11px] text-[#ccc3d8]">Quarterly payout</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Min. Investment</span>
+<span class="font-metric-tabular text-lg text-white font-bold">₹10k – ₹15k</span>
+<span class="text-[11px] text-[#ccc3d8]">1 lot (NSE/BSE)</span>
+</div>
+</div>
+<!-- Risk Gauge Visual -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center text-xs">
+<span class="text-[#958da1] font-semibold uppercase tracking-wider text-[11px]">Risk Profile</span>
+<span class="text-accent-magenta font-bold">Moderate · 3.0 / 5</span>
+</div>
+<div class="w-full h-2 rounded-full bg-white/10 overflow-hidden flex gap-0.5 p-0.5">
+<span class="h-full w-1/5 rounded-full bg-accent-magenta shadow-[0_0_6px_#EC4899]"></span>
+<span class="h-full w-1/5 rounded-full bg-accent-magenta shadow-[0_0_6px_#EC4899]"></span>
+<span class="h-full w-1/5 rounded-full bg-accent-magenta/60"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+</div>
+</div>
+<!-- Context & Popular list -->
+<div class="flex flex-col gap-1">
+<span class="text-[11px] font-bold text-accent-magenta uppercase tracking-wider">Who It Suits</span>
+<p class="text-xs text-[#ccc3d8] leading-relaxed">
+            Investors seeking regular commercial rental income with long-term capital appreciation and inflation hedge.
+          </p>
+</div>
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-bold text-[#958da1] uppercase tracking-wider">Top Bluechip Listings</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#EC4899]/40 transition-colors">Embassy REIT</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#EC4899]/40 transition-colors">Nexus Select</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#EC4899]/40 transition-colors">Mindspace</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#EC4899]/40 transition-colors">Brookfield</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center gap-2.5 pt-4 mt-3 border-t border-white/5 relative z-10">
+<button class="flex-1 py-2.5 px-4 rounded-full bg-gradient-to-r from-[#EC4899] to-[#7C3AED] hover:from-[#f45ca7] hover:to-[#8b46ff] text-white font-bold text-sm text-center shadow-[0_0_20px_rgba(236,72,153,0.35)] active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="filterTableByAsset('REIT')">
+<span>Explore REITs</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:border-[#EC4899]/40" onclick="showComparisonToast('REIT Yield Matrix Loaded')" title="Compare Yields">
+<span class="material-symbols-outlined text-[18px]">balance</span>
+</button>
+</div>
+</div>
+<!-- CARD 2: InvITs (CYAN THEMED) -->
+<div class="glass-card-cyan rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#22D3EE] hover:shadow-[0_20px_50px_rgba(34,211,238,0.22)] transition-all duration-300">
+<div class="pointer-events-none absolute -right-12 -top-12 w-48 h-48 rounded-full bg-[#22D3EE]/20 blur-[70px] group-hover:bg-[#22D3EE]/30 transition-all"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<!-- Header & Visual Stamp -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-[#22D3EE]/15 border border-[#22D3EE]/30 flex items-center justify-center text-accent-cyan shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+<span class="material-symbols-outlined text-[26px]">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-accent-cyan uppercase tracking-wider">Asset Class 02</span>
+<h2 class="font-headline-md text-xl font-bold text-white">InvITs</h2>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-accent-cyan font-semibold text-xs">Tolls, Grid &amp; Telecom</span>
+</div>
+<p class="font-body-md text-sm text-[#ccc3d8] leading-relaxed">
+          Infrastructure Investment Trusts distributing toll collections, interstate electricity transmission, and optical fiber tariffs.
+        </p>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-[#070517]/70 border border-white/5">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Typical Yield</span>
+<span class="font-metric-tabular text-lg text-accent-cyan font-extrabold drop-shadow-[0_0_8px_rgba(34,211,238,0.35)]">8.5% – 11.2%</span>
+<span class="text-[11px] text-[#ccc3d8]">Semi-annual/Quarterly</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Min. Investment</span>
+<span class="font-metric-tabular text-lg text-white font-bold">₹10k – ₹25k</span>
+<span class="text-[11px] text-[#ccc3d8]">Direct depository units</span>
+</div>
+</div>
+<!-- Risk Gauge Visual -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center text-xs">
+<span class="text-[#958da1] font-semibold uppercase tracking-wider text-[11px]">Risk Profile</span>
+<span class="text-accent-cyan font-bold">Moderate-High · 3.5 / 5</span>
+</div>
+<div class="w-full h-2 rounded-full bg-white/10 overflow-hidden flex gap-0.5 p-0.5">
+<span class="h-full w-1/5 rounded-full bg-accent-cyan shadow-[0_0_6px_#22D3EE]"></span>
+<span class="h-full w-1/5 rounded-full bg-accent-cyan shadow-[0_0_6px_#22D3EE]"></span>
+<span class="h-full w-1/5 rounded-full bg-accent-cyan shadow-[0_0_6px_#22D3EE]"></span>
+<span class="h-full w-1/10 rounded-full bg-accent-cyan/60"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+</div>
+</div>
+<!-- Context & Popular list -->
+<div class="flex flex-col gap-1">
+<span class="text-[11px] font-bold text-accent-cyan uppercase tracking-wider">Who It Suits</span>
+<p class="text-xs text-[#ccc3d8] leading-relaxed">
+            Cashflow-focused portfolios seeking higher payouts than standard deposits, backed by sovereign infrastructure concessions.
+          </p>
+</div>
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-bold text-[#958da1] uppercase tracking-wider">Top Bluechip Listings</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#22D3EE]/40 transition-colors">PGInvIT (PowerGrid)</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#22D3EE]/40 transition-colors">IndiGrid Trust</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#22D3EE]/40 transition-colors">IRB InvIT Fund</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center gap-2.5 pt-4 mt-3 border-t border-white/5 relative z-10">
+<button class="flex-1 py-2.5 px-4 rounded-full bg-gradient-to-r from-[#22D3EE] to-[#3B82F6] hover:from-[#3ee0fa] hover:to-[#4e90fb] text-[#0A0720] font-extrabold text-sm text-center shadow-[0_0_20px_rgba(34,211,238,0.35)] active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="filterTableByAsset('InvIT')">
+<span>Explore InvITs</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:border-[#22D3EE]/40" onclick="showComparisonToast('InvIT Annuity Model Simulated')" title="View Cashflow Predictor">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</button>
+</div>
+</div>
+<!-- CARD 3: Senior Secured Corporate Bonds & G-Secs (AMBER THEMED) -->
+<div class="glass-card-amber rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#FBBF24] hover:shadow-[0_20px_50px_rgba(251,191,36,0.22)] transition-all duration-300">
+<div class="pointer-events-none absolute -right-12 -top-12 w-48 h-48 rounded-full bg-[#FBBF24]/20 blur-[70px] group-hover:bg-[#FBBF24]/30 transition-all"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<!-- Header & Visual Stamp -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-[#FBBF24]/15 border border-[#FBBF24]/30 flex items-center justify-center text-accent-amber shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+<span class="material-symbols-outlined text-[26px]">account_balance</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-accent-amber uppercase tracking-wider">Asset Class 03</span>
+<h2 class="font-headline-md text-xl font-bold text-white">Bonds &amp; G-Secs</h2>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/30 text-accent-amber font-semibold text-xs">CRISIL AAA / AA+</span>
+</div>
+<p class="font-body-md text-sm text-[#ccc3d8] leading-relaxed">
+          Exchange-listed senior secured debentures and RBI-issued sovereign securities with priority redemption claims.
+        </p>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-[#070517]/70 border border-white/5">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Typical Return</span>
+<span class="font-metric-tabular text-lg text-accent-amber font-extrabold drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]">9.0% – 11.8%</span>
+<span class="text-[11px] text-[#ccc3d8]">Fixed coupon p.a.</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-[#958da1] uppercase">Min. Investment</span>
+<span class="font-metric-tabular text-lg text-white font-bold">₹10,000</span>
+<span class="text-[11px] text-[#ccc3d8]">SEBI OBPP norms</span>
+</div>
+</div>
+<!-- Risk Gauge Visual -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center text-xs">
+<span class="text-[#958da1] font-semibold uppercase tracking-wider text-[11px]">Risk Profile</span>
+<span class="text-accent-amber font-bold">Conservative · 2.0 / 5</span>
+</div>
+<div class="w-full h-2 rounded-full bg-white/10 overflow-hidden flex gap-0.5 p-0.5">
+<span class="h-full w-1/5 rounded-full bg-accent-amber shadow-[0_0_6px_#FBBF24]"></span>
+<span class="h-full w-1/5 rounded-full bg-accent-amber shadow-[0_0_6px_#FBBF24]"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+<span class="h-full w-1/5 rounded-full bg-white/5"></span>
+</div>
+</div>
+<!-- Context & Popular list -->
+<div class="flex flex-col gap-1">
+<span class="text-[11px] font-bold text-accent-amber uppercase tracking-wider">Who It Suits</span>
+<p class="text-xs text-[#ccc3d8] leading-relaxed">
+            Conservative capital preservers looking for non-equity correlated yields superior to bank recurring deposits.
+          </p>
+</div>
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-bold text-[#958da1] uppercase tracking-wider">Top Bluechip Listings</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#FBBF24]/40 transition-colors">Tata Capital NCD</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#FBBF24]/40 transition-colors">Cholamandalam AA+</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-white text-xs hover:border-[#FBBF24]/40 transition-colors">REC 54EC Bond</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center gap-2.5 pt-4 mt-3 border-t border-white/5 relative z-10">
+<button class="flex-1 py-2.5 px-4 rounded-full bg-gradient-to-r from-[#FBBF24] to-[#F59E0B] hover:from-[#fcd060] hover:to-[#faac1e] text-[#0A0720] font-extrabold text-sm text-center shadow-[0_0_20px_rgba(251,191,36,0.35)] active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="filterTableByAsset('Bond')">
+<span>Browse Bonds</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:border-[#FBBF24]/40" onclick="showComparisonToast('Section 54EC &amp; Indexation Tax Calc Open')" title="Calculate Tax Savings">
+<span class="material-symbols-outlined text-[18px]">calculate</span>
+</button>
+</div>
+</div>
+</section>
+<!-- MIDDLE SECTION: YOUR MIX VS DIVERSIFIED MIX COMPARATIVE VISUALIZER -->
+<section class="glass-gradient-border rounded-3xl p-6 lg:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] mb-8 relative overflow-hidden">
+<div class="pointer-events-none absolute -left-28 -top-28 w-96 h-96 rounded-full bg-[#7C3AED]/20 blur-[130px]"></div>
+<div class="pointer-events-none absolute right-10 bottom-0 w-80 h-80 rounded-full bg-[#EC4899]/18 blur-[130px]"></div>
+<div class="pointer-events-none absolute left-1/2 top-10 w-80 h-80 rounded-full bg-[#22D3EE]/15 blur-[140px]"></div>
+<div class="relative z-10 flex flex-col gap-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-accent-violet/20 border border-accent-violet/30 flex items-center justify-center text-primary shadow-[0_0_12px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</div>
+<h2 class="font-headline-lg text-2xl lg:text-3xl text-white font-bold">Your Portfolio Mix vs Recommended Yield Mix</h2>
+</div>
+<p class="font-body-md text-sm text-[#ccc3d8]">
+          Analyzed from your 4 linked broker accounts (Zerodha, Groww, AngelOne, Upstox) totaling <span class="text-white font-bold">₹34,80,000 AUM</span>.
+        </p>
+</div>
+<div class="flex items-center gap-2.5 flex-wrap">
+<span class="px-3.5 py-1.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/35 text-accent-cyan font-semibold text-xs flex items-center gap-1.5 shadow-[0_0_12px_rgba(34,211,238,0.2)]">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+          +2.4% Annual Passive Cashflow Payouts
+        </span>
+<span class="px-3.5 py-1.5 rounded-full bg-accent-violet/20 border border-accent-violet/35 text-primary font-semibold text-xs flex items-center gap-1.5 shadow-[0_0_12px_rgba(124,58,237,0.2)]">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+          -32% Drawdown Volatility in Market Corrections
+        </span>
+</div>
+</div>
+<!-- Concentration Alert Banner -->
+<div class="p-4 rounded-2xl bg-[#EC4899]/10 border border-[#EC4899]/30 text-white flex items-start sm:items-center justify-between gap-4 shadow-[0_0_20px_rgba(236,72,153,0.12)]">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#EC4899]/20 border border-[#EC4899]/35 flex items-center justify-center text-accent-magenta shrink-0 shadow-[0_0_10px_rgba(236,72,153,0.3)]">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div>
+<span class="font-bold text-sm text-accent-magenta block">High Equity Concentration Alert</span>
+<span class="text-xs text-[#ccc3d8]">
+            You currently hold 90% in equity market-risk assets with zero dividend-generating real estate or infrastructure units.
+          </span>
+</div>
+</div>
+<button class="shrink-0 px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm" onclick="openSimulatorModal()">
+        Fix Imbalance
+      </button>
+</div>
+<!-- Comparative Visual Bars Container -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Current Allocation -->
+<div class="flex flex-col gap-4 p-5 rounded-2xl bg-[#070517]/75 border border-white/10 shadow-lg">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-accent-magenta shadow-[0_0_8px_#EC4899]"></span>
+<span class="font-headline-sm text-base text-white font-bold">Your Current Holdings</span>
+</div>
+<span class="font-mono text-xs text-[#958da1]">100% Total</span>
+</div>
+<!-- Stacked Bar Representation with consistent asset colors -->
+<div class="w-full h-9 rounded-2xl overflow-hidden flex bg-white/5 border border-white/10 shadow-inner p-1 gap-1">
+<div class="h-full rounded-xl bg-[#3B82F6] flex items-center justify-center text-[11px] font-bold text-white shadow-[0_0_10px_rgba(59,130,246,0.35)]" style="width: 74%;" title="74% Direct Equities (Stocks)">74% Stocks</div>
+<div class="h-full rounded-xl bg-[#7C3AED] flex items-center justify-center text-[11px] font-bold text-white shadow-[0_0_10px_rgba(124,58,237,0.35)]" style="width: 16%;" title="16% Mutual Funds">16% MF</div>
+<div class="h-full rounded-xl bg-[#94A3B8] flex items-center justify-center text-[10px] font-bold text-[#0A0720]" style="width: 8%;" title="8% Cash / Liquid">8%</div>
+<div class="h-full rounded-xl bg-[#FBBF24] flex items-center justify-center text-[10px] font-bold text-[#0A0720]" style="width: 2%;" title="2% Fixed Debt / Bonds">2%</div>
+</div>
+<!-- Legend breakdown with consistent colors -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#3B82F6] shadow-[0_0_6px_#3B82F6]"></span> Stocks
+            </span>
+<span class="font-mono text-sm font-bold text-white mt-0.5">₹25.75L (74%)</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#7C3AED] shadow-[0_0_6px_#7C3AED]"></span> MFs
+            </span>
+<span class="font-mono text-sm font-bold text-white mt-0.5">₹5.56L (16%)</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#94A3B8]"></span> Cash
+            </span>
+<span class="font-mono text-sm font-bold text-white mt-0.5">₹2.78L (8%)</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#FBBF24] shadow-[0_0_6px_#FBBF24]"></span> Bonds
+            </span>
+<span class="font-mono text-sm font-bold text-white mt-0.5">₹0.70L (2%)</span>
+</div>
+</div>
+</div>
+<!-- Recommended Balanced Yield Mix -->
+<div class="flex flex-col gap-4 p-5 rounded-2xl bg-[#070517]/75 border border-white/10 shadow-lg">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-accent-cyan shadow-[0_0_8px_#22D3EE]"></span>
+<span class="font-headline-sm text-base text-white font-bold">Recommended All-Weather Mix</span>
+</div>
+<span class="text-xs text-accent-cyan bg-accent-cyan/15 border border-accent-cyan/35 px-2.5 py-0.5 rounded-full font-bold">Optimized</span>
+</div>
+<!-- Stacked Bar Representation with consistent asset colors -->
+<div class="w-full h-9 rounded-2xl overflow-hidden flex bg-white/5 border border-white/10 shadow-inner p-1 gap-1">
+<div class="h-full rounded-xl bg-[#3B82F6] flex items-center justify-center text-[11px] font-bold text-white shadow-[0_0_10px_rgba(59,130,246,0.3)]" style="width: 50%;" title="50% Stocks (Core Equity)">50% Stocks</div>
+<div class="h-full rounded-xl bg-[#EC4899] flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_10px_rgba(236,72,153,0.3)]" style="width: 15%;" title="15% REITs">15% REIT</div>
+<div class="h-full rounded-xl bg-[#22D3EE] flex items-center justify-center text-[10px] font-bold text-[#0A0720] shadow-[0_0_10px_rgba(34,211,238,0.3)]" style="width: 10%;" title="10% InvITs">10% InvIT</div>
+<div class="h-full rounded-xl bg-[#FBBF24] flex items-center justify-center text-[10px] font-bold text-[#0A0720] shadow-[0_0_10px_rgba(251,191,36,0.3)]" style="width: 20%;" title="20% Bonds">20% Bonds</div>
+<div class="h-full rounded-xl bg-[#F59E0B] flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_8px_rgba(245,158,11,0.3)]" style="width: 5%;" title="5% Sovereign Gold">5% Gold</div>
+</div>
+<!-- Legend breakdown with Delta suggestion badges -->
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1">
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#3B82F6] shadow-[0_0_6px_#3B82F6]"></span> Stocks
+            </span>
+<span class="font-mono text-sm font-bold text-white">50%</span>
+<span class="text-[10px] font-bold text-accent-magenta">-24% trim</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#EC4899] shadow-[0_0_6px_#EC4899]"></span> REITs
+            </span>
+<span class="font-mono text-sm font-bold text-accent-magenta">15%</span>
+<span class="text-[10px] font-bold text-accent-magenta">+15% add</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#22D3EE] shadow-[0_0_6px_#22D3EE]"></span> InvITs
+            </span>
+<span class="font-mono text-sm font-bold text-accent-cyan">10%</span>
+<span class="text-[10px] font-bold text-accent-cyan">+10% add</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#FBBF24] shadow-[0_0_6px_#FBBF24]"></span> Bonds
+            </span>
+<span class="font-mono text-sm font-bold text-accent-amber">20%</span>
+<span class="text-[10px] font-bold text-accent-amber">+18% add</span>
+</div>
+<div class="flex flex-col p-2 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#ccc3d8] flex items-center gap-1.5 font-medium">
+<span class="w-2 h-2 rounded-full bg-[#F59E0B] shadow-[0_0_6px_#F59E0B]"></span> Gold
+            </span>
+<span class="font-mono text-sm font-bold text-[#F59E0B]">5%</span>
+<span class="text-[10px] font-bold text-[#958da1]">Core safety</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Simulator CTA Strip -->
+<div class="mt-2 pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/5">
+<div class="flex items-center gap-2 text-xs text-[#ccc3d8]">
+<span class="material-symbols-outlined text-[18px] text-accent-cyan">auto_fix_high</span>
+<span>Rebalancing generates <span class="text-white font-bold">₹72,400</span> projected tax-efficient income every 12 months with lower portfolio variance.</span>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-2.5 rounded-full bg-gradient-to-r from-[#7C3AED] via-[#6366F1] to-[#3B82F6] hover:from-[#8b46ff] hover:to-[#5594ff] text-white font-bold text-sm shadow-[0_0_25px_rgba(124,58,237,0.45)] transition-all active:scale-95 flex items-center justify-center gap-2 border border-white/20" onclick="openSimulatorModal()">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+          Simulate Portfolio Rebalance
+        </button>
+<button class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white text-sm font-medium transition-all active:scale-95" onclick="autoAllocatePrompt()">
+          Auto-Allocate ₹50,000
+        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM DISCOVERY & CURATED MARKET OPPORTUNITIES TABLE -->
+<section class="glass-gradient-border rounded-3xl p-6 lg:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col gap-6 relative overflow-hidden">
+<div class="pointer-events-none absolute right-0 top-0 w-80 h-80 rounded-full bg-[#22D3EE]/15 blur-[120px]"></div>
+<div class="relative z-10 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-accent-cyan/15 border border-accent-cyan/30 flex items-center justify-center text-accent-cyan shadow-[0_0_12px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[20px]">database</span>
+</div>
+<h2 class="font-headline-lg text-2xl lg:text-3xl text-white font-bold">Curated Indian Yield Opportunities</h2>
+</div>
+<p class="font-body-md text-sm text-[#ccc3d8] mt-1">
+          Real-time quotes fetched across NSE, BSE and RFQ bond reporting platform. Filter by rating and asset class.
+        </p>
+</div>
+<!-- Search & Quick Toggles -->
+<div class="flex items-center gap-2.5">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[16px] text-[#958da1] pointer-events-none">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-xl bg-[#070517]/80 border border-white/10 text-white placeholder:text-[#958da1] font-body-sm text-xs focus:outline-none focus:ring-1 focus:ring-accent-cyan focus:border-accent-cyan transition-all" id="tableSearchInput" onkeyup="filterOpportunitiesTable()" placeholder="Filter by asset or ticker..." type="text"/>
+</div>
+<button class="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:border-accent-cyan/40" onclick="showComparisonToast('Yield Opportunity CSV exported')" title="Export CSV">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="overflow-x-auto -mx-6 px-6">
+<table class="w-full text-left border-collapse" id="opportunitiesTable">
+<thead>
+<tr class="text-[#958da1] text-[11px] font-bold tracking-wider uppercase border-b border-white/5">
+<th class="py-3 px-4">Asset Name (Ticker)</th>
+<th class="py-3 px-4">Category</th>
+<th class="py-3 px-4">Rating / Backing</th>
+<th class="py-3 px-4">Distribution Payout</th>
+<th class="py-3 px-4 text-right">CMP / Face Value</th>
+<th class="py-3 px-4 text-right">Net Yield</th>
+<th class="py-3 px-4 text-right">1Y Total Return</th>
+<th class="py-3 px-4 text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 font-body-md text-sm">
+<!-- ROW 1: Embassy REIT -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="REIT">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#EC4899]/15 border border-[#EC4899]/30 text-accent-magenta flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(236,72,153,0.25)]">
+                  EB
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-magenta transition-colors">Embassy Office Parks REIT</span>
+<span class="text-xs text-[#958da1]">EMBASSY · NSE</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-[#EC4899]/15 border border-[#EC4899]/30 text-accent-magenta font-semibold text-xs">REIT</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/40 text-accent-cyan font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                CRISIL AAA / Stable
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Quarterly (Div + Int)
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹394.50
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              7.12%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +14.8%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('Embassy Office Parks REIT', '394.50')">
+                Invest
+              </button>
+</td>
+</tr>
+<!-- ROW 2: IndiGrid InvIT -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="InvIT">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-accent-cyan flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+                  IG
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-cyan transition-colors">India Grid Trust</span>
+<span class="text-xs text-[#958da1]">INDIGRID · NSE</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/30 text-accent-cyan font-semibold text-xs">InvIT</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/40 text-accent-cyan font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                CRISIL AAA / ICRA AAA
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Quarterly (Distribution)
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹138.20
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              10.24%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +12.1%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('India Grid Trust', '138.20')">
+                Invest
+              </button>
+</td>
+</tr>
+<!-- ROW 3: PGInvIT -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="InvIT">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-accent-cyan flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+                  PG
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-cyan transition-colors">POWERGRID InvIT Fund</span>
+<span class="text-xs text-[#958da1]">PGINVIT · NSE</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/30 text-accent-cyan font-semibold text-xs">InvIT</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-violet/20 border border-accent-violet/40 text-primary font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(124,58,237,0.25)]">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                Sovereign PSU Backed
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Quarterly Regular
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹89.40
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              11.50%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +9.4%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('PowerGrid InvIT', '89.40')">
+                Invest
+              </button>
+</td>
+</tr>
+<!-- ROW 4: Tata Capital Secured Bond -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="Bond">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#FBBF24]/15 border border-[#FBBF24]/30 text-accent-amber flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(251,191,36,0.25)]">
+                  TC
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-amber transition-colors">Tata Capital Financial NCD 8.85%</span>
+<span class="text-xs text-[#958da1]">INE306N07 · BSE Debt</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/30 text-accent-amber font-semibold text-xs">Corporate Bond</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/40 text-accent-cyan font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[13px]">shield</span>
+                CRISIL AAA / ICRA AAA
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Annual Guaranteed Coupon
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹1,000.00
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              8.85%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +8.85%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('Tata Capital NCD', '1000.00')">
+                Invest
+              </button>
+</td>
+</tr>
+<!-- ROW 5: Cholamandalam Investment Finance Bond -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="Bond">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#FBBF24]/15 border border-[#FBBF24]/30 text-accent-amber flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(251,191,36,0.25)]">
+                  CH
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-amber transition-colors">Cholamandalam Inv &amp; Finance AA+</span>
+<span class="text-xs text-[#958da1]">INE121A07 · NSE Debt</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/30 text-accent-amber font-semibold text-xs">Corporate Bond</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-amber/15 border border-accent-amber/40 text-accent-amber font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(251,191,36,0.25)]">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                IND AA+ / Positive
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Monthly Cash Distribution
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹1,000.00
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              9.85%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +10.2%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('Cholamandalam AA+ Bond', '1000.00')">
+                Invest
+              </button>
+</td>
+</tr>
+<!-- ROW 6: Nexus Select Trust REIT -->
+<tr class="hover:bg-white/[0.04] transition-all group backdrop-blur-sm" data-asset-type="REIT">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-[#EC4899]/15 border border-[#EC4899]/30 text-accent-magenta flex items-center justify-center font-bold text-xs shadow-[0_0_10px_rgba(236,72,153,0.25)]">
+                  NX
+                </div>
+<div class="flex flex-col">
+<span class="font-bold text-white group-hover:text-accent-magenta transition-colors">Nexus Select Trust (Retail Malls)</span>
+<span class="text-xs text-[#958da1]">NXST · NSE</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-[#EC4899]/15 border border-[#EC4899]/30 text-accent-magenta font-semibold text-xs">REIT</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-0.5 rounded-full bg-accent-cyan/15 border border-accent-cyan/40 text-accent-cyan font-mono text-xs font-semibold inline-flex items-center gap-1 shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                CRISIL AAA / Stable
+              </span>
+</td>
+<td class="py-3.5 px-4 text-[#ccc3d8] text-xs">
+              Quarterly (Direct Tenant Rent)
+            </td>
+<td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+              ₹142.10
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-extrabold drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
+              8.35%
+            </td>
+<td class="py-3.5 px-4 text-right font-mono text-accent-emerald font-semibold">
+              +16.4%
+            </td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-[#7C3AED] hover:to-[#3B82F6] hover:text-white border border-white/10 text-white font-semibold text-xs transition-all active:scale-95 shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.4)]" onclick="quickInvest('Nexus Select Trust', '142.10')">
+                Invest
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Meta -->
+<div class="flex flex-col sm:flex-row items-center justify-between text-xs text-[#ccc3d8] gap-4 pt-2 border-t border-white/5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-accent-cyan">info</span>
+<span>Distribution yields are post-reinvestment calculations based on rolling 12-month trailing filings.</span>
+</div>
+<div class="flex items-center gap-2">
+<span>Showing 6 of 28 listed instruments</span>
+<a class="text-accent-cyan hover:underline font-semibold" href="#" onclick="showComparisonToast('Loading complete 28 listings...'); return false;">View All 28 →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE SIMULATOR DIALOG / MODAL (HIDDEN BY DEFAULT) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden" id="rebalanceSimulatorModal">
+<div class="glass-gradient-border relative w-full max-w-xl rounded-3xl p-6 lg:p-7 shadow-2xl flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-accent-violet/20 border border-accent-violet/40 flex items-center justify-center text-primary shadow-[0_0_12px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</div>
+<div>
+<h3 class="font-headline-md text-xl font-bold text-white">Interactive Yield Simulator</h3>
+<p class="text-xs text-[#ccc3d8]">Inject yield-generating units without triggering capital gains taxes</p>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-white/10 text-[#ccc3d8] hover:text-white transition-colors" onclick="closeSimulatorModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Rebalance Slider -->
+<div class="flex flex-col gap-4 bg-[#070517]/80 p-5 rounded-2xl border border-white/10">
+<div class="flex justify-between items-center">
+<span class="text-sm font-semibold text-white">Capital to Shift into Alternatives</span>
+<span class="font-mono text-xl text-accent-cyan font-bold drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]" id="sliderValueText">₹1,50,000</span>
+</div>
+<input class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#7C3AED]" id="rebalanceSlider" max="1000000" min="25000" oninput="updateSimulatorProjection(this.value)" step="25000" type="range" value="150000"/>
+<div class="grid grid-cols-3 gap-3 pt-2 text-center">
+<div class="p-3 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#958da1] block">Quarterly Payout</span>
+<span class="font-mono text-base font-bold text-accent-cyan mt-1 block" id="projQuarterly">₹3,450</span>
+</div>
+<div class="p-3 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#958da1] block">New Blended Yield</span>
+<span class="font-mono text-base font-bold text-accent-magenta mt-1 block" id="projYield">9.20%</span>
+</div>
+<div class="p-3 rounded-xl bg-white/5 border border-white/5">
+<span class="text-xs text-[#958da1] block">Beta Reduction</span>
+<span class="font-mono text-base font-bold text-accent-emerald mt-1 block">-28%</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3">
+<button class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[#ccc3d8] hover:text-white text-sm font-medium transition-all" onclick="closeSimulatorModal()">Cancel</button>
+<button class="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#7C3AED] via-[#6366F1] to-[#3B82F6] hover:from-[#8b46ff] hover:to-[#5594ff] text-white font-bold text-sm shadow-[0_0_20px_rgba(124,58,237,0.45)] transition-all flex items-center gap-2 border border-white/20 active:scale-95" onclick="executeSimulatedRebalance()">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+          Stage Execution across Brokers
+        </button>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-6 right-6 z-50 bg-[#120e2e]/95 backdrop-blur-xl border border-accent-cyan/40 text-white px-5 py-3.5 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.6)] flex items-center gap-3 pointer-events-none opacity-0 transition-opacity duration-300" id="toastNotification">
+<span class="material-symbols-outlined text-accent-cyan text-[22px] drop-shadow-[0_0_8px_#22D3EE]">check_circle</span>
+<span class="font-body-md text-sm font-semibold" id="toastMessage">Action completed successfully</span>
+</div>
+</div>
+<!-- INTERACTIVE CLIENT-SIDE LOGIC -->
+<script>
+  function showComparisonToast(message) {
+    const toast = document.getElementById('toastNotification');
+    const toastText = document.getElementById('toastMessage');
+    if (!toast || !toastText) return;
+    toastText.textContent = message;
+    toast.classList.remove('opacity-0');
+    toast.classList.add('opacity-100');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100');
+      toast.classList.add('opacity-0');
+    }, 3200);
+  }
+
+  function filterTableByAsset(categoryKeyword) {
+    const table = document.getElementById('opportunitiesTable');
+    if (!table) return;
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      const type = row.getAttribute('data-asset-type') || '';
+      if (type.toLowerCase().includes(categoryKeyword.toLowerCase())) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+    showComparisonToast('Filtered view: ' + categoryKeyword);
+  }
+
+  function filterOpportunitiesTable() {
+    const query = document.getElementById('tableSearchInput').value.toLowerCase();
+    const table = document.getElementById('opportunitiesTable');
+    if (!table) return;
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(query) ? '' : 'none';
+    });
+  }
+
+  // Handle Quick Filter Pills
+  const filterButtons = document.querySelectorAll('#categoryFilterBar button');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => {
+        b.className = 'px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#ccc3d8] hover:text-white hover:bg-white/10 text-sm font-medium transition-all whitespace-nowrap';
+      });
+      btn.className = 'px-4 py-2 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-semibold text-sm shadow-[0_0_20px_rgba(124,58,237,0.45)] transition-all whitespace-nowrap active:scale-95 border border-white/15';
+      
+      const filter = btn.getAttribute('data-filter');
+      const table = document.getElementById('opportunitiesTable');
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      
+      if (filter === 'all') {
+        rows.forEach(r => r.style.display = '');
+      } else if (filter === 'reits') {
+        rows.forEach(r => r.style.display = r.getAttribute('data-asset-type') === 'REIT' ? '' : 'none');
+      } else if (filter === 'invits') {
+        rows.forEach(r => r.style.display = r.getAttribute('data-asset-type') === 'InvIT' ? '' : 'none');
+      } else if (filter === 'bonds' || filter === 'taxfree') {
+        rows.forEach(r => r.style.display = r.getAttribute('data-asset-type') === 'Bond' ? '' : 'none');
+      }
+    });
+  });
+
+  // Simulator Modal Functions
+  function openSimulatorModal() {
+    const modal = document.getElementById('rebalanceSimulatorModal');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  function closeSimulatorModal() {
+    const modal = document.getElementById('rebalanceSimulatorModal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  function updateSimulatorProjection(val) {
+    const num = parseInt(val, 10);
+    const formatted = '₹' + num.toLocaleString('en-IN');
+    document.getElementById('sliderValueText').textContent = formatted;
+    
+    // Estimated calculations: 9.2% annual -> /4 for quarterly
+    const quarterlyEst = Math.round((num * 0.092) / 4);
+    document.getElementById('projQuarterly').textContent = '₹' + quarterlyEst.toLocaleString('en-IN');
+  }
+
+  function executeSimulatedRebalance() {
+    closeSimulatorModal();
+    showComparisonToast('Order staged: Zerodha + Groww basket generated with ₹1,50,000 allocation');
+  }
+
+  function autoAllocatePrompt() {
+    showComparisonToast('Smart Basket: Allocated ₹20k Embassy REIT, ₹20k PGInvIT, ₹10k Tata Capital NCD');
+  }
+
+  function quickInvest(assetName, cmp) {
+    showComparisonToast('Order ticket prefilled for ' + assetName + ' @ ₹' + cmp);
+  }
+</script></main></div></body></html>

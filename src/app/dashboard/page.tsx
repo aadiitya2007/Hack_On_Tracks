@@ -10,12 +10,12 @@ import { FloatingCard } from '@/components/ui/floating-card';
 // Animated Counter component
 function AnimatedNumber({ value, prefix = '' }: { value: number, prefix?: string }) {
   const [displayValue, setDisplayValue] = useState(value);
-  const [color, setColor] = useState('text-slate-50');
+  const [color, setColor] = useState('text-foreground');
 
   useEffect(() => {
     if (value !== displayValue) {
-      setColor(value > displayValue ? 'text-emerald-400' : 'text-red-400');
-      const timeout = setTimeout(() => setColor('text-slate-50'), 1000);
+      setColor(value > displayValue ? 'text-[var(--chart-2)]' : 'text-destructive');
+      const timeout = setTimeout(() => setColor('text-foreground'), 1000);
       setDisplayValue(value);
       return () => clearTimeout(timeout);
     }
@@ -97,10 +97,10 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
-        <div className="h-32 bg-slate-900 rounded-2xl"></div>
+        <div className="h-32 bg-card rounded-2xl"></div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-64 bg-slate-900 rounded-2xl col-span-1"></div>
-          <div className="h-64 bg-slate-900 rounded-2xl col-span-2"></div>
+          <div className="h-64 bg-card rounded-2xl col-span-1"></div>
+          <div className="h-64 bg-card rounded-2xl col-span-2"></div>
         </div>
       </div>
     );
@@ -111,14 +111,14 @@ export default function Dashboard() {
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-bold">Portfolio Dashboard</h1>
-          <p className="text-slate-400 mt-1 flex items-center gap-2">
+          <p className="text-muted-foreground mt-1 flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${syncing ? 'bg-emerald-400 animate-ping' : 'bg-blue-400'}`}></span>
             Live Sync {syncing && 'Active'}
           </p>
         </div>
         <button 
           onClick={handleSimulate}
-          className="relative px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium overflow-hidden"
+          className="relative px-4 py-2 bg-primary hover:bg-primary/90 rounded-lg text-sm font-medium overflow-hidden"
         >
           {syncing && (
             <motion.div 
@@ -136,12 +136,12 @@ export default function Dashboard() {
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3"
+          className="p-4 rounded-xl bg-[var(--chart-5)]/10 border border-amber-500/20 flex items-start gap-3"
         >
-          <svg className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          <svg className="w-5 h-5 text-[var(--chart-5)] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
           <div>
-            <h4 className="text-amber-500 font-medium text-sm">Duplicate Holdings Detected</h4>
-            <p className="text-slate-400 text-xs mt-1">You hold {duplicateSymbols.join(', ')} in multiple broker accounts. Consider consolidating them to reduce AMC fees.</p>
+            <h4 className="text-[var(--chart-5)] font-medium text-sm">Duplicate Holdings Detected</h4>
+            <p className="text-muted-foreground text-xs mt-1">You hold {duplicateSymbols.join(', ')} in multiple broker accounts. Consider consolidating them to reduce AMC fees.</p>
           </div>
         </motion.div>
       )}
@@ -149,20 +149,20 @@ export default function Dashboard() {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <FloatingCard className="p-6">
-          <p className="text-sm text-slate-400 font-medium">Current Value</p>
+          <p className="text-sm text-muted-foreground font-medium">Current Value</p>
           <h2 className="text-3xl font-bold mt-2">
             <AnimatedNumber value={totalValue} prefix="₹" />
           </h2>
         </FloatingCard>
         <FloatingCard className="p-6">
-          <p className="text-sm text-slate-400 font-medium">Total Invested</p>
-          <h2 className="text-3xl font-bold mt-2 text-slate-300">
+          <p className="text-sm text-muted-foreground font-medium">Total Invested</p>
+          <h2 className="text-3xl font-bold mt-2 text-foreground/90">
             <AnimatedNumber value={totalInvested} prefix="₹" />
           </h2>
         </FloatingCard>
         <FloatingCard className="p-6">
-          <p className="text-sm text-slate-400 font-medium">Total P&L</p>
-          <h2 className={`text-3xl font-bold mt-2 ${totalPnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+          <p className="text-sm text-muted-foreground font-medium">Total P&L</p>
+          <h2 className={`text-3xl font-bold mt-2 ${totalPnl >= 0 ? 'text-[var(--chart-2)]' : 'text-destructive'}`}>
             {totalPnl >= 0 ? '+' : ''}
             <AnimatedNumber value={totalPnl} prefix="₹" />
           </h2>
@@ -203,15 +203,15 @@ export default function Dashboard() {
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-semibold">Holdings</h3>
             <div className="flex gap-2">
-              <button onClick={() => setFilter(null)} className={`px-3 py-1 rounded-full text-xs ${!filter ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300'}`}>All</button>
-              <button onClick={() => setFilter('Zerodha')} className={`px-3 py-1 rounded-full text-xs ${filter === 'Zerodha' ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300'}`}>Zerodha</button>
-              <button onClick={() => setFilter('Upstox')} className={`px-3 py-1 rounded-full text-xs ${filter === 'Upstox' ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300'}`}>Upstox</button>
+              <button onClick={() => setFilter(null)} className={`px-3 py-1 rounded-full text-xs ${!filter ? 'bg-primary text-white' : 'bg-secondary text-foreground/90'}`}>All</button>
+              <button onClick={() => setFilter('Zerodha')} className={`px-3 py-1 rounded-full text-xs ${filter === 'Zerodha' ? 'bg-primary text-white' : 'bg-secondary text-foreground/90'}`}>Zerodha</button>
+              <button onClick={() => setFilter('Upstox')} className={`px-3 py-1 rounded-full text-xs ${filter === 'Upstox' ? 'bg-primary text-white' : 'bg-secondary text-foreground/90'}`}>Upstox</button>
             </div>
           </div>
           
           <div className="overflow-x-auto flex-1">
             <table className="w-full text-left text-sm">
-              <thead className="text-slate-400 border-b border-slate-800">
+              <thead className="text-muted-foreground border-b border-border">
                 <tr>
                   <th className="pb-3 font-medium">Asset</th>
                   <th className="pb-3 font-medium">Broker</th>
@@ -239,13 +239,13 @@ export default function Dashboard() {
                     >
                       <td className="py-4">
                         <p className="font-semibold">{h.symbol}</p>
-                        <p className="text-xs text-slate-500">{h.assetType}</p>
+                        <p className="text-xs text-foreground0">{h.assetType}</p>
                       </td>
-                      <td className="py-4 text-slate-400">{h.broker}</td>
+                      <td className="py-4 text-muted-foreground">{h.broker}</td>
                       <td className="py-4 text-right">{h.quantity}</td>
                       <td className="py-4 text-right">{h.avgBuyPrice ? `₹${h.avgBuyPrice.toFixed(2)}` : 'Buy price needed'}</td>
                       <td className="py-4 text-right font-medium">₹{h.value.toLocaleString('en-IN')}</td>
-                      <td className={`py-4 text-right ${!h.pnl ? 'text-slate-500' : h.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                      <td className={`py-4 text-right ${!h.pnl ? 'text-foreground0' : h.pnl >= 0 ? 'text-[var(--chart-2)]' : 'text-destructive'}`}>
                         {h.pnl !== null ? (
                           <>
                             {h.pnl >= 0 ? '+' : ''}₹{h.pnl.toLocaleString('en-IN')}

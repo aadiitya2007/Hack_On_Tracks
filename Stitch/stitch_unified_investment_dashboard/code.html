@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+    .glass-card-glow {
+      position: relative;
+    }
+    .glass-card-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(34, 211, 238, 0.25), rgba(236, 72, 153, 0.2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .text-glow-emerald {
+      text-shadow: 0 0 20px rgba(52, 211, 153, 0.35);
+    }
+    .text-glow-coral {
+      text-shadow: 0 0 20px rgba(251, 113, 133, 0.35);
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#0A0720",
+            "surface-dim": "#070517",
+            "surface": "#120D2C",
+            "surface-container-lowest": "#08051A",
+            "surface-container-low": "#110D2D",
+            "surface-container": "#18133B",
+            "surface-container-high": "#221C4F",
+            "surface-container-highest": "#2E2766",
+            "on-surface": "#EDE9FE",
+            "on-surface-variant": "#A7A0C7",
+            "outline": "#655D8A",
+            "outline-variant": "#342C58",
+            "primary": "#C084FC",
+            "primary-container": "#7C3AED",
+            "on-primary-container": "#FFFFFF",
+            "secondary": "#22D3EE",
+            "gain": "#34D399",
+            "loss": "#FB7185",
+            "brand-cyan": "#22D3EE",
+            "brand-blue": "#3B82F6",
+            "brand-magenta": "#EC4899",
+            "brand-gold": "#F59E0B"
+          },
+          borderRadius: {
+            "3xl": "1.5rem"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#0A0720] text-on-surface font-sans text-sm antialiased selection:bg-[#7C3AED] selection:text-white min-h-screen relative overflow-x-hidden">
+<!-- Ambient Mesh Gradient Glows -->
+<div class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+<div class="absolute -top-32 -left-32 w-[650px] h-[650px] rounded-full bg-[#7C3AED]/20 blur-[150px]"></div>
+<div class="absolute top-12 right-0 w-[550px] h-[550px] rounded-full bg-[#3B82F6]/15 blur-[160px]"></div>
+<div class="absolute top-1/2 -left-20 w-[500px] h-[500px] rounded-full bg-[#EC4899]/15 blur-[170px]"></div>
+<div class="absolute bottom-10 right-1/4 w-[600px] h-[600px] rounded-full bg-[#22D3EE]/12 blur-[160px]"></div>
+<div class="absolute -bottom-20 left-1/3 w-[550px] h-[550px] rounded-full bg-[#7C3AED]/15 blur-[180px]"></div>
+</div>
+<!-- Left Navigation Bar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] bg-[#08051A]/85 backdrop-blur-2xl z-40 flex flex-col justify-between border-r border-white/[0.06] shadow-2xl">
+<div class="flex flex-col">
+<!-- Logo -->
+<div class="h-16 px-6 flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#7C3AED] to-[#22D3EE] p-[1.5px] flex items-center justify-center shadow-lg shadow-[#7C3AED]/30">
+<div class="w-full h-full bg-[#0E0926] rounded-[10px] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<span class="font-display font-extrabold text-xl tracking-tight text-white flex items-center gap-1.5">
+          VaultIQ
+          <span class="w-1.5 h-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_8px_#22D3EE]"></span>
+</span>
+</div>
+<!-- Navigation Links -->
+<nav class="px-3.5 py-4 flex flex-col gap-1.5">
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-[#7C3AED]/30 to-[#3B82F6]/20 text-white font-medium border border-[#7C3AED]/40 shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-all" data-path="dashboard" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-[#C084FC]">grid_view</span>
+<span class="font-display font-semibold text-sm">Dashboard</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] shadow-[0_0_8px_#34D399]"></span>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:bg-white/[0.04] hover:text-white transition-all group" data-path="linked-accounts" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">account_balance</span>
+<span class="font-medium text-sm">Linked Accounts</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-[#34D399]/15 text-[#34D399] border border-[#34D399]/30 text-[11px] font-semibold">4 Live</span>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:bg-white/[0.04] hover:text-white transition-all group" data-path="explore" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">explore</span>
+<span class="font-medium text-sm">Explore</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:bg-white/[0.04] hover:text-white transition-all group" data-path="time-machine" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">history_toggle_off</span>
+<span class="font-medium text-sm">Time Machine</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-on-surface-variant hover:bg-white/[0.04] hover:text-white transition-all group" data-path="settings" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-white transition-colors">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</div>
+</a>
+</nav>
+</div>
+<!-- Bottom Status Card -->
+<div class="p-3.5 flex flex-col gap-2">
+<div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#34D399]"></span>
+</span>
+<span class="text-xs font-semibold text-white">4 Brokers Live</span>
+</div>
+<span class="text-[11px] font-mono text-[#34D399] font-medium">240ms</span>
+</div>
+<p class="text-xs text-on-surface-variant truncate">Zerodha · Groww · Angel · Upstox</p>
+</div>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-white/[0.04] hover:text-white transition-colors" data-path="help-support" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span class="text-xs font-medium">Help &amp; Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="pl-[260px] relative z-10 min-h-screen flex flex-col">
+<!-- Top Header -->
+<header class="fixed top-0 left-[260px] right-0 h-16 bg-[#08051A]/80 backdrop-blur-xl z-30 border-b border-white/[0.06] shadow-sm">
+<div class="h-16 w-full px-8 flex items-center justify-between gap-4">
+<!-- Search Input -->
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[18px] text-on-surface-variant pointer-events-none">search</span>
+<input class="w-full h-10 pl-10 pr-12 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-outline text-sm focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-all" placeholder="Search holdings, NSE/BSE tickers, mutual funds, or brokers..." type="text"/>
+<span class="absolute right-3 px-1.5 py-0.5 rounded-md bg-white/[0.06] border border-white/10 text-on-surface-variant text-[11px] font-mono pointer-events-none">⌘K</span>
+</div>
+</div>
+<!-- Top Right Controls -->
+<div class="flex items-center gap-4 shrink-0">
+<!-- Market Indices Ticker -->
+<div class="hidden xl:flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08]">
+<div class="flex items-center gap-1.5">
+<span class="text-[11px] font-semibold text-on-surface-variant">NIFTY 50</span>
+<span class="font-mono text-xs text-[#34D399] font-semibold">24,834.15</span>
+<span class="text-[11px] text-[#34D399] font-medium">(+0.62%)</span>
+</div>
+<span class="w-px h-3 bg-white/15"></span>
+<div class="flex items-center gap-1.5">
+<span class="text-[11px] font-semibold text-on-surface-variant">SENSEX</span>
+<span class="font-mono text-xs text-[#34D399] font-semibold">81,392.40</span>
+<span class="text-[11px] text-[#34D399] font-medium">(+0.54%)</span>
+</div>
+</div>
+<!-- Pulsing Live Sync Dot & Text -->
+<div class="hidden lg:flex items-center gap-2 text-on-surface-variant text-xs">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#34D399] shadow-[0_0_8px_#34D399]"></span>
+</span>
+<span class="text-white/80 font-medium">Last synced: Today, 3:24 PM IST</span>
+</div>
+<!-- Sync Button -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] text-white text-xs font-semibold transition-all active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-[#22D3EE]">sync</span>
+<span>Sync All</span>
+</button>
+<!-- Notifications -->
+<button class="relative p-2 rounded-full text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#EC4899] shadow-[0_0_6px_#EC4899]"></span>
+</button>
+<!-- User Profile -->
+<div class="flex items-center gap-2.5 pl-1">
+<img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-[#7C3AED]/60 shadow-[0_0_12px_rgba(124,58,237,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfRI0UMPWihpwE79xsaDzNw4QSiP9aC44wLMN9vJF5Fs3paXnPbOE-BmWTN1vzZp7A_hmbQ7MDqn-iY0EM4Lrzl_F527MWYV9TPl4kH2TUTQBKkUY9TVU4hwM4Q0RPvFmheZaiPTt6CeM92cLV44MXFca9zLi14pH_jXqASxKDlHYnVLe46D3ybYxa85Oow6XzVcnS8OZY8Kpl2aYO7STe8AaH_nsbc6KXn33PhsGqlo36n8h1UIhk"/>
+<div class="hidden sm:flex flex-col text-left">
+<span class="font-display text-xs font-bold text-white leading-tight">Arjun Sharma</span>
+<span class="text-[11px] text-[#22D3EE] font-semibold leading-tight">Pro Investor</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Dashboard Area -->
+<main class="w-full pt-20 flex-1 max-w-[1440px] mx-auto px-8 pb-12">
+<div class="flex flex-col w-full">
+<!-- Top Header Banner -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+<div class="flex flex-col">
+<div class="flex items-center gap-3 mb-1">
+<h1 class="font-display font-extrabold text-3xl md:text-4xl text-white tracking-tight">Portfolio Dashboard</h1>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] text-xs font-semibold shadow-[0_0_12px_rgba(52,211,153,0.2)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                Live Feed
+              </span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium">
+              Consolidated real-time telemetry across linked Indian brokerages
+            </p>
+</div>
+<!-- Right Controls Toolbar -->
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Period Selector Pills -->
+<div class="flex items-center p-1 rounded-2xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
+<button class="px-3 py-1 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white transition-colors" type="button">1D</button>
+<button class="px-3 py-1 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white transition-colors" type="button">1W</button>
+<button class="px-3 py-1 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white transition-colors" type="button">1M</button>
+<button class="px-3.5 py-1 rounded-xl text-xs font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white shadow-[0_0_15px_rgba(124,58,237,0.5)] transition-all" type="button">1Y</button>
+<button class="px-3 py-1 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white transition-colors" type="button">3Y</button>
+<button class="px-3 py-1 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white transition-colors" type="button">ALL</button>
+</div>
+<!-- Currency Pill -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-white text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px] text-[#C084FC]">currency_rupee</span>
+<span>INR</span>
+</div>
+<!-- Export Statement CTA -->
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] text-white text-xs font-semibold transition-all active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-[#22D3EE]">ios_share</span>
+<span>Export Statement</span>
+</button>
+</div>
+</div>
+<!-- Row of 4 Telemetry Stat Cards with Sleek SVG Sparklines -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-7">
+<!-- Card 1: Total Portfolio Value -->
+<div class="glass-card glass-card-glow rounded-3xl p-5 flex flex-col justify-between group hover:border-[#7C3AED]/40 transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Net Portfolio</span>
+<span class="p-2 rounded-xl bg-[#7C3AED]/20 border border-[#7C3AED]/30 text-[#C084FC] shadow-[0_0_10px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</span>
+</div>
+<div class="flex items-baseline gap-1 mb-2">
+<span class="font-display font-extrabold text-3xl tracking-tight bg-gradient-to-r from-white via-[#E0E7FF] to-[#22D3EE] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
+                  ₹48,62,450
+                </span>
+<span class="font-display text-lg font-semibold text-on-surface-variant">.80</span>
+</div>
+<!-- Sparkline 1 -->
+<div class="w-full h-8 my-1">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 160 30">
+<defs>
+<lineargradient id="spark1" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#22D3EE" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#22D3EE" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0,26 Q 25,24 50,18 T 100,14 T 135,8 T 160,3 L 160,30 L 0,30 Z" fill="url(#spark1)"></path>
+<path d="M 0,26 Q 25,24 50,18 T 100,14 T 135,8 T 160,3" fill="none" stroke="#22D3EE" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/[0.06] text-xs">
+<span class="text-on-surface-variant">Invested: <strong class="text-white font-mono font-semibold">₹34,34,130.40</strong></span>
+<span class="text-[#C084FC] font-semibold">+141.6% Cap</span>
+</div>
+</div>
+<!-- Card 2: Overall P&L -->
+<div class="glass-card glass-card-glow rounded-3xl p-5 flex flex-col justify-between group hover:border-[#34D399]/40 transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Realized &amp; Unrealized P&amp;L</span>
+<span class="px-2 py-0.5 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] text-xs font-bold flex items-center gap-1 shadow-[0_0_10px_rgba(52,211,153,0.25)]">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                  +41.59%
+                </span>
+</div>
+<div class="flex items-baseline gap-1 mb-2">
+<span class="font-display font-extrabold text-3xl tracking-tight text-[#34D399] text-glow-emerald">
+                  +₹14,28,320
+                </span>
+<span class="font-display text-lg font-medium text-[#34D399]/70">.40</span>
+</div>
+<!-- Sparkline 2 -->
+<div class="w-full h-8 my-1">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 160 30">
+<defs>
+<lineargradient id="spark2" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#34D399" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#34D399" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0,28 Q 30,22 60,20 T 110,10 T 160,2 L 160,30 L 0,30 Z" fill="url(#spark2)"></path>
+<path d="M 0,28 Q 30,22 60,20 T 110,10 T 160,2" fill="none" stroke="#34D399" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/[0.06] text-xs">
+<span class="text-on-surface-variant">XIRR: <strong class="text-white font-mono font-semibold">22.84%</strong></span>
+<span class="text-[#34D399] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                vs NIFTY 14.2%
+              </span>
+</div>
+</div>
+<!-- Card 3: Today's Change -->
+<div class="glass-card glass-card-glow rounded-3xl p-5 flex flex-col justify-between group hover:border-[#34D399]/40 transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Today's Market Movement</span>
+<span class="px-2 py-0.5 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] text-xs font-bold flex items-center gap-1 shadow-[0_0_10px_rgba(52,211,153,0.25)]">
+<span class="material-symbols-outlined text-[14px]">north_east</span>
+                  +0.79%
+                </span>
+</div>
+<div class="flex items-baseline gap-1 mb-2">
+<span class="font-display font-extrabold text-3xl tracking-tight text-[#34D399] text-glow-emerald">
+                  +₹38,410
+                </span>
+<span class="font-display text-lg font-medium text-[#34D399]/70">.25</span>
+</div>
+<!-- Sparkline 3 -->
+<div class="w-full h-8 my-1">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 160 30">
+<defs>
+<lineargradient id="spark3" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#34D399" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#34D399" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0,20 Q 30,24 60,16 T 110,12 T 160,4 L 160,30 L 0,30 Z" fill="url(#spark3)"></path>
+<path d="M 0,20 Q 30,24 60,16 T 110,12 T 160,4" fill="none" stroke="#34D399" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/[0.06] text-xs text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#34D399] animate-ping"></span>
+                NSE/BSE Open
+              </span>
+<span class="text-white font-medium">14 of 18 stocks up</span>
+</div>
+</div>
+<!-- Card 4: Linked Brokers -->
+<div class="glass-card glass-card-glow rounded-3xl p-5 flex flex-col justify-between group hover:border-[#7C3AED]/40 transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Multi-Broker Telemetry</span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#34D399] text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>
+                  Sync: 2m ago
+                </span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="font-display font-extrabold text-3xl tracking-tight text-white">4</span>
+<span class="font-display text-lg font-semibold text-on-surface-variant">Brokers Live</span>
+</div>
+<!-- Sparkline 4 (Network stability bar / micro wave) -->
+<div class="w-full h-8 my-1 flex items-center justify-between gap-1 px-1">
+<span class="h-4 w-full bg-[#7C3AED]/30 rounded-full overflow-hidden flex items-end">
+<span class="w-full h-[85%] bg-gradient-to-t from-[#7C3AED] to-[#22D3EE] rounded-full"></span>
+</span>
+<span class="h-4 w-full bg-[#7C3AED]/30 rounded-full overflow-hidden flex items-end">
+<span class="w-full h-[95%] bg-gradient-to-t from-[#7C3AED] to-[#22D3EE] rounded-full"></span>
+</span>
+<span class="h-4 w-full bg-[#7C3AED]/30 rounded-full overflow-hidden flex items-end">
+<span class="w-full h-[75%] bg-gradient-to-t from-[#7C3AED] to-[#22D3EE] rounded-full"></span>
+</span>
+<span class="h-4 w-full bg-[#7C3AED]/30 rounded-full overflow-hidden flex items-end">
+<span class="w-full h-[100%] bg-gradient-to-t from-[#7C3AED] to-[#22D3EE] rounded-full"></span>
+</span>
+<span class="h-4 w-full bg-[#7C3AED]/30 rounded-full overflow-hidden flex items-end">
+<span class="w-full h-[90%] bg-gradient-to-t from-[#7C3AED] to-[#22D3EE] rounded-full"></span>
+</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 pt-2 border-t border-white/[0.06] flex-wrap">
+<span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-white text-[11px] font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>Zerodha
+              </span>
+<span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-white text-[11px] font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>Groww
+              </span>
+<span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-white text-[11px] font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>Angel
+              </span>
+<span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-white text-[11px] font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>Upstox
+              </span>
+</div>
+</div>
+</div>
+<!-- Main Content 2-Column Split: Center (8 cols) vs Right Side Panel (4 cols) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- LEFT & CENTER AREA (lg:col-span-8) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Charts Row: Asset Allocation & Performance Area Chart -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+<!-- Asset Allocation Donut Card (5 cols) -->
+<div class="xl:col-span-5 glass-card glass-card-glow rounded-3xl p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<div>
+<h2 class="font-display font-bold text-lg text-white">Asset Allocation</h2>
+<span class="text-xs text-on-surface-variant font-medium">4 asset classes cross-indexed</span>
+</div>
+<button class="p-1.5 rounded-xl text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<!-- Donut SVG Visualization with Target Palette -->
+<div class="relative flex items-center justify-center my-3">
+<svg class="w-48 h-48 transform -rotate-90 drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]" viewbox="0 0 100 100">
+<!-- Background Circle Track -->
+<circle class="text-white/[0.05] fill-none" cx="50" cy="50" r="38" stroke="currentColor" stroke-width="11"></circle>
+<!-- Stocks (Electric Blue #3B82F6): 58.4% -> dasharray: 139.4 99.36 -->
+<circle class="fill-none transition-all duration-700" cx="50" cy="50" r="38" stroke="#3B82F6" stroke-dasharray="139.4 99.36" stroke-dashoffset="0" stroke-width="11"></circle>
+<!-- Mutual Funds (Bonds/Amber #FBBF24): 25.1% -> 59.9 -->
+<circle class="fill-none transition-all duration-700" cx="50" cy="50" r="38" stroke="#FBBF24" stroke-dasharray="59.9 178.86" stroke-dashoffset="-139.4" stroke-width="11"></circle>
+<!-- Gold (Gold #F59E0B): 11.9% -> 28.4 -->
+<circle class="fill-none transition-all duration-700" cx="50" cy="50" r="38" stroke="#EC4899" stroke-dasharray="28.4 210.36" stroke-dashoffset="-199.3" stroke-width="11"></circle>
+<!-- Cash (Slate #94A3B8 / Cyan #22D3EE): 4.6% -> 11.0 -->
+<circle class="fill-none transition-all duration-700" cx="50" cy="50" r="38" stroke="#22D3EE" stroke-dasharray="11 227.76" stroke-dashoffset="-227.7" stroke-width="11"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+<span class="text-[11px] font-semibold tracking-wider text-on-surface-variant uppercase">Portfolio</span>
+<span class="font-display font-extrabold text-2xl text-white">₹48.62L</span>
+<span class="text-xs text-[#34D399] font-medium">Consolidated</span>
+</div>
+</div>
+<!-- Interactive Legend -->
+<div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-white/[0.06]">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+<span class="w-3 h-3 rounded-full bg-[#3B82F6] shadow-[0_0_8px_#3B82F6] shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="text-xs text-on-surface-variant truncate">Stocks (Equity)</span>
+<span class="font-mono text-xs text-white font-semibold">58.4% <span class="text-on-surface-variant text-[11px] font-normal">(₹28.40L)</span></span>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+<span class="w-3 h-3 rounded-full bg-[#FBBF24] shadow-[0_0_8px_#FBBF24] shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="text-xs text-on-surface-variant truncate">Mutual Funds</span>
+<span class="font-mono text-xs text-white font-semibold">25.1% <span class="text-on-surface-variant text-[11px] font-normal">(₹12.20L)</span></span>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+<span class="w-3 h-3 rounded-full bg-[#EC4899] shadow-[0_0_8px_#EC4899] shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="text-xs text-on-surface-variant truncate">SGB / Gold</span>
+<span class="font-mono text-xs text-white font-semibold">11.9% <span class="text-on-surface-variant text-[11px] font-normal">(₹5.78L)</span></span>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+<span class="w-3 h-3 rounded-full bg-[#22D3EE] shadow-[0_0_8px_#22D3EE] shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="text-xs text-on-surface-variant truncate">Cash &amp; Liquid</span>
+<span class="font-mono text-xs text-white font-semibold">4.6% <span class="text-on-surface-variant text-[11px] font-normal">(₹2.24L)</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Portfolio Growth vs Benchmark Card (7 cols) -->
+<div class="xl:col-span-7 glass-card glass-card-glow rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-display font-bold text-lg text-white">Trajectory vs NIFTY 50</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] text-xs font-bold shadow-[0_0_8px_rgba(52,211,153,0.2)]">
+                        +8.64% Benchmark Alpha
+                      </span>
+</div>
+<p class="text-xs text-on-surface-variant font-medium">12-month consolidated compounded trajectory</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 text-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-[#7C3AED] shadow-[0_0_6px_#7C3AED]"></span>
+<span class="text-white font-medium">Portfolio</span>
+</div>
+<div class="flex items-center gap-1.5 text-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-outline"></span>
+<span class="text-on-surface-variant">NIFTY 50</span>
+</div>
+</div>
+</div>
+<!-- Vector Area Chart Canvas -->
+<div class="relative w-full h-56 my-2">
+<div class="absolute inset-0 bg-gradient-to-t from-[#7C3AED]/10 via-transparent to-transparent pointer-events-none"></div>
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 500 200">
+<defs>
+<lineargradient id="neonVaultGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#7C3AED" stop-opacity="0.45"></stop>
+<stop offset="60%" stop-color="#22D3EE" stop-opacity="0.1"></stop>
+<stop offset="100%" stop-color="#22D3EE" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal grid lines -->
+<line stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="500" y1="40" y2="40"></line>
+<line stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="500" y1="100" y2="100"></line>
+<line stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="500" y1="160" y2="160"></line>
+<!-- Benchmark NIFTY curve -->
+<path d="M 0 170 C 60 162, 120 155, 180 140 C 240 128, 300 132, 360 115 C 420 100, 460 95, 500 85" fill="none" opacity="0.5" stroke="#94A3B8" stroke-dasharray="5 5" stroke-width="2"></path>
+<!-- Portfolio Area Fill -->
+<path d="M 0 175 C 50 160, 110 148, 170 125 C 230 105, 280 115, 340 70 C 400 45, 450 35, 500 22 L 500 200 L 0 200 Z" fill="url(#neonVaultGradient)"></path>
+<!-- Portfolio Primary Line curve -->
+<path d="M 0 175 C 50 160, 110 148, 170 125 C 230 105, 280 115, 340 70 C 400 45, 450 35, 500 22" fill="none" stroke="url(#lineGradient)" stroke-linecap="round" stroke-width="3.5"></path>
+<defs>
+<lineargradient id="lineGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#7C3AED"></stop>
+<stop offset="50%" stop-color="#3B82F6"></stop>
+<stop offset="100%" stop-color="#22D3EE"></stop>
+</lineargradient>
+</defs>
+<!-- Key Data Points -->
+<circle class="animate-pulse" cx="500" cy="22" fill="#34D399" r="6" stroke="#0A0720" stroke-width="3"></circle>
+<circle cx="340" cy="70" fill="#3B82F6" r="4.5" stroke="#0A0720" stroke-width="2"></circle>
+<circle cx="170" cy="125" fill="#7C3AED" r="4.5" stroke="#0A0720" stroke-width="2"></circle>
+</svg>
+<!-- Tooltip Overlay on rightmost peak -->
+<div class="absolute top-1 right-2 p-2.5 rounded-2xl bg-[#120D2C]/90 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col items-end pointer-events-none">
+<span class="text-[10px] font-bold text-[#34D399] uppercase tracking-wider">ALL-TIME HIGH</span>
+<span class="font-display font-extrabold text-base text-white">₹48,62,450.80</span>
+<span class="text-[11px] text-[#34D399] font-medium">+41.59% Cumulative</span>
+</div>
+</div>
+<!-- Bottom Time Axis labels -->
+<div class="flex items-center justify-between text-on-surface-variant text-[11px] font-semibold pt-2 border-t border-white/[0.06]">
+<span>NOV 2023</span>
+<span>JAN 2024</span>
+<span>APR 2024</span>
+<span>JUL 2024</span>
+<span>OCT 2024</span>
+<span class="text-[#34D399] font-bold">CURRENT</span>
+</div>
+</div>
+</div>
+<!-- Holdings Filter & Interactive Table Module -->
+<div class="glass-card glass-card-glow rounded-3xl p-6 flex flex-col">
+<!-- Filter Header: Tabs + Search -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<!-- Broker Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+<button class="px-4 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white shadow-[0_0_15px_rgba(124,58,237,0.4)] whitespace-nowrap" type="button">All Brokers (38)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-all whitespace-nowrap" type="button">Zerodha (18)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-all whitespace-nowrap" type="button">Groww (10)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-all whitespace-nowrap" type="button">Angel One (6)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-all whitespace-nowrap" type="button">Upstox (4)</button>
+</div>
+<!-- Search & Asset Sub-Filter -->
+<div class="flex items-center gap-2.5">
+<div class="relative w-48 lg:w-56">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[16px] text-on-surface-variant pointer-events-none">search</span>
+<input class="w-full h-9 pl-8 pr-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-outline text-xs focus:outline-none focus:border-[#7C3AED]" placeholder="Filter holdings..." type="text"/>
+</div>
+<div class="flex items-center p-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+<button class="px-2.5 py-1 rounded-lg text-xs font-bold bg-white/[0.08] text-white" type="button">All</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white" type="button">EQ</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white" type="button">MF</button>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto -mx-6 px-6">
+<table class="w-full text-left">
+<thead>
+<tr class="text-on-surface-variant text-[11px] uppercase tracking-wider border-b border-white/[0.08]">
+<th class="py-3.5 pr-4 font-semibold">Stock / Asset</th>
+<th class="py-3.5 px-3 font-semibold">Broker(s)</th>
+<th class="py-3.5 px-3 font-semibold text-right">Qty &amp; Avg</th>
+<th class="py-3.5 px-3 font-semibold text-right">LTP (Day %)</th>
+<th class="py-3.5 px-3 font-semibold text-right">Overall P&amp;L</th>
+<th class="py-3.5 pl-4 font-semibold">AI Telemetry Insight</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-white/[0.04]">
+<!-- Row 1: Reliance -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#3B82F6] transition-colors">
+                            RIL
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#22D3EE] transition-colors">Reliance Industries</span>
+<span class="text-xs text-on-surface-variant">RELIANCE • NSE</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/10 text-white text-xs font-medium">Zerodha</span>
+<span class="px-2 py-0.5 rounded-lg bg-[#7C3AED]/15 border border-[#7C3AED]/30 text-[#C084FC] text-xs font-semibold">Angel One</span>
+</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">140 sh</div>
+<div class="font-mono text-xs text-on-surface-variant">Avg ₹2,420.00</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹2,985.40</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+1.45%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#34D399] font-bold text-glow-emerald">+₹79,156.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+23.36%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-[#FB7185]/10 border border-[#FB7185]/20 text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#FB7185] shrink-0">warning</span>
+<span class="truncate text-on-surface-variant font-medium">Overweight in Energy (14.2%). Held in 2 brokers.</span>
+</div>
+</td>
+</tr>
+<!-- Row 2: TCS -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#3B82F6] transition-colors">
+                            TCS
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#22D3EE] transition-colors">Tata Consultancy Services</span>
+<span class="text-xs text-on-surface-variant">TCS • NSE</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/10 text-white text-xs font-medium">Zerodha</span>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">65 sh</div>
+<div class="font-mono text-xs text-on-surface-variant">Avg ₹3,410.00</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹4,120.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+0.82%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#34D399] font-bold text-glow-emerald">+₹46,150.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+20.82%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#34D399] shrink-0">payments</span>
+<span class="truncate text-on-surface-variant font-medium">Interim Dividend ₹28/sh ex-date Oct 28.</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: HDFC Bank -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#3B82F6] transition-colors">
+                            HDFC
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#22D3EE] transition-colors">HDFC Bank Ltd</span>
+<span class="text-xs text-on-surface-variant">HDFCBANK • NSE</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded-lg bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-[#22D3EE] text-xs font-semibold">Groww</span>
+<span class="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/10 text-white text-xs font-medium">Zerodha</span>
+</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">210 sh</div>
+<div class="font-mono text-xs text-on-surface-variant">Avg ₹1,510.00</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹1,680.50</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+0.35%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#34D399] font-bold text-glow-emerald">+₹35,805.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+11.29%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-[#7C3AED]/15 border border-[#7C3AED]/25 text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#C084FC] shrink-0">merge</span>
+<span class="truncate text-on-surface-variant font-medium">Sector rebound candidate. Consider consolidating.</span>
+</div>
+</td>
+</tr>
+<!-- Row 4: L&T -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#3B82F6] transition-colors">
+                            LT
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#22D3EE] transition-colors">Larsen &amp; Toubro</span>
+<span class="text-xs text-on-surface-variant">LT • NSE</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-[#7C3AED]/15 border border-[#7C3AED]/30 text-[#C084FC] text-xs font-semibold">Angel One</span>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">50 sh</div>
+<div class="font-mono text-xs text-on-surface-variant">Avg ₹2,950.00</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹3,640.20</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+2.10%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#34D399] font-bold text-glow-emerald">+₹34,510.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+23.39%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#34D399] shrink-0">speed</span>
+<span class="truncate text-on-surface-variant font-medium">CapEx cycle beneficiary. RSI 62 (Healthy).</span>
+</div>
+</td>
+</tr>
+<!-- Row 5: Parag Parikh Flexi Cap Fund -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#FBBF24] transition-colors">
+                            PPFC
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#FBBF24] transition-colors">Parag Parikh Flexi Cap Fund</span>
+<span class="text-xs text-on-surface-variant">Direct Growth • Mutual Fund</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-[#22D3EE] text-xs font-semibold">Groww</span>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">10,542 un</div>
+<div class="font-mono text-xs text-on-surface-variant">NAV ₹58.15</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹78.42</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+0.64%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#34D399] font-bold text-glow-emerald">+₹2,14,500.00</div>
+<div class="font-mono text-xs text-[#34D399] font-semibold">+34.80%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#C084FC] shrink-0">event_repeat</span>
+<span class="truncate text-on-surface-variant font-medium">Top performing flexi-cap. SIP active (₹15,000/mo).</span>
+</div>
+</td>
+</tr>
+<!-- Row 6: Infosys (Loss State) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="py-4 pr-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center font-display font-extrabold text-white text-xs shrink-0 group-hover:border-[#FB7185] transition-colors">
+                            INFY
+                          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-display font-bold text-white group-hover:text-[#FB7185] transition-colors">Infosys Limited</span>
+<span class="text-xs text-on-surface-variant">INFY • NSE</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/10 text-on-surface-variant text-xs font-medium">Upstox</span>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">120 sh</div>
+<div class="font-mono text-xs text-on-surface-variant">Avg ₹1,580.00</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-white font-semibold">₹1,520.10</div>
+<div class="font-mono text-xs text-[#FB7185] font-semibold">-0.95%</div>
+</td>
+<td class="py-4 px-3 text-right">
+<div class="font-mono text-[#FB7185] font-bold text-glow-coral">-₹7,188.00</div>
+<div class="font-mono text-xs text-[#FB7185] font-semibold">-3.79%</div>
+</td>
+<td class="py-4 pl-4">
+<div class="flex items-center gap-2 p-2 rounded-xl bg-[#FB7185]/15 border border-[#FB7185]/30 text-white text-xs max-w-xs">
+<span class="material-symbols-outlined text-[16px] text-[#FB7185] shrink-0">content_cut</span>
+<span class="truncate text-[#FB7185] font-semibold">Tax-loss harvesting opportunity before Q3.</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDE PANEL (lg:col-span-4) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Card 1: Urgent Cross-Broker Duplicate Alert -->
+<div class="glass-card glass-card-glow rounded-3xl p-6 relative overflow-hidden shadow-2xl">
+<div class="flex items-start justify-between gap-2 mb-3">
+<div class="flex items-center gap-2">
+<span class="p-2 rounded-xl bg-[#FB7185]/20 border border-[#FB7185]/30 text-[#FB7185] shadow-[0_0_12px_rgba(251,113,133,0.3)]">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</span>
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#FB7185]">Optimization Notice</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-[#FB7185]/15 border border-[#FB7185]/30 text-[#FB7185] text-xs font-bold">
+                  2 Duplicates
+                </span>
+</div>
+<h3 class="font-display font-bold text-lg text-white mb-1.5">
+                Cross-Broker Overlap Detected
+              </h3>
+<p class="text-xs text-on-surface-variant mb-4 leading-relaxed font-medium">
+                Holding identical scrips across accounts causes duplicate DP charges and fragmented allocation telemetry.
+              </p>
+<!-- Scrip Overlap 1: Reliance -->
+<div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] mb-3">
+<div class="flex items-center justify-between mb-2">
+<span class="font-display font-bold text-sm text-white">Reliance Industries</span>
+<span class="font-mono text-xs text-white font-semibold">140 sh total</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs mb-2">
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#08051A]/60 border border-white/[0.05]">
+<span class="text-on-surface-variant">Zerodha</span>
+<span class="font-mono text-white text-[11px] font-bold">90 sh (₹2.68L)</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#08051A]/60 border border-white/[0.05]">
+<span class="text-on-surface-variant">Angel</span>
+<span class="font-mono text-white text-[11px] font-bold">50 sh (₹1.49L)</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-[#EC4899] font-medium">
+<span class="material-symbols-outlined text-[14px]">savings</span>
+<span>Est. ₹420 annual duplicate DP fee leak</span>
+</div>
+</div>
+<!-- Scrip Overlap 2: HDFC Bank -->
+<div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-display font-bold text-sm text-white">HDFC Bank Ltd</span>
+<span class="font-mono text-xs text-white font-semibold">210 sh total</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#08051A]/60 border border-white/[0.05]">
+<span class="text-on-surface-variant">Groww</span>
+<span class="font-mono text-white text-[11px] font-bold">130 sh (₹2.18L)</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#08051A]/60 border border-white/[0.05]">
+<span class="text-on-surface-variant">Zerodha</span>
+<span class="font-mono text-white text-[11px] font-bold">80 sh (₹1.34L)</span>
+</div>
+</div>
+</div>
+<!-- Action Link -->
+<a class="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-[#EC4899]/15 to-[#7C3AED]/20 border border-[#EC4899]/30 hover:border-[#EC4899]/50 text-white text-xs font-semibold transition-all group" href="#">
+<span class="text-[#EC4899] group-hover:text-white transition-colors">One-Click CDSL Easiest Transfer Guide</span>
+<span class="material-symbols-outlined text-[18px] text-[#EC4899] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Card 2: Interactive Trade Simulator Widget -->
+<div class="glass-card glass-card-glow rounded-3xl p-6 relative overflow-hidden shadow-2xl">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="p-2 rounded-xl bg-[#7C3AED]/20 border border-[#7C3AED]/30 text-[#C084FC] shadow-[0_0_12px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</span>
+<h3 class="font-display font-bold text-lg text-white">Trade Simulator</h3>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">
+                  Sandbox
+                </span>
+</div>
+<p class="text-xs text-on-surface-variant mb-4 font-medium">
+                Simulate a hypothetical trade before executing on your broker
+              </p>
+<!-- Simulator Form Elements -->
+<div class="flex flex-col gap-3 mb-4">
+<!-- Stock Selection -->
+<div class="flex flex-col gap-1">
+<label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Select Scrip</label>
+<div class="relative">
+<select class="w-full h-10 px-3.5 pr-8 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs appearance-none focus:outline-none focus:border-[#7C3AED]">
+<option class="bg-[#120D2C] text-white" selected="">Reliance Industries (RELIANCE)</option>
+<option class="bg-[#120D2C] text-white">Tata Consultancy Services (TCS)</option>
+<option class="bg-[#120D2C] text-white">HDFC Bank Ltd (HDFCBANK)</option>
+<option class="bg-[#120D2C] text-white">Larsen &amp; Toubro (LT)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[18px] text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Trade Action & Target Broker Grid -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Buy / Sell Toggle -->
+<div class="flex flex-col gap-1">
+<label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Action</label>
+<div class="flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+<button class="w-1/2 py-1.5 rounded-lg bg-[#34D399]/20 border border-[#34D399]/30 text-[#34D399] text-xs font-bold text-center" type="button">BUY</button>
+<button class="w-1/2 py-1.5 rounded-lg text-on-surface-variant text-xs font-semibold text-center hover:text-white" type="button">SELL</button>
+</div>
+</div>
+<!-- Target Broker Dropdown -->
+<div class="flex flex-col gap-1">
+<label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Destination Broker</label>
+<div class="relative">
+<select class="w-full h-10 px-3 pr-6 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs appearance-none focus:outline-none">
+<option class="bg-[#120D2C] text-white" selected="">Zerodha</option>
+<option class="bg-[#120D2C] text-white">Groww</option>
+<option class="bg-[#120D2C] text-white">Angel One</option>
+<option class="bg-[#120D2C] text-white">Upstox</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-[16px] text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Quantity Input -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Order Quantity</label>
+<span class="font-mono text-xs text-white font-semibold">₹74,635.00 Est.</span>
+</div>
+<div class="relative">
+<input class="w-full h-10 px-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-mono text-xs focus:outline-none focus:border-[#7C3AED]" type="number" value="25"/>
+<span class="absolute right-3.5 top-2.5 text-on-surface-variant text-xs">shares @ ₹2,985.40</span>
+</div>
+</div>
+</div>
+<!-- Projected Impact Preview Box -->
+<div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] mb-4 flex flex-col gap-2">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Projected Portfolio Impact</span>
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">New Weighted Avg Price</span>
+<span class="font-mono text-white font-semibold">₹2,506.20 <span class="text-[#34D399] text-[11px]">(-₹18.40)</span></span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Gross Margin Required</span>
+<span class="font-mono text-white font-semibold">₹74,635.00</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Brokerage + STT &amp; Taxes</span>
+<span class="font-mono text-on-surface-variant font-medium">₹42.80</span>
+</div>
+</div>
+<!-- Simulator Execution CTA Button in violet-to-blue gradient -->
+<button class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] hover:from-[#6D28D9] hover:to-[#2563EB] text-white font-display font-bold text-sm shadow-[0_0_24px_rgba(124,58,237,0.45)] hover:shadow-[0_0_32px_rgba(124,58,237,0.65)] transition-all flex items-center justify-center gap-2 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span>Simulate Trade in Zerodha</span>
+</button>
+</div>
+<!-- Card 3: Portfolio Health Quick Pill Card -->
+<div class="glass-card glass-card-glow rounded-3xl p-6 shadow-2xl">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-[#34D399]">verified_user</span>
+<h4 class="font-display font-bold text-sm text-white">Diversification Index</h4>
+</div>
+<span class="font-display font-extrabold text-xl text-[#34D399] text-glow-emerald">94/100</span>
+</div>
+<!-- Score Bar Track -->
+<div class="w-full h-2.5 rounded-full bg-white/[0.06] mb-4 overflow-hidden p-[1px]">
+<div class="h-full rounded-full bg-gradient-to-r from-[#7C3AED] via-[#3B82F6] to-[#34D399] transition-all duration-1000 shadow-[0_0_12px_rgba(52,211,153,0.5)]" style="width: 94%;"></div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium">
+<span class="material-symbols-outlined text-[15px] text-[#34D399]">check</span>
+                  Sector Caps Safe (&lt;20%)
+                </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium">
+<span class="material-symbols-outlined text-[15px] text-[#34D399]">check</span>
+                  Beta 0.91 (Low Volatility)
+                </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium">
+<span class="material-symbols-outlined text-[15px] text-[#34D399]">check</span>
+                  Debt/Gold Hedge (16.5%)
+                </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

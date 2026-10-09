@@ -61,7 +61,7 @@ export function FloatingCard({ children, delay = 0, duration = 4, yOffset = 15, 
         ease: 'easeInOut',
         delay: delay,
       }}
-      className={`relative rounded-2xl bg-slate-900/50 border border-slate-800 backdrop-blur-md shadow-2xl overflow-hidden ${className}`}
+      className={`relative rounded-2xl bg-card/50 border border-border backdrop-blur-md shadow-2xl overflow-hidden ${className}`}
     >
       {/* Subtle hover glow following cursor */}
       {!prefersReducedMotion && (

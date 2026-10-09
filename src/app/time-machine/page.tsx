@@ -97,8 +97,8 @@ export default function TimeMachine() {
     <div className="py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Time Machine</h1>
-        <p className="text-slate-400 mt-2">See what would have happened if you invested in the past.</p>
-        <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Educational, not investment advice</p>
+        <p className="text-muted-foreground mt-2">See what would have happened if you invested in the past.</p>
+        <p className="text-xs text-foreground0 mt-1 uppercase tracking-wider font-semibold">Educational, not investment advice</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -108,7 +108,7 @@ export default function TimeMachine() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-1">Select Asset</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1">Select Asset</label>
                 <select 
                   value={asset}
                   onChange={(e) => {
@@ -116,7 +116,7 @@ export default function TimeMachine() {
                     const newAsset = assets.find(a => a.id === e.target.value)!;
                     if (startYear < newAsset.listing) setStartYear(newAsset.listing);
                   }}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  className="w-full bg-card border border-border/80 rounded-lg px-4 py-2 focus:outline-none focus:border-primary"
                 >
                   {assets.map(a => (
                     <option key={a.id} value={a.id}>{a.name}</option>
@@ -125,38 +125,38 @@ export default function TimeMachine() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-1">Start Year</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1">Start Year</label>
                 <input 
                   type="number" 
                   value={startYear}
                   onChange={handleYearChange}
                   min={selectedAssetInfo.listing}
                   max={2026}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  className="w-full bg-card border border-border/80 rounded-lg px-4 py-2 focus:outline-none focus:border-primary"
                 />
-                <p className="text-xs text-slate-500 mt-1">Listed in {selectedAssetInfo.listing}</p>
+                <p className="text-xs text-foreground0 mt-1">Listed in {selectedAssetInfo.listing}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-1">Investment Amount (₹)</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1">Investment Amount (₹)</label>
                 <input 
                   type="number" 
                   value={amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
                   step="10000"
                   min="1000"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  className="w-full bg-card border border-border/80 rounded-lg px-4 py-2 focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
           </FloatingCard>
 
           <FloatingCard className="p-6">
-            <h3 className="text-sm font-medium text-slate-400 mb-1">Simulated Value Today</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-1">Simulated Value Today</h3>
             <div className="text-4xl font-bold text-white mb-2">
               <AnimatedNumber value={finalValue} prefix="₹" />
             </div>
-            <div className={`text-sm font-medium ${pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+            <div className={`text-sm font-medium ${pnl >= 0 ? 'text-[var(--chart-2)]' : 'text-destructive'}`}>
               {pnl >= 0 ? '+' : ''}<AnimatedNumber value={pnl} prefix="₹" /> ({(pnl/amount*100).toFixed(2)}%)
             </div>
           </FloatingCard>

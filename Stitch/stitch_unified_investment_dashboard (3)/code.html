@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "ink-dark": "#0A0720",
+            "ink-surface": "#0F0B2C",
+            "ink-card": "rgba(255, 255, 255, 0.038)",
+            "glow-violet": "#7C3AED",
+            "glow-blue": "#3B82F6",
+            "glow-pink": "#EC4899",
+            "glow-cyan": "#22D3EE",
+            "glow-emerald": "#34D399"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["'Plus Jakarta Sans'", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #0A0720;
+        color: #E2E8F0;
+        font-family: 'Inter', sans-serif;
+      }
+      ::-webkit-scrollbar { display: none; }
+    }
+    
+    .gradient-border-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.035);
+      border-radius: 1.5rem; /* 24px */
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .gradient-border-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1.5rem;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(34, 211, 238, 0.25), rgba(236, 72, 153, 0.15), rgba(255, 255, 255, 0.06));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+    }
+    .btn-vibrant-primary {
+      background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.25s ease;
+    }
+    .btn-vibrant-primary:hover {
+      filter: brightness(1.12);
+      box-shadow: 0 0 35px rgba(59, 130, 246, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#0A0720] text-slate-100 min-h-screen relative overflow-x-hidden antialiased selection:bg-purple-500/30 selection:text-white">
+<!-- Ambient Blurred Luminous Mesh Glow Background -->
+<div class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+<div class="absolute -left-32 -top-32 w-[650px] h-[650px] rounded-full bg-[#7C3AED]/25 blur-[150px]"></div>
+<div class="absolute right-0 top-10 w-[600px] h-[600px] rounded-full bg-[#3B82F6]/20 blur-[170px]"></div>
+<div class="absolute left-1/3 top-[45%] w-[700px] h-[700px] rounded-full bg-[#EC4899]/15 blur-[180px]"></div>
+<div class="absolute right-12 bottom-10 w-[600px] h-[600px] rounded-full bg-[#22D3EE]/15 blur-[160px]"></div>
+<div class="absolute left-10 bottom-0 w-[500px] h-[500px] rounded-full bg-[#7C3AED]/20 blur-[160px]"></div>
+<!-- Fine dot matrix grid texture overlay for depth -->
+<div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:28px_28px] opacity-40"></div>
+</div>
+<!-- Sidebar Chrome -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] bg-[#0A0720]/80 backdrop-blur-2xl border-r border-white/10 z-40 flex flex-col justify-between shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+<div class="flex flex-col">
+<div class="h-16 px-6 flex items-center gap-3 border-b border-white/[0.06]">
+<div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-400 p-[1px] shadow-[0_0_15px_rgba(124,58,237,0.5)]">
+<div class="w-full h-full bg-[#0A0720] rounded-[11px] flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-transparent bg-clip-text bg-gradient-to-tr from-purple-400 to-cyan-300">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-display font-extrabold text-[19px] tracking-tight text-white leading-none">VaultIQ</span>
+<span class="text-[10px] text-purple-300/70 font-semibold tracking-wider uppercase mt-0.5">Capital Mesh</span>
+</div>
+</div>
+<nav class="px-4 py-5 flex flex-col gap-1.5" data-active-classes="bg-gradient-to-r from-purple-600/30 to-blue-600/20 text-white border border-purple-500/40 font-semibold shadow-[0_0_24px_rgba(124,58,237,0.35)]">
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition-all group" data-path="dashboard" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-purple-400 transition-colors">grid_view</span>
+<span class="text-[14px] font-medium">Dashboard</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600/30 to-blue-600/20 text-white border border-purple-500/40 font-semibold shadow-[0_0_24px_rgba(124,58,237,0.35)] transition-all" data-path="linked-accounts" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-purple-300">account_balance</span>
+<span class="text-[14px]">Linked Accounts</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_10px_rgba(52,211,153,0.3)]">4 Connected</span>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition-all group" data-path="explore" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-purple-400 transition-colors">explore</span>
+<span class="text-[14px] font-medium">Explore</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition-all group" data-path="time-machine" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-cyan-400 transition-colors">history_toggle_off</span>
+<span class="text-[14px] font-medium">Time Machine</span>
+</div>
+</a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition-all group" data-path="settings" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] group-hover:text-purple-400 transition-colors">settings</span>
+<span class="text-[14px] font-medium">Settings</span>
+</div>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom Status Card -->
+<div class="p-4 flex flex-col gap-3">
+<div class="relative overflow-hidden p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-80"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#34D399] shadow-[0_0_8px_#34D399]"></span>
+</span>
+<span class="text-[12px] font-semibold text-white">All 4 brokers live</span>
+</div>
+<span class="text-[11px] font-mono font-bold text-cyan-400 bg-cyan-400/10 px-1.5 py-0.5 rounded border border-cyan-400/20">240ms</span>
+</div>
+<p class="text-[11px] text-slate-400 truncate">Zerodha · Groww · Angel · Upstox</p>
+</div>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition-colors" data-path="help-support" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span class="text-[13px] font-medium">Help &amp; Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="pl-[260px] relative z-10 min-h-screen flex flex-col">
+<!-- Top Bar with live tickers & glowing pulse indicator -->
+<header class="fixed top-0 left-[260px] right-0 h-16 bg-[#0A0720]/80 backdrop-blur-2xl border-b border-white/[0.08] z-30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+<div class="h-16 w-full px-8 flex items-center justify-between gap-4">
+<!-- Search Bar -->
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[19px] text-slate-400 pointer-events-none">search</span>
+<input class="w-full h-10 pl-11 pr-12 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder:text-slate-400 text-[13px] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all shadow-inner" placeholder="Search holdings, NSE/BSE tickers, mutual funds, or brokers..." type="text"/>
+<span class="absolute right-3 px-1.5 py-0.5 rounded-md bg-white/[0.07] border border-white/10 text-[10px] text-slate-300 font-mono pointer-events-none font-semibold">⌘K</span>
+</div>
+</div>
+<!-- Right Side Meta, Indices, Actions -->
+<div class="flex items-center gap-4 shrink-0">
+<div class="hidden xl:flex items-center gap-3 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] shadow-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 tracking-wider">NIFTY 50</span>
+<span class="font-mono text-[13px] text-emerald-400 font-bold">24,834.15</span>
+<span class="text-[11px] font-semibold text-emerald-400/90">(+0.62%)</span>
+</div>
+<span class="w-px h-3 bg-white/10"></span>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 tracking-wider">SENSEX</span>
+<span class="font-mono text-[13px] text-emerald-400 font-bold">81,392.40</span>
+<span class="text-[11px] font-semibold text-emerald-400/90">(+0.54%)</span>
+</div>
+</div>
+<div class="hidden 2xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[13px] text-purple-300">science</span>
+<span>Simulated demo data</span>
+</div>
+<!-- Pulsing Live Indicator beside Last Synced -->
+<div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] text-slate-300">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-80"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-[0_0_6px_#22D3EE]"></span>
+</span>
+<span class="material-symbols-outlined text-[15px] text-slate-400">schedule</span>
+<span>Last synced: <span class="text-white font-medium">Today, 3:24 PM IST</span></span>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl glass-btn text-white text-[13px] font-semibold shadow-sm active:scale-95" type="button">
+<span class="material-symbols-outlined text-[16px] text-cyan-400 animate-spin-reverse">sync</span>
+<span>Sync All</span>
+</button>
+<button class="relative p-2 rounded-xl glass-btn text-slate-300 hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_8px_#EC4899]"></span>
+</button>
+<div class="flex items-center gap-3 pl-1 border-l border-white/10">
+<div class="relative">
+<img alt="Profile" class="w-9 h-9 rounded-full object-cover ring-2 ring-purple-500/60 shadow-[0_0_12px_rgba(124,58,237,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfRI0UMPWihpwE79xsaDzNw4QSiP9aC44wLMN9vJF5Fs3paXnPbOE-BmWTN1vzZp7A_hmbQ7MDqn-iY0EM4Lrzl_F527MWYV9TPl4kH2TUTQBKkUY9TVU4hwM4Q0RPvFmheZaiPTt6CeM92cLV44MXFca9zLi14pH_jXqASxKDlHYnVLe46D3ybYxa85Oow6XzVcnS8OZY8Kpl2aYO7STe8AaH_nsbc6KXn33PhsGqlo36n8h1UIhk"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0A0720]"></span>
+</div>
+<div class="hidden sm:flex flex-col text-left">
+<span class="font-display text-[13px] font-bold text-white leading-tight">Arjun Sharma</span>
+<span class="text-[10px] text-purple-300 font-semibold uppercase tracking-wider leading-tight">Pro Investor</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Container -->
+<main class="w-full pt-20 flex-1 max-w-[1440px] mx-auto px-8 pb-16">
+<div class="flex flex-col w-full">
+<!-- Header Section -->
+<div class="relative z-10 pt-4 pb-8 flex flex-col xl:flex-row xl:items-end justify-between gap-6">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2.5 flex-wrap mb-1">
+<span class="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_12px_rgba(124,58,237,0.25)]">
+<span class="material-symbols-outlined text-[14px] text-purple-400">verified_user</span>
+                SEBI &amp; RBI AA COMPLIANT
+              </span>
+<span class="px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 text-[11px] font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">science</span>
+                Simulated demo data
+              </span>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[12px]">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-80"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#34D399] shadow-[0_0_6px_#34D399]"></span>
+</span>
+<span class="text-[#34D399] font-medium">All 4 active feeds healthy</span>
+<span class="text-slate-500">·</span>
+<span class="text-slate-400 text-[11px]">Last sync 4 mins ago</span>
+</div>
+</div>
+<h1 class="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.1)]">
+              Linked Accounts &amp; Broking Integrations
+            </h1>
+<p class="text-[14px] text-slate-300 leading-relaxed max-w-2xl">
+              Manage multi-broker API credentials, automated Account Aggregator (AA) syncs, and manual NSDL/CDSL Consolidated Account Statements (CAS) across Indian capital markets.
+            </p>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 flex-wrap shrink-0">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-btn text-white font-medium text-[13px] shadow-sm active:scale-95 group" id="refreshFeedsBtn">
+<span class="material-symbols-outlined text-[18px] text-cyan-400 group-hover:rotate-180 transition-transform duration-500">refresh</span>
+<span>Refresh All Feeds</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-btn text-white font-medium text-[13px] shadow-sm active:scale-95" id="openCasModalBtn">
+<span class="material-symbols-outlined text-[18px] text-purple-300">upload_file</span>
+<span>Upload CAS Statement</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-2xl btn-vibrant-primary text-white font-semibold text-[13px] active:scale-95 transition-all" id="connectBrokerBtn">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Connect New Broker</span>
+</button>
+</div>
+</div>
+<!-- Overview Row: Metric Stat Tiles with Sparklines -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+<!-- Tile 1: Connected Entities -->
+<div class="gradient-border-card p-5 flex flex-col justify-between group hover:shadow-[0_0_30px_rgba(124,58,237,0.25)] transition-all">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">CONNECTED BROKERS</span>
+<div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between gap-2 mb-2">
+<div class="flex items-baseline gap-1.5">
+<span class="font-display text-3xl font-extrabold text-white">4</span>
+<span class="text-[14px] text-slate-400 font-medium">of 5 Active</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                  100% Up
+                </span>
+</div>
+<p class="text-[12px] text-slate-400 truncate">
+                Zerodha · Groww · Upstox · Angel One
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+<!-- Mini vibrant sparkline -->
+<div class="flex items-center gap-2">
+<svg class="w-20 h-6 overflow-visible" fill="none" viewbox="0 0 80 24">
+<path d="M0,18 Q15,12 28,15 T52,7 T80,4" fill="none" filter="drop-shadow(0 0 4px #34D399)" stroke="#34D399" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="80" cy="4" fill="#34D399" r="2.5"></circle>
+</svg>
+<span class="text-[11px] text-slate-400">Latency</span>
+</div>
+<span class="font-mono text-[13px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">168ms</span>
+</div>
+</div>
+<!-- Tile 2: Total Tracked Portfolio Value -->
+<div class="gradient-border-card p-5 flex flex-col justify-between group hover:shadow-[0_0_30px_rgba(59,130,246,0.25)] transition-all">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">AGGREGATED WEALTH</span>
+<div class="w-8 h-8 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-300 shadow-[0_0_12px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex items-baseline gap-1 mb-1">
+<span class="font-display text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-purple-200">₹48,62,450</span>
+<span class="text-[13px] text-slate-400 font-mono">.00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>
+                  +₹32,480 (Today)
+                </span>
+<span class="text-[11px] text-slate-400">Across 4 Demats</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+<!-- Mini vibrant sparkline -->
+<div class="flex items-center gap-2">
+<svg class="w-20 h-6 overflow-visible" fill="none" viewbox="0 0 80 24">
+<path d="M0,20 Q18,22 32,13 T55,9 T80,3" fill="none" filter="drop-shadow(0 0 4px #22D3EE)" stroke="#22D3EE" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="80" cy="3" fill="#22D3EE" r="2.5"></circle>
+</svg>
+<span class="text-[11px] text-slate-400">Cash Ledger</span>
+</div>
+<span class="font-mono text-[12px] text-white font-bold">₹1,44,210.40</span>
+</div>
+</div>
+<!-- Tile 3: Account Aggregator Status -->
+<div class="gradient-border-card p-5 flex flex-col justify-between group hover:shadow-[0_0_30px_rgba(236,72,153,0.25)] transition-all">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">ACCOUNT AGGREGATOR</span>
+<div class="w-8 h-8 rounded-xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-300 shadow-[0_0_12px_rgba(236,72,153,0.3)]">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="font-display text-lg font-bold text-white">RBI-Regulated AA</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[10px] font-bold">Active</span>
+</div>
+<p class="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                Sahamati Financial Information User (FIU) consent valid till Oct 24, 2025.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+<!-- Mini pulse wave sparkline -->
+<div class="flex items-center gap-2">
+<svg class="w-20 h-6 overflow-visible" fill="none" viewbox="0 0 80 24">
+<path d="M0,12 L24,12 L30,4 L38,20 L44,8 L50,14 L80,14" fill="none" filter="drop-shadow(0 0 4px #EC4899)" stroke="#EC4899" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[11px] text-slate-400">Token</span>
+</div>
+<span class="font-mono text-[11px] text-purple-300 font-bold bg-purple-500/15 px-2 py-0.5 rounded border border-purple-500/30">AES-256 GCM</span>
+</div>
+</div>
+<!-- Tile 4: Daily Auto-Sync Schedule -->
+<div class="gradient-border-card p-5 flex flex-col justify-between group hover:shadow-[0_0_30px_rgba(34,211,238,0.25)] transition-all">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">SYNC CADENCE</span>
+<div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.3)]">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</div>
+</div>
+<div class="flex items-baseline gap-1.5 mb-1.5">
+<span class="font-display text-2xl font-bold text-white">3:35 PM IST</span>
+<span class="text-[12px] text-slate-400 font-medium">(Mkt Close)</span>
+</div>
+<p class="text-[11px] text-slate-400 leading-relaxed">
+                Automated NAV reconciliation &amp; EOD settlement Bhavcopy fetch.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+<!-- Cadence waveform sparkline -->
+<div class="flex items-center gap-2">
+<svg class="w-20 h-6 overflow-visible" fill="none" viewbox="0 0 80 24">
+<path d="M0,15 C20,15 20,6 40,6 C60,6 60,15 80,15" fill="none" filter="drop-shadow(0 0 4px #3B82F6)" stroke="#3B82F6" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<span class="text-[11px] text-slate-400">Rate</span>
+</div>
+<span class="text-[12px] text-white font-medium">Real-time + Daily EOD</span>
+</div>
+</div>
+</div>
+<!-- Section Title & Filter Tabs -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+<div class="flex items-center gap-3">
+<h2 class="font-display font-bold text-xl text-white">Integrated Institutions &amp; Demats</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-slate-300 text-[11px] font-bold">
+              5 Configured
+            </span>
+</div>
+<div class="flex items-center p-1 rounded-2xl glass-pill shadow-inner">
+<button class="px-4 py-1.5 rounded-xl bg-gradient-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/30 text-white text-[12px] font-semibold shadow-[0_0_12px_rgba(124,58,237,0.3)] transition-all">All (5)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white text-[12px] font-medium transition-all">Broker APIs (3)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white text-[12px] font-medium transition-all">Account Aggregator (1)</button>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white text-[12px] font-medium transition-all">Manual CAS (1)</button>
+</div>
+</div>
+<!-- Elevated Broker & Depository Cards (Grid of 6) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+<!-- CARD 1: GROWW -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(52,211,153,0.2)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<!-- Glowing Groww Icon -->
+<div class="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(52,211,153,0.3)] group-hover:scale-105 transition-transform">
+<svg class="w-7 h-7 text-emerald-400 drop-shadow-[0_0_6px_#34D399]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 3"></path>
+<path d="M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" fill="currentColor" fill-opacity="0.3"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">Groww</h3>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[10px] font-bold flex items-center gap-1 shadow-[0_0_8px_rgba(52,211,153,0.25)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                        Connected &amp; Syncing
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Mutual Funds &amp; Direct Stocks</p>
+</div>
+</div>
+<button class="p-1 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors" title="Options">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Client ID chip -->
+<div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-slate-300 text-[12px] flex items-center justify-between mb-4">
+<span class="font-mono text-white font-medium">Client ID: GRW-88291</span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-[14px]">format_image_left</span> AA Consent Active
+                </span>
+</div>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">HOLDINGS VALUE</span>
+<span class="font-display text-xl font-bold text-white font-mono">₹12.18 Lakhs</span>
+<span class="text-[11px] text-emerald-400 font-medium font-mono mt-0.5">+14.2% overall XIRR</span>
+</div>
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">PORTFOLIO SPREAD</span>
+<span class="font-display text-[15px] font-bold text-white mt-1">14 MFs · 8 Equities</span>
+<span class="text-[11px] text-slate-400 mt-0.5">Synced 12 mins ago</span>
+</div>
+</div>
+<!-- Features Badges -->
+<div class="flex items-center gap-2 flex-wrap mb-6">
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-purple-400">autorenew</span>
+                  Real-time SIP Tracking
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-emerald-400">task_alt</span>
+                  Auto Mandate Sync
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-cyan-400">insights</span>
+                  XIRR Feed Active
+                </span>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-purple-400">lock_reset</span>
+                Re-authenticate
+              </button>
+<button class="py-2 px-3.5 rounded-xl glass-btn text-slate-300 hover:text-pink-400 hover:border-pink-500/40 text-[12px] font-medium flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">link_off</span>
+                Disconnect
+              </button>
+</div>
+</div>
+<!-- CARD 2: ZERODHA KITE -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(255,87,34,0.25)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<!-- Glowing Zerodha Icon -->
+<div class="relative w-12 h-12 rounded-2xl bg-[#ff5722]/15 border border-[#ff5722]/40 flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(255,87,34,0.3)] group-hover:scale-105 transition-transform">
+<svg class="w-7 h-7 text-[#ff7043] drop-shadow-[0_0_6px_#ff7043]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2L2 12l10 10 10-12L12 2zm0 3.83L18.17 12 12 18.17 5.83 12 12 5.83z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">Zerodha Kite</h3>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[10px] font-bold flex items-center gap-1 shadow-[0_0_8px_rgba(52,211,153,0.25)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>
+                        Connected
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Equities, F&amp;O &amp; Direct Debt</p>
+</div>
+</div>
+<button class="p-1 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors" title="Options">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Client ID chip -->
+<div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-slate-300 text-[12px] flex items-center justify-between mb-4">
+<span class="font-mono text-white font-medium">Client ID: ZR-440912</span>
+<span class="text-orange-400 font-semibold flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-[14px]">key</span> Kite Connect API Active
+                </span>
+</div>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">HOLDINGS VALUE</span>
+<span class="font-display text-xl font-bold text-white font-mono">₹28.40 Lakhs</span>
+<span class="text-[11px] text-emerald-400 font-medium font-mono mt-0.5">+21.8% All-Time P&amp;L</span>
+</div>
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">OPEN CONTRACTS</span>
+<span class="font-display text-[15px] font-bold text-white mt-1">18 Stocks · 2 F&amp;O</span>
+<span class="text-[11px] text-cyan-400 font-mono mt-0.5 font-medium">Latency: 140ms (Fast)</span>
+</div>
+</div>
+<!-- Features Badges -->
+<div class="flex items-center gap-2 flex-wrap mb-6">
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-emerald-400">stream</span>
+                  Live NSE/BSE Streaming
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-purple-400">target</span>
+                  GTT Orders Tracked
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-cyan-400">api</span>
+                  P&amp;L API Linked
+                </span>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 py-2 px-3.5 rounded-xl btn-vibrant-primary text-white font-semibold text-[12px] flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">token</span>
+                Renew API Token
+              </button>
+<button class="py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+                Permissions
+              </button>
+</div>
+</div>
+<!-- CARD 3: UPSTOX -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(168,85,247,0.25)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<!-- Glowing Upstox Icon -->
+<div class="relative w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/40 flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(168,85,247,0.3)] group-hover:scale-105 transition-transform">
+<svg class="w-7 h-7 text-purple-400 drop-shadow-[0_0_6px_#a855f7]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M18 15l-6-6-6 6"></path>
+<path d="M12 9v12"></path>
+<circle cx="12" cy="4" fill="currentColor" r="1.5"></circle>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">Upstox</h3>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[10px] font-bold flex items-center gap-1 shadow-[0_0_8px_rgba(52,211,153,0.25)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>
+                        Connected
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Equities &amp; Global IPOs</p>
+</div>
+</div>
+<button class="p-1 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors" title="Options">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Client ID chip -->
+<div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-slate-300 text-[12px] flex items-center justify-between mb-4">
+<span class="font-mono text-white font-medium">UCC: UP-901844</span>
+<span class="text-purple-300 font-semibold flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-[14px]">bolt</span> Upstox Pro v2
+                </span>
+</div>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">HOLDINGS VALUE</span>
+<span class="font-display text-xl font-bold text-white font-mono">₹2.24 Lakhs</span>
+<span class="text-[11px] text-emerald-400 font-medium font-mono mt-0.5">+4.6% Returns</span>
+</div>
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">AVAILABLE MARGIN</span>
+<span class="font-display text-[15px] font-bold text-white font-mono mt-1">₹14,200.00</span>
+<span class="text-[11px] text-slate-400 mt-0.5">Synced 2 hrs ago</span>
+</div>
+</div>
+<!-- Features Badges -->
+<div class="flex items-center gap-2 flex-wrap mb-6">
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-purple-400">calendar_today</span>
+                  Daily EOD Sync
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-emerald-400">payments</span>
+                  Ledger Balance: ₹14,200
+                </span>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-cyan-400">sync</span>
+                Sync Now
+              </button>
+<button class="py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+                Edit API Key
+              </button>
+</div>
+</div>
+<!-- CARD 4: ANGEL ONE -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(56,189,248,0.25)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<!-- Glowing Angel One Icon -->
+<div class="relative w-12 h-12 rounded-2xl bg-sky-500/15 border border-sky-500/40 flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(56,189,248,0.3)] group-hover:scale-105 transition-transform">
+<svg class="w-7 h-7 text-sky-400 drop-shadow-[0_0_6px_#38bdf8]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2L1 21h22L12 2zm0 5.1L18.8 19H5.2L12 7.1z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">Angel One</h3>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[10px] font-bold flex items-center gap-1 shadow-[0_0_8px_rgba(52,211,153,0.25)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>
+                        Connected
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Equities &amp; Sovereign Gold Bonds</p>
+</div>
+</div>
+<button class="p-1 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors" title="Options">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Client ID chip -->
+<div class="px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-slate-300 text-[12px] flex items-center justify-between mb-4">
+<span class="font-mono text-white font-medium">Client ID: ANG-310492</span>
+<span class="text-sky-400 font-semibold flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-[14px]">memory</span> SmartAPI Active
+                </span>
+</div>
+<!-- Metric Grid -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">HOLDINGS VALUE</span>
+<span class="font-display text-xl font-bold text-white font-mono">₹5.80 Lakhs</span>
+<span class="text-[11px] text-emerald-400 font-medium font-mono mt-0.5">+9.1% Total Gain</span>
+</div>
+<div class="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.05] flex flex-col">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">ASSET ALLOCATION</span>
+<span class="font-display text-[15px] font-bold text-white mt-1">SGBs &amp; 6 Equities</span>
+<span class="text-[11px] text-slate-400 mt-0.5">Synced 45 mins ago</span>
+</div>
+</div>
+<!-- Features Badges -->
+<div class="flex items-center gap-2 flex-wrap mb-6">
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-amber-400">savings</span>
+                  SGB Coupon Tracking (2.5% p.a.)
+                </span>
+<span class="px-2.5 py-1 rounded-xl glass-pill text-slate-200 text-[11px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-purple-400">receipt_long</span>
+                  Tax Lot FIFO Mapping
+                </span>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-cyan-400">sync</span>
+                Sync Now
+              </button>
+<button class="py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+                Manage
+              </button>
+</div>
+</div>
+<!-- CARD 5: NSDL / CDSL (Manual Statement Upload) -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(34,211,238,0.25)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/40 flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(34,211,238,0.3)] group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px] text-cyan-300 drop-shadow-[0_0_6px_#22D3EE]">description</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">NSDL / CDSL CAS</h3>
+<span class="px-2 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-[10px] font-bold">
+                        Manual CAS Upload
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Official Indian Central Depository</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-cyan-400 text-[20px]">verified</span>
+</div>
+<p class="text-[12px] text-slate-300 mb-4 leading-relaxed">
+                Upload password-protected e-CAS PDF statements from CDSL or NSDL for historical holdings verification and unlisted/off-market shares.
+              </p>
+<!-- Dropzone interactive area with subtle glow -->
+<div class="p-4 rounded-2xl bg-white/[0.02] border border-dashed border-cyan-500/30 text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer hover:bg-white/[0.05] hover:border-cyan-400 transition-all mb-4 group/drop" id="dropzoneBox">
+<div class="w-10 h-10 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover/drop:scale-110 shadow-[0_0_12px_rgba(34,211,238,0.3)] transition-transform">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+</div>
+<span class="text-[13px] text-white font-semibold">Click or drop CAS PDF here</span>
+<span class="text-[11px] text-slate-400">Supports e-CAS PDF (PAN-password encrypted)</span>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 py-2 px-3.5 rounded-xl btn-vibrant-primary text-white font-semibold text-[12px] flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">upload</span>
+                Upload Statement
+              </button>
+<button class="py-2 px-3.5 rounded-xl glass-btn text-white text-[12px] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">help</span>
+                Format Help
+              </button>
+</div>
+</div>
+<!-- CARD 6: ICICI DIRECT / HDFC SKY / DHAN (Available to Connect) -->
+<div class="gradient-border-card p-6 flex flex-col justify-between group hover:shadow-[0_0_35px_rgba(124,58,237,0.2)] transition-all duration-300">
+<div>
+<div class="flex items-start justify-between gap-3 mb-5">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center p-2.5 shadow-inner">
+<span class="material-symbols-outlined text-[26px] text-slate-300">add_business</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-display font-bold text-lg text-white">ICICI · HDFC · Dhan</h3>
+<span class="px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-slate-300 text-[10px] font-semibold">
+                        Available
+                      </span>
+</div>
+<p class="text-[12px] text-slate-400">Direct 1-Click AA Connection</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">add_circle_outline</span>
+</div>
+<p class="text-[12px] text-slate-300 mb-4 leading-relaxed">
+                Link your 3-in-1 institutional bank Demat accounts to seamlessly monitor Corporate Bonds, Sovereign Gold Bonds, and primary market IPO allocations.
+              </p>
+<!-- Broker Avatars List -->
+<div class="flex items-center gap-2 p-2.5 rounded-2xl bg-white/[0.025] border border-white/[0.05] mb-6">
+<div class="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center font-bold text-[11px] text-white">ICICI</div>
+<div class="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center font-bold text-[11px] text-white">HDFC</div>
+<div class="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center font-bold text-[11px] text-white">DHAN</div>
+<div class="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center font-bold text-[11px] text-white">KOTAK</div>
+<span class="text-[11px] text-slate-400 font-medium ml-auto pr-1">+12 more</span>
+</div>
+</div>
+<!-- Footer Button -->
+<div class="pt-2">
+<button class="w-full py-2.5 px-4 rounded-xl glass-btn text-purple-300 hover:text-white hover:border-purple-500 font-semibold text-[13px] flex items-center justify-center gap-2 active:scale-98 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                + Connect Account
+              </button>
+</div>
+</div>
+</div>
+<!-- Security & Account Aggregator Ecosystem Insight Banner -->
+<div class="gradient-border-card p-7 mb-12 relative overflow-hidden">
+<div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-purple-600/20 blur-[100px] pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+<div class="flex items-start gap-4 max-w-2xl">
+<div class="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(124,58,237,0.35)]">
+<span class="material-symbols-outlined text-[28px]">lock</span>
+</div>
+<div>
+<h4 class="font-display font-bold text-lg text-white mb-1">
+                  Institutional Privacy &amp; Consent Management
+                </h4>
+<p class="text-[13px] text-slate-300 leading-relaxed">
+                  VaultIQ utilizes Sahamati and RBI-regulated Account Aggregators (AAnam) with zero access to your brokerage execution pins or trading passwords. All financial data pulls are read-only, signed with hardware tokens, and client-side decrypted.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-5 flex-wrap">
+<div class="flex flex-col text-left">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CONSENT IDENTIFIER</span>
+<span class="font-mono text-[13px] text-white font-bold">SAH-AA-99824-2025</span>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="flex flex-col text-left">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">REVOCATION SLA</span>
+<span class="text-[13px] text-emerald-400 font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  Instant (Zero Retain)
+                </span>
+</div>
+<button class="px-4 py-2 rounded-xl glass-btn text-white text-[13px] font-semibold transition-all">
+                Manage Consent
+              </button>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Real-Time Sync Audit Trail Table -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<h3 class="font-display font-bold text-xl text-white">Real-Time Sync Audit Trail</h3>
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-80"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#34D399] shadow-[0_0_8px_#34D399]"></span>
+</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-slate-400">Auto-refreshed every 60s</span>
+<button class="p-1.5 rounded-xl glass-btn text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Audit Log Table with Luminous Borders & Soft Glow Badges -->
+<div class="gradient-border-card overflow-hidden shadow-2xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-white/[0.04] border-b border-white/[0.08]">
+<th class="px-6 py-3.5 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Broker / Entity</th>
+<th class="px-6 py-3.5 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Sync Pipeline</th>
+<th class="px-6 py-3.5 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Holdings Reconciled</th>
+<th class="px-6 py-3.5 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Timestamp (IST)</th>
+<th class="px-6 py-3.5 text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider">Duration</th>
+<th class="px-6 py-3.5 text-right text-[11px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/[0.05]">
+<!-- Row 1: Groww -->
+<tr class="hover:bg-white/[0.03] transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.25)]">
+<span class="material-symbols-outlined text-[17px]">show_chart</span>
+</div>
+<div>
+<span class="font-display font-bold text-[14px] text-white block">Groww India</span>
+<span class="font-mono text-[11px] text-slate-400">GRW-88291</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-slate-300 text-[11px] font-medium">
+                        AA Automated Pull
+                      </span>
+</td>
+<td class="px-6 py-4 text-[13px] text-slate-200">
+                      +3 new SIP installments reconciled (Parag Parikh Flexi Cap)
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-slate-400">
+                      Today, 03:20:14 PM
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-cyan-400 font-semibold">
+                      184ms
+                    </td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Success
+                      </span>
+</td>
+</tr>
+<!-- Row 2: Zerodha Kite -->
+<tr class="hover:bg-white/[0.03] transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-[#ff5722]/15 border border-[#ff5722]/30 flex items-center justify-center text-[#ff7043] shadow-[0_0_10px_rgba(255,87,34,0.25)]">
+<span class="material-symbols-outlined text-[17px]">bolt</span>
+</div>
+<div>
+<span class="font-display font-bold text-[14px] text-white block">Zerodha Kite</span>
+<span class="font-mono text-[11px] text-slate-400">ZR-440912</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-slate-300 text-[11px] font-medium">
+                        Kite WebSocket Feed
+                      </span>
+</td>
+<td class="px-6 py-4 text-[13px] text-slate-200">
+                      18 Stock positions marked to market; Day P&amp;L adjusted (+₹18,400)
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-slate-400">
+                      Today, 03:19:58 PM
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-cyan-400 font-semibold">
+                      112ms
+                    </td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Success
+                      </span>
+</td>
+</tr>
+<!-- Row 3: Angel One -->
+<tr class="hover:bg-white/[0.03] transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.25)]">
+<span class="material-symbols-outlined text-[17px]">account_balance</span>
+</div>
+<div>
+<span class="font-display font-bold text-[14px] text-white block">Angel One</span>
+<span class="font-mono text-[11px] text-slate-400">ANG-310492</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-slate-300 text-[11px] font-medium">
+                        SmartAPI Webhook
+                      </span>
+</td>
+<td class="px-6 py-4 text-[13px] text-slate-200">
+                      SGB semi-annual coupon credit updated (₹1,250.00 credited)
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-slate-400">
+                      Today, 02:40:22 PM
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-cyan-400 font-semibold">
+                      230ms
+                    </td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Success
+                      </span>
+</td>
+</tr>
+<!-- Row 4: Upstox -->
+<tr class="hover:bg-white/[0.03] transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.25)]">
+<span class="material-symbols-outlined text-[17px]">trending_flat</span>
+</div>
+<div>
+<span class="font-display font-bold text-[14px] text-white block">Upstox</span>
+<span class="font-mono text-[11px] text-slate-400">UP-901844</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-slate-300 text-[11px] font-medium">
+                        Daily Batch Pull
+                      </span>
+</td>
+<td class="px-6 py-4 text-[13px] text-slate-200">
+                      EOD settlement &amp; Tata Motors bonus fractional allotment mapped
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-slate-400">
+                      Today, 01:15:00 PM
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-cyan-400 font-semibold">
+                      410ms
+                    </td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Success
+                      </span>
+</td>
+</tr>
+<!-- Row 5: NSDL e-CAS -->
+<tr class="hover:bg-white/[0.03] transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+<span class="material-symbols-outlined text-[17px]">picture_as_pdf</span>
+</div>
+<div>
+<span class="font-display font-bold text-[14px] text-white block">NSDL e-CAS</span>
+<span class="font-mono text-[11px] text-slate-400">CAS-DEC24-PAN</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-slate-300 text-[11px] font-medium">
+                        Parser Engine v3
+                      </span>
+</td>
+<td class="px-6 py-4 text-[13px] text-slate-200">
+                      Consolidated Statement parsed (4 Folios verified across Zerodha &amp; Groww)
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-slate-400">
+                      Yesterday, 07:11:45 PM
+                    </td>
+<td class="px-6 py-4 font-mono text-[12px] text-cyan-400 font-semibold">
+                      980ms
+                    </td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[#34D399] text-[11px] font-bold shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Success
+                      </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Interactive Connect Modal Backdrop -->
+<div class="fixed inset-0 z-50 bg-[#0A0720]/80 backdrop-blur-xl hidden flex items-center justify-center p-4" id="connectModal">
+<div class="gradient-border-card w-full max-w-lg p-7 shadow-[0_0_50px_rgba(124,58,237,0.35)] relative">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-display font-bold text-xl text-white">Connect Indian Brokerage</h3>
+<button class="p-1 rounded-xl glass-btn text-slate-400 hover:text-white transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="text-[13px] text-slate-300 mb-6">
+        Select your broker to begin zero-credential Account Aggregator consent or enter your API key directly.
+      </p>
+<div class="grid grid-cols-2 gap-3 mb-6">
+<button class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-purple-500 hover:bg-purple-500/10 flex flex-col items-center gap-1.5 text-center transition-all group">
+<span class="material-symbols-outlined text-[28px] text-purple-400 group-hover:scale-110 transition-transform">account_balance</span>
+<span class="font-display font-bold text-[14px] text-white">ICICI Direct</span>
+<span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/20">1-Click AA</span>
+</button>
+<button class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-sky-500 hover:bg-sky-500/10 flex flex-col items-center gap-1.5 text-center transition-all group">
+<span class="material-symbols-outlined text-[28px] text-sky-400 group-hover:scale-110 transition-transform">trending_up</span>
+<span class="font-display font-bold text-[14px] text-white">Dhan</span>
+<span class="text-[10px] font-bold text-sky-400 bg-sky-500/15 px-2 py-0.5 rounded-full border border-sky-500/20">Smart API</span>
+</button>
+<button class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-500 hover:bg-blue-500/10 flex flex-col items-center gap-1.5 text-center transition-all group">
+<span class="material-symbols-outlined text-[28px] text-blue-400 group-hover:scale-110 transition-transform">account_balance_wallet</span>
+<span class="font-display font-bold text-[14px] text-white">HDFC Sky</span>
+<span class="text-[10px] font-bold text-blue-400 bg-blue-500/15 px-2 py-0.5 rounded-full border border-blue-500/20">Instant OTP</span>
+</button>
+<button class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-pink-500 hover:bg-pink-500/10 flex flex-col items-center gap-1.5 text-center transition-all group">
+<span class="material-symbols-outlined text-[28px] text-pink-400 group-hover:scale-110 transition-transform">diamond</span>
+<span class="font-display font-bold text-[14px] text-white">Kotak Neo</span>
+<span class="text-[10px] font-bold text-slate-300 bg-white/10 px-2 py-0.5 rounded-full">API Gateway</span>
+</button>
+</div>
+<div class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07] mb-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[17px] text-purple-400">key</span>
+<span class="text-[13px] text-white font-semibold">Or add custom broker via API credentials</span>
+</div>
+<input class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-[13px] placeholder:text-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Enter API Key / UCC code" type="text"/>
+</div>
+<div class="flex items-center justify-end gap-3">
+<button class="px-4 py-2.5 rounded-xl glass-btn text-slate-300 hover:text-white text-[13px] font-medium" id="cancelModalBtn">
+          Cancel
+        </button>
+<button class="px-5 py-2.5 rounded-xl btn-vibrant-primary text-white font-semibold text-[13px]" id="confirmConnectBtn">
+          Proceed with Sahamati AA
+        </button>
+</div>
+</div>
+</div>
+<!-- Toast Notification element for Refresh button feedback -->
+<div class="fixed bottom-6 right-6 z-50 gradient-border-card text-white px-5 py-3 shadow-[0_0_30px_rgba(52,211,153,0.3)] flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="syncToast">
+<span class="material-symbols-outlined text-[22px] text-[#34D399]">check_circle</span>
+<span class="text-[13px] font-semibold">Feeds refreshed. 4 active brokers synced successfully.</span>
+</div>
+<script>
+    // Micro-interactions for buttons and modal
+    const refreshBtn = document.getElementById('refreshFeedsBtn');
+    const toast = document.getElementById('syncToast');
+    const connectBtn = document.getElementById('connectBrokerBtn');
+    const modal = document.getElementById('connectModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const confirmConnectBtn = document.getElementById('confirmConnectBtn');
+    const dropzoneBox = document.getElementById('dropzoneBox');
+    const openCasBtn = document.getElementById('openCasModalBtn');
+
+    if (refreshBtn && toast) {
+      refreshBtn.addEventListener('click', () => {
+        refreshBtn.classList.add('opacity-70');
+        setTimeout(() => {
+          refreshBtn.classList.remove('opacity-70');
+          toast.classList.remove('translate-y-24', 'opacity-0');
+          setTimeout(() => {
+            toast.classList.add('translate-y-24', 'opacity-0');
+          }, 3200);
+        }, 600);
+      });
+    }
+
+    const openModal = () => modal.classList.remove('hidden');
+    const closeModal = () => modal.classList.add('hidden');
+
+    if (connectBtn) connectBtn.addEventListener('click', openModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+    if (confirmConnectBtn) confirmConnectBtn.addEventListener('click', closeModal);
+
+    if (dropzoneBox) {
+      dropzoneBox.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf';
+        input.onchange = e => {
+          if (e.target.files.length > 0) {
+            alert(`Selected statement: ${e.target.files[0].name}. Decrypting with investor PAN on device...`);
+          }
+        };
+        input.click();
+      });
+    }
+
+    if (openCasBtn && dropzoneBox) {
+      openCasBtn.addEventListener('click', () => {
+        dropzoneBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        dropzoneBox.classList.add('ring-2', 'ring-purple-400');
+        setTimeout(() => dropzoneBox.classList.remove('ring-2', 'ring-purple-400'), 1800);
+      });
+    }
+  </script>
+</body></html>

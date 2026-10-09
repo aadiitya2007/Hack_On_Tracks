@@ -50,7 +50,7 @@ export default function Login() {
         <FloatingCard className="p-8 w-full group">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold tracking-tight">Welcome Back</h1>
-            <p className="text-slate-400 mt-2 text-sm">Sign in to your investment dashboard (Simulated demo)</p>
+            <p className="text-muted-foreground mt-2 text-sm">Sign in to your investment dashboard (Simulated demo)</p>
           </div>
 
           <div className="relative overflow-hidden min-h-[200px]">
@@ -61,19 +61,19 @@ export default function Login() {
               className="absolute inset-0 flex flex-col justify-center"
               style={{ pointerEvents: step === 1 ? 'auto' : 'none' }}
             >
-              <label className="block text-sm font-medium text-slate-300 mb-2">PAN Number</label>
+              <label className="block text-sm font-medium text-foreground/90 mb-2">PAN Number</label>
               <input 
                 type="text" 
                 value={pan}
                 onChange={(e) => setPan(e.target.value.toUpperCase())}
                 placeholder="ABCDE1234F"
                 maxLength={10}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 uppercase tracking-widest transition-all"
+                className="w-full bg-background border border-border/80 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary uppercase tracking-widest transition-all"
                 required
               />
               <button 
                 type="submit"
-                className="mt-6 w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+                className="mt-6 w-full py-3 rounded-lg bg-primary hover:bg-primary/90 text-white font-medium transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]"
               >
                 Continue
               </button>
@@ -85,8 +85,8 @@ export default function Login() {
               className="absolute inset-0 flex flex-col justify-center"
               style={{ pointerEvents: step === 2 ? 'auto' : 'none' }}
             >
-              <label className="block text-sm font-medium text-slate-300 mb-2">Enter OTP</label>
-              <p className="text-xs text-slate-500 mb-4">Sent to your registered mobile (Enter any 6 digits)</p>
+              <label className="block text-sm font-medium text-foreground/90 mb-2">Enter OTP</label>
+              <p className="text-xs text-foreground0 mb-4">Sent to your registered mobile (Enter any 6 digits)</p>
               
               <div className="flex gap-2 justify-between">
                 {otp.map((digit, i) => (
@@ -105,13 +105,13 @@ export default function Login() {
                     whileFocus={{ scale: 1.1, y: -2 }}
                     animate={digit ? { scale: [1, 1.1, 1], borderColor: '#3b82f6' } : {}}
                     transition={{ duration: 0.2 }}
-                    className="w-12 h-14 text-center text-xl font-bold bg-slate-950 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                    className="w-12 h-14 text-center text-xl font-bold bg-background border border-border/80 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                   />
                 ))}
               </div>
               <button 
                 onClick={() => setStep(1)}
-                className="mt-6 text-sm text-slate-400 hover:text-white transition-colors"
+                className="mt-6 text-sm text-muted-foreground hover:text-white transition-colors"
               >
                 Back to PAN
               </button>
