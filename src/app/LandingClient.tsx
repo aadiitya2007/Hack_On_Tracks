@@ -25,9 +25,9 @@ export default function LandingClient() {
           <span className="text-xl font-extrabold text-text-primary tracking-tight">VaultIQ</span>
         </div>
         <div className="hidden md:flex gap-8 font-medium text-sm text-text-secondary">
-          <Link href="#features" className="hover:text-accent transition-colors">Features</Link>
-          <Link href="#solutions" className="hover:text-accent transition-colors">Solutions</Link>
-          <Link href="#about" className="hover:text-accent transition-colors">About</Link>
+          <Link href="#features" className="hover:text-[var(--asset-stocks)] transition-colors">Features</Link>
+          <Link href="#solutions" className="hover:text-[var(--asset-stocks)] transition-colors">Solutions</Link>
+          <Link href="#about" className="hover:text-[var(--asset-stocks)] transition-colors">About</Link>
         </div>
         <div className="flex gap-4">
           <Link href="/dashboard" className="px-6 py-2.5 rounded-full font-bold text-sm text-text-primary hover:bg-surface-hover transition-colors border border-border">Login</Link>
@@ -44,14 +44,14 @@ export default function LandingClient() {
         >
           <div className="sub-heading mb-6 justify-center">VaultIQ Financial Engine</div>
           <h1 className="heading-hero text-6xl md:text-7xl max-w-4xl leading-tight mb-8">
-            Master Your Wealth <br/> <span className="text-accent">Without the Complexity.</span>
+            Master Your Wealth <br/> <span className="text-[var(--asset-stocks)]">Without the Complexity.</span>
           </h1>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
             Unify your scattered broker accounts, test strategies in our virtual simulator, and parse offline contract notes—all in one intelligent platform.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/onboarding" className="btn-primary text-lg px-8 py-4">Start For Free</Link>
-            <Link href="/dashboard" className="px-8 py-4 rounded-xl font-bold text-accent hover:bg-accent-bg transition-colors">View Live Demo →</Link>
+            <Link href="/dashboard" className="px-8 py-4 rounded-xl font-bold text-[var(--asset-stocks)] hover:bg-surface shadow-sm border border-border transition-colors">View Live Demo →</Link>
           </div>
         </motion.div>
         
@@ -69,7 +69,7 @@ export default function LandingClient() {
           </div>
           <div className="p-10 mt-12 grid grid-cols-3 gap-6">
             <div className="col-span-2 space-y-6">
-              <div className="h-40 bg-accent-bg rounded-2xl border border-accent/10 flex items-center justify-center p-8">
+              <div className="h-40 bg-surface shadow-sm border border-border rounded-2xl border border-accent/10 flex items-center justify-center p-8">
                 <div className="w-full h-full border-b-2 border-l-2 border-accent/20 relative">
                   <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none"><path d="M0 100 Q 50 20 100 50 T 200 40 T 300 10" fill="none" stroke="var(--color-accent)" strokeWidth="4" strokeLinecap="round"/></svg>
                 </div>
@@ -104,12 +104,12 @@ export default function LandingClient() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { icon: <LayoutDashboard size={24} className="text-accent" />, title: 'Unified Telemetry', desc: 'Connect all your Indian brokers instantly. See overlapping holdings, exact allocations, and true P&L.' },
-            { icon: <Clock size={24} className="text-accent" />, title: 'Time Machine', desc: 'Simulate historical asset trajectories. See exactly how a 10-year SIP in NIFTY 50 compares to Gold.' },
-            { icon: <Wallet size={24} className="text-accent" />, title: 'Practice Trading', desc: 'Risk-free ₹10L virtual sandbox. Trigger market crashes and rate hikes to see how your portfolio reacts.' },
-            { icon: <Compass size={24} className="text-accent" />, title: 'Asset Explorer', desc: 'Understand REITs, InvITs, Bonds, and Equities with plain-language, jargon-free explanations.' },
-            { icon: <GraduationCap size={24} className="text-accent" />, title: 'Knowledge Check', desc: 'Dynamic financial literacy quizzes that assign you a level (Beginner to Confident) and adapt to you.' },
-            { icon: <LayoutDashboard size={24} className="text-accent" />, title: 'Mail Sync Engine', desc: 'No broker API? No problem. We securely parse your PDF contract notes from Gmail automatically.' },
+            { icon: <LayoutDashboard size={24} className="text-[var(--asset-stocks)]" />, title: 'Unified Telemetry', desc: 'Connect all your Indian brokers instantly. See overlapping holdings, exact allocations, and true P&L.' },
+            { icon: <Clock size={24} className="text-[var(--asset-stocks)]" />, title: 'Time Machine', desc: 'Simulate historical asset trajectories. See exactly how a 10-year SIP in NIFTY 50 compares to Gold.' },
+            { icon: <Wallet size={24} className="text-[var(--asset-stocks)]" />, title: 'Practice Trading', desc: 'Risk-free ₹10L virtual sandbox. Trigger market crashes and rate hikes to see how your portfolio reacts.' },
+            { icon: <Compass size={24} className="text-[var(--asset-stocks)]" />, title: 'Asset Explorer', desc: 'Understand REITs, InvITs, Bonds, and Equities with plain-language, jargon-free explanations.' },
+            { icon: <GraduationCap size={24} className="text-[var(--asset-stocks)]" />, title: 'Knowledge Check', desc: 'Dynamic financial literacy quizzes that assign you a level (Beginner to Confident) and adapt to you.' },
+            { icon: <LayoutDashboard size={24} className="text-[var(--asset-stocks)]" />, title: 'Mail Sync Engine', desc: 'No broker API? No problem. We securely parse your PDF contract notes from Gmail automatically.' },
           ].map((feature, idx) => (
             <motion.div 
               key={idx}
@@ -119,7 +119,7 @@ export default function LandingClient() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="card p-8 flex flex-col items-start hover:-translate-y-1 hover:shadow-[0_15px_40px_-10px_rgba(109,40,217,0.1)] cursor-default"
             >
-              <div className="w-12 h-12 rounded-2xl bg-accent-bg flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-surface shadow-sm border border-border flex items-center justify-center mb-6">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
@@ -158,12 +158,12 @@ export default function LandingClient() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="absolute -inset-4 bg-accent-bg rounded-[3rem] blur-xl"></div>
+            <div className="absolute -inset-4 bg-surface shadow-sm border border-border rounded-[3rem] blur-xl"></div>
             <div className="relative bg-surface border border-border rounded-3xl p-8 shadow-[0_20px_50px_-10px_rgba(109,40,217,0.1)]">
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-accent-bg rounded-xl border border-accent/10">
+                <div className="flex items-center justify-between p-4 bg-surface shadow-sm border border-border rounded-xl border border-accent/10">
                   <div>
-                    <p className="font-bold text-accent">BUY 50 RELIANCE</p>
+                    <p className="font-bold text-[var(--asset-stocks)]">BUY 50 RELIANCE</p>
                     <p className="text-xs text-text-secondary mt-1">Found in ContractNote_Zerodha.pdf</p>
                   </div>
                   <span className="pill-gain">Mapped</span>

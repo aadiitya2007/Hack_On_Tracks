@@ -122,12 +122,12 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           <h1 className="heading-hero text-4xl md:text-5xl text-gradient pb-2 drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
             Portfolio Dashboard
           </h1>
-          <p className="text-foreground/60 mt-1 flex items-center gap-2 font-medium">
+          <p className="text-text-secondary mt-1 flex items-center gap-2 font-medium">
             Consolidated real-time telemetry across linked Indian brokerages
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={handleLiveSync} className="glass-card px-4 py-2 text-sm font-semibold flex items-center gap-2 text-success hover:bg-success/10 transition-colors">
+          <button onClick={handleLiveSync} className="card px-4 py-2 text-sm font-semibold flex items-center gap-2 text-gain hover:bg-success/10 transition-colors">
             <span className={`w-2 h-2 rounded-full ${syncing ? 'bg-success animate-ping' : 'bg-success'}`}></span>
             {syncing ? 'Syncing...' : 'Live Feed'}
           </button>
@@ -141,21 +141,21 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative z-10">
         
         {/* Net Portfolio */}
-        <div className="glass-card p-6 flex flex-col justify-between">
-          <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider mb-2">Total Net Portfolio</p>
+        <div className="card p-6 flex flex-col justify-between">
+          <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider mb-2">Total Net Portfolio</p>
           <h2 className="text-4xl font-display font-bold text-gradient tabular-nums">
             <AnimatedNumber value={totalValue} prefix="₹" isCurrency />
           </h2>
-          <div className="mt-6 flex justify-between text-[11px] font-medium text-foreground/60 border-t border-white/10 pt-3">
+          <div className="mt-6 flex justify-between text-[11px] font-medium text-text-secondary border-t border-border pt-3">
             <span>Invested:</span>
-            <span className="text-foreground">₹{totalInvested.toLocaleString('en-IN')}</span>
+            <span className="text-text-primary">₹{totalInvested.toLocaleString('en-IN')}</span>
           </div>
         </div>
 
         {/* Realized & Unrealized PnL */}
-        <div className="glass-card p-6 flex flex-col justify-between">
+        <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider w-1/2 leading-relaxed">Total Realized & Unrealized P&L</p>
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">Total Realized & Unrealized P&L</p>
             <span className={`px-2 py-1 rounded bg-${totalPnl >= 0 ? 'success' : 'destructive'}/10 text-${totalPnl >= 0 ? 'success' : 'destructive'} text-[10px] font-bold border border-${totalPnl >= 0 ? 'success' : 'destructive'}/20`}>
               {totalPnl >= 0 ? '+' : ''}{totalPnlPercent.toFixed(2)}%
             </span>
@@ -164,44 +164,44 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             {totalPnl >= 0 ? '+' : ''}
             <AnimatedNumber value={totalPnl} prefix="₹" isCurrency />
           </h2>
-          <div className="mt-4 flex justify-between text-[11px] font-medium text-foreground/60 border-t border-white/10 pt-3">
-            <span>XIRR: <strong className="text-foreground">22.84%</strong></span>
-            <span className="text-success flex items-center gap-1">vs NIFTY 14.2%</span>
+          <div className="mt-4 flex justify-between text-[11px] font-medium text-text-secondary border-t border-border pt-3">
+            <span>XIRR: <strong className="text-text-primary">22.84%</strong></span>
+            <span className="text-gain flex items-center gap-1">vs NIFTY 14.2%</span>
           </div>
         </div>
 
         {/* Today's Movement */}
-        <div className="glass-card p-6 flex flex-col justify-between">
+        <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider w-1/2 leading-relaxed">Today's Market Movement</p>
-            <span className="px-2 py-1 rounded bg-success/10 text-success text-[10px] font-bold border border-success/20">
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">Today's Market Movement</p>
+            <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20">
               +0.79%
             </span>
           </div>
-          <h2 className="text-3xl font-display font-bold tabular-nums mt-2 text-success">
+          <h2 className="text-3xl font-display font-bold tabular-nums mt-2 text-gain">
             +₹38,410.25
           </h2>
-          <div className="mt-4 flex justify-between text-[11px] font-medium text-foreground/60 border-t border-white/10 pt-3">
+          <div className="mt-4 flex justify-between text-[11px] font-medium text-text-secondary border-t border-border pt-3">
             <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-success"></span> NSE/BSE Open</span>
             <span>14 of 18 stocks up</span>
           </div>
         </div>
 
         {/* Telemetry Status */}
-        <div className="glass-card p-6 flex flex-col justify-between">
+        <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider">Multi-Broker Telemetry</p>
-            <span className="px-2 py-1 rounded bg-success/10 text-success text-[10px] font-bold border border-success/20 flex gap-1 items-center">
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider">Multi-Broker Telemetry</p>
+            <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20 flex gap-1 items-center">
               <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></div>
               Sync: 2m ago
             </span>
           </div>
           <h2 className="text-2xl font-display font-bold mt-2">
-            4 <span className="text-base font-sans font-medium text-foreground/70">Brokers Live</span>
+            4 <span className="text-base font-sans font-medium text-text-primary/70">Brokers Live</span>
           </h2>
           <div className="flex flex-wrap gap-2 mt-4">
             {['Zerodha', 'Groww', 'Upstox', 'Angel'].map(b => (
-              <span key={b} className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-foreground/80 flex items-center gap-1.5">
+              <span key={b} className="px-2 py-1 bg-bg border border-border rounded text-[10px] text-text-primary/80 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent"></span> {b}
               </span>
             ))}
@@ -213,9 +213,9 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
         
         {/* Allocation */}
-        <div className="glass-card p-6 col-span-1 h-[320px] flex flex-col relative">
+        <div className="card p-6 col-span-1 h-[320px] flex flex-col relative">
           <h3 className="font-bold text-sm mb-2">Asset Allocation</h3>
-          <p className="text-xs text-foreground/50 mb-4">{allocData.length} asset classes cross-indexed</p>
+          <p className="text-xs text-text-muted mb-4">{allocData.length} asset classes cross-indexed</p>
           <div className="flex-1 absolute inset-0 mt-16 pointer-events-none">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -227,19 +227,19 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </div>
           
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[20px] text-center">
-            <p className="text-[10px] text-foreground/50 uppercase tracking-widest font-bold">Portfolio</p>
+            <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold">Portfolio</p>
             <p className="text-lg font-display font-bold">₹{(totalValue/100000).toFixed(2)}L</p>
           </div>
         </div>
 
         {/* Growth Chart */}
-        <div className="glass-card p-6 col-span-1 lg:col-span-2 h-[320px] flex flex-col">
+        <div className="card p-6 col-span-1 lg:col-span-2 h-[320px] flex flex-col">
           <div className="flex justify-between items-center mb-4">
             <div>
               <h3 className="font-bold text-sm">Trajectory vs NIFTY 50</h3>
-              <p className="text-xs text-foreground/50">12-month consolidated compounded trajectory</p>
+              <p className="text-xs text-text-muted">12-month consolidated compounded trajectory</p>
             </div>
-            <span className="px-2 py-1 rounded bg-success/10 text-success text-[10px] font-bold border border-success/20">
+            <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20">
               +8.64% Benchmark Alpha
             </span>
           </div>
@@ -264,16 +264,16 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       {/* Duplicate Alert */}
       <AnimatePresence>
         {duplicateSymbols.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glass-card border-destructive/30 bg-destructive/5 p-5 flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center text-destructive shrink-0">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card border-destructive/30 bg-destructive/5 p-5 flex items-start gap-4">
+            <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center text-loss shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
             </div>
             <div>
-              <h3 className="font-bold text-destructive">Cross-Broker Overlap Detected</h3>
-              <p className="text-sm text-foreground/70 mt-1">Holding identical scrips across accounts causes duplicate DP charges and fragmented allocation telemetry.</p>
+              <h3 className="font-bold text-loss">Cross-Broker Overlap Detected</h3>
+              <p className="text-sm text-text-primary/70 mt-1">Holding identical scrips across accounts causes duplicate DP charges and fragmented allocation telemetry.</p>
               <div className="flex flex-wrap gap-2 mt-3">
                 {duplicateSymbols.map(sym => (
-                  <span key={sym} className="px-2 py-1 rounded bg-white/5 border border-white/10 text-xs font-medium">
+                  <span key={sym} className="px-2 py-1 rounded bg-bg border border-border text-xs font-medium">
                     {sym} is held in multiple brokers. Est. ₹420 annual duplicate DP fee leak.
                   </span>
                 ))}
@@ -284,21 +284,21 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       </AnimatePresence>
 
       {/* Holdings Table */}
-      <div className="glass-card overflow-hidden">
-        <div className="p-4 border-b border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/5">
+      <div className="card overflow-hidden">
+        <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between items-center gap-4 bg-bg">
           <div className="flex gap-2">
-            <button onClick={() => setFilter('All')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'All' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-background border border-white/10 text-foreground/60 hover:text-foreground'}`}>All Brokers</button>
-            <button onClick={() => setFilter('Zerodha')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Zerodha' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-background border border-white/10 text-foreground/60 hover:text-foreground'}`}>Zerodha</button>
-            <button onClick={() => setFilter('Groww')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Groww' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-background border border-white/10 text-foreground/60 hover:text-foreground'}`}>Groww</button>
+            <button onClick={() => setFilter('All')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'All' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>All Brokers</button>
+            <button onClick={() => setFilter('Zerodha')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Zerodha' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Zerodha</button>
+            <button onClick={() => setFilter('Groww')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Groww' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Groww</button>
           </div>
           <div className="relative">
-            <input type="text" placeholder="Filter holdings..." className="bg-background border border-white/10 rounded-full pl-8 pr-4 py-1.5 text-xs focus:outline-none focus:border-accent" />
+            <input type="text" placeholder="Filter holdings..." className="bg-surface border border-border rounded-full pl-8 pr-4 py-1.5 text-xs focus:outline-none focus:border-accent" />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="text-[10px] font-bold text-foreground/50 uppercase tracking-wider border-b border-white/10 bg-black/20">
+            <thead className="text-[10px] font-bold text-text-muted uppercase tracking-wider border-b border-border bg-surface-hover">
               <tr>
                 <th className="px-6 py-4">Stock / Asset</th>
                 <th className="px-6 py-4">Broker(s)</th>
@@ -322,25 +322,25 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       key={h.id} 
-                      className="hover:bg-white/5 transition-colors group"
+                      className="hover:bg-bg transition-colors group"
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-bold text-xs">
+                          <div className="w-8 h-8 rounded-full bg-bg border border-border flex items-center justify-center font-bold text-xs">
                             {h.symbol.substring(0, 2)}
                           </div>
                           <div>
                             <p className="font-bold text-sm">{h.symbol}</p>
-                            <p className="text-[10px] text-foreground/50">{h.assetType}</p>
+                            <p className="text-[10px] text-text-muted">{h.assetType}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px]">{h.broker}</span>
+                        <span className="px-2 py-1 bg-bg border border-border rounded text-[10px]">{h.broker}</span>
                       </td>
                       <td className="px-6 py-4 text-right">
                         <p className="font-bold text-sm tabular-nums">{h.quantity} sh</p>
-                        <p className="text-[10px] text-foreground/50 tabular-nums">
+                        <p className="text-[10px] text-text-muted tabular-nums">
                           {h.avgBuyPrice ? `₹${h.avgBuyPrice.toFixed(2)}` : <span className="text-accent">Buy price needed</span>}
                         </p>
                       </td>
@@ -358,7 +358,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                             </p>
                           </>
                         ) : (
-                          <p className="text-sm text-foreground/50">-</p>
+                          <p className="text-sm text-text-muted">-</p>
                         )}
                       </td>
                     </motion.tr>
@@ -377,32 +377,32 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-card-overlay w-full max-w-md p-6 relative rounded-2xl border border-white/10"
+            className="card-overlay w-full max-w-md p-6 relative rounded-2xl border border-border"
           >
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
               <span className="w-8 h-8 rounded bg-primary/20 text-primary flex items-center justify-center">✨</span>
               Trade Simulator
             </h2>
-            <p className="text-sm text-foreground/60 mb-6">Simulate a hypothetical trade to test allocation impacts before executing on your broker.</p>
+            <p className="text-sm text-text-secondary mb-6">Simulate a hypothetical trade to test allocation impacts before executing on your broker.</p>
             
             <div className="space-y-4 mb-6">
               <div>
-                <label className="text-xs font-bold text-foreground/50 uppercase">Select Scrip</label>
-                <select value={tradeSymbol} onChange={e=>setTradeSymbol(e.target.value)} className="w-full mt-1 bg-white/5 border border-white/10 rounded-lg p-2 text-sm">
+                <label className="text-xs font-bold text-text-muted uppercase">Select Scrip</label>
+                <select value={tradeSymbol} onChange={e=>setTradeSymbol(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm">
                   {holdings.map((h:any) => <option key={h.id} value={h.symbol}>{h.symbol}</option>)}
                 </select>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-foreground/50 uppercase">Action</label>
-                  <div className="flex mt-1 bg-white/5 rounded-lg border border-white/10 p-1">
+                  <label className="text-xs font-bold text-text-muted uppercase">Action</label>
+                  <div className="flex mt-1 bg-bg rounded-lg border border-border p-1">
                     <button onClick={()=>setTradeAction('BUY')} className={`flex-1 text-xs py-1.5 rounded ${tradeAction==='BUY' ? 'bg-success text-black font-bold' : ''}`}>BUY</button>
                     <button onClick={()=>setTradeAction('SELL')} className={`flex-1 text-xs py-1.5 rounded ${tradeAction==='SELL' ? 'bg-destructive text-white font-bold' : ''}`}>SELL</button>
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-foreground/50 uppercase">Destination</label>
-                  <select value={tradeBroker} onChange={e=>setTradeBroker(e.target.value)} className="w-full mt-1 bg-white/5 border border-white/10 rounded-lg p-2 text-sm">
+                  <label className="text-xs font-bold text-text-muted uppercase">Destination</label>
+                  <select value={tradeBroker} onChange={e=>setTradeBroker(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm">
                     <option>Zerodha</option>
                     <option>Groww</option>
                     <option>Upstox</option>
@@ -410,8 +410,8 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                 </div>
               </div>
               <div>
-                <label className="text-xs font-bold text-foreground/50 uppercase">Quantity</label>
-                <input type="number" value={tradeQty} onChange={e=>setTradeQty(Number(e.target.value))} className="w-full mt-1 bg-white/5 border border-white/10 rounded-lg p-2 text-sm tabular-nums" />
+                <label className="text-xs font-bold text-text-muted uppercase">Quantity</label>
+                <input type="number" value={tradeQty} onChange={e=>setTradeQty(Number(e.target.value))} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm tabular-nums" />
               </div>
             </div>
 

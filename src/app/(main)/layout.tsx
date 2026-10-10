@@ -1,19 +1,19 @@
-import { LayoutDashboard, Wallet, Compass, FileText } from "lucide-react";
+import { LayoutDashboard, Wallet, BookOpen, TrendingUp, Clock } from "lucide-react";
 import Link from "next/link";
 import AssistantWidget from "./AssistantWidget";
 import MarketBackground from "./MarketBackground";
 
-function NavLink({ href, icon, label, badge }: { href: string, icon: React.ReactNode, label: string, badge?: string }) {
+function NavLink({ href, icon, label, badge, colorClass }: { href: string, icon: React.ReactNode, label: string, badge?: string, colorClass: string }) {
   return (
-    <Link href={href} className="flex items-center justify-between p-3 rounded-xl hover:bg-accent-bg text-text-secondary hover:text-accent transition-all group font-medium">
+    <Link href={href} className="flex items-center justify-between p-3 rounded-xl hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-all group font-medium">
       <div className="flex items-center gap-3">
-        <div className="text-text-muted group-hover:text-accent transition-colors">
+        <div className={`transition-colors ${colorClass} opacity-70 group-hover:opacity-100 bg-surface-hover p-2 rounded-lg`}>
           {icon}
         </div>
-        <span className="text-sm">{label}</span>
+        <span className="text-sm font-bold group-hover:text-text-primary">{label}</span>
       </div>
       {badge && (
-        <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-accent/10 text-accent">
+        <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-accent-bg text-accent">
           {badge}
         </span>
       )}
@@ -28,32 +28,33 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       
       {/* Sidebar: Pure white, soft shadow instead of hard border */}
       <aside className="w-64 bg-surface flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <div className="p-8 pb-4">
+        <div className="p-8 pb-4 border-b border-border">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center shadow-[0_4px_10px_rgba(109,40,217,0.3)]">
               <span className="w-3 h-3 bg-white rounded-full"></span>
             </div>
             <h1 className="text-2xl font-extrabold font-sans tracking-tight text-text-primary">VaultIQ</h1>
           </div>
         </div>
         
-        <nav className="flex-1 px-4 mt-8 space-y-1">
-          <NavLink href="/dashboard" icon={<LayoutDashboard size={20} strokeWidth={2.5} />} label="Dashboard" />
-          <NavLink href="/accounts" icon={<Wallet size={20} strokeWidth={2.5} />} label="Accounts" />
-          <NavLink href="/learn" icon={<Compass size={20} strokeWidth={2.5} />} label="Explore" />
-          <NavLink href="/practice" icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>} label="Practice Trading" badge="Virtual" />
-          <NavLink href="/knowledge-check" icon={<FileText size={20} strokeWidth={2.5} />} label="Knowledge Check" />
-          <NavLink href="/time-machine" icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>} label="Time Machine" />
+        <nav className="flex-1 px-4 mt-6 space-y-2">
+          <NavLink href="/dashboard" icon={<LayoutDashboard size={18} strokeWidth={2.5} />} label="Dashboard" colorClass="text-accent" />
+          <NavLink href="/accounts" icon={<Wallet size={18} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
+          <NavLink href="/learn" icon={<BookOpen size={18} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
+          <NavLink href="/practice" icon={<TrendingUp size={18} strokeWidth={2.5} />} label="Practice Trading" badge="Virtual" colorClass="text-[var(--asset-cash)]" />
+          <NavLink href="/time-machine" icon={<Clock size={18} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
         </nav>
 
-        <div className="p-6">
-          <div className="flex items-center gap-4 p-4 rounded-2xl bg-bg border border-border">
-            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold shadow-inner">
+        <div className="p-6 border-t border-border">
+          <div className="flex items-center gap-4 p-4 rounded-2xl bg-bg border border-border shadow-inner">
+            <div className="w-10 h-10 rounded-full bg-accent-bg flex items-center justify-center text-accent font-bold shadow-sm">
               U
             </div>
             <div className="flex-1 overflow-hidden">
               <p className="text-sm font-bold truncate text-text-primary">Simulated User</p>
-              <p className="text-[11px] font-medium text-text-muted mt-0.5 truncate">Zerodha · Groww</p>
+              <p className="text-[11px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Zerodha
+              </p>
             </div>
           </div>
         </div>
@@ -61,9 +62,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col relative z-20 h-screen overflow-y-auto">
-        <header className="sticky top-0 z-40 bg-surface/60 backdrop-blur-xl h-20 flex items-center justify-end px-10 shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
+        <header className="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl h-16 flex items-center justify-end px-10 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border-b border-border/50">
           <div className="flex items-center gap-4">
-            <div className="text-xs font-bold text-text-primary flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-border">
+            <div className="text-xs font-bold text-text-primary flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gain animate-pulse"></span>
               Live Sync Active
             </div>
