@@ -55,7 +55,7 @@ Indian retail investors face severe fragmentation across multiple brokerage acco
 - **Comprehensive Analytics**: Computes CAGR, Drawdown Profile (Pain Index), and Calendar Year Returns.
 
 ### 7. 📚 Interactive Academy (`/learn`)
-- **6 Comprehensive Masterclasses**: Deep dives into **Stocks, Mutual Funds, ETFs, Bonds, REITs, and InvITs** with exact India market statistics.
+- **7 Comprehensive Masterclasses**: Deep dives into **Stocks, Mutual Funds, ETFs, Bonds, REITs, InvITs, and Futures & Options (F&O)** with exact India market statistics.
 - **Interactive Return Simulator**: Test custom initial investment amounts and observe Bullish vs Bearish outcome ranges.
 - **Interactive MCQ Challenges**: Quiz questions with immediate explanation rationales.
 

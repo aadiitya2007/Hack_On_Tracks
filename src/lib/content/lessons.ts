@@ -398,8 +398,90 @@ export const LESSON_MAP: Record<string, LessonContent> = {
       { label: "Annualized Total Return", value: "11.0% – 14.0%", desc: "Long-term total return over concession asset lifespans." }
     ],
     takeaway: "InvITs provide an investment route into infrastructure-related assets, but their returns and risks depend on the trust's underlying assets and structure.",
-    nextLesson: null,
+    nextLesson: 'futures-options',
     prevLesson: 'reits',
     dialogue: [...dialogueDefaults]
+  },
+
+  'futures-options': {
+    id: 'futures-options',
+    title: 'FUTURES & OPTIONS (F&O)',
+    subtitle: 'Understand the Power of Price Movements',
+    whatItIs: [
+      "Futures and Options are financial contracts whose value depends on an underlying asset, such as a stock, market index, currency or commodity.",
+      "Think of F&O as making a contract based on where you expect a market price to move.",
+      "Futures: A contract that creates an obligation to buy or sell an underlying asset under specified terms.",
+      "Options: A contract that gives the buyer the right, but not the obligation, to buy or sell an underlying asset at a specified price. Buyers pay a premium for this right.",
+      "A Call Option gives the buyer the right to buy, while a Put Option gives the buyer the right to sell."
+    ],
+    keyTypes: [
+      {
+        title: "1. Futures Contracts",
+        desc: "Creates an obligation to buy or sell an underlying asset under specified terms on a future date.",
+        goal: "Hedging portfolios or taking leveraged directional market positions."
+      },
+      {
+        title: "2. Call Options (CE)",
+        desc: "Gives the buyer the right (not obligation) to BUY the underlying asset at a specified price.",
+        goal: "Participate in upside price movements with capped risk equal to premium paid."
+      },
+      {
+        title: "3. Put Options (PE)",
+        desc: "Gives the buyer the right (not obligation) to SELL the underlying asset at a specified price.",
+        goal: "Hedge existing stock holdings or capitalize on expected downward price moves."
+      }
+    ],
+    howItWorks: [
+      { step: "Step 1: Choose underlying asset", desc: "Choose an underlying stock, index (e.g. NIFTY 50) or other eligible asset." },
+      { step: "Step 2: Select contract & expiry", desc: "Select a futures or options contract with its expiry date and contract details." },
+      { step: "Step 3: Take a position", desc: "Take a position based on your market view or hedging requirement." },
+      { step: "Step 4: Contract value changes", desc: "The contract's value changes as underlying price, time and market factors change." },
+      { step: "Step 5: Close or settle position", desc: "Close or settle the position according to contract and exchange rules, resulting in a gain or loss." }
+    ],
+    returnsExample: {
+      initial: 3000,
+      gainVal: 10000,
+      lossVal: 0,
+      gainPct: 233,
+      lossPct: -100,
+      note: "Futures Example: Index at 22,000, lot size 50. Rise to 22,200 (+200 pts) = ₹10,000 gain. Fall to 21,800 (-200 pts) = ₹10,000 loss. Call Option Example: Strike ₹1,000, premium ₹30, lot 100 (Cost ₹3,000). Stock at ₹1,100 = net profit ₹7,000 (+233%). Stock ≤ ₹1,000 = lose full ₹3,000 premium (-100%)."
+    },
+    advantages: [
+      "Can help hedge against certain market-price risks.",
+      "Offers ways to take positions on expected price movements.",
+      "Provides different strategies for different market views.",
+      "May require less upfront capital than buying the full underlying exposure, but leverage increases risk."
+    ],
+    risks: [
+      "Leverage can magnify losses as well as gains.",
+      "Futures can result in substantial losses.",
+      "Option buyers can lose the entire premium paid.",
+      "Option sellers may face very large losses, depending on the position.",
+      "Expiry, time decay, volatility, liquidity and transaction costs can affect results."
+    ],
+    challenge: {
+      question: "You buy a call option, but the underlying asset finishes below the strike price at expiry. What generally happens?",
+      options: [
+        "A. You automatically earn a profit.",
+        "B. You generally lose the premium paid.",
+        "C. Your profit is guaranteed by the exchange."
+      ],
+      correctIndex: 1,
+      explanation: "Correct! The option may expire worthless when the underlying price finishes below the strike price at expiry, resulting in a loss of the premium paid."
+    },
+    snapshotStats: [
+      { label: "SEBI Loss Fact (FY19 & FY22)", value: "89% (9 in 10)", desc: "SEBI reported that 9 out of 10 individual traders in equity F&O incurred net losses." },
+      { label: "Average Net Loss / Trader", value: "~₹1.1 Lakh", desc: "Average loss incurred by loss-making retail traders across Indian exchanges." },
+      { label: "Active Retail F&O Base", value: "45+ Lakh", desc: "Registered individual retail accounts trading in Indian derivative segments." },
+      { label: "Derivative Settlement", value: "99%+ Cash Settled", desc: "High turnover velocity with cash settlement execution on NSE & BSE." }
+    ],
+    takeaway: "Futures and Options can be used for hedging or trading, but they are complex instruments and are not a reliable shortcut to guaranteed income. Learn the contract mechanics and risks before participating.",
+    nextLesson: null,
+    prevLesson: 'invits',
+    dialogue: [
+      { id: '1', sender: 'mentor', text: 'Welcome to Futures & Options (F&O)! Did you know SEBI reported 9 out of 10 individual traders in equity F&O incurred net losses?' },
+      { id: '2', sender: 'learner', text: 'That is eye-opening! Why is derivative trading so high risk?' },
+      { id: '3', sender: 'mentor', text: 'Because leverage magnifies losses as well as gains, and options experience continuous time decay. Let us study how Futures, Calls, Puts, and hedging work!' }
+    ]
   }
 };

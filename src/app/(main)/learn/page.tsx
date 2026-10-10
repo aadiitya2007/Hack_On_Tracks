@@ -10,7 +10,8 @@ const MODULES = [
   { id: 'etfs', title: 'ETFs', subtitle: 'A Basket You Can Trade', color: 'var(--asset-stocks)', bg: 'rgba(37, 99, 235, 0.08)' },
   { id: 'bonds', title: 'Bonds', subtitle: 'Become a Lender', color: 'var(--asset-bonds)', bg: 'rgba(217, 119, 6, 0.08)' },
   { id: 'reits', title: 'REITs', subtitle: 'Real Estate Without the Building', color: 'var(--asset-reits)', bg: 'rgba(13, 148, 136, 0.08)' },
-  { id: 'invits', title: 'InvITs', subtitle: 'Infrastructure Behind Everyday Life', color: 'var(--asset-invits)', bg: 'rgba(124, 58, 237, 0.08)' }
+  { id: 'invits', title: 'InvITs', subtitle: 'Infrastructure Behind Everyday Life', color: 'var(--asset-invits)', bg: 'rgba(124, 58, 237, 0.08)' },
+  { id: 'futures-options', title: 'Futures & Options', subtitle: 'Understand Price Movements & Leverage', color: 'var(--loss)', bg: 'rgba(239, 68, 68, 0.08)' }
 ];
 
 export default function LearnIndex() {
@@ -20,7 +21,7 @@ export default function LearnIndex() {
         <div className="sub-heading">Financial Engine Modules</div>
         <h1 className="text-4xl font-extrabold text-text-primary">Learn & Simulate</h1>
         <p className="text-text-secondary text-lg max-w-2xl mt-2">
-          Master the mechanics of 6 core asset classes. Read plain-language breakdowns, chat with virtual mentors, and experiment with risk-free interactive simulations.
+          Master the mechanics of 7 core asset classes. Read plain-language breakdowns, chat with virtual mentors, and experiment with risk-free interactive simulations.
         </p>
       </div>
 
