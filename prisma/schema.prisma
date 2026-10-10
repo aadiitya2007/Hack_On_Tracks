@@ -18,6 +18,8 @@ model User {
   trades        Trade[]
   consents      ConsentLog[]
   attempts      Attempt[]
+  lessonProgress  LessonProgress[]
+  challenges      ChallengeAttempt[]
 }
 
 model LinkedAccount {
@@ -104,4 +106,24 @@ model Attempt {
   total         Int
   levelAssigned String
   date          DateTime @default(now())
+}
+
+model LessonProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  lessonId  String   // 'stocks', 'mutual-funds', etc.
+  completed Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, lessonId])
+}
+
+model ChallengeAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  lessonId  String
+  passed    Boolean
+  createdAt DateTime @default(now())
 }

@@ -1,128 +1,196 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0A0720;
-  --color-foreground: #FFFFFF;
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
   
-  --color-card: rgba(255, 255, 255, 0.03);
-  --color-card-hover: rgba(255, 255, 255, 0.06);
-  --color-card-border: rgba(255, 255, 255, 0.05);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   
-  --color-primary: #7C3AED;
-  --color-secondary: #3B82F6;
-  --color-accent: #22D3EE;
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-bg: var(--accent-bg);
   
-  --color-success: #10E5A0;
-  --color-destructive: #FB7185;
+  --color-gain: var(--gain);
+  --color-loss: var(--loss);
+  --color-warning: var(--warning);
+  --color-gain-bg: var(--gain-bg);
+  --color-loss-bg: var(--loss-bg);
+  --color-warning-bg: var(--warning-bg);
   
-  --color-asset-equity: #3B82F6;
-  --color-asset-bond: #FBBF24;
-  --color-asset-reit: #EC4899;
-  --color-asset-invit: #22D3EE;
-  --color-asset-cash: #94A3B8;
-  --color-asset-gold: #F59E0B;
-  
+  --color-asset-stocks: var(--asset-stocks);
+  --color-asset-bonds: var(--asset-bonds);
+  --color-asset-reits: var(--asset-reits);
+  --color-asset-invits: var(--asset-invits);
+  --color-asset-funds: var(--asset-funds);
+  --color-asset-cash: var(--asset-cash);
+
   --font-sans: 'Inter', sans-serif;
-  --font-display: 'Plus Jakarta Sans', sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
 }
 
-/* Base resets & typography */
 @layer base {
   :root {
-    color-scheme: dark;
+    /* VIBRANT LIGHT THEME (Alizo-inspired) */
+    --bg: #FAFAFA;          /* Very light grey almost white */
+    --surface: #FFFFFF;      /* Pure white cards */
+    --surface-hover: #F8F9FA;/* Barely there hover */
+    --border: #F1F5F9;       /* Ultra-faint border */
+    
+    --text-primary: #111827;   /* Bold black/dark-grey */
+    --text-secondary: #4B5563; /* Medium grey for readability */
+    --text-muted: #9CA3AF;     /* Light grey */
+    
+    /* ALIZO PURPLE ACCENT */
+    --accent: #6D28D9;       /* Vibrant Purple */
+    --accent-hover: #5B21B6; /* Deep Purple */
+    --accent-bg: #F5F3FF;    /* Ultra-light purple tint */
+    
+    /* Semantic Colors */
+    --gain: #059669;         
+    --gain-bg: #D1FAE5;      
+    
+    --loss: #DC2626;         
+    --loss-bg: #FEE2E2;      
+
+    --warning: #D97706;      
+    --warning-bg: #FEF3C7;   
+
+    /* Asset Classes */
+    --asset-stocks: #6D28D9; /* Primary Purple */
+    --asset-bonds: #F59E0B;  /* Amber */
+    --asset-reits: #14B8A6;  /* Teal */
+    --asset-invits: #8B5CF6; /* Light Violet */
+    --asset-funds: #F97316;  /* Orange */
+    --asset-cash: #64748B;   /* Slate */
   }
-  
+}
+
+@layer base {
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--bg);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    font-variant-numeric: tabular-nums;
   }
   
-  /* Enforce tabular lining nums by default on the body, 
-     then headings override back to proportional if needed */
-  body {
-    font-variant-numeric: tabular-nums;
+  input, button, select {
+    font-family: inherit;
+    border-color: var(--border);
   }
 }
 
 @layer components {
-  /* Glass Card Base */
-  .glass-card {
-    background-color: var(--color-card);
-    backdrop-filter: blur(24px) saturate(160%);
-    border-radius: 24px;
-    border: 1px solid var(--color-card-border);
-    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45), inset 0 0 1px 1px rgba(255, 255, 255, 0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Alizo-style Cards: White, high border radius, soft purple shadow */
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px -15px rgba(109, 40, 217, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
-  .glass-card:hover {
-    background-color: var(--color-card-hover);
-    backdrop-filter: blur(36px) saturate(180%);
-    box-shadow: 0 20px 48px -8px rgba(10, 7, 32, 0.8), 0 0 24px -2px rgba(124, 58, 237, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  
-  .glass-card-overlay {
-    background-color: rgba(15, 10, 42, 0.82);
-    backdrop-filter: blur(40px);
-    box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px -12px rgba(109, 40, 217, 0.12), 0 8px 20px -4px rgba(0, 0, 0, 0.04);
   }
 
-  /* Primary Gradient Button */
   .btn-primary {
-    background: linear-gradient(90deg, #7C3AED 0%, #3B82F6 100%);
-    color: white;
-    font-family: var(--font-display);
+    background-color: var(--accent);
+    color: #FFFFFF;
+    font-family: var(--font-sans);
     font-weight: 600;
     font-size: 14px;
-    padding: 10px 24px;
-    border-radius: 14px;
-    box-shadow: 0 4px 20px -2px rgba(124, 58, 237, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
     transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
   }
   
-  .btn-primary:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 24px -2px rgba(124, 58, 237, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.35);
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.4);
+    transform: translateY(-1px);
+  }
+  
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
   }
 
-  /* Typography utilities */
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* Alizo sub-heading style (// TEXT) */
+  .sub-heading {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .sub-heading::before {
+    content: '//';
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* Bold Main Headings */
   .heading-hero {
-    font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.02em;
-    font-variant-numeric: proportional-nums;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
   }
 
-  .text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(135deg, #FFFFFF 30%, #93C5FD 100%);
+  /* Structural Badges Pill */
+  .pill-gain {
+    background-color: var(--gain-bg);
+    color: var(--gain);
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 
-  /* Ambient Glow Rings */
-  .ambient-glow-violet {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: rgba(124, 58, 237, 0.15);
-    filter: blur(120px);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
+  .pill-loss {
+    background-color: var(--loss-bg);
+    color: var(--loss);
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
   
-  .ambient-glow-cyan {
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    background: rgba(34, 211, 238, 0.12);
-    filter: blur(140px);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
+  .pill-warning {
+    background-color: var(--warning-bg);
+    color: var(--warning);
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 }
