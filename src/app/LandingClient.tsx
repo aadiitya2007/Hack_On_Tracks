@@ -19,10 +19,7 @@ export default function LandingClient() {
       {/* Navbar */}
       <nav className="relative z-50 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-            <span className="w-3 h-3 bg-white rounded-full"></span>
-          </div>
-          <span className="text-xl font-extrabold text-text-primary tracking-tight">VaultIQ</span>
+          <img src="/logos/unify.png" alt="Unify" className="h-9 object-contain" />
         </div>
         <div className="hidden md:flex gap-8 font-medium text-sm text-text-secondary">
           <Link href="#features" className="hover:text-[var(--asset-stocks)] transition-colors">Features</Link>
@@ -42,7 +39,7 @@ export default function LandingClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="sub-heading mb-6 justify-center">VaultIQ Financial Engine</div>
+          <div className="sub-heading mb-6 justify-center">Unify Financial Engine</div>
           <h1 className="heading-hero text-6xl md:text-7xl max-w-4xl leading-tight mb-8">
             Master Your Wealth <br/> <span className="text-[var(--asset-stocks)]">Without the Complexity.</span>
           </h1>
@@ -196,7 +193,7 @@ export default function LandingClient() {
         </motion.div>
         
         <div className="mt-24 text-sm text-text-muted">
-          <p>© 2026 VaultIQ Hackathon Prototype. Educational purposes only.</p>
+          <p>© 2026 Unify Hackathon Prototype. Educational purposes only.</p>
         </div>
       </footer>
       

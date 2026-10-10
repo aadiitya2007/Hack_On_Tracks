@@ -18,8 +18,8 @@ export default function Onboarding() {
       <div className="ambient-glow-cyan bottom-0 right-0"></div>
       
       <div className="w-full max-w-lg z-10">
-        <div className="mb-8 text-center">
-          <h1 className="font-display font-bold text-3xl">VaultIQ<span className="text-accent">.</span></h1>
+        <div className="mb-8 flex flex-col items-center">
+          <img src="/logos/unify.png" alt="Unify" className="h-12 object-contain" />
           <span className="inline-block mt-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-[10px] font-bold tracking-widest uppercase border border-primary/30">
             Simulated Demo
           </span>
@@ -68,7 +68,7 @@ export default function Onboarding() {
                 <h2 className="text-xl font-bold mb-2">Aadhaar Consent</h2>
                 <p className="text-sm text-foreground/60 mb-6">We require one-time consent to fetch your CKYC profile. <strong className="text-destructive">Aadhaar data is never stored.</strong></p>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-xl mb-6 text-xs text-foreground/70">
-                  "I hereby grant my explicit consent to VaultIQ to fetch my KYC details from the central registry for the purpose of portfolio aggregation. This is a simulated demo environment."
+                  "I hereby grant my explicit consent to Unify to fetch my KYC details from the central registry for the purpose of portfolio aggregation. This is a simulated demo environment."
                 </div>
                 <button onClick={handleNext} className="btn-primary w-full bg-gradient-to-r from-success to-accent">
                   I Consent (Mock)

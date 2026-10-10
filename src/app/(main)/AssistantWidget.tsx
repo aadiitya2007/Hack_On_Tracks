@@ -7,7 +7,7 @@ import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 export default function AssistantWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([
-    { role: 'assistant', text: 'Hi! I am VaultIQ AI Assistant. Ask me anything about your portfolio telemetry, risk scores, XGBoost stock predictions, or tax implications!' }
+    { role: 'assistant', text: 'Hi! I am Unify AI Assistant. Ask me anything about your portfolio telemetry, risk scores, XGBoost stock predictions, or tax implications!' }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -95,7 +95,7 @@ export default function AssistantWidget() {
                   <Sparkles size={16} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm text-text-primary">VaultIQ AI Assistant</h3>
+                  <h3 className="font-extrabold text-sm text-text-primary">Unify AI Assistant</h3>
                   <p className="text-[10px] text-gain font-bold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-gain animate-pulse"></span> LLM Engine Connected
                   </p>

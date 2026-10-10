@@ -16,6 +16,13 @@ const ASSET_COLORS: Record<string, string> = {
   CASH: 'var(--asset-cash)',
 };
 
+const BROKER_LOGOS: Record<string, string> = {
+  'zerodha': '/logos/zerodha.webp',
+  'groww': '/logos/groww.png',
+  'upstox': '/logos/upstox.png',
+  'cdsl': '/logos/cdsl.webp',
+};
+
 // Animated Number Component
 function AnimatedNumber({ value, prefix = '', suffix = '', isCurrency = false }: { value: number, prefix?: string, suffix?: string, isCurrency?: boolean }) {
   const [displayValue, setDisplayValue] = useState(0);
@@ -202,9 +209,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             4 <span className="text-base font-sans font-medium text-text-primary/70">Brokers Live</span>
           </h2>
           <div className="flex flex-wrap gap-2 mt-4">
-            {['Zerodha', 'Groww', 'Upstox', 'Angel'].map(b => (
-              <span key={b} className="px-2 py-1 bg-bg border border-border rounded text-[10px] text-text-primary/80 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent"></span> {b}
+            {['Zerodha', 'Groww', 'Upstox', 'CDSL'].map(b => (
+              <span key={b} className="px-2.5 py-1 bg-bg border border-border rounded-lg text-[10px] font-bold text-text-primary flex items-center gap-1.5 shadow-sm">
+                {BROKER_LOGOS[b.toLowerCase()] ? (
+                  <img src={BROKER_LOGOS[b.toLowerCase()]} alt={b} className="w-3.5 h-3.5 object-contain" />
+                ) : (
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                )}
+                {b}
               </span>
             ))}
           </div>

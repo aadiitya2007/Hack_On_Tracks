@@ -28,12 +28,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       
       {/* Sidebar: Pure white, soft shadow instead of hard border */}
       <aside className="w-64 bg-surface flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <div className="p-8 pb-4 border-b border-border">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center shadow-[0_4px_10px_rgba(109,40,217,0.3)]">
-              <span className="w-3 h-3 bg-white rounded-full"></span>
-            </div>
-            <h1 className="text-2xl font-extrabold font-sans tracking-tight text-text-primary">VaultIQ</h1>
+        <div className="p-6 pb-4 border-b border-border">
+          <div className="flex items-center gap-3">
+            <img src="/logos/unify.png" alt="Unify Logo" className="h-8 object-contain" />
           </div>
         </div>
         

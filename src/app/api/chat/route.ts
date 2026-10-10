@@ -23,7 +23,7 @@ export async function POST(req: Request) {
             messages: [
               {
                 role: 'system',
-                content: 'You are VaultIQ AI, an expert Indian financial advisor assistant specializing in portfolio tracking, equities, mutual funds, REITs, InvITs, tax implications, risk management, and ML stock prediction.'
+                content: 'You are Unify AI, an expert Indian financial advisor assistant specializing in portfolio tracking, equities, mutual funds, REITs, InvITs, tax implications, risk management, and ML stock prediction.'
               },
               ...messages.map((m: any) => ({
                 role: m.role === 'user' ? 'user' : 'assistant',
@@ -41,12 +41,12 @@ export async function POST(req: Request) {
           }
         }
       } catch (err) {
-        console.warn('External LLM call failed, falling back to VaultIQ Financial Knowledge Engine:', err);
+        console.warn('External LLM call failed, falling back to Unify Financial Knowledge Engine:', err);
       }
     }
 
-    // Intelligent VaultIQ Financial Knowledge Engine
-    let reply = "VaultIQ Assistant here! How can I help you analyze your portfolio, evaluate stock predictions, or manage your risk profile today?";
+    // Intelligent Unify Financial Knowledge Engine
+    let reply = "Unify Assistant here! How can I help you analyze your portfolio, evaluate stock predictions, or manage your risk profile today?";
 
     if (query.includes('advice') || query.includes('should i buy') || query.includes('invest in')) {
       reply = "I can provide analytical insights based on your portfolio telemetry, but I cannot give direct SEBI-registered financial advice. For personalized investment decisions, consult a certified financial planner.";
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     } else if (query.includes('risk') || query.includes('volatility') || query.includes('drawdown')) {
       reply = "Your Portfolio Risk Profile calculates 1-year annual volatility, Herfindahl-Hirschman concentration index (HHI), and 95% 1-month Value-at-Risk (VaR). You can use the 'What-If' engine on the Risk page to simulate shifting allocation into fixed-income bonds to lower your risk score!";
     } else if (query.includes('account') || query.includes('broker') || query.includes('zerodha') || query.includes('groww')) {
-      reply = "VaultIQ supports live API telemetry connections across Zerodha, Groww, Upstox, Angel One, ICICI Direct, and Paytm Money. For non-API accounts, our Mail Sync module parses password-protected PDF Consolidated Account Statements (CAS) automatically!";
+      reply = "Unify supports live API telemetry connections across Zerodha, Groww, Upstox, Angel One, ICICI Direct, and Paytm Money. For non-API accounts, our Mail Sync module parses password-protected PDF Consolidated Account Statements (CAS) automatically!";
     } else if (query.includes('reit') || query.includes('invit')) {
       reply = "REITs (Real Estate Investment Trusts like Embassy) and InvITs (Infrastructure Investment Trusts like PGInvIT) pass through rental and infrastructure yield to unitholders. They offer 6-9% annual yields and serve as excellent fixed-income alternatives in a diversified portfolio.";
     } else if (query.includes('practice') || query.includes('trade') || query.includes('virtual')) {

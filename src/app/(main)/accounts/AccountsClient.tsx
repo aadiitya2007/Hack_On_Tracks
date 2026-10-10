@@ -5,6 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Wallet, Plus, RefreshCw, Trash2, CheckCircle2, ShieldCheck, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import { uploadBaselineStatement, runDemoMailSync } from '@/lib/mail-sync';
 
+const BROKER_LOGOS: Record<string, string> = {
+  'zerodha': '/logos/zerodha.webp',
+  'zerodha kite': '/logos/zerodha.webp',
+  'groww': '/logos/groww.png',
+  'upstox': '/logos/upstox.png',
+  'cdsl': '/logos/cdsl.webp',
+};
+
 const DEFAULT_ACCOUNTS = [
   {
     id: 'a1',
@@ -158,8 +166,14 @@ export default function AccountsClient({ initialAccounts }: { initialAccounts: a
             <div key={a.id} className="card p-5 bg-surface border border-border hover:border-accent/40 transition-all">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-accent-bg text-accent flex items-center justify-center font-extrabold text-sm border border-accent/20">
-                    {a.broker.substring(0, 2).toUpperCase()}
+                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-border p-1.5 overflow-hidden shrink-0 shadow-sm">
+                    {BROKER_LOGOS[a.broker.toLowerCase()] ? (
+                      <img src={BROKER_LOGOS[a.broker.toLowerCase()]} alt={a.broker} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-full h-full rounded-xl bg-accent-bg text-accent flex items-center justify-center font-extrabold text-sm border border-accent/20">
+                        {a.broker.substring(0, 2).toUpperCase()}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">

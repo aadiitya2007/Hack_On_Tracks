@@ -1,4 +1,4 @@
-# VaultIQ — All Your Investments, In One Place 🚀
+# Unify — All Your Investments, In One Place 🚀
 
 > **Hack On Track 2026 Submission** | Unified Investment Telemetry, Machine Learning Stock Insights, Risk Analytics & Interactive Financial Masterclasses.
 
@@ -19,8 +19,8 @@ Indian retail investors face severe fragmentation across multiple brokerage acco
 3. **Speculative Decision Making**: Lack of statistical price direction insights and reliance on hype rather than data-driven technical indicators.
 4. **Financial Literacy Gap**: Complex asset classes (REITs, InvITs, Debt Funds, ETFs) are poorly understood by retail investors.
 
-### 💡 The VaultIQ Solution
-**VaultIQ** consolidates all your investment telemetry under a single dashboard, paired with an **XGBoost Machine Learning prediction engine**, real-time **Financial News feed from Times of India, Economic Times & Reuters**, a **Mathematical Risk Engine**, and **Interactive Learning Masterclasses** for Indian markets.
+### 💡 The Unify Solution
+**Unify** consolidates all your investment telemetry under a single dashboard, paired with an **XGBoost Machine Learning prediction engine**, real-time **Financial News feed from Times of India, Economic Times & Reuters**, a **Mathematical Risk Engine**, and **Interactive Learning Masterclasses** for Indian markets.
 
 ---
 
@@ -59,7 +59,7 @@ Indian retail investors face severe fragmentation across multiple brokerage acco
 - **Interactive Return Simulator**: Test custom initial investment amounts and observe Bullish vs Bearish outcome ranges.
 - **Interactive MCQ Challenges**: Quiz questions with immediate explanation rationales.
 
-### 8. 💬 VaultIQ AI Assistant (`/api/chat`)
+### 8. 💬 Unify AI Assistant (`/api/chat`)
 - **Context-Aware Financial LLM**: Embedded floating chat widget connected to `/api/chat` streaming answers character-by-character on portfolio state, risk scores, tax rules (STCG/LTCG), and ML predictions.
 
 ---
@@ -187,4 +187,4 @@ $$R = 0.40 \cdot S_{\text{vol}} + 0.30 \cdot S_{\text{conc}} + 0.30 \cdot S_{\te
 ---
 
 ## 🛡️ Compliance & Disclaimer
-VaultIQ is an experimental fintech prototype developed for **Hack On Track 2026**. All predictions, risk scores, and simulations are statistical and educational. The platform does not provide SEBI-registered financial advice.
+Unify is an experimental fintech prototype developed for **Hack On Track 2026**. All predictions, risk scores, and simulations are statistical and educational. The platform does not provide SEBI-registered financial advice.
