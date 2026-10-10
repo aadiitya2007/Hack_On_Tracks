@@ -20,6 +20,24 @@ const ASSET_COLORS: Record<string, string> = {
   CASH: 'var(--asset-cash)',
 };
 
+const ASSET_LABELS: Record<string, string> = {
+  EQUITY: 'Equities (Stocks)',
+  MUTUAL_FUND: 'Mutual Funds',
+  DEBT: 'Bonds & Fixed Income',
+  REIT: 'REITs & Real Estate',
+  COMMODITY: 'Commodities (Gold/Silver)',
+  CASH: 'Cash & Liquid Funds',
+};
+
+const ASSET_THEME_COLORS: Record<string, string> = {
+  EQUITY: '#7C3AED',
+  MUTUAL_FUND: '#EC4899',
+  DEBT: '#F59E0B',
+  REIT: '#10B981',
+  COMMODITY: '#06B6D4',
+  CASH: '#64748B',
+};
+
 const BROKER_LOGOS: Record<string, string> = {
   'zerodha': '/logos/zerodha.webp',
   'groww': '/logos/groww.png',
@@ -125,6 +143,18 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
     return acc;
   }, {});
   const allocData = Object.keys(allocMap).map(k => ({ name: k, value: allocMap[k] }));
+
+  const assetBreakdown = allocData.map(item => {
+    const amount = item.value;
+    const pct = totalValue > 0 ? (amount / totalValue) * 100 : 0;
+    return {
+      key: item.name,
+      label: ASSET_LABELS[item.name] || item.name,
+      amount,
+      pct,
+      color: ASSET_THEME_COLORS[item.name] || ASSET_COLORS[item.name] || '#7C3AED'
+    };
+  }).sort((a, b) => b.amount - a.amount);
 
   // Growth Chart Mock Data
   const mockHistory = Array.from({ length: 7 }).map((_, i) => {
@@ -428,37 +458,92 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
       </div>
 
-      {/* Middle Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+      {/* Asset Allocation & Trajectory Row */}
+      <div className="space-y-6 relative z-10">
         
-        {/* Allocation */}
-        <div className="card p-6 col-span-1 h-[320px] flex flex-col relative">
-          <h3 className="font-bold text-sm mb-2">Asset Allocation</h3>
-          <p className="text-xs text-text-muted mb-4">{allocData.length} asset classes cross-indexed</p>
-          <div className="flex-1 absolute inset-0 mt-16 pointer-events-none">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={allocData} innerRadius={60} outerRadius={85} paddingAngle={4} dataKey="value" stroke="none">
-                  {allocData.map((entry, index) => <Cell key={`cell-${index}`} fill={ASSET_COLORS[entry.name] || '#ffffff'} />)}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
+        {/* Full Asset Allocation & Capital Invested Breakdown Card */}
+        <div className="card p-6 md:p-8 bg-surface border border-border rounded-3xl space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 pb-4 border-b border-border">
+            <div>
+              <h3 className="text-xl font-extrabold text-text-primary flex items-center gap-2">
+                <Layers size={22} className="text-accent" /> Asset Allocation & Capital Invested
+              </h3>
+              <p className="text-xs text-text-secondary mt-1 font-medium">
+                Detailed capital distribution and portfolio percentage share across {allocData.length} asset classes
+              </p>
+            </div>
+            <span className="px-3.5 py-1.5 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider self-start sm:self-auto border border-accent/20">
+              Total Invested: ₹{totalInvested.toLocaleString('en-IN')}
+            </span>
           </div>
-          
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[20px] text-center">
-            <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold">Portfolio</p>
-            <p className="text-lg font-display font-bold">₹{(totalValue/100000).toFixed(2)}L</p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left: Donut Chart with Net Worth Center */}
+            <div className="lg:col-span-5 h-[280px] relative flex items-center justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie 
+                    data={allocData} 
+                    innerRadius={80} 
+                    outerRadius={110} 
+                    paddingAngle={4} 
+                    dataKey="value" 
+                    stroke="none"
+                  >
+                    {allocData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={ASSET_THEME_COLORS[entry.name] || ASSET_COLORS[entry.name] || '#7C3AED'} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px', color: 'var(--text-primary)', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }}
+                    formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Invested Amount']}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                <p className="text-[10px] text-text-muted uppercase tracking-widest font-black">Net Portfolio Value</p>
+                <p className="text-3xl font-black text-text-primary tracking-tight font-display">₹{(totalValue/100000).toFixed(2)}L</p>
+                <p className="text-xs font-bold text-gain mt-0.5">₹{totalValue.toLocaleString('en-IN')}</p>
+              </div>
+            </div>
+
+            {/* Right: Rich Breakdown Table showing Exact Amount & % */}
+            <div className="lg:col-span-7 space-y-3.5">
+              {assetBreakdown.map((item) => (
+                <div key={item.key} className="p-4 rounded-2xl bg-bg border border-border hover:border-accent/40 transition-all space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <span className="w-4 h-4 rounded-full shrink-0 shadow-sm" style={{ backgroundColor: item.color }}></span>
+                      <span className="font-extrabold text-text-primary text-sm">{item.label}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-mono font-black text-text-primary text-base">₹{item.amount.toLocaleString('en-IN')}</span>
+                      <span className="text-xs font-bold text-accent ml-2 font-mono">({item.pct.toFixed(1)}%)</span>
+                    </div>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="w-full bg-surface h-2 rounded-full overflow-hidden border border-border/50">
+                    <div 
+                      className="h-full rounded-full transition-all duration-500" 
+                      style={{ width: `${Math.max(item.pct, 4)}%`, backgroundColor: item.color }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Growth Chart */}
-        <div className="card p-6 col-span-1 lg:col-span-2 h-[320px] flex flex-col">
-          <div className="flex justify-between items-center mb-4">
+        <div className="card p-6 md:p-8 col-span-1 lg:col-span-3 h-[360px] flex flex-col">
+          <div className="flex justify-between items-center mb-6">
             <div>
-              <h3 className="font-bold text-sm">Trajectory vs NIFTY 50</h3>
-              <p className="text-xs text-text-muted">12-month consolidated compounded trajectory</p>
+              <h3 className="font-extrabold text-lg text-text-primary">Portfolio Trajectory vs NIFTY 50 Benchmark</h3>
+              <p className="text-xs text-text-secondary mt-0.5 font-medium">12-month consolidated compounded growth trajectory</p>
             </div>
-            <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20">
+            <span className="px-3 py-1 rounded-full bg-success/10 text-gain text-xs font-bold border border-success/20">
               +8.64% Benchmark Alpha
             </span>
           </div>
@@ -472,13 +557,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.5} />
-                <XAxis dataKey="month" stroke="var(--text-muted)" fontSize={10} tickLine={false} axisLine={false} />
+                <XAxis dataKey="month" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)' }} itemStyle={{ color: 'var(--accent)', fontWeight: 'bold' }} />
                 <Area type="monotone" dataKey="value" stroke="var(--accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
+
       </div>
 
       {/* Duplicate Alert */}
