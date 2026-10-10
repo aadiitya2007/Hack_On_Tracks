@@ -7,7 +7,7 @@ import Dialogue from '@/components/Dialogue';
 import { Aarav, Meera } from '@/components/Characters';
 import { simulateStocks } from '@/lib/simulations/stocks';
 import { Play, Pause, RotateCcw, TrendingUp, TrendingDown, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
 
 const INTRO_DIALOGUE = [
@@ -196,12 +196,19 @@ export default function StocksLesson() {
           
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={simData.slice(0, simStep + 1)}>
+              <AreaChart data={simData.slice(0, simStep + 1)} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--color-accent)" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="var(--color-accent)" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" opacity={0.5} />
                 <XAxis dataKey="month" hide />
                 <YAxis domain={['auto', 'auto']} hide />
-                <RechartsTooltip />
-                <Line type="monotone" dataKey="price" stroke="var(--color-accent)" strokeWidth={3} dot={false} isAnimationActive={false} />
-              </LineChart>
+                <RechartsTooltip contentStyle={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px', color: 'var(--color-text-primary)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)' }} itemStyle={{ color: 'var(--color-accent)', fontWeight: 'bold' }} />
+                <Area type="monotone" dataKey="price" stroke="var(--color-accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorPrice)" isAnimationActive={false} />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
 

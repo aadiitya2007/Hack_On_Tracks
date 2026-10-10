@@ -2,16 +2,16 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { simulateTradeAction } from '@/lib/actions';
 
 const ASSET_COLORS: Record<string, string> = {
-  EQUITY: 'var(--color-asset-equity)',
-  MUTUAL_FUND: 'var(--color-asset-reit)', // magenta
-  DEBT: 'var(--color-asset-bond)',
-  COMMODITY: 'var(--color-asset-gold)',
-  REIT: 'var(--color-asset-reit)',
-  CASH: 'var(--color-asset-cash)',
+  EQUITY: 'var(--asset-stocks)',
+  MUTUAL_FUND: 'var(--asset-funds)', // magenta
+  DEBT: 'var(--asset-bonds)',
+  COMMODITY: 'var(--asset-reits)',
+  REIT: 'var(--asset-reits)',
+  CASH: 'var(--asset-cash)',
 };
 
 // Animated Number Component
@@ -248,13 +248,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
               <AreaChart data={mockHistory}>
                 <defs>
                   <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="var(--accent)" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="var(--accent)" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="month" stroke="#475569" fontSize={10} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: 'rgba(15, 10, 42, 0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }} />
-                <Area type="monotone" dataKey="value" stroke="var(--color-primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.5} />
+                <XAxis dataKey="month" stroke="var(--text-muted)" fontSize={10} tickLine={false} axisLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)' }} itemStyle={{ color: 'var(--accent)', fontWeight: 'bold' }} />
+                <Area type="monotone" dataKey="value" stroke="var(--accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

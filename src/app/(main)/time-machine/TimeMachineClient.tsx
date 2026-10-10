@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { motion } from 'framer-motion';
 
 const ASSETS = [
-  { id: 'NIFTY', name: 'NIFTY 50 (Equity)', cagr: 0.14, color: 'var(--color-primary)' },
-  { id: 'GOLD', name: 'Physical Gold', cagr: 0.08, color: 'var(--color-asset-gold)' },
-  { id: 'FD', name: 'Bank FD', cagr: 0.06, color: 'var(--color-asset-cash)' },
+  { id: 'NIFTY', name: 'NIFTY 50 (Equity)', cagr: 0.14, color: 'var(--accent)' },
+  { id: 'GOLD', name: 'Physical Gold', cagr: 0.08, color: 'var(--asset-funds)' },
+  { id: 'FD', name: 'Bank FD', cagr: 0.06, color: 'var(--asset-cash)' },
 ];
 
 export default function TimeMachineClient() {
@@ -41,15 +41,15 @@ export default function TimeMachineClient() {
     <div className="max-w-6xl mx-auto pb-20 relative z-10">
       <div className="mb-8">
         <h1 className="heading-hero text-4xl text-gradient">Time Machine</h1>
-        <p className="text-foreground/60 mt-2 flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-accent tracking-widest uppercase">Educational Only</span>
+        <p className="text-text-secondary mt-2 flex items-center gap-2">
+          <span className="px-2 py-0.5 rounded bg-white/5 border border-border text-[10px] font-bold text-accent tracking-widest uppercase">Educational Only</span>
           Not investment advice. Past performance does not guarantee future results.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Controls */}
-        <div className="glass-card p-6 flex flex-col gap-6">
+        <div className="card p-6 flex flex-col gap-6">
           <div>
             <label className="text-xs font-bold text-foreground/50 uppercase tracking-wider">Asset Class</label>
             <div className="mt-2 space-y-2">
@@ -57,7 +57,7 @@ export default function TimeMachineClient() {
                 <button 
                   key={a.id} 
                   onClick={() => setAssetId(a.id)}
-                  className={`w-full text-left px-4 py-3 rounded-xl border transition-all flex items-center gap-3 ${assetId === a.id ? 'bg-white/10 border-accent/50 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'bg-white/5 border-white/10 text-foreground/70 hover:bg-white/10'}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl border transition-all flex items-center gap-3 ${assetId === a.id ? 'bg-white/10 border-accent/50 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'bg-white/5 border-border text-foreground/70 hover:bg-white/10'}`}
                 >
                   <span className="w-3 h-3 rounded-full" style={{ backgroundColor: a.color }}></span>
                   {a.name}
@@ -98,21 +98,21 @@ export default function TimeMachineClient() {
         {/* Results */}
         <div className="col-span-1 lg:col-span-2 space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider">Final Value</p>
               <p className="text-3xl font-display font-bold text-gradient mt-1">₹{Math.round(finalValue).toLocaleString('en-IN')}</p>
             </div>
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider">Total Profit</p>
               <p className="text-2xl font-display font-bold text-success mt-1">+₹{Math.round(totalProfit).toLocaleString('en-IN')}</p>
             </div>
-            <div className="glass-card p-5">
+            <div className="card p-5">
               <p className="text-[10px] text-foreground/50 font-bold uppercase tracking-wider">Wealth Multiplier</p>
               <p className="text-2xl font-display font-bold text-accent mt-1">{multiplier}x</p>
             </div>
           </div>
 
-          <div className="glass-card p-6 h-[400px] flex flex-col">
+          <div className="card p-6 h-[400px] flex flex-col">
             <h3 className="font-bold text-sm mb-4">Historical Trajectory ({startYear} - {currentYear})</h3>
             <div className="flex-1 -ml-4">
               <ResponsiveContainer width="100%" height="100%">
