@@ -83,7 +83,13 @@ model PriceHistory {
   id         String   @id @default(uuid())
   symbol     String
   date       DateTime
-  price      Float
+  open       Float?
+  high       Float?
+  low        Float?
+  close      Float
+  volume     Float?
+  adjClose   Float?
+  assetClass String   @default("EQUITY")
 
   @@unique([symbol, date])
 }
