@@ -61,15 +61,15 @@ const DEFAULT_ACCOUNTS = [
 
 export default function AccountsClient({ initialAccounts }: { initialAccounts: any[] }) {
   const [accounts, setAccounts] = useState(() => {
-    if (initialAccounts && initialAccounts.length > 0) {
-      return initialAccounts.map(a => ({
-        id: a.id,
-        broker: a.broker,
-        accountNumber: a.id.substring(0, 8).toUpperCase(),
+    if (initialAccounts && Array.isArray(initialAccounts) && initialAccounts.length > 0) {
+      return initialAccounts.map((a: any) => ({
+        id: a.id || 'acc-' + Math.random(),
+        broker: a.broker || 'Broker Account',
+        accountNumber: (a.id || 'ACC12345').substring(0, 8).toUpperCase(),
         status: 'CONNECTED',
         lastSynced: 'Just now',
         holdingsCount: a.holdings?.length || 3,
-        totalValue: a.holdings?.reduce((sum: number, h: any) => sum + (h.quantity * h.currentPrice), 0) || 250000,
+        totalValue: a.holdings?.reduce((sum: number, h: any) => sum + ((h.quantity || 0) * (h.currentPrice || h.avgBuyPrice || 0)), 0) || 250000,
         holdings: a.holdings || []
       }));
     }
