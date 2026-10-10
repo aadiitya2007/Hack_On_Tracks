@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { simulateTradeAction } from '@/lib/actions';
+import { RiskPanel } from '@/components/RiskPanel';
 
 const ASSET_COLORS: Record<string, string> = {
   EQUITY: 'var(--asset-stocks)',
@@ -370,6 +371,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </table>
         </div>
       </div>
+      <div className="mt-6"><RiskPanel /></div>
 
       {/* Simulate Modal */}
       {simulateModalOpen && (

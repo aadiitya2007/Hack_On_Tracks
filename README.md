@@ -71,3 +71,10 @@ To evaluate this prototype, we highly recommend following this exact flow:
 
 ## 🎨 Design System Note
 This prototype was custom-designed using an ultra-vibrant, strict 4-color CSS variable token system. No off-the-shelf component libraries (like Bootstrap or MUI) were used. All components (Cards, Steppers, Dialogues, Charts) were built entirely from scratch with Tailwind v4 for maximum performance and a premium SaaS aesthetic.
+
+### Risk Score Calculation Formula
+The Portfolio Risk Score (0-100) is calculated in `src/lib/risk-analytics.ts` using the following mathematical breakdown:
+1. **Annualised Volatility (40% Weight):** Calculated as the standard deviation of daily portfolio returns (factoring in the Covariance Matrix of mapped assets) annualized over 252 days. Maxes out at 40% volatility.
+2. **Concentration / HHI (30% Weight):** Uses the Herfindahl-Hirschman Index ($\sum weight^2$). Maxes out at 10,000 (100% allocation in a single asset).
+3. **Maximum Drawdown (30% Weight):** Calculated from the synthetic portfolio equity curve over the historical period. Maxes out at a 50% drop.
+4. **Data Penalty:** If assets are missing from the dataset (unmapped), a flat penalty proportional to their weight is added to account for unknown risks.
