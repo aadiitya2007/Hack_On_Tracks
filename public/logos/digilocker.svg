@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" fill="none">
+  <!-- DigiLocker Emblem -->
+  <rect x="10" y="10" width="40" height="40" rx="10" fill="#0284C7"/>
+  <path d="M22 26 C22 21 28 21 30 21 C32 21 38 21 38 26 L38 30 L22 30 Z" stroke="#FFF" stroke-width="2.5" fill="none"/>
+  <rect x="20" y="30" width="20" height="14" rx="3" fill="#F97316"/>
+  <circle cx="30" cy="36" r="2" fill="#FFF"/>
+  <!-- Text -->
+  <text x="58" y="28" font-family="system-ui, sans-serif" font-weight="900" font-size="16" fill="#0284C7">DigiLocker</text>
+  <text x="58" y="42" font-family="system-ui, sans-serif" font-weight="700" font-size="9" fill="#0284C7" letter-spacing="0.5">digilocker.gov.in</text>
+</svg>

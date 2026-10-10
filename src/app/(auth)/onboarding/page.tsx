@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { 
   Shield, CheckCircle2, UserCheck, Camera, Brain, Award, 
-  ArrowRight, Sparkles, AlertCircle, RefreshCw, BarChart3, HelpCircle 
+  ArrowRight, Sparkles, AlertCircle, RefreshCw, BarChart3, HelpCircle,
+  FileText, Upload, Mail, ExternalLink, Check, User, Phone, MapPin
 } from 'lucide-react';
 
 const SKILL_QUESTIONS = [
@@ -53,29 +54,97 @@ const SKILL_QUESTIONS = [
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
-  const [pan, setPan] = useState('');
-  const [otp, setOtp] = useState('');
   const router = useRouter();
 
-  // Face Authentication State
+  // Basic Profile State
+  const [fullName, setFullName] = useState('Aadiitya Agarrwal');
+  const [age, setAge] = useState('24');
+  const [phone, setPhone] = useState('+91 9876543210');
+  const [email, setEmail] = useState('aadiitya@example.com');
+  const [address, setAddress] = useState('Mumbai, Maharashtra, India');
+
+  // PAN & OTP State
+  const [pan, setPan] = useState('');
+  const [otp, setOtp] = useState('');
+
+  // DigiLocker State
+  const [digiLockerRedirecting, setDigiLockerRedirecting] = useState(false);
+  const [digiLockerVerified, setDigiLockerVerified] = useState(false);
+
+  // Real Camera & Face Auth State
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [cameraActive, setCameraActive] = useState(false);
   const [faceScanning, setFaceScanning] = useState(false);
   const [faceVerified, setFaceVerified] = useState(false);
+  const [capturedSnapshot, setCapturedSnapshot] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
 
-  // Quiz State
+  // Non-Partnered PnL & Gmail Sync State
+  const [pnlFileUploaded, setPnlFileUploaded] = useState(false);
+  const [gmailSyncEnabled, setGmailSyncEnabled] = useState(true);
+
+  // Skill Quiz State
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [userCategory, setUserCategory] = useState<{ level: string; title: string; desc: string; color: string } | null>(null);
 
   const handleNext = () => setStep(s => s + 1);
 
-  // Face authentication simulation
-  const startFaceScan = () => {
+  // Enter Key Handler helper for forms
+  const handleKeyDown = (e: React.KeyboardEvent, onValidSubmit: () => void) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onValidSubmit();
+    }
+  };
+
+  // Start Device Camera on Step 5
+  useEffect(() => {
+    if (step === 5) {
+      let stream: MediaStream | null = null;
+      navigator.mediaDevices?.getUserMedia({ video: { width: 640, height: 480 } })
+        .then(s => {
+          stream = s;
+          if (videoRef.current) {
+            videoRef.current.srcObject = s;
+            setCameraActive(true);
+          }
+        })
+        .catch(err => {
+          console.warn('Webcam access not allowed, fallback simulation:', err);
+          setCameraActive(false);
+        });
+
+      return () => {
+        if (stream) {
+          stream.getTracks().forEach(t => t.stop());
+        }
+      };
+    }
+  }, [step]);
+
+  // Capture face frame & run liveness scan
+  const captureAndVerifyFace = () => {
     setFaceScanning(true);
     setScanProgress(0);
+
+    // Capture snapshot if camera is active
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth || 320;
+      canvas.height = video.videoHeight || 240;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        setCapturedSnapshot(canvas.toDataURL('image/png'));
+      }
+    }
+
     let progress = 0;
     const interval = setInterval(() => {
-      progress += 20;
+      progress += 25;
       setScanProgress(progress);
       if (progress >= 100) {
         clearInterval(interval);
@@ -83,6 +152,16 @@ export default function Onboarding() {
         setFaceVerified(true);
       }
     }, 400);
+  };
+
+  // DigiLocker Government Modal Simulation
+  const handleDigiLockerAuth = () => {
+    setDigiLockerRedirecting(true);
+    setTimeout(() => {
+      setDigiLockerRedirecting(false);
+      setDigiLockerVerified(true);
+      setTimeout(() => setStep(5), 1000);
+    }, 2000);
   };
 
   // Handle Quiz Selection
@@ -138,7 +217,7 @@ export default function Onboarding() {
         localStorage.setItem('unify_trader_title', category.title);
         localStorage.setItem('unify_trader_desc', category.desc);
       }
-      setStep(6); // Move to classification result
+      setStep(8); // Move to classification certificate
     }
   };
 
@@ -153,30 +232,30 @@ export default function Onboarding() {
       
       <div className="w-full max-w-xl z-10 relative">
         
-        {/* Header */}
+        {/* Header Logo */}
         <div className="mb-6 flex flex-col items-center">
           <img src="/logos/unify.png" alt="Unify — PLAN / TRACK / GROW" className="h-16 md:h-20 object-contain drop-shadow-md" />
           <div className="flex items-center gap-2 mt-3">
-            <span className="px-3 py-1 rounded-full bg-surface border border-border text-text-secondary text-[10px] font-extrabold tracking-widest uppercase shadow-sm">
-              Identity & Skill Assessment Onboarding
+            <span className="px-3.5 py-1 rounded-full bg-surface border border-border text-text-secondary text-[10px] font-extrabold tracking-widest uppercase shadow-sm">
+              Official Identity & Portfolio Onboarding Gateway
             </span>
           </div>
         </div>
 
         {/* Step Indicator Pills */}
-        <div className="flex items-center justify-between mb-6 px-2">
-          {['PAN', 'OTP', 'Aadhaar', 'Face Auth', 'Skill Quiz', 'Category'].map((sName, idx) => {
+        <div className="flex items-center justify-between mb-6 px-1">
+          {['Profile', 'NSDL PAN', 'OTP', 'DigiLocker', 'Face Auth', 'Accounts', 'Quiz', 'Category'].map((sName, idx) => {
             const stepNum = idx + 1;
             const active = step === stepNum;
             const completed = step > stepNum;
             return (
               <div key={sName} className="flex flex-col items-center">
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-extrabold transition-all ${
                   completed ? 'bg-gain text-white' : (active ? 'bg-accent text-white shadow-[0_0_12px_rgba(109,40,217,0.5)] scale-110' : 'bg-surface text-text-muted border border-border')
                 }`}>
                   {completed ? '✓' : stepNum}
                 </div>
-                <span className="text-[9px] font-semibold text-text-muted mt-1 hidden sm:block">{sName}</span>
+                <span className="text-[8.5px] font-bold text-text-muted mt-1 hidden sm:block">{sName}</span>
               </div>
             );
           })}
@@ -186,111 +265,232 @@ export default function Onboarding() {
         <div className="card p-6 md:p-8 bg-surface border border-border rounded-3xl shadow-2xl relative overflow-hidden">
           <AnimatePresence mode="wait">
             
-            {/* STEP 1: PAN Entry */}
+            {/* STEP 1: Basic Personal Profile */}
             {step === 1 && (
-              <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-                <div>
-                  <h2 className="text-xl font-extrabold text-text-primary">Step 1: Enter your PAN Number</h2>
-                  <p className="text-xs text-text-secondary mt-1">Enter your Permanent Account Number to locate connected brokerages and CKYC records.</p>
-                </div>
-                
-                <div>
-                  <label className="text-xs font-bold uppercase text-text-muted">Permanent Account Number (PAN)</label>
-                  <input 
-                    type="text" 
-                    value={pan}
-                    onChange={e => setPan(e.target.value.toUpperCase())}
-                    placeholder="ABCDE1234F"
-                    className="w-full mt-1 bg-bg border border-border rounded-2xl px-4 py-3.5 focus:outline-none focus:border-accent text-center tracking-[0.4em] font-mono text-xl font-bold uppercase"
-                    maxLength={10}
-                  />
-                </div>
+              <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <form 
+                  onSubmit={(e) => { e.preventDefault(); handleNext(); }} 
+                  onKeyDown={(e) => handleKeyDown(e, handleNext)}
+                  className="space-y-4"
+                >
+                  <div>
+                    <h2 className="text-xl font-black text-text-primary">Step 1: Basic Investor Profile</h2>
+                    <p className="text-xs text-text-secondary mt-1">Enter your contact details to locate CKYC and depository records. Press <kbd className="px-1.5 py-0.5 rounded bg-bg border border-border font-mono text-[10px]">Enter</kbd> to advance.</p>
+                  </div>
 
-                <div className="p-3 rounded-xl bg-accent-bg border border-accent/20 text-accent text-xs flex items-center gap-2 font-medium">
-                  <Shield size={16} className="shrink-0" />
-                  <span>256-bit encrypted CKYC lookup. Your identity is verified against official NSDL/CDSL depositories.</span>
-                </div>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-[10px] font-extrabold uppercase text-text-muted">Full Name (As per Bank & PAN)</label>
+                      <input 
+                        type="text" 
+                        value={fullName}
+                        onChange={e => setFullName(e.target.value)}
+                        required
+                        className="w-full mt-1 bg-bg border border-border rounded-xl px-4 py-2.5 text-sm font-bold text-text-primary focus:outline-none focus:border-accent"
+                      />
+                    </div>
 
-                <button onClick={handleNext} disabled={pan.length !== 10} className="btn-primary w-full py-3.5 text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed">
-                  Verify PAN & Find Accounts →
-                </button>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-[10px] font-extrabold uppercase text-text-muted">Age (Years)</label>
+                        <input 
+                          type="number" 
+                          value={age}
+                          onChange={e => setAge(e.target.value)}
+                          required
+                          className="w-full mt-1 bg-bg border border-border rounded-xl px-4 py-2.5 text-sm font-bold text-text-primary focus:outline-none focus:border-accent"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-extrabold uppercase text-text-muted">Mobile Number</label>
+                        <input 
+                          type="text" 
+                          value={phone}
+                          onChange={e => setPhone(e.target.value)}
+                          required
+                          className="w-full mt-1 bg-bg border border-border rounded-xl px-4 py-2.5 text-sm font-bold text-text-primary focus:outline-none focus:border-accent"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-extrabold uppercase text-text-muted">Email Address</label>
+                      <input 
+                        type="email" 
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="w-full mt-1 bg-bg border border-border rounded-xl px-4 py-2.5 text-sm font-bold text-text-primary focus:outline-none focus:border-accent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-extrabold uppercase text-text-muted">Residential Address</label>
+                      <input 
+                        type="text" 
+                        value={address}
+                        onChange={e => setAddress(e.target.value)}
+                        required
+                        className="w-full mt-1 bg-bg border border-border rounded-xl px-4 py-2.5 text-sm font-bold text-text-primary focus:outline-none focus:border-accent"
+                      />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="btn-primary w-full py-3.5 text-xs font-bold flex justify-center items-center gap-2">
+                    Save Profile & Proceed to NSDL PAN Verification →
+                  </button>
+                </form>
               </motion.div>
             )}
 
-            {/* STEP 2: Mobile OTP */}
+            {/* STEP 2: NSDL PAN Card Verification */}
             {step === 2 && (
-              <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-                <div>
-                  <h2 className="text-xl font-extrabold text-text-primary">Step 2: Mobile OTP Authentication</h2>
-                  <p className="text-xs text-text-secondary mt-1">Enter the 6-digit verification code sent to the mobile linked to PAN <strong className="font-mono text-text-primary">{pan.substring(0,2)}*****{pan.substring(8)}</strong>.</p>
-                </div>
+              <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <form 
+                  onSubmit={(e) => { e.preventDefault(); if (pan.length === 10) handleNext(); }}
+                  onKeyDown={(e) => handleKeyDown(e, () => { if (pan.length === 10) handleNext(); })}
+                  className="space-y-5"
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h2 className="text-xl font-black text-text-primary">Step 2: NSDL PAN Verification</h2>
+                      <p className="text-xs text-text-secondary mt-1">Verify Permanent Account Number against NSDL Securities Depository.</p>
+                    </div>
+                    {/* NSDL Official Logo Badge */}
+                    <img src="/logos/nsdl.svg" alt="NSDL Depository" className="h-10 object-contain bg-white/90 p-1 rounded-lg border border-border shrink-0" />
+                  </div>
+                  
+                  <div>
+                    <label className="text-[10px] font-extrabold uppercase text-text-muted">Permanent Account Number (PAN)</label>
+                    <input 
+                      type="text" 
+                      value={pan}
+                      onChange={e => setPan(e.target.value.toUpperCase())}
+                      placeholder="ABCDE1234F"
+                      className="w-full mt-1 bg-bg border border-border rounded-2xl px-4 py-3.5 focus:outline-none focus:border-accent text-center tracking-[0.4em] font-mono text-xl font-black uppercase"
+                      maxLength={10}
+                      autoFocus
+                    />
+                  </div>
 
-                <div>
-                  <label className="text-xs font-bold uppercase text-text-muted">Enter 6-Digit OTP</label>
-                  <input 
-                    type="text" 
-                    value={otp}
-                    onChange={e => setOtp(e.target.value)}
-                    placeholder="0 0 0 0 0 0"
-                    className="w-full mt-1 bg-bg border border-border rounded-2xl px-4 py-3.5 focus:outline-none focus:border-accent text-center tracking-[0.8em] font-mono text-2xl font-bold"
-                    maxLength={6}
-                  />
-                </div>
+                  <div className="p-3 rounded-2xl bg-accent-bg border border-accent/20 text-accent text-xs flex items-center gap-2 font-medium">
+                    <Shield size={16} className="shrink-0" />
+                    <span>Official NSDL Depository API verification. Type 10 characters and press <kbd className="px-1.5 py-0.5 rounded bg-surface border border-accent/30 font-mono text-[10px]">Enter</kbd>.</span>
+                  </div>
 
-                <div className="flex justify-between items-center text-xs text-text-muted">
-                  <span>Didn't receive code?</span>
-                  <button className="text-accent font-bold hover:underline" onClick={() => setOtp('982311')}>Use Demo OTP (982311)</button>
-                </div>
-
-                <button onClick={handleNext} disabled={otp.length !== 6} className="btn-primary w-full py-3.5 text-xs font-bold disabled:opacity-50">
-                  Confirm OTP & Proceed →
-                </button>
+                  <button type="submit" disabled={pan.length !== 10} className="btn-primary w-full py-3.5 text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed">
+                    Verify NSDL PAN & Send Mobile OTP →
+                  </button>
+                </form>
               </motion.div>
             )}
 
-            {/* STEP 3: Aadhaar CKYC Consent */}
+            {/* STEP 3: Mobile OTP */}
             {step === 3 && (
-              <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-                <div>
-                  <h2 className="text-xl font-extrabold text-text-primary">Step 3: Aadhaar CKYC Consent</h2>
-                  <p className="text-xs text-text-secondary mt-1">Provide one-time explicit authorization to aggregate holdings across Zerodha, Groww, Upstox & CDSL.</p>
-                </div>
+              <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <form 
+                  onSubmit={(e) => { e.preventDefault(); if (otp.length === 6) handleNext(); }}
+                  onKeyDown={(e) => handleKeyDown(e, () => { if (otp.length === 6) handleNext(); })}
+                  className="space-y-5"
+                >
+                  <div>
+                    <h2 className="text-xl font-black text-text-primary">Step 3: Mobile OTP Authentication</h2>
+                    <p className="text-xs text-text-secondary mt-1">Enter the 6-digit verification code sent to mobile <strong className="font-mono text-text-primary">{phone}</strong> linked to PAN <strong className="font-mono text-text-primary">{pan}</strong>.</p>
+                  </div>
 
-                <div className="p-4 rounded-2xl bg-bg border border-border text-xs text-text-secondary space-y-3 leading-relaxed">
-                  <p className="font-bold text-text-primary flex items-center gap-1.5">
-                    <Shield size={16} className="text-gain" /> Regulatory Read-Only Data Guarantee
-                  </p>
-                  <p>
-                    "I hereby grant explicit consent to Unify to fetch my CKYC profile details and aggregate read-only portfolio telemetry across linked Indian depository accounts."
-                  </p>
-                  <p className="text-[11px] text-text-muted">
-                    Note: Unify operates strictly read-only telemetry. We cannot place orders, debit funds, or execute transactions.
-                  </p>
-                </div>
+                  <div>
+                    <label className="text-[10px] font-extrabold uppercase text-text-muted">Enter 6-Digit Mobile OTP</label>
+                    <input 
+                      type="text" 
+                      value={otp}
+                      onChange={e => setOtp(e.target.value)}
+                      placeholder="0 0 0 0 0 0"
+                      className="w-full mt-1 bg-bg border border-border rounded-2xl px-4 py-3.5 focus:outline-none focus:border-accent text-center tracking-[0.8em] font-mono text-2xl font-black"
+                      maxLength={6}
+                      autoFocus
+                    />
+                  </div>
 
-                <button onClick={handleNext} className="btn-primary w-full py-3.5 text-xs font-bold bg-gradient-to-r from-accent to-gain">
-                  I Consent & Continue →
-                </button>
+                  <div className="flex justify-between items-center text-xs text-text-muted">
+                    <span>Press <kbd className="px-1.5 py-0.5 rounded bg-bg border border-border font-mono text-[10px]">Enter</kbd> to submit</span>
+                    <button type="button" className="text-accent font-bold hover:underline" onClick={() => setOtp('982311')}>Use Demo OTP (982311)</button>
+                  </div>
+
+                  <button type="submit" disabled={otp.length !== 6} className="btn-primary w-full py-3.5 text-xs font-bold disabled:opacity-50">
+                    Confirm OTP & Proceed to DigiLocker →
+                  </button>
+                </form>
               </motion.div>
             )}
 
-            {/* STEP 4: Face Authentication (Biometric AI Scan) */}
+            {/* STEP 4: DigiLocker & UIDAI Aadhaar CKYC Authentication */}
             {step === 4 && (
               <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <Camera className="text-accent" size={22} />
-                    <h2 className="text-xl font-extrabold text-text-primary">Step 4: AI Face Authentication</h2>
-                  </div>
-                  <p className="text-xs text-text-secondary mt-1">Biometric liveness verification to match facial hash against CKYC photo database.</p>
+                  <h2 className="text-xl font-black text-text-primary">Step 4: Government DigiLocker & UIDAI Aadhaar CKYC</h2>
+                  <p className="text-xs text-text-secondary mt-1">You will be redirected to the official Government portal (<strong className="text-sky-400">digilocker.gov.in</strong>) to pull Aadhaar CKYC records.</p>
                 </div>
 
-                {/* Face Camera Scan Box */}
-                <div className="relative w-full h-56 rounded-3xl bg-black/80 border-2 border-dashed border-accent/40 flex flex-col items-center justify-center overflow-hidden">
+                {/* Official Logos Container */}
+                <div className="flex justify-around items-center p-4 rounded-2xl bg-white/90 border border-border">
+                  <img src="/logos/digilocker.svg" alt="DigiLocker Government Portal" className="h-10 object-contain" />
+                  <div className="h-8 w-[1px] bg-slate-300"></div>
+                  <img src="/logos/aadhaar.svg" alt="UIDAI Aadhaar Govt of India" className="h-10 object-contain" />
+                </div>
+
+                <div className="p-4 rounded-2xl bg-bg border border-border text-xs text-text-secondary space-y-2 leading-relaxed">
+                  <p className="font-extrabold text-text-primary flex items-center gap-1.5">
+                    <Shield size={16} className="text-gain" /> Official DigiLocker Authorization Contract
+                  </p>
+                  <p>
+                    "I hereby grant explicit consent to fetch my CKYC profile and Aadhaar verification details via DigiLocker Government Gateway (<strong className="font-mono">digilocker.gov.in</strong>)."
+                  </p>
+                </div>
+
+                {digiLockerRedirecting ? (
+                  <div className="p-4 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-bold text-center space-y-2">
+                    <RefreshCw className="animate-spin mx-auto" size={20} />
+                    <p>Connecting to DigiLocker Government Gateway (digilocker.gov.in)...</p>
+                    <p className="text-[10px] text-text-muted">Fetching CKYC Identity Record & UIDAI Hash...</p>
+                  </div>
+                ) : digiLockerVerified ? (
+                  <div className="p-4 rounded-2xl bg-gain-bg border border-gain/30 text-gain text-xs font-extrabold text-center flex items-center justify-center gap-2">
+                    <CheckCircle2 size={18} /> CKYC & Aadhaar Verified via DigiLocker! Redirecting...
+                  </div>
+                ) : (
+                  <button 
+                    onClick={handleDigiLockerAuth} 
+                    className="btn-primary w-full py-3.5 text-xs font-bold bg-gradient-to-r from-sky-500 to-accent text-white flex justify-center items-center gap-2"
+                  >
+                    <ExternalLink size={16} /> Authenticate via DigiLocker (digilocker.gov.in) →
+                  </button>
+                )}
+              </motion.div>
+            )}
+
+            {/* STEP 5: Live Device Camera Face Capture & Biometric Verification */}
+            {step === 5 && (
+              <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Camera className="text-accent" size={22} />
+                    <h2 className="text-xl font-black text-text-primary">Step 5: Device Camera Face Capture & Verification</h2>
+                  </div>
+                  <p className="text-xs text-text-secondary mt-1">Your device camera will capture your face to verify biometric liveness against your UIDAI Aadhaar photo.</p>
+                </div>
+
+                {/* Real Device Camera Viewport */}
+                <div className="relative w-full h-64 rounded-3xl bg-black border-2 border-dashed border-accent/50 flex flex-col items-center justify-center overflow-hidden shadow-2xl">
                   
-                  {/* Face Mesh SVG Guide Overlay */}
+                  {/* Live WebRTC Camera Stream */}
+                  <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover rounded-3xl" />
+                  
+                  {/* Hidden Canvas for Frame Snapshots */}
+                  <canvas ref={canvasRef} className="hidden" />
+
+                  {/* Face Mesh Overlay Guide */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <svg className={`w-36 h-44 text-accent transition-all ${faceScanning ? 'animate-pulse scale-105' : ''}`} viewBox="0 0 100 120" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className={`w-40 h-48 text-accent transition-all ${faceScanning ? 'animate-pulse scale-105' : ''}`} viewBox="0 0 100 120" fill="none" stroke="currentColor" strokeWidth="2">
                       <ellipse cx="50" cy="55" rx="35" ry="45" strokeDasharray="4 4" />
                       <circle cx="35" cy="45" r="5" fill={faceVerified ? '#10E5A0' : 'none'} />
                       <circle cx="65" cy="45" r="5" fill={faceVerified ? '#10E5A0' : 'none'} />
@@ -298,36 +498,37 @@ export default function Onboarding() {
                     </svg>
                   </div>
 
-                  {/* Scanning Animation Laser Line */}
+                  {/* Scanning Laser Line */}
                   {faceScanning && (
                     <motion.div 
-                      animate={{ y: [-100, 100, -100] }} 
-                      transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-                      className="absolute w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_15px_#6D28D9]"
+                      animate={{ y: [-110, 110, -110] }} 
+                      transition={{ repeat: Infinity, duration: 1.4, ease: 'linear' }}
+                      className="absolute w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_20px_#6D28D9]"
                     />
                   )}
 
-                  {/* Status Overlay Text */}
-                  <div className="relative z-10 text-center p-4">
+                  {/* Camera Status Label */}
+                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white flex items-center gap-1.5 border border-white/20">
+                    <span className={`w-2 h-2 rounded-full ${cameraActive ? 'bg-gain animate-ping' : 'bg-amber-400'}`}></span>
+                    {cameraActive ? 'Device Camera Active' : 'Camera Ready (Simulated)'}
+                  </div>
+
+                  {/* Scanning Overlay Text */}
+                  <div className="relative z-10 text-center p-4 pointer-events-none">
                     {faceVerified ? (
-                      <div className="space-y-2">
-                        <div className="w-12 h-12 rounded-full bg-gain-bg text-gain mx-auto flex items-center justify-center border border-gain/30">
-                          <CheckCircle2 size={24} />
+                      <div className="space-y-1 bg-black/70 backdrop-blur-md p-4 rounded-2xl border border-gain/40">
+                        <div className="w-10 h-10 rounded-full bg-gain-bg text-gain mx-auto flex items-center justify-center border border-gain/30">
+                          <CheckCircle2 size={22} />
                         </div>
-                        <p className="text-sm font-extrabold text-gain">Biometric Hash Matched!</p>
-                        <p className="text-[11px] text-text-muted font-mono">Liveness Score: 99.8% • CKYC Face Verified</p>
+                        <p className="text-sm font-black text-gain">Biometric Hash Verified!</p>
+                        <p className="text-[10px] text-white/80 font-mono">Matched against UIDAI Aadhaar Photo • Liveness 99.9%</p>
                       </div>
-                    ) : faceScanning ? (
-                      <div className="space-y-2">
-                        <p className="text-xs font-bold text-accent tracking-wider uppercase animate-pulse">Scanning Facial Features...</p>
+                    ) : faceScanning && (
+                      <div className="space-y-2 bg-black/70 backdrop-blur-md p-3 rounded-2xl border border-accent/40">
+                        <p className="text-xs font-extrabold text-accent tracking-wider uppercase animate-pulse">Capturing & Verifying Facial Liveness...</p>
                         <div className="w-48 bg-bg h-2 rounded-full mx-auto overflow-hidden border border-border">
                           <div className="bg-accent h-full transition-all duration-300" style={{ width: `${scanProgress}%` }}></div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        <UserCheck className="mx-auto text-text-muted" size={32} />
-                        <p className="text-xs text-text-secondary font-medium max-w-xs">Position your face inside the frame and ensure good lighting.</p>
                       </div>
                     )}
                   </div>
@@ -335,30 +536,104 @@ export default function Onboarding() {
 
                 {!faceVerified ? (
                   <button 
-                    onClick={startFaceScan} 
+                    onClick={captureAndVerifyFace} 
                     disabled={faceScanning} 
                     className="btn-primary w-full py-3.5 text-xs font-bold flex justify-center items-center gap-2"
                   >
                     {faceScanning ? <RefreshCw className="animate-spin" size={16} /> : <Camera size={16} />}
-                    {faceScanning ? 'Verifying Liveness...' : 'Start Biometric Face Scan'}
+                    {faceScanning ? 'Verifying Facial Hash...' : 'Capture Face & Verify with Aadhaar →'}
                   </button>
                 ) : (
                   <button onClick={handleNext} className="btn-primary w-full py-3.5 text-xs font-bold bg-gain text-white">
-                    Face Authenticated — Proceed to Skill Assessment →
+                    Face Authenticated — Proceed to Accounts Link →
                   </button>
                 )}
               </motion.div>
             )}
 
-            {/* STEP 5: Trader Skill & Knowledge Questionnaire */}
-            {step === 5 && (
-              <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+            {/* STEP 6: Partnered Accounts Link & Non-Partnered PnL / Gmail Access */}
+            {step === 6 && (
+              <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+                <div>
+                  <h2 className="text-xl font-black text-text-primary">Step 6: Account Linking & P&L Statement Upload</h2>
+                  <p className="text-xs text-text-secondary mt-1">Partnered brokerages auto-sync telemetry. For un-integrated brokerages, upload P&L statements or enable Gmail trade note sync.</p>
+                </div>
+
+                {/* Partnered Brokers List */}
+                <div className="space-y-2">
+                  <p className="text-[10px] font-extrabold uppercase text-text-muted tracking-wider">Partnered Brokers (Auto-Fetched)</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { name: 'Zerodha Kite', logo: '/logos/zerodha.webp' },
+                      { name: 'Groww', logo: '/logos/groww.png' },
+                      { name: 'Upstox', logo: '/logos/upstox.png' },
+                      { name: 'CDSL Depository', logo: '/logos/cdsl.webp' }
+                    ].map(b => (
+                      <div key={b.name} className="flex items-center justify-between p-2.5 rounded-xl bg-bg border border-border">
+                        <div className="flex items-center gap-2">
+                          <img src={b.logo} alt={b.name} className="w-5 h-5 object-contain" />
+                          <span className="text-xs font-extrabold text-text-primary">{b.name}</span>
+                        </div>
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gain-bg text-gain">Connected</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Non-Partnered Upload PnL Section */}
+                <div className="p-4 rounded-2xl bg-bg border border-dashed border-border space-y-3">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xs font-black text-text-primary">Un-integrated Brokers P&L Upload</p>
+                      <p className="text-[10px] text-text-muted">Upload CAS statement (PDF/CSV) for non-partnered brokers</p>
+                    </div>
+                    <FileText size={20} className="text-accent shrink-0" />
+                  </div>
+
+                  <button 
+                    type="button"
+                    onClick={() => setPnlFileUploaded(true)} 
+                    className="w-full py-2.5 rounded-xl bg-surface border border-border text-xs font-bold text-text-primary hover:border-accent transition-all flex justify-center items-center gap-2"
+                  >
+                    <Upload size={14} /> {pnlFileUploaded ? '✓ P&L Statement Processed' : 'Upload CAS / P&L Statement (PDF/CSV)'}
+                  </button>
+                </div>
+
+                {/* Gmail Trade Mail Parser Access */}
+                <div className="p-4 rounded-2xl bg-surface border border-border space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <img src="/logos/gmail.svg" alt="Gmail Sync" className="h-6 object-contain" />
+                      <div>
+                        <p className="text-xs font-black text-text-primary">Gmail Trade Contract Note Sync</p>
+                        <p className="text-[10px] text-text-muted">Read-only order email parsing consent</p>
+                      </div>
+                    </div>
+
+                    <input 
+                      type="checkbox" 
+                      checked={gmailSyncEnabled} 
+                      onChange={e => setGmailSyncEnabled(e.target.checked)}
+                      className="w-4 h-4 accent-accent shrink-0" 
+                    />
+                  </div>
+                </div>
+
+                <button onClick={handleNext} className="btn-primary w-full py-3.5 text-xs font-bold">
+                  Save Accounts & Proceed to Skill Assessment →
+                </button>
+              </motion.div>
+            )}
+
+            {/* STEP 7: Trader Skill & Knowledge Questionnaire */}
+            {step === 7 && (
+              <motion.div key="step7" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                 <div className="flex justify-between items-start">
                   <div>
                     <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-accent-bg text-accent border border-accent/20">
                       Question {currentQuizIdx + 1} of {SKILL_QUESTIONS.length}
                     </span>
-                    <h2 className="text-lg font-extrabold text-text-primary mt-2">
+                    <h2 className="text-lg font-black text-text-primary mt-2">
                       {SKILL_QUESTIONS[currentQuizIdx].question}
                     </h2>
                   </div>
@@ -370,7 +645,7 @@ export default function Onboarding() {
                     <button
                       key={i}
                       onClick={() => handleAnswerSelect(opt.score)}
-                      className="w-full text-left p-4 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover text-xs font-medium text-text-primary transition-all flex items-center justify-between group"
+                      className="w-full text-left p-4 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover text-xs font-bold text-text-primary transition-all flex items-center justify-between group"
                     >
                       <span>{opt.label}</span>
                       <ArrowRight size={14} className="text-text-muted group-hover:text-accent group-hover:translate-x-1 transition-all shrink-0" />
@@ -379,14 +654,14 @@ export default function Onboarding() {
                 </div>
 
                 <p className="text-[11px] text-text-muted text-center italic">
-                  This classification customizes your dashboard AI advisory & learning recommendations.
+                  Press <kbd className="px-1.5 py-0.5 rounded bg-bg border border-border font-mono text-[10px]">Enter</kbd> or click options to classify level.
                 </p>
               </motion.div>
             )}
 
-            {/* STEP 6: Classification Result Certificate */}
-            {step === 6 && userCategory && (
-              <motion.div key="step6" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6 text-center py-2">
+            {/* STEP 8: Classification Result Certificate & Launch */}
+            {step === 8 && userCategory && (
+              <motion.div key="step8" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6 text-center py-2">
                 <div className="w-16 h-16 rounded-3xl bg-accent-bg text-accent mx-auto flex items-center justify-center border border-accent/30 shadow-[0_0_20px_rgba(109,40,217,0.3)]">
                   <Award size={32} />
                 </div>
@@ -401,35 +676,36 @@ export default function Onboarding() {
 
                 <div className="p-4 rounded-2xl bg-bg border border-border text-left space-y-2 text-xs">
                   <p className="font-bold text-text-primary flex items-center gap-2">
-                    <Sparkles size={16} className="text-accent" /> What this means for your dashboard:
+                    <Sparkles size={16} className="text-accent" /> Verified CKYC & Portfolio Configuration:
                   </p>
-                  <ul className="space-y-1.5 text-text-secondary pl-5 list-disc">
-                    <li>Customized AI portfolio diversification recommendations on dashboard</li>
-                    <li>Tailored risk threshold alerts for your skill tier</li>
-                    <li>Pre-configured ML stock return prediction widgets</li>
+                  <ul className="space-y-1.5 text-text-secondary pl-5 list-disc text-[11px]">
+                    <li><strong>Investor Profile:</strong> {fullName} ({age} Yrs), {email}</li>
+                    <li><strong>Depository:</strong> NSDL PAN {pan} Verified</li>
+                    <li><strong>CKYC Identity:</strong> DigiLocker Govt Authenticated & Biometric Face Hash Matched</li>
+                    <li><strong>Accounts:</strong> Zerodha, Groww, Upstox & P&L Statement Synchronized</li>
                   </ul>
                 </div>
 
                 <button 
                   onClick={() => {
-                    setStep(7);
+                    setStep(9);
                     setTimeout(() => router.push('/dashboard'), 1200);
                   }}
                   className="btn-primary w-full py-3.5 text-xs font-bold"
                 >
-                  Confirm & Launch My Dashboard →
+                  Confirm Setup & Open Dashboard →
                 </button>
               </motion.div>
             )}
 
-            {/* STEP 7: Redirecting Final State */}
-            {step === 7 && (
-              <motion.div key="step7" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8 space-y-4">
+            {/* STEP 9: Redirecting Final State */}
+            {step === 9 && (
+              <motion.div key="step9" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8 space-y-4">
                 <div className="w-16 h-16 rounded-full bg-gain-bg text-gain mx-auto flex items-center justify-center border border-gain/30 animate-bounce">
                   <CheckCircle2 size={32} />
                 </div>
-                <h2 className="text-2xl font-extrabold text-gain">Setup Complete!</h2>
-                <p className="text-xs text-text-secondary">Linking broker telemetry and generating personalized AI strategy report...</p>
+                <h2 className="text-2xl font-black text-gain">Telemetry Connection Complete!</h2>
+                <p className="text-xs text-text-secondary">Generating your personalized AI Advisory Report on the Dashboard...</p>
                 <div className="w-32 h-1.5 bg-bg rounded-full mx-auto overflow-hidden border border-border">
                   <div className="bg-gain h-full animate-pulse w-full"></div>
                 </div>
