@@ -1,4 +1,4 @@
-import { LayoutDashboard, Wallet, BookOpen, TrendingUp, Clock, ShieldAlert, Sparkles, Newspaper } from "lucide-react";
+import { LayoutDashboard, Wallet, BookOpen, TrendingUp, Clock, ShieldAlert, Sparkles, Newspaper, Users } from "lucide-react";
 import Link from "next/link";
 import AssistantWidget from "./AssistantWidget";
 import MarketBackground from "./MarketBackground";
@@ -45,6 +45,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <NavLink href="/risk" icon={<ShieldAlert size={22} strokeWidth={2.5} />} label="Risk Profile" colorClass="text-[var(--asset-bonds)]" />
           <NavLink href="/prediction" icon={<Sparkles size={22} strokeWidth={2.5} />} label="Stock Insights" badge="AI ML" colorClass="text-accent" />
           <NavLink href="/news" icon={<Newspaper size={22} strokeWidth={2.5} />} label="Market News" badge="Live" colorClass="text-accent" />
+          <NavLink href="/community" icon={<Users size={22} strokeWidth={2.5} />} label="Community Forum" badge="Network" colorClass="text-accent" />
 
           <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
           <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
