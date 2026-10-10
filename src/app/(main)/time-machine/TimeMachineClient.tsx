@@ -276,7 +276,11 @@ export default function TimeMachineClient() {
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.5} />
                         <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={10} tickLine={false} axisLine={false} minTickGap={50} />
                         <YAxis stroke="var(--text-muted)" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(v)=>`${v.toFixed(0)}%`} domain={['auto', 0]} />
-                        <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)' }} itemStyle={{ color: 'var(--loss)', fontWeight: 'bold' }} />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)' }} 
+                          itemStyle={{ color: 'var(--loss)', fontWeight: 'bold' }} 
+                          formatter={(val: any) => [`${Number(val).toFixed(2)}%`, 'Drawdown']}
+                        />
                         <Area type="monotone" dataKey="drawdown" name="Drawdown %" stroke="var(--loss)" strokeWidth={2} fillOpacity={1} fill="url(#colorLoss)" isAnimationActive={false} />
                       </AreaChart>
                     </ResponsiveContainer>
