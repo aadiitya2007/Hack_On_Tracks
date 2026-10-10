@@ -158,10 +158,10 @@ export default function AssistantWidget() {
         drag
         dragMomentum={false}
         onClick={() => setOpen(prev => !prev)}
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-accent hover:bg-accent/90 flex items-center justify-center text-white shadow-[0_8px_25px_rgba(109,40,217,0.5)] transition-transform hover:scale-105 z-[999] border border-white/20 cursor-grab active:cursor-grabbing"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-accent hover:bg-accent/90 flex items-center justify-center text-white shadow-[0_8px_25px_rgba(109,40,217,0.5)] transition-transform hover:scale-105 z-[999] border border-white/20 cursor-grab active:cursor-grabbing"
         aria-label="Open AI Assistant"
       >
-        <MessageSquare size={24} />
+        <MessageSquare size={22} />
       </motion.button>
 
       <AnimatePresence>
@@ -173,7 +173,7 @@ export default function AssistantWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 w-[380px] h-[560px] bg-surface border border-border rounded-3xl shadow-[0_25px_60px_-15px_rgba(109,40,217,0.35)] flex flex-col z-[999] overflow-hidden cursor-default"
+            className="fixed bottom-20 right-2 sm:bottom-24 sm:right-6 w-[calc(100vw-1rem)] sm:w-[380px] max-w-[380px] h-[75vh] sm:h-[560px] max-h-[560px] bg-surface border border-border rounded-3xl shadow-[0_25px_60px_-15px_rgba(109,40,217,0.35)] flex flex-col z-[999] overflow-hidden cursor-default"
           >
             {/* Top Drag Handle Header */}
             <div className="bg-accent/10 border-b border-border py-1.5 px-4 flex items-center justify-between cursor-grab active:cursor-grabbing select-none text-[10px] font-extrabold text-accent">
