@@ -222,3 +222,213 @@ body {
   color: var(--text-muted);
   border-top: 1px solid var(--border-color);
 }
+
+/* Phase 2 Additions */
+
+/* Forms & Inputs */
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: left;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+.checkbox-label input {
+  margin-top: 3px;
+  accent-color: var(--brand-accent);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge.source-api { background-color: var(--brand-accent-bg); color: var(--brand-accent-text); }
+.badge.source-statement { background-color: var(--bg-surface-hover); color: var(--text-secondary); border: 1px solid var(--border-color); }
+.badge.source-mail { background-color: rgba(234, 88, 12, 0.1); color: var(--color-mf); }
+.badge-gain { background-color: var(--color-gain-bg); color: var(--color-gain); }
+.badge-loss { background-color: var(--color-loss-bg); color: var(--color-loss); }
+
+/* Broker Logo Chip */
+.broker-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  margin-right: 8px;
+}
+
+/* Wizard / Stepper */
+.wizard-step {
+  display: none;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+.wizard-step.active {
+  display: block;
+}
+.wizard-card {
+  max-w: 480px;
+  margin: 48px auto;
+  text-align: center;
+}
+.progress-bar {
+  height: 4px;
+  background-color: var(--bg-surface-hover);
+  border-radius: 2px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background-color: var(--brand-accent);
+  transition: width 0.3s ease;
+}
+
+/* Dashboard Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+}
+
+/* Charts */
+.chart-container {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  margin-top: 16px;
+}
+svg.chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.chart-line {
+  fill: none;
+  stroke: var(--brand-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: drawLine 1s ease-out forwards;
+}
+.chart-area {
+  fill: var(--brand-accent);
+  opacity: 0.1;
+  animation: fadeIn 1s ease-out forwards;
+}
+@keyframes drawLine {
+  from { stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+  to { stroke-dasharray: 2000; stroke-dashoffset: 0; }
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+.tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tab:hover { color: var(--text-primary); }
+.tab.active {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+/* Dense Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+.data-table th {
+  padding: 12px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 700;
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+.data-table tr:hover td {
+  background-color: var(--bg-surface-hover);
+}
+.data-table tr.new-row td {
+  animation: slideInRow 0.4s ease-out forwards, highlightRow 1s ease-out forwards;
+}
+
+@keyframes slideInRow {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes highlightRow {
+  0% { background-color: var(--brand-accent-bg); }
+  100% { background-color: transparent; }
+}
+
+/* Alert Box */
+.alert-box {
+  background-color: var(--color-bonds);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+/* Value flash */
+.flash-up { animation: flashGreen 0.5s ease-out; }
+.flash-down { animation: flashRed 0.5s ease-out; }
+@keyframes flashGreen { 0% { color: var(--color-gain); } 100% { color: inherit; } }
+@keyframes flashRed { 0% { color: var(--color-loss); } 100% { color: inherit; } }
