@@ -1,0 +1,93 @@
+{
+  "report_generated_at": "2026-10-10T17:44:47.866071",
+  "data_processing": {
+    "initial_rows_in_raw": 4094387,
+    "rows_after_filtering": 124162,
+    "final_rows_saved": 124162,
+    "duplicates_removed": 0,
+    "suspicious_jumps_flagged": 0
+  },
+  "missing_values": {
+    "before_ffill": {
+      "date": 0,
+      "symbol": 0,
+      "open": 0,
+      "high": 0,
+      "low": 0,
+      "close": 0,
+      "volume": 0,
+      "change_pct": 0
+    },
+    "after_ffill": {
+      "date": 0,
+      "symbol": 0,
+      "open": 0,
+      "high": 0,
+      "low": 0,
+      "close": 0,
+      "volume": 0,
+      "change_pct": 0
+    }
+  },
+  "metadata": {
+    "symbols_included": [
+      "BAJFINANCE",
+      "HDFCBANK",
+      "HINDPETRO",
+      "EXIDEIND",
+      "TI",
+      "KANSAINER",
+      "HDFC",
+      "SBIN",
+      "TATAMOTORS",
+      "ITC",
+      "ONGC",
+      "RELIANCE",
+      "ACC",
+      "BPCL",
+      "INFY",
+      "KARURVYSYA",
+      "BRITANNIA",
+      "TRENT",
+      "SUNPHARMA",
+      "GFLLIMITED",
+      "UPL",
+      "GRASIM",
+      "CESC",
+      "HEG",
+      "NOVARTIND",
+      "TATACHEM",
+      "MCDOWELL-N",
+      "KOTAKBANK",
+      "BHEL",
+      "M&M",
+      "FEDERALBNK",
+      "OIL",
+      "BERGEPAINT",
+      "LUPIN",
+      "BBOX",
+      "CHOLAFIN",
+      "TATAPOWER",
+      "BHARATFORG",
+      "ZEEL",
+      "EICHERMOT",
+      "RELCAPITAL",
+      "ARVIND",
+      "NATIONALUM",
+      "ABAN",
+      "IPCALAB",
+      "TATAELXSI",
+      "SRF",
+      "CENTURYTEX",
+      "HEROMOTOCO",
+      "TATASTEEL"
+    ],
+    "date_range": [
+      "2012-01-01",
+      "2022-01-11"
+    ],
+    "output_file": "data/processed/stocks_processed.parquet",
+    "output_size_mb": 2.91,
+    "price_adjustment_note": "Prices are UNADJUSTED raw prices. Stock splits/bonus issues are flagged in 'suspicious_jump' but not mathematically adjusted. Dividends are NOT included."
+  }
+}

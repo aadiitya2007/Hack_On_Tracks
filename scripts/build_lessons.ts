@@ -1,4 +1,6 @@
+import fs from 'fs';
 
+const content = `
 export type LessonContent = {
   id: string;
   title: string;
@@ -80,3 +82,6 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     id: 'invits', title: 'InvITs', subtitle: 'Infrastructure Behind Everyday Life', whatItIs: ["Trusts that own infrastructure assets like toll roads."], howItWorks: [], returnsExample: { initial: 10000, bullPrice: 110, bearPrice: 90, basePrice: 100 }, advantages: ["Yield from infrastructure"], risks: ["Regulatory changes"], challenge: { question: "InvITs stand for:", options: ["Infrastructure Investment Trusts", "Inventory Trusts"], correctIndex: 0 }, snapshot: [], takeaway: "InvITs offer yield from large-scale infra projects.", nextLesson: null, dialogue: dialogueDefaults
   }
 };
+`;
+
+fs.writeFileSync('src/lib/content/lessons.ts', content);
