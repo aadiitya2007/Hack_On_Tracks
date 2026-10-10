@@ -12,6 +12,7 @@ import {
   CORRELATION_MATRIX_7X7, 
   calculateMultiAssetRiskProfile 
 } from '@/lib/risk-analytics';
+import { RebalanceBasketModal } from '@/components/RebalanceBasketModal';
 
 export default function RiskPage() {
   // Base portfolio value
@@ -41,6 +42,7 @@ export default function RiskPage() {
 
   const [activeStrategyPreset, setActiveStrategyPreset] = useState<string>('current');
   const [activeMetricExplain, setActiveMetricExplain] = useState<string | null>(null);
+  const [basketModalOpen, setBasketModalOpen] = useState<boolean>(false);
 
   // Calculate current baseline risk profile
   const currentProfile = useMemo(() => {
@@ -410,6 +412,14 @@ export default function RiskPage() {
               Select a structured personal choice strategy below or customize percentages to see exact before-and-after risk consequences.
             </p>
           </div>
+
+          <button 
+            onClick={() => setBasketModalOpen(true)}
+            className="px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-extrabold flex items-center gap-2 shadow-md hover:bg-accent/90 transition-all cursor-pointer shrink-0"
+          >
+            <Zap size={16} />
+            <span>Generate Rebalance Basket Order</span>
+          </button>
         </div>
 
         {/* 4 Personal Strategy Action Cards */}
@@ -679,6 +689,15 @@ export default function RiskPage() {
           </table>
         </div>
       </div>
+
+      {/* ONE-CLICK REBALANCE BASKET MODAL */}
+      <RebalanceBasketModal 
+        isOpen={basketModalOpen}
+        onClose={() => setBasketModalOpen(false)}
+        currentWeights={initialWeights}
+        targetWeights={targetWeights}
+        portfolioValue={portfolioValue}
+      />
 
     </div>
   );

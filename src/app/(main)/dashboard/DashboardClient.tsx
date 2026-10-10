@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { simulateTradeAction } from '@/lib/actions';
 import { StockInsightsCard } from '@/components/StockInsightsCard';
+import { TaxLossHarvestingCard } from '@/components/TaxLossHarvestingCard';
+import { PassiveIncomeCalendar } from '@/components/PassiveIncomeCalendar';
+import { GoalBasedPortfolioTracker } from '@/components/GoalBasedPortfolioTracker';
 import Link from 'next/link';
 import { 
   Brain, Award, Sparkles, BookOpen, TrendingUp, TrendingDown, 
@@ -667,6 +670,11 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </table>
         </div>
       </div>
+
+      {/* NEW FEATURE MODULES: TAX-LOSS HARVESTING, PASSIVE YIELD CALENDAR, GOAL BUCKETS */}
+      <TaxLossHarvestingCard holdings={holdings} />
+      <PassiveIncomeCalendar />
+      <GoalBasedPortfolioTracker />
 
       {/* Trade Simulation Modal */}
       {simulateModalOpen && (

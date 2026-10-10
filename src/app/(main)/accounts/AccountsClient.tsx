@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wallet, Plus, RefreshCw, Trash2, CheckCircle2, ShieldCheck, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import { uploadBaselineStatement, runDemoMailSync } from '@/lib/mail-sync';
+import { CasPdfParserSync } from '@/components/CasPdfParserSync';
 
 const BROKER_LOGOS: Record<string, string> = {
   'zerodha': '/logos/zerodha.webp',
@@ -241,6 +242,9 @@ export default function AccountsClient({ initialAccounts }: { initialAccounts: a
             </div>
           ))}
         </div>
+
+        {/* UNIVERSAL BROKER TELEMETRY PARSER & ACCOUNT AGGREGATOR SYNC */}
+        <CasPdfParserSync />
 
         {/* Mail Sync Baseline Module */}
         <div className="space-y-4">
