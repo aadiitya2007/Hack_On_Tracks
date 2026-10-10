@@ -230,50 +230,56 @@ export const LESSON_MAP: Record<string, LessonContent> = {
   'bonds': {
     id: 'bonds',
     title: 'BONDS',
-    subtitle: 'Become a Lender & Earn Coupon Yield',
+    subtitle: 'Become a Lender',
     whatItIs: [
-      "When you buy a bond, you are lending money to a corporation or government entity.",
-      "In return, the borrower promises to pay you regular interest payments (called coupon yield) and return your principal amount at maturity.",
-      "Bonds offer predictable income stream and lower volatility compared to equity markets."
+      "Imagine a company needs money to build a factory.",
+      "Instead of raising all the money through ownership shares, it may borrow money by issuing bonds.",
+      "When you buy a bond, you are lending money to the issuer. The issuer promises to make payments according to the bond's terms.",
+      "Issuers can include governments (G-Secs) and private or public corporations."
     ],
     howItWorks: [
-      { step: "Step 1: Bond issuance", desc: "Government or company issues bonds to borrow capital." },
-      { step: "Step 2: Investor purchases bond", desc: "Investor pays principal amount for the bond certificate." },
-      { step: "Step 3: Coupon payouts", desc: "Issuer pays periodic fixed interest payments (e.g. 8% p.a.)." },
-      { step: "Step 4: Principal repayment", desc: "On maturity date, full principal is returned to investor." }
+      { step: "Step 1: Bond issuance", desc: "An issuer raises money by issuing a bond with specified interest terms." },
+      { step: "Step 2: Investor purchase", desc: "Investors purchase the bond certificates." },
+      { step: "Step 3: Coupon payments", desc: "The issuer makes periodic interest payments if specified by the bond's terms." },
+      { step: "Step 4: Principal repayment at maturity", desc: "At maturity, the issuer is generally expected to repay the principal according to the bond's terms." }
     ],
     returnsExample: {
       initial: 10000,
-      gainVal: 10800,
-      lossVal: 9500,
-      gainPct: 8,
-      lossPct: -5,
-      note: "Example: ₹10,000 bond paying 8% coupon yields ₹800 annual interest. Secondary market prices can fluctuate if interest rates change."
+      gainVal: 10700,
+      lossVal: 9300,
+      gainPct: 7,
+      lossPct: -7,
+      note: "Example: Suppose you buy a bond with a face value of ₹10,000 and an annual coupon rate of 7% (₹700 annual coupon). If interest rates rise or issuer credit drops, market secondary price fluctuates."
     },
     advantages: [
-      "Predictable fixed income stream.",
-      "Lower volatility than stock market.",
-      "Priority claim over equity in case of company liquidation."
+      "Some bonds provide scheduled, predictable interest payments.",
+      "Cash flows can be more predictable for certain fixed-income securities.",
+      "Bonds help diversify a portfolio of stocks.",
+      "Serve different financial goals depending on maturity and credit quality."
     ],
     risks: [
-      "Interest rate risk: Bond prices fall when market interest rates rise.",
-      "Credit/Default risk: Issuer may fail to make interest or principal payments."
+      "Credit/Default risk: The issuer may fail to pay interest or principal.",
+      "Interest-rate risk: Bond market prices fall when market interest rates rise.",
+      "Liquidity risk: Some corporate bonds can be difficult to sell quickly.",
+      "Inflation risk: Inflation can reduce the purchasing power of future cash payouts."
     ],
     challenge: {
-      question: "When market interest rates rise, what typically happens to existing fixed-rate bond prices?",
+      question: "You buy a fixed-coupon bond. Market interest rates rise. What may happen to the bond's market price?",
       options: [
-        "A. Existing bond prices fall.",
-        "B. Existing bond prices rise.",
-        "C. Nothing changes."
+        "A. It must rise.",
+        "B. It may fall.",
+        "C. It can never change."
       ],
-      correctIndex: 0,
-      explanation: "Correct! Bond prices and interest rates move in opposite directions."
+      correctIndex: 1,
+      explanation: "Correct! Existing fixed-coupon bonds become less attractive when new bonds offer higher interest rates, pushing their market prices down."
     },
     snapshotStats: [
-      { label: "Indian Bond Market", value: "₹170+ Lakh Cr", desc: "Dominated by Sovereign G-Secs and Corporate Bonds." },
-      { label: "10Y G-Sec Benchmark", value: "~6.8% – 7.2%", desc: "Risk-free benchmark rate for Indian fixed income." }
+      { label: "Total Indian Debt Market", value: "$2.3+ Trillion", desc: "Valued at over ₹190+ Lakh Crore across G-Secs, SDLs & Corporate Bonds." },
+      { label: "10-Year G-Sec Yield", value: "6.8% – 7.3%", desc: "Sovereign risk-free benchmark yield rate." },
+      { label: "AAA Corporate Bond Yield", value: "7.5% – 8.5%", desc: "High credit quality corporate debt returns." },
+      { label: "High-Yield Corporate Bonds", value: "9.0% – 11.5%", desc: "Reflecting higher credit default risks." }
     ],
-    takeaway: "Bonds provide portfolio stability and steady income, balancing stock market volatility.",
+    takeaway: "Existing fixed-coupon bonds often become less attractive when new bonds offer higher interest rates, which can push their market prices down.",
     nextLesson: 'reits',
     prevLesson: 'etfs',
     dialogue: [...dialogueDefaults]
@@ -282,49 +288,57 @@ export const LESSON_MAP: Record<string, LessonContent> = {
   'reits': {
     id: 'reits',
     title: 'REITs',
-    subtitle: 'Real Estate Ownership Without Buying Buildings',
+    subtitle: 'Explore Real Estate Without Buying an Entire Building',
     whatItIs: [
-      "REITs (Real Estate Investment Trusts) own and operate revenue-generating commercial real estate such as IT parks, malls, and warehouses.",
-      "By law in India, REITs must distribute at least 90% of their net printable cash flow to unitholders as quarterly dividends.",
-      "They allow everyday investors to own prime real estate with small ticket sizes."
+      "REIT stands for Real Estate Investment Trust.",
+      "Imagine a commercial building worth hundreds of crores. Most individual investors cannot buy the entire property.",
+      "A REIT provides a way to invest in a vehicle that holds or manages eligible real-estate assets, depending on its structure.",
+      "In India, listed REIT units can be bought and sold through stock exchanges."
     ],
     howItWorks: [
-      { step: "Step 1: Property aggregation", desc: "REIT acquires Grade-A office parks and commercial assets." },
-      { step: "Step 2: Rental collection", desc: "Corporate tenants pay monthly lease rentals to the REIT." },
-      { step: "Step 3: Quarterly distribution", desc: "90%+ of net rental income is distributed to unitholders." }
+      { step: "Step 1: Capital raising", desc: "A REIT raises capital from investors through an initial public offer." },
+      { step: "Step 2: Property investment", desc: "It holds or invests in commercial real-estate assets (e.g. IT parks, malls)." },
+      { step: "Step 3: Rental income generation", desc: "Properties generate monthly rental income from corporate tenants." },
+      { step: "Step 4: Payout distribution", desc: "After expenses, the trust distributes net rental cash flows to investors." },
+      { step: "Step 5: Exchange trading", desc: "Investors gain or lose money as the market price of their units changes." }
     ],
     returnsExample: {
       initial: 10000,
-      gainVal: 10700,
-      lossVal: 9400,
-      gainPct: 7,
-      lossPct: -6,
-      note: "Example: ₹10,000 investment yields ~6.5% rental dividend payout plus potential capital appreciation of underlying IT parks."
+      gainVal: 10800,
+      lossVal: 9200,
+      gainPct: 8,
+      lossPct: -8,
+      note: "Example: You invest ₹10,000 in a REIT. Units increase in market value by ₹500 + receive ₹300 in cash distributions = Total gain ₹800 (8% return)."
     },
     advantages: [
-      "High dividend yield distributed quarterly.",
-      "Inflation hedge through built-in lease rental escalation clauses.",
-      "Liquid exchange trading unlike physical property."
+      "Access to commercial real-estate investment without buying an entire building.",
+      "Potential regular distributions from property-related rental income.",
+      "Listed units provide an easy exit route through the stock exchange.",
+      "Diversifies a portfolio beyond individual company shares."
     ],
     risks: [
-      "Occupancy risk: Vacancies in IT parks reduce rental payouts.",
-      "Interest rate sensitivity: Higher rates increase borrowing costs."
+      "Property vacancies can reduce overall rental income.",
+      "Interest-rate increases can affect property valuations and financing costs.",
+      "Commercial real-estate market downturns can reduce unit market prices.",
+      "Distributions are not guaranteed and trading liquidity can vary."
     ],
     challenge: {
-      question: "What percentage of net rentable cash flows must Indian REITs distribute to unitholders by law?",
+      question: "You want to explore commercial real-estate exposure but cannot afford to buy an entire building. What could you research?",
       options: [
-        "A. At least 90%",
-        "B. Exactly 50%",
-        "C. Optional 10%"
+        "A. REITs.",
+        "B. Only direct property ownership.",
+        "C. A company's ordinary shares without researching its business."
       ],
       correctIndex: 0,
-      explanation: "Correct! SEBI regulations mandate at least 90% distribution to ensure high yield for unitholders."
+      explanation: "Correct! REITs allow retail investors to buy fractional units of commercial IT parks and office buildings."
     },
     snapshotStats: [
-      { label: "Listed Indian REITs", value: "Embassy, Mindspace, Nexus, Brookfield", desc: "Over 110+ Million sq. ft. Grade-A commercial office space." },
-      { label: "Average Distribution Yield", value: "6.5% – 7.5%", desc: "Quarterly cash payouts combined with long-term property appreciation." }
+      { label: "Grade-A Commercial Space", value: "115+ Million sq. ft.", desc: "Managed by listed REITs across major Indian tech hubs." },
+      { label: "Listed REIT Sector Cap", value: "₹1.07L – ₹1.6L Cr", desc: "Fast-growing sector including Embassy, Mindspace, Nexus & Brookfield." },
+      { label: "SEBI Payout Mandate", value: "At least 90%", desc: "Must distribute 90%+ of net distributable cash flows back to unitholders." },
+      { label: "Distribution Dividend Yield", value: "5.5% – 6.5% p.a.", desc: "Quarterly rental income cash yield." }
     ],
-    takeaway: "REITs offer liquid real estate exposure with regular rental dividend distributions.",
+    takeaway: "REITs offer an alternative route to real-estate exposure, but they are not equivalent to owning a property directly.",
     nextLesson: 'invits',
     prevLesson: 'bonds',
     dialogue: [...dialogueDefaults]
@@ -333,49 +347,57 @@ export const LESSON_MAP: Record<string, LessonContent> = {
   'invits': {
     id: 'invits',
     title: 'InvITs',
-    subtitle: 'Infrastructure Generating Daily Cash Flow',
+    subtitle: 'Explore the Infrastructure Behind Everyday Life',
     whatItIs: [
-      "InvITs (Infrastructure Investment Trusts) own operational infrastructure projects such as power transmission lines, toll highways, and telecom towers.",
-      "Similar to REITs, InvITs distribute predictable cash flows generated from toll collection or long-term power transmission tariffs.",
-      "They provide stable, high-yield cash flows backed by critical national infrastructure."
+      "InvIT stands for Infrastructure Investment Trust.",
+      "Think about highways, power transmission lines and other infrastructure assets that support everyday life.",
+      "An InvIT allows investors to gain exposure to eligible infrastructure assets through a trust structure.",
+      "In India, listed InvIT units can be traded on stock exchanges."
     ],
     howItWorks: [
-      { step: "Step 1: Infra asset pooling", desc: "Trust pools toll roads, power grids, or gas pipelines." },
-      { step: "Step 2: Tariff collection", desc: "Vehicles pay tolls or state utilities pay transmission tariffs." },
-      { step: "Step 3: Unitholder payout", desc: "Net cash flows are distributed as interest, dividend, and capital repayment." }
+      { step: "Step 1: Trust establishment", desc: "A sponsor establishes the trust and transfers eligible infrastructure assets." },
+      { step: "Step 2: Unit issuance", desc: "Investors buy units in the trust through public or private offerings." },
+      { step: "Step 3: Revenue generation", desc: "Assets generate cash flow through toll collections or contractual power tariffs." },
+      { step: "Step 4: Cash distribution", desc: "After operating expenses, the trust distributes net income to unitholders." },
+      { step: "Step 5: Price fluctuation", desc: "Market price of units changes on the exchange, creating potential gains or losses." }
     ],
     returnsExample: {
       initial: 10000,
-      gainVal: 10900,
-      lossVal: 9200,
-      gainPct: 9,
-      lossPct: -8,
-      note: "Example: ₹10,000 invested in a PowerGrid InvIT can yield 8-9% annual cash distribution."
+      gainVal: 10700,
+      lossVal: 9300,
+      gainPct: 7,
+      lossPct: -7,
+      note: "Example: You invest ₹10,000 in an InvIT. Receive ₹400 in cash distributions + units appreciate by ₹300 = Total gain ₹700 (7% return)."
     },
     advantages: [
-      "High distribution yield (often 8% – 10% p.a.).",
-      "Monopoly assets backed by long-term government concession agreements.",
-      "Regular quarterly cash flow distributions."
+      "Provides access to infrastructure investment exposure.",
+      "Offers regular distributions from essential infrastructure cash flows.",
+      "Participate without directly owning an entire highway or power grid.",
+      "Provides asset diversification non-correlated with traditional stocks."
     ],
     risks: [
-      "Concession period expiry: Assets return to government after concession term.",
-      "Traffic volume & regulatory tariff revision risk."
+      "Traffic volume or toll usage may fall for highway assets.",
+      "Operating and maintenance costs may increase unexpectedly.",
+      "Interest-rate changes can affect borrowing costs and valuations.",
+      "Regulatory policy changes may impact toll or tariff rates."
     ],
     challenge: {
-      question: "InvITs primarily derive their cash flows from:",
+      question: "You want to learn how investors can gain exposure to infrastructure projects without directly buying the entire project. What could you explore?",
       options: [
-        "A. Operational infrastructure like toll roads & power lines",
-        "B. Software apps & e-commerce sales",
-        "C. Unlisted startup shares"
+        "A. InvITs.",
+        "B. Only individual company stocks.",
+        "C. Buying a highway directly."
       ],
       correctIndex: 0,
-      explanation: "Correct! InvITs monetize essential national infrastructure like highways, power lines, and telecom towers."
+      explanation: "Correct! InvITs monetize operational infrastructure assets like national highways, power transmission lines, and solar parks."
     },
     snapshotStats: [
-      { label: "Major Listed InvITs", value: "POWERGRID InvIT, IndiGrid, IRB Infra", desc: "Managing thousands of kilometers of national highways & power grids." },
-      { label: "Cash Distribution Yield", value: "8.0% – 10.5%", desc: "Among the highest cash distribution yields available in Indian markets." }
+      { label: "Registered Indian InvITs", value: "24+ InvITs", desc: "Managing national assets valued at over ₹2.5+ Lakh Crore." },
+      { label: "SEBI Payout Requirement", value: "At least 90%", desc: "Mandated distribution of net cash flows to investors." },
+      { label: "Distribution Yield", value: "8.0% – 12.3% p.a.", desc: "Driven by steady toll collections and regulated power tariffs." },
+      { label: "Annualized Total Return", value: "11.0% – 14.0%", desc: "Long-term total return over concession asset lifespans." }
     ],
-    takeaway: "InvITs offer high cash yields from operational national infrastructure projects.",
+    takeaway: "InvITs provide an investment route into infrastructure-related assets, but their returns and risks depend on the trust's underlying assets and structure.",
     nextLesson: null,
     prevLesson: 'reits',
     dialogue: [...dialogueDefaults]
