@@ -1,13 +1,28 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { LayoutDashboard, Wallet, Compass, GraduationCap, Clock } from 'lucide-react';
+import { LayoutDashboard, Wallet, Compass, GraduationCap, Clock, Sparkles, RefreshCw } from 'lucide-react';
+import { CrumbleToUnifyIntro } from '@/components/CrumbleToUnifyIntro';
 
 export default function LandingClient() {
+  const [introKey, setIntroKey] = useState(1);
+  const [playIntro, setPlayIntro] = useState(true);
+
+  const handleReplayIntro = () => {
+    setIntroKey(prev => prev + 1);
+    setPlayIntro(true);
+  };
+
   return (
     <div className="min-h-screen bg-bg relative overflow-hidden font-sans">
       
+      {/* High-Impact Crumble & Clearing Splash Intro Animation */}
+      {playIntro && (
+        <CrumbleToUnifyIntro key={introKey} onComplete={() => setPlayIntro(false)} />
+      )}
+
       {/* Background Gradients (Alizo Style) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full opacity-50 mix-blend-multiply"
@@ -24,10 +39,16 @@ export default function LandingClient() {
           </div>
           <img src="/logos/unify.png" alt="Unify" className="h-10 object-contain" />
         </div>
-        <div className="hidden md:flex gap-8 font-medium text-sm text-text-secondary">
+        <div className="hidden md:flex gap-8 font-medium text-sm text-text-secondary items-center">
           <Link href="#features" className="hover:text-[var(--asset-stocks)] transition-colors">Features</Link>
           <Link href="#solutions" className="hover:text-[var(--asset-stocks)] transition-colors">Solutions</Link>
           <Link href="#about" className="hover:text-[var(--asset-stocks)] transition-colors">About</Link>
+          <button 
+            onClick={handleReplayIntro} 
+            className="px-3 py-1 rounded-full bg-accent-bg text-accent text-xs font-bold border border-accent/20 hover:bg-accent hover:text-white transition-all flex items-center gap-1.5"
+          >
+            <Sparkles size={13} /> Replay Intro Animation
+          </button>
         </div>
         <div className="flex gap-4">
           <Link href="/dashboard" className="px-6 py-2.5 rounded-full font-bold text-sm text-text-primary hover:bg-surface-hover transition-colors border border-border">Login</Link>
