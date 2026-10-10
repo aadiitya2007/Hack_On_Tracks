@@ -42,5 +42,5 @@ next-env.d.ts
 
 /src/generated/prisma
 data/raw/
-data/processed/
+# data/processed/
 data_venv/
