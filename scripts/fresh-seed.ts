@@ -10,7 +10,7 @@ async function main() {
 
   console.log("Creating fresh demo user & account...");
   const user = await prisma.user.create({
-    data: { pan: 'DEMO12345', name: 'Fresh Demo User' }
+    data: { pan: 'ABCDE1234F', name: 'Fresh Demo User' }
   });
 
   const account = await prisma.linkedAccount.create({

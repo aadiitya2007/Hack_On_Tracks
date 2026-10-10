@@ -11,6 +11,8 @@ export async function getPortfolioRiskProfile(userId?: string) {
   
   if (userId) {
     holdings = await prisma.holding.findMany({ where: { userId } });
+  } else {
+    holdings = await prisma.holding.findMany();
   }
 
   // Fallback to Mock Portfolio if none exist (for MVP Demo)
@@ -25,6 +27,9 @@ export async function getPortfolioRiskProfile(userId?: string) {
     holdings = holdings.map(h => ({
       symbol: h.symbol,
       value: h.quantity * h.currentPrice,
+      assetClass: h.assetType
+    }));
+  }
       assetClass: h.assetType
     }));
   }
