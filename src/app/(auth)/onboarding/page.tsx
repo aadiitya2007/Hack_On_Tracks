@@ -457,7 +457,7 @@ export default function Onboarding() {
                       <p className="text-xs text-text-secondary mt-1">Verify Permanent Account Number against NSDL Securities Depository.</p>
                     </div>
                     {/* NSDL Official Logo Badge */}
-                    <img src="/logos/nsdl.svg" alt="NSDL Depository" className="h-10 object-contain bg-white/90 p-1 rounded-lg border border-border shrink-0" />
+                    <img src="/logos/nsdl.png" alt="NSDL Depository" className="h-10 object-contain bg-white p-1 rounded-lg border border-border shrink-0 shadow-sm" />
                   </div>
                   
                   <div>
@@ -532,10 +532,10 @@ export default function Onboarding() {
                 </div>
 
                 {/* Official Logos Container */}
-                <div className="flex justify-around items-center p-4 rounded-2xl bg-white/90 border border-border">
+                <div className="flex justify-around items-center p-4 rounded-2xl bg-white border border-border shadow-sm">
                   <img src="/logos/digilocker.svg" alt="DigiLocker Government Portal" className="h-10 object-contain" />
-                  <div className="h-8 w-[1px] bg-slate-300"></div>
-                  <img src="/logos/aadhaar.svg" alt="UIDAI Aadhaar Govt of India" className="h-10 object-contain" />
+                  <div className="h-8 w-[1px] bg-slate-200"></div>
+                  <img src="/logos/aadhaar.png" alt="UIDAI Aadhaar Govt of India" className="h-10 object-contain" />
                 </div>
 
                 <div className="p-4 rounded-2xl bg-bg border border-border text-xs text-text-secondary space-y-2 leading-relaxed">
