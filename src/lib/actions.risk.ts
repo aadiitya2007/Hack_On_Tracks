@@ -30,9 +30,6 @@ export async function getPortfolioRiskProfile(userId?: string) {
       assetClass: h.assetType
     }));
   }
-      assetClass: h.assetType
-    }));
-  }
 
   const totalPortfolioValue = holdings.reduce((sum, h) => sum + h.value, 0);
   
