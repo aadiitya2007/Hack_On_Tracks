@@ -4,29 +4,51 @@ import Link from 'next/link';
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, Info, Sliders, ChevronRight } from 'lucide-react';
+import { ShieldAlert, Info, Sliders, ChevronRight, AlertTriangle } from 'lucide-react';
 import { getPortfolioRiskProfile } from '@/lib/actions.risk';
 
 export default function RiskPage() {
   const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [shiftBonds, setShiftBonds] = useState(0);
 
   useEffect(() => {
-    getPortfolioRiskProfile().then(res => setData(res)).catch(err => { console.error(err); setData({ error: true }); });
+    let mounted = true;
+    getPortfolioRiskProfile()
+      .then(res => {
+        if (mounted) {
+          setData(res);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to load risk profile:", err);
+        if (mounted) {
+          setData({ error: true });
+          setLoading(false);
+        }
+      });
+    return () => { mounted = false; };
   }, []);
 
-  if (!data) return (
+  if (loading) return (
     <div className="max-w-4xl mx-auto py-12 flex justify-center animate-pulse">
       <div className="text-text-muted font-bold text-lg">Crunching Portfolio Mathematics...</div>
     </div>
   );
 
+  if (!data) return null;
+
   if (data.error) return (
-    <div className="p-8 text-center bg-red-50 text-red-500 rounded-2xl border border-red-200 mt-6">
-      <h3 className="font-bold">Error loading risk profile</h3>
-      <p className="text-sm">Please ensure the database is seeded and try again.</p>
+    <div className="max-w-4xl mx-auto py-12">
+      <div className="p-8 text-center bg-loss-bg text-loss rounded-2xl border border-loss/20 mt-6 flex flex-col items-center gap-3">
+        <AlertTriangle size={32} />
+        <h3 className="font-bold text-lg">Error loading risk profile</h3>
+        <p className="text-sm">Please ensure the database is seeded with valid holdings and historical price records, and try again.</p>
+      </div>
     </div>
   );
+
   const { riskProfile, metrics, totalPortfolioValue } = data;
 
   // Basic What-If calculation approximation for demo
@@ -35,96 +57,122 @@ export default function RiskPage() {
   const simulatedRisk = riskProfile.score - Math.round(shiftBonds * 0.3);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10 pb-24">
-      <div className="flex flex-col gap-2">
-        <div className="sub-heading">Deep Analytics</div>
-        <h1 className="text-4xl font-extrabold text-text-primary">Portfolio Risk Engine</h1>
-        <p className="text-text-secondary text-lg max-w-2xl mt-2">
-          Understand your true exposure. We calculate mathematically derived risk scores based on Modern Portfolio Theory, looking at how your specific assets correlate with one another.
-        </p>
+    <div className="max-w-4xl mx-auto py-12">
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-10 h-10 rounded-full bg-accent-bg text-accent flex items-center justify-center">
+            <ShieldAlert size={20} />
+          </div>
+          <h1 className="text-3xl font-extrabold text-text-primary">Portfolio Risk Engine</h1>
+        </div>
+        <p className="text-text-secondary text-lg">A deep dive into your mathematical risk exposure, calculated dynamically from your real holdings and 1-year covariance matrix.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="card p-8 col-span-1 md:col-span-1 bg-surface flex flex-col justify-center items-center text-center">
-          <ShieldAlert size={48} className={simulatedRisk > 70 ? 'text-loss' : simulatedRisk > 40 ? 'text-accent' : 'text-gain'} />
-          <h2 className="text-5xl font-extrabold mt-6 mb-2">{simulatedRisk}</h2>
-          <p className="font-bold text-text-secondary">Overall Risk Score</p>
-          <div className="mt-6 text-left w-full text-xs space-y-2 text-text-muted">
-            <div className="flex justify-between"><span>Volatility</span><span>{riskProfile.breakdown.volatility}/40</span></div>
-            <div className="flex justify-between"><span>Concentration</span><span>{riskProfile.breakdown.concentration}/30</span></div>
-            <div className="flex justify-between"><span>Drawdown</span><span>{riskProfile.breakdown.drawdown}/30</span></div>
-            <div className="flex justify-between"><span>Data Penalty</span><span>{riskProfile.breakdown.penalty}/50</span></div>
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
+        {/* Risk Score Card */}
+        <div className="card bg-surface p-6 border-t-4" style={{ borderColor: riskProfile.category === 'High' ? 'var(--loss)' : riskProfile.category === 'Moderate' ? 'var(--accent)' : 'var(--gain)' }}>
+          <h3 className="text-sm font-bold text-text-muted uppercase mb-4 tracking-wider">Overall Risk Score</h3>
+          <div className="flex items-end gap-2 mb-2">
+            <span className="text-5xl font-black text-text-primary">{riskProfile.score}</span>
+            <span className="text-lg text-text-muted mb-1">/100</span>
+          </div>
+          <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+            riskProfile.category === 'High' ? 'bg-loss-bg text-loss' : 
+            riskProfile.category === 'Moderate' ? 'bg-accent-bg text-accent' : 'bg-gain-bg text-gain'
+          }`}>
+            {riskProfile.category} Risk Profile
           </div>
         </div>
 
-        <div className="col-span-1 md:col-span-2 space-y-6">
-          <div className="card p-6">
-            <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-              <Sliders className="text-accent" size={20} />
-              "What-If" Scenario Engine
-            </h3>
-            <p className="text-sm text-text-secondary mb-6">
-              How would your risk profile change if you shifted capital from Equities into fixed-income Bonds?
-            </p>
-            <div className="space-y-6">
+        {/* Detailed Metrics */}
+        <div className="md:col-span-2 grid grid-cols-2 gap-4">
+          <div className="card bg-surface p-5">
+            <h4 className="text-xs font-bold text-text-muted uppercase mb-2">Annual Volatility</h4>
+            <p className="text-2xl font-bold text-text-primary">{(metrics.annualVolatility * 100).toFixed(1)}%</p>
+            <p className="text-xs text-text-muted mt-2">Standard deviation of 1-year returns</p>
+          </div>
+          <div className="card bg-surface p-5">
+            <h4 className="text-xs font-bold text-text-muted uppercase mb-2">Maximum Drawdown</h4>
+            <p className="text-2xl font-bold text-loss">-{(metrics.maxDrawdown * 100).toFixed(1)}%</p>
+            <p className="text-xs text-text-muted mt-2">Worst peak-to-trough decline</p>
+          </div>
+          <div className="card bg-surface p-5">
+            <h4 className="text-xs font-bold text-text-muted uppercase mb-2">Value at Risk (95%)</h4>
+            <p className="text-2xl font-bold text-text-primary">₹{metrics.var1m.toLocaleString('en-IN', {maximumFractionDigits:0})}</p>
+            <p className="text-xs text-text-muted mt-2">1-Month estimated maximum loss</p>
+          </div>
+          <div className="card bg-surface p-5">
+            <h4 className="text-xs font-bold text-text-muted uppercase mb-2">Concentration (HHI)</h4>
+            <p className="text-2xl font-bold text-text-primary">{metrics.hhi.toFixed(0)}</p>
+            <p className="text-xs text-text-muted mt-2">Herfindahl-Hirschman Index</p>
+          </div>
+        </div>
+      </div>
+
+      {/* What-If Scenario Builder */}
+      <div className="card bg-surface p-8 mb-8 border border-border">
+        <div className="flex items-center gap-3 mb-6">
+          <Sliders className="text-accent" />
+          <h2 className="text-xl font-bold">"What-If" Scenario Engine</h2>
+        </div>
+        <p className="text-text-secondary text-sm mb-8">Shift allocation from Equities to Fixed Income (Bonds) to see how it mathematically reduces your portfolio volatility and max drawdown.</p>
+        
+        <div className="mb-12">
+          <div className="flex justify-between text-sm font-bold mb-4">
+            <span className="text-[var(--asset-stocks)]">Shift {shiftBonds}% from Stocks</span>
+            <span className="text-[var(--asset-bonds)]">To Bonds</span>
+          </div>
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            step="10"
+            value={shiftBonds} 
+            onChange={(e) => setShiftBonds(Number(e.target.value))}
+            className="w-full h-2 bg-surface-hover rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+        </div>
+
+        {shiftBonds > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-accent-bg p-6 rounded-2xl border border-accent/20"
+          >
+            <h3 className="font-bold text-accent mb-4">Simulated Impact</h3>
+            <div className="grid grid-cols-3 gap-4">
               <div>
-                <div className="flex justify-between text-sm font-bold mb-2">
-                  <span>Current Portfolio</span>
-                  <span className="text-accent">Shift {shiftBonds}% to Bonds</span>
+                <p className="text-xs text-text-muted mb-1">New Volatility</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-text-primary">{(simulatedVolatility * 100).toFixed(1)}%</span>
+                  <span className="text-xs font-bold text-gain flex items-center">
+                    ↓ {((metrics.annualVolatility - simulatedVolatility) * 100).toFixed(1)}%
+                  </span>
                 </div>
-                <input 
-                  type="range" min="0" max="100" 
-                  value={shiftBonds} 
-                  onChange={e => setShiftBonds(Number(e.target.value))} 
-                  className="w-full accent-accent"
-                />
               </div>
-              
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="bg-bg border border-border p-3 rounded-lg">
-                  <p className="text-[10px] text-text-muted uppercase font-bold mb-1">Vol (Ann.)</p>
-                  <p className="text-lg font-bold">{(simulatedVolatility * 100).toFixed(1)}%</p>
+              <div>
+                <p className="text-xs text-text-muted mb-1">New Max Drawdown</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-text-primary">-{(simulatedDrawdown * 100).toFixed(1)}%</span>
+                  <span className="text-xs font-bold text-gain flex items-center">
+                    Improved
+                  </span>
                 </div>
-                <div className="bg-bg border border-border p-3 rounded-lg">
-                  <p className="text-[10px] text-text-muted uppercase font-bold mb-1">Max Drawdown</p>
-                  <p className="text-lg font-bold">{(simulatedDrawdown * 100).toFixed(1)}%</p>
-                </div>
-                <div className="bg-bg border border-border p-3 rounded-lg">
-                  <p className="text-[10px] text-text-muted uppercase font-bold mb-1">Risk Score</p>
-                  <p className="text-lg font-bold">{simulatedRisk}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-muted mb-1">New Risk Score</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-text-primary">{simulatedRisk}</span>
+                  <span className="text-xs font-bold text-gain flex items-center">
+                    ↓ {riskProfile.score - simulatedRisk} pts
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="card p-6">
-            <h3 className="font-bold text-lg mb-4">Educational Suggestions</h3>
-            <div className="space-y-4">
-              <Link href="/learn/bonds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
-                <div className="flex justify-between items-center mb-1">
-                  <h4 className="font-bold text-sm">Learn how Bonds lower portfolio volatility</h4>
-                  <ChevronRight size={16} className="text-text-muted" />
-                </div>
-                <p className="text-xs text-text-secondary">Fixed-income assets generally have low correlation with equities, reducing overall portfolio swings.</p>
-              </Link>
-              <Link href="/learn/mutual-funds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
-                <div className="flex justify-between items-center mb-1">
-                  <h4 className="font-bold text-sm">Diversification using Mutual Funds</h4>
-                  <ChevronRight size={16} className="text-text-muted" />
-                </div>
-                <p className="text-xs text-text-secondary">If your HHI concentration is high, mutual funds offer instant broad market exposure.</p>
-              </Link>
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        )}
       </div>
 
-      <div className="card p-4 flex gap-3 text-xs bg-surface-hover text-text-muted">
-        <Info size={16} className="shrink-0 mt-0.5" />
-        <p>
-          <strong>Disclaimer:</strong> Educational, not investment advice. Risk scores are mathematical aggregates of historical volatility, drawdown, and concentration. They do not predict future losses.
-        </p>
-      </div>
     </div>
   );
 }

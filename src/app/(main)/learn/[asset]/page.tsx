@@ -1,248 +1,140 @@
 'use client';
-
-import { useState, use } from 'react';
+import { use } from 'react';
 import { notFound } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LESSON_MAP, LessonData } from '@/lib/content/lessons';
+import { LESSON_MAP } from '@/lib/content/lessons';
 import Dialogue from '@/components/Dialogue';
-import { Aarav, Meera } from '@/components/Characters';
 import { simulateStocks } from '@/lib/simulations/stocks';
 import { Play, Pause, RotateCcw, TrendingUp, TrendingDown, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
 
-// Use React.use() to unwrap params in Next.js 15
 export default function AssetLesson({ params }: { params: Promise<{ asset: string }> }) {
-  const unwrappedParams = use(params);
-  const lessonKey = unwrappedParams.asset;
-  const lesson = LESSON_MAP[lessonKey];
+  const resolvedParams = use(params);
+  const lesson = LESSON_MAP[resolvedParams.asset];
 
   if (!lesson) {
     notFound();
   }
 
-  const [simStep, setSimStep] = useState(0);
-  const [simRunning, setSimRunning] = useState(false);
-  const [simData, setSimData] = useState(() => simulateStocks(500, 0.15, 12));
-  
-  const [calcSlider, setCalcSlider] = useState(500);
-  const [challengeAns, setChallengeAns] = useState<number | null>(null);
-
-  const INTRO_DIALOGUE = [
-    { id: '1', speaker: 'aarav' as const, text: `I keep hearing about ${lesson.title.toLowerCase()}, but I don't really get it.`, expression: 'thinking' as const },
-    { id: '2', speaker: 'meera' as const, text: `It's simpler than it sounds! Think of it like this: ${lesson.sections.whatIsIt.analogy}.`, expression: 'happy' as const },
-    { id: '3', speaker: 'aarav' as const, text: 'Okay, that makes sense. So how does it actually work?', expression: 'surprised' as const }
-  ];
-
-  const runSimulation = () => {
-    setSimRunning(true);
-    let step = 0;
-    const interval = setInterval(() => {
-      step++;
-      setSimStep(step);
-      if (step >= 12) {
-        clearInterval(interval);
-        setSimRunning(false);
-      }
-    }, 500);
-  };
-
-  const resetSimulation = () => {
-    setSimStep(0);
-    setSimData(simulateStocks(500, 0.15, 12));
-  };
-
-  const calcValue = (calcSlider / 500) * lesson.sections.returns.example.initial;
-  const calcGain = calcValue - lesson.sections.returns.example.initial;
-  const calcPct = (calcGain / lesson.sections.returns.example.initial) * 100;
-
   return (
-    <div className="max-w-4xl mx-auto space-y-16 pb-24">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <Link href="/learn" className="text-sm font-bold text-text-muted hover:text-text-primary transition-colors flex items-center justify-center gap-2 mb-8">
-          ← Back to Modules
-        </Link>
-        <div className="inline-block px-3 py-1 rounded-full bg-accent-bg text-accent text-[10px] font-bold uppercase tracking-widest">
-          Module {lesson.colorType}
+    <div className="max-w-4xl mx-auto p-8 pt-12 pb-24">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="px-3 py-1 bg-surface-hover rounded-full text-xs font-bold text-text-muted border border-border">
+          Asset Class
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">{lesson.title}</h1>
       </div>
+      <h1 className="text-4xl font-extrabold text-text-primary mb-3 font-sans tracking-tight">{lesson.title}</h1>
+      <p className="text-xl text-text-secondary font-medium mb-12">{lesson.subtitle}</p>
 
-      {/* 1. Meet the Characters */}
-      <section>
-        <Dialogue messages={INTRO_DIALOGUE} />
-      </section>
-
-      {/* 2. What is it? */}
-      <section className="card p-8 md:p-12 bg-surface text-center">
-        <h2 className="text-2xl font-bold mb-6">What is it?</h2>
-        <p className="text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto whitespace-pre-wrap">
-          {lesson.sections.whatIsIt.text}
-        </p>
-      </section>
-
-      {/* 3. How it works (Stepper) */}
-      <section>
-        <h2 className="text-2xl font-bold mb-8 text-center">How it works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {lesson.sections.howItWorks.steps.map((step, idx) => (
-            <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="card p-6 flex gap-4">
-              <div className="w-10 h-10 rounded-full bg-surface-hover border border-border flex items-center justify-center font-bold text-accent shrink-0">
-                {idx + 1}
-              </div>
-              <div>
-                <h3 className="font-bold text-lg mb-2">{step.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{step.text}</p>
-              </div>
-            </motion.div>
-          ))}
+      {/* Lesson Dialogue */}
+      {lesson.dialogue && lesson.dialogue.length > 0 && (
+        <div className="h-[400px] mb-16">
+          <Dialogue messages={lesson.dialogue} />
         </div>
-      </section>
+      )}
 
-      {/* 4. Calculator */}
-      <section className="card p-8 bg-surface">
-        <h2 className="text-2xl font-bold mb-4 text-center">How much can it return?</h2>
-        <p className="text-center text-text-secondary mb-8">{lesson.sections.returns.intro}</p>
-        
-        <div className="max-w-xl mx-auto space-y-8">
-          <div className="text-center p-4 bg-bg rounded-xl border border-border">
-            <p className="font-medium">{lesson.sections.returns.example.setup}</p>
+      {/* What it is */}
+      {lesson.whatItIs && lesson.whatItIs.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-text-primary sub-heading">What are {lesson.title.toLowerCase()}?</h2>
+          <div className="bg-surface p-8 rounded-3xl border border-border">
+            {lesson.whatItIs.map((p: string, i: number) => (
+              <p key={i} className="mb-4 text-text-secondary leading-relaxed last:mb-0">
+                {p}
+              </p>
+            ))}
           </div>
-
-          <div>
-            <div className="flex justify-between mb-2 text-sm font-bold text-text-muted">
-              <span>Price Drops</span>
-              <span>Price Rises</span>
-            </div>
-            <input 
-              type="range" 
-              min="300" 
-              max="800" 
-              value={calcSlider} 
-              onChange={(e) => setCalcSlider(Number(e.target.value))}
-              className="w-full accent-accent"
-            />
-          </div>
-
-          <div className={`p-6 rounded-2xl text-center border transition-colors ${calcGain >= 0 ? 'bg-gain-bg border-gain/20' : 'bg-loss-bg border-loss/20'}`}>
-            <p className="text-sm font-bold text-text-muted mb-2">Current Value</p>
-            <p className={`text-4xl font-extrabold mb-2 tabular-nums ${calcGain >= 0 ? 'text-gain' : 'text-loss'}`}>
-              ₹{calcValue.toLocaleString('en-IN', {maximumFractionDigits: 0})}
-            </p>
-            <p className={`font-bold tabular-nums ${calcGain >= 0 ? 'text-gain' : 'text-loss'}`}>
-              {calcGain >= 0 ? '▲' : '▼'} ₹{Math.abs(calcGain).toLocaleString('en-IN', {maximumFractionDigits: 0})} ({calcPct > 0 ? '+' : ''}{calcPct.toFixed(1)}%)
-            </p>
-          </div>
-          
-          <p className="text-[10px] text-center text-text-muted">{lesson.sections.returns.example.disclaimer}</p>
-        </div>
-      </section>
-
-      {/* 5. Simulation */}
-      {lessonKey === 'stocks' && (
-        <section className="card p-8 bg-surface overflow-hidden">
-          <h2 className="text-2xl font-bold mb-4">The Rollercoaster Simulator</h2>
-          <p className="text-text-secondary mb-8">Watch a 1-year mathematical random-walk simulation with simulated news events affecting the price.</p>
-          
-          <div className="flex flex-col md:flex-row gap-6 mb-8 items-center justify-between">
-            <div className="flex gap-4 items-center">
-              <div className="text-3xl font-extrabold tabular-nums">
-                ₹{simData[simStep].price.toFixed(2)}
-              </div>
-              <div className={`px-3 py-1 rounded-full text-sm font-bold ${simData[simStep].price >= simData[0].price ? 'bg-gain-bg text-gain' : 'bg-loss-bg text-loss'}`}>
-                {(((simData[simStep].price - simData[0].price) / simData[0].price) * 100).toFixed(2)}%
-              </div>
-            </div>
-            
-            <div className="flex gap-2">
-              {!simRunning && simStep < 12 ? (
-                <button onClick={runSimulation} className="btn-primary flex items-center gap-2"><Play size={16}/> Start 1-Year Sim</button>
-              ) : (
-                <button onClick={resetSimulation} className="px-4 py-2 border border-border hover:bg-surface-hover rounded-lg font-bold text-sm transition-colors flex items-center gap-2"><RotateCcw size={16}/> Reset</button>
-              )}
-            </div>
-          </div>
-          
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={simData.slice(0, simStep + 1)} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--accent)" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="var(--accent)" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.5} />
-                <XAxis dataKey="month" hide />
-                <YAxis domain={['auto', 'auto']} hide />
-                <RechartsTooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)' }} itemStyle={{ color: 'var(--accent)', fontWeight: 'bold' }} />
-                <Area type="monotone" dataKey="price" stroke="var(--accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorPrice)" isAnimationActive={false} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="mt-6 h-12 flex items-center justify-center">
-            {simData[simStep].news && (
-              <div className={`px-4 py-2 rounded-lg text-sm font-bold animate-pulse ${simData[simStep].isPositive ? 'bg-gain-bg text-gain' : 'bg-loss-bg text-loss'}`}>
-                Month {simStep}: {simData[simStep].news}
-              </div>
-            )}
-          </div>
-          <p className="text-[10px] text-text-muted mt-4 text-center">Simulated for learning. Not a prediction and not investment advice.</p>
         </section>
       )}
 
-      {/* 6. Challenge */}
-      <section className="card p-8 bg-surface">
-        <h2 className="text-2xl font-bold mb-6 text-center">Interactive Challenge</h2>
-        <div className="max-w-2xl mx-auto">
-          <p className="font-medium text-lg mb-6">{lesson.sections.challenge.text}</p>
-          <div className="space-y-3 mb-8">
-            {lesson.sections.challenge.options.map((opt, i) => (
-              <button 
-                key={i}
-                onClick={() => setChallengeAns(i)}
-                className={`w-full text-left p-4 rounded-xl border transition-all font-medium ${
-                  challengeAns === null 
-                    ? 'border-border bg-bg hover:border-accent hover:shadow-sm' 
-                    : i === lesson.sections.challenge.correctIndex
-                      ? 'border-gain bg-gain-bg text-gain'
-                      : challengeAns === i
-                        ? 'border-loss bg-loss-bg text-loss'
-                        : 'border-border bg-bg opacity-50'
-                }`}
-                disabled={challengeAns !== null}
-              >
-                <div className="flex justify-between items-center">
-                  <span>{opt}</span>
-                  {challengeAns !== null && i === lesson.sections.challenge.correctIndex && <CheckCircle2 size={20} className="text-gain" />}
-                  {challengeAns === i && i !== lesson.sections.challenge.correctIndex && <XCircle size={20} className="text-loss" />}
+      {/* How it works */}
+      {lesson.howItWorks && lesson.howItWorks.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-text-primary">How do they work?</h2>
+          <div className="grid gap-4">
+            {lesson.howItWorks.map((step: any, i: number) => (
+              <div key={i} className="bg-surface p-6 rounded-2xl border border-border flex gap-4">
+                <div className="w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold shrink-0">
+                  {i + 1}
                 </div>
-              </button>
+                <div>
+                  <h3 className="font-bold text-text-primary mb-1">{step.step}</h3>
+                  <p className="text-text-secondary text-sm">{step.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
+        </section>
+      )}
 
-          {challengeAns !== null && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex gap-4 items-start bg-bg p-6 rounded-2xl border border-border">
-              <Meera expression={challengeAns === lesson.sections.challenge.correctIndex ? 'happy' : 'thinking'} className="w-16 h-16 shrink-0" />
-              <div>
-                <p className={`font-bold mb-1 ${challengeAns === lesson.sections.challenge.correctIndex ? 'text-gain' : 'text-loss'}`}>
-                  {challengeAns === lesson.sections.challenge.correctIndex ? 'Spot on, Aarav!' : 'Not quite!'}
-                </p>
-                <p className="text-sm text-text-secondary leading-relaxed">{lesson.sections.takeaway}</p>
-              </div>
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* Footer Navigation */}
-      <div className="flex justify-end pt-8 border-t border-border">
-        <Link href="/learn" className="btn-primary flex items-center gap-2">
-          Complete Lesson <ArrowRight size={16} />
-        </Link>
+      {/* Advantages & Risks */}
+      <div className="grid md:grid-cols-2 gap-8 mb-16">
+        {lesson.advantages && lesson.advantages.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
+              <TrendingUp className="text-gain" /> Advantages
+            </h2>
+            <div className="space-y-3">
+              {lesson.advantages.map((adv: string, i: number) => (
+                <div key={i} className="flex gap-3 bg-surface p-4 rounded-xl border border-border">
+                  <CheckCircle2 className="text-gain shrink-0" size={20} />
+                  <span className="text-text-secondary text-sm">{adv}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+        
+        {lesson.risks && lesson.risks.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
+              <TrendingDown className="text-loss" /> Risks
+            </h2>
+            <div className="space-y-3">
+              {lesson.risks.map((risk: string, i: number) => (
+                <div key={i} className="flex gap-3 bg-surface p-4 rounded-xl border border-border">
+                  <XCircle className="text-loss shrink-0" size={20} />
+                  <span className="text-text-secondary text-sm">{risk}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
+
+      {/* Snapshot */}
+      {lesson.snapshot && lesson.snapshot.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-text-primary">India Context Snapshot (Indicative)</h2>
+          <div className="bg-accent-bg border border-accent/20 p-6 rounded-3xl text-accent">
+            <ul className="space-y-2 list-disc list-inside">
+              {lesson.snapshot.map((s: string, i: number) => (
+                <li key={i} className="text-sm">{s}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Takeaway */}
+      {lesson.takeaway && (
+        <section className="mb-16">
+          <div className="bg-surface p-8 rounded-3xl border border-border text-center">
+            <p className="text-xs uppercase font-bold text-text-muted mb-3 tracking-wider">Key Takeaway</p>
+            <p className="text-xl font-medium text-text-primary italic">"{lesson.takeaway}"</p>
+          </div>
+        </section>
+      )}
+
+      {/* Next Lesson */}
+      {lesson.nextLesson && (
+        <div className="flex justify-end pt-8 border-t border-border mt-8">
+          <Link href={`/learn/${lesson.nextLesson}`} className="group flex items-center gap-3 px-8 py-4 bg-accent text-white rounded-xl font-bold hover:shadow-lg transition-all hover:-translate-y-1">
+            Next Lesson: {lesson.nextLesson.replace('-', ' ').toUpperCase()}
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

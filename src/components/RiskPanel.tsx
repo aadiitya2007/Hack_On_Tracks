@@ -11,10 +11,22 @@ export function RiskPanel() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPortfolioRiskProfile().then(res => {
-      setData(res);
-      setLoading(false);
-    });
+    let mounted = true;
+    getPortfolioRiskProfile()
+      .then(res => {
+        if (mounted) {
+          setData(res);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to load risk profile:", err);
+        if (mounted) {
+          setData({ error: true });
+          setLoading(false);
+        }
+      });
+    return () => { mounted = false; };
   }, []);
 
   if (loading) return (
@@ -24,6 +36,14 @@ export function RiskPanel() {
   );
 
   if (!data) return null;
+  
+  if (data.error) return (
+    <div className="card p-6 h-64 bg-surface flex flex-col items-center justify-center text-center gap-2 border border-loss">
+      <AlertTriangle className="text-loss" size={32} />
+      <h3 className="font-bold text-sm">Missing Portfolio Data</h3>
+      <p className="text-xs text-text-muted max-w-xs">We could not analyze the risk profile because the database has no valid historical price records or holdings.</p>
+    </div>
+  );
 
   const { riskProfile, metrics, unanalysedHoldings, totalPortfolioValue } = data;
 
@@ -62,7 +82,7 @@ export function RiskPanel() {
           </div>
         </div>
 
-        {unanalysedHoldings.length > 0 && (
+        {unanalysedHoldings && unanalysedHoldings.length > 0 && (
           <div className="bg-surface-hover border border-border p-3 rounded-lg flex gap-3 text-xs">
             <Info size={16} className="text-text-muted shrink-0 mt-0.5" />
             <p className="text-text-muted">
