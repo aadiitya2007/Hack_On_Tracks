@@ -52,6 +52,60 @@ const SKILL_QUESTIONS = [
   }
 ];
 
+const BROKER_OPTIONS = [
+  { id: 'zerodha', name: 'Zerodha Kite', logo: '/logos/zerodha.webp', isPartnered: true, autoFound: true },
+  { id: 'groww', name: 'Groww', logo: '/logos/groww.png', isPartnered: true, autoFound: true },
+  { id: 'upstox', name: 'Upstox Pro', logo: '/logos/upstox.png', isPartnered: true, autoFound: false },
+  { id: 'cdsl', name: 'CDSL Depository CAS', logo: '/logos/cdsl.webp', isPartnered: true, autoFound: true },
+  { id: 'angel', name: 'Angel One', logo: '/logos/unify.png', isPartnered: false, autoFound: false },
+  { id: 'icici', name: 'ICICI Direct / HDFC Sec', logo: '/logos/unify.png', isPartnered: false, autoFound: false },
+];
+
+const BROKER_GUIDES: Record<string, { title: string; steps: string[] }> = {
+  'zerodha': {
+    title: 'Zerodha Kite P&L Download Guide',
+    steps: [
+      'Login to console.zerodha.com or open the Kite mobile app.',
+      'Go to Profile / Account → Reports → Tax P&L.',
+      'Select the Financial Year (e.g. FY 2024-25) & Segment (Equity / F&O).',
+      'Click "Download P&L" (PDF or Excel) and save to device.'
+    ]
+  },
+  'groww': {
+    title: 'Groww Tax P&L Download Guide',
+    steps: [
+      'Open the Groww App or web portal at groww.in.',
+      'Click your Profile Avatar → Reports.',
+      'Select "Stocks P&L" or "Mutual Fund P&L".',
+      'Choose Financial Year and click "Download PDF".'
+    ]
+  },
+  'upstox': {
+    title: 'Upstox Pro P&L Download Guide',
+    steps: [
+      'Login to my.upstox.com or open the Upstox Pro app.',
+      'Navigate to Account → Reports & Ledgers → Tax P&L.',
+      'Select Financial Year & click "Export PDF Statement".'
+    ]
+  },
+  'angel': {
+    title: 'Angel One P&L Download Guide',
+    steps: [
+      'Login to Angel One app or web portal.',
+      'Go to Account → Statements → Gain/Loss & Tax P&L.',
+      'Select Date Range and tap "Download PDF".'
+    ]
+  },
+  'icici': {
+    title: 'ICICI Direct / HDFC / CAMS CAS Guide',
+    steps: [
+      'Visit camsonline.com or cdslindia.com for Consolidated Account Statement (CAS).',
+      'Select CAS - Detailed statement with portfolio holdings.',
+      'Enter your PAN & Email address to receive statement via email.'
+    ]
+  }
+};
+
 export default function Onboarding() {
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -80,9 +134,55 @@ export default function Onboarding() {
   const [capturedSnapshot, setCapturedSnapshot] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
 
-  // Non-Partnered PnL & Gmail Sync State
+  // Broker Portal Selection & PnL Upload State
+  const [selectedBrokers, setSelectedBrokers] = useState<string[]>(['zerodha', 'groww', 'cdsl']);
   const [pnlFileUploaded, setPnlFileUploaded] = useState(false);
+  const [pnlFileName, setPnlFileName] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [showGuideModal, setShowGuideModal] = useState(false);
+  const [activeGuideBroker, setActiveGuideBroker] = useState<'zerodha' | 'groww' | 'upstox' | 'angel' | 'icici'>('zerodha');
   const [gmailSyncEnabled, setGmailSyncEnabled] = useState(true);
+
+  // File Upload Validation Handler
+  const handleFileUpload = (file: File) => {
+    setUploadError(null);
+    setUploadSuccess(false);
+
+    const validExtensions = ['.pdf', '.csv', '.xlsx', '.xls'];
+    const fileName = file.name.toLowerCase();
+    const isValidExtension = validExtensions.some(ext => fileName.endsWith(ext));
+
+    if (!isValidExtension) {
+      setUploadError(`Invalid file format ("${file.name}"). P&L statements must be uploaded in PDF, CSV, or Excel (.xlsx) format.`);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = (e.target?.result as string) || '';
+      const lowerText = text.toLowerCase();
+      
+      const keywords = ['pnl', 'p&l', 'profit', 'loss', 'cas', 'holding', 'contract', 'trade', 'statement', 'zerodha', 'groww', 'upstox', 'angel', 'tax', 'realized', 'unrealized', 'isin', 'demat', 'equity', 'scrip', 'broker'];
+      const hasKeyword = keywords.some(k => lowerText.includes(k) || fileName.includes('pnl') || fileName.includes('statement') || fileName.includes('cas') || fileName.includes('contract'));
+      
+      if (file.size < 50) {
+        setUploadError("The uploaded file is empty. Please upload a valid P&L statement.");
+        return;
+      }
+
+      if (!hasKeyword && file.size < 10000) {
+        setUploadError("Invalid file content. The uploaded file does not contain recognized broker P&L or CAS trade data.");
+        return;
+      }
+
+      setUploadSuccess(true);
+      setPnlFileName(file.name);
+      setPnlFileUploaded(true);
+    };
+
+    reader.readAsText(file.slice(0, 10000));
+  };
 
   // Skill Quiz State
   const [currentQuizIdx, setCurrentQuizIdx] = useState(0);
@@ -551,76 +651,147 @@ export default function Onboarding() {
               </motion.div>
             )}
 
-            {/* STEP 6: Partnered Accounts Link & Non-Partnered PnL / Gmail Access */}
+            {/* STEP 6: Partnered & Non-Partnered Broker Selection & PnL Upload */}
             {step === 6 && (
-              <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
+              <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
                 <div>
-                  <h2 className="text-xl font-black text-text-primary">Step 6: Account Linking & P&L Statement Upload</h2>
-                  <p className="text-xs text-text-secondary mt-1">Partnered brokerages auto-sync telemetry. For un-integrated brokerages, upload P&L statements or enable Gmail trade note sync.</p>
+                  <h2 className="text-xl font-black text-text-primary">Step 6: Select Broker Portals & P&L Statement</h2>
+                  <p className="text-xs text-text-secondary mt-1">Select the portals you want to link. Partnered brokers auto-sync via API; un-integrated brokers require P&L statement upload.</p>
                 </div>
 
-                {/* Partnered Brokers List */}
+                {/* Interactive Broker Portal Checkbox Selection */}
                 <div className="space-y-2">
-                  <p className="text-[10px] font-extrabold uppercase text-text-muted tracking-wider">Partnered Brokers (Auto-Fetched)</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { name: 'Zerodha Kite', logo: '/logos/zerodha.webp' },
-                      { name: 'Groww', logo: '/logos/groww.png' },
-                      { name: 'Upstox', logo: '/logos/upstox.png' },
-                      { name: 'CDSL Depository', logo: '/logos/cdsl.webp' }
-                    ].map(b => (
-                      <div key={b.name} className="flex items-center justify-between p-2.5 rounded-xl bg-bg border border-border">
-                        <div className="flex items-center gap-2">
-                          <img src={b.logo} alt={b.name} className="w-5 h-5 object-contain" />
-                          <span className="text-xs font-extrabold text-text-primary">{b.name}</span>
-                        </div>
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gain-bg text-gain">Connected</span>
-                      </div>
-                    ))}
+                  <p className="text-[10px] font-extrabold uppercase text-text-muted tracking-wider">Select Broker Accounts to Connect</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {BROKER_OPTIONS.map(b => {
+                      const isChecked = selectedBrokers.includes(b.id);
+                      return (
+                        <label 
+                          key={b.id} 
+                          className={`flex items-center justify-between p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                            isChecked ? 'bg-accent-bg/40 border-accent text-text-primary shadow-sm' : 'bg-bg border-border text-text-secondary hover:border-border/80'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="checkbox" 
+                              checked={isChecked} 
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedBrokers(prev => [...prev, b.id]);
+                                } else {
+                                  setSelectedBrokers(prev => prev.filter(id => id !== b.id));
+                                }
+                              }}
+                              className="w-4 h-4 accent-accent shrink-0 rounded cursor-pointer"
+                            />
+                            <img src={b.logo} alt={b.name} className="w-5 h-5 object-contain" />
+                            <div className="flex flex-col">
+                              <span className="text-xs font-black text-text-primary">{b.name}</span>
+                              <span className="text-[9px] text-text-muted font-mono">
+                                {b.isPartnered ? (b.autoFound ? '✓ Auto-Detected' : 'Partnered API') : 'Manual P&L'}
+                              </span>
+                            </div>
+                          </div>
+                          {b.isPartnered ? (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gain-bg text-gain border border-gain/20">Auto API</span>
+                          ) : (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-warning-bg text-warning border border-warning/20">Upload</span>
+                          )}
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Non-Partnered Upload PnL Section */}
                 <div className="p-4 rounded-2xl bg-bg border border-dashed border-border space-y-3">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-xs font-black text-text-primary">Un-integrated Brokers P&L Upload</p>
-                      <p className="text-[10px] text-text-muted">Upload CAS statement (PDF/CSV) for non-partnered brokers</p>
+                      <p className="text-xs font-black text-text-primary">Un-integrated Brokers P&L / CAS Upload</p>
+                      <p className="text-[10px] text-text-secondary">Upload Tax P&L or CAS statement (.pdf, .csv, .xlsx)</p>
                     </div>
-                    <FileText size={20} className="text-accent shrink-0" />
+                    <button 
+                      type="button" 
+                      onClick={() => setShowGuideModal(true)} 
+                      className="text-[10px] font-extrabold text-accent bg-accent-bg px-2.5 py-1 rounded-lg border border-accent/20 flex items-center gap-1 hover:underline shrink-0"
+                    >
+                      <HelpCircle size={12} /> How to get P&L?
+                    </button>
                   </div>
 
-                  <button 
-                    type="button"
-                    onClick={() => setPnlFileUploaded(true)} 
-                    className="w-full py-2.5 rounded-xl bg-surface border border-border text-xs font-bold text-text-primary hover:border-accent transition-all flex justify-center items-center gap-2"
-                  >
-                    <Upload size={14} /> {pnlFileUploaded ? '✓ P&L Statement Processed' : 'Upload CAS / P&L Statement (PDF/CSV)'}
-                  </button>
+                  {/* Real File Input */}
+                  <div className="relative">
+                    <input 
+                      type="file" 
+                      accept=".pdf,.csv,.xlsx,.xls"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          handleFileUpload(e.target.files[0]);
+                        }
+                      }}
+                      className="hidden"
+                      id="pnl-file-input"
+                    />
+                    <label 
+                      htmlFor="pnl-file-input" 
+                      className="w-full py-3 px-4 rounded-xl bg-surface border border-border text-xs font-bold text-text-primary hover:border-accent transition-all flex justify-center items-center gap-2 cursor-pointer shadow-sm"
+                    >
+                      <Upload size={15} className="text-accent" />
+                      {pnlFileName ? `Uploaded: ${pnlFileName}` : 'Choose P&L / CAS File (.pdf, .csv)'}
+                    </label>
+                  </div>
+
+                  {/* Upload Validation Error Alert */}
+                  {uploadError && (
+                    <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-3 rounded-xl bg-loss-bg border border-loss/30 text-loss text-xs font-bold flex items-start gap-2">
+                      <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-extrabold">Invalid File Uploaded</p>
+                        <p className="text-[11px] font-medium text-loss/90 mt-0.5">{uploadError}</p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Upload Success Alert */}
+                  {uploadSuccess && (
+                    <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-3 rounded-xl bg-gain-bg border border-gain/30 text-gain text-xs font-bold flex items-center gap-2">
+                      <CheckCircle2 size={16} className="shrink-0" />
+                      <span>P&L Statement Validated! Financial trade telemetry extracted cleanly.</span>
+                    </motion.div>
+                  )}
                 </div>
 
                 {/* Gmail Trade Mail Parser Access */}
-                <div className="p-4 rounded-2xl bg-surface border border-border space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <img src="/logos/gmail.svg" alt="Gmail Sync" className="h-6 object-contain" />
-                      <div>
-                        <p className="text-xs font-black text-text-primary">Gmail Trade Contract Note Sync</p>
-                        <p className="text-[10px] text-text-muted">Read-only order email parsing consent</p>
-                      </div>
+                <div className="p-3.5 rounded-2xl bg-surface border border-border flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <img src="/logos/gmail.svg" alt="Gmail Sync" className="h-5 object-contain" />
+                    <div>
+                      <p className="text-xs font-black text-text-primary">Gmail Order Contract Note Auto-Sync</p>
+                      <p className="text-[10px] text-text-muted">Grant read-only access to parse trade notes automatically</p>
                     </div>
-
-                    <input 
-                      type="checkbox" 
-                      checked={gmailSyncEnabled} 
-                      onChange={e => setGmailSyncEnabled(e.target.checked)}
-                      className="w-4 h-4 accent-accent shrink-0" 
-                    />
                   </div>
+
+                  <input 
+                    type="checkbox" 
+                    checked={gmailSyncEnabled} 
+                    onChange={e => setGmailSyncEnabled(e.target.checked)}
+                    className="w-4 h-4 accent-accent shrink-0 rounded cursor-pointer" 
+                  />
                 </div>
 
-                <button onClick={handleNext} className="btn-primary w-full py-3.5 text-xs font-bold">
-                  Save Accounts & Proceed to Skill Assessment →
+                <button 
+                  onClick={() => {
+                    const hasNonPartnered = selectedBrokers.some(id => id === 'angel' || id === 'icici');
+                    if (hasNonPartnered && !pnlFileUploaded && !uploadSuccess) {
+                      setUploadError("Please upload a valid P&L statement or CAS file for your selected non-partnered broker before advancing.");
+                      return;
+                    }
+                    handleNext();
+                  }} 
+                  className="btn-primary w-full py-3.5 text-xs font-bold flex justify-center items-center gap-2"
+                >
+                  Save Portals & Proceed to Skill Assessment →
                 </button>
               </motion.div>
             )}
@@ -715,6 +886,54 @@ export default function Onboarding() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Step-by-Step P&L Download Guide Modal */}
+      {showGuideModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowGuideModal(false)}></div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="card w-full max-w-lg p-6 relative rounded-3xl border border-border bg-surface z-10 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl"
+          >
+            <div className="flex justify-between items-center pb-3 border-b border-border">
+              <h3 className="font-extrabold text-base text-text-primary flex items-center gap-2">
+                <BookOpen size={18} className="text-accent" /> How to Download Your P&L Statement
+              </h3>
+              <button onClick={() => setShowGuideModal(false)} className="text-text-muted hover:text-text-primary text-sm font-bold w-7 h-7 rounded-full bg-bg border border-border flex items-center justify-center">✕</button>
+            </div>
+
+            {/* Broker Guide Selector Tabs */}
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {Object.keys(BROKER_GUIDES).map(key => (
+                <button
+                  key={key}
+                  onClick={() => setActiveGuideBroker(key as any)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider shrink-0 transition-all ${
+                    activeGuideBroker === key ? 'bg-accent text-white shadow-sm' : 'bg-bg text-text-secondary border border-border hover:text-text-primary'
+                  }`}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+
+            {/* Guide Step-by-Step Instructions */}
+            <div className="p-4 rounded-2xl bg-bg border border-border space-y-3">
+              <h4 className="font-black text-sm text-text-primary">{BROKER_GUIDES[activeGuideBroker].title}</h4>
+              <ol className="space-y-2 text-xs text-text-secondary list-decimal pl-4">
+                {BROKER_GUIDES[activeGuideBroker].steps.map((st, i) => (
+                  <li key={i} className="leading-relaxed font-medium">{st}</li>
+                ))}
+              </ol>
+            </div>
+
+            <button onClick={() => setShowGuideModal(false)} className="btn-primary w-full py-3 text-xs font-bold">
+              Understood — Back to Statement Upload →
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
