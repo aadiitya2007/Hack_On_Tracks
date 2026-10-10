@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
+import { MessageSquare, X, Send, Sparkles, GripHorizontal, Move } from 'lucide-react';
 
 export default function AssistantWidget() {
   const [open, setOpen] = useState(false);
@@ -71,25 +71,41 @@ export default function AssistantWidget() {
 
   return (
     <>
-      <button 
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-accent hover:bg-accent/90 flex items-center justify-center text-white shadow-[0_8px_25px_rgba(109,40,217,0.4)] transition-transform hover:scale-105 z-50 border border-white/20"
+      {/* Draggable Launcher Button */}
+      <motion.button 
+        drag
+        dragMomentum={false}
+        onClick={() => setOpen(prev => !prev)}
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-accent hover:bg-accent/90 flex items-center justify-center text-white shadow-[0_8px_25px_rgba(109,40,217,0.5)] transition-transform hover:scale-105 z-[999] border border-white/20 cursor-grab active:cursor-grabbing"
         aria-label="Open AI Assistant"
       >
         <MessageSquare size={24} />
-      </button>
+      </motion.button>
 
       <AnimatePresence>
         {open && (
           <motion.div 
+            drag
+            dragMomentum={false}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 w-[380px] h-[560px] bg-surface border border-border rounded-2xl shadow-[0_20px_50px_-10px_rgba(109,40,217,0.2)] flex flex-col z-50 overflow-hidden"
+            className="fixed bottom-24 right-6 w-[380px] h-[560px] bg-surface border border-border rounded-3xl shadow-[0_25px_60px_-15px_rgba(109,40,217,0.35)] flex flex-col z-[999] overflow-hidden cursor-default"
           >
+            {/* Top Drag Handle Header */}
+            <div className="bg-accent/10 border-b border-border py-1.5 px-4 flex items-center justify-between cursor-grab active:cursor-grabbing select-none text-[10px] font-extrabold text-accent">
+              <div className="flex items-center gap-1.5">
+                <GripHorizontal size={14} className="text-accent" />
+                <span>Movable Assistant • Drag Anywhere</span>
+              </div>
+              <div className="flex items-center gap-1 text-[9px] text-text-muted font-bold">
+                <Move size={10} /> Drag Window
+              </div>
+            </div>
+
             {/* Header */}
-            <div className="p-4 bg-surface border-b border-border flex justify-between items-center z-10">
+            <div className="p-4 bg-surface border-b border-border flex justify-between items-center z-10 select-none">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent-bg text-accent flex items-center justify-center">
                   <Sparkles size={16} />
@@ -103,7 +119,7 @@ export default function AssistantWidget() {
               </div>
               <button 
                 onClick={() => setOpen(false)} 
-                className="w-8 h-8 flex items-center justify-center rounded-full text-text-muted hover:bg-surface-hover hover:text-text-primary transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full text-text-muted hover:bg-surface-hover hover:text-text-primary transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -146,7 +162,7 @@ export default function AssistantWidget() {
                   <button
                     key={idx}
                     onClick={() => { setInput(p); }}
-                    className="text-[10px] bg-bg border border-border hover:border-accent text-text-secondary hover:text-text-primary px-2.5 py-1 rounded-full transition-colors text-left"
+                    className="text-[10px] bg-bg border border-border hover:border-accent text-text-secondary hover:text-text-primary px-2.5 py-1 rounded-full transition-colors text-left cursor-pointer"
                   >
                     {p}
                   </button>
@@ -167,7 +183,7 @@ export default function AssistantWidget() {
               <button 
                 type="submit" 
                 disabled={!input.trim() || isTyping}
-                className="w-9 h-9 shrink-0 bg-accent text-white rounded-xl flex items-center justify-center hover:bg-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-9 h-9 shrink-0 bg-accent text-white rounded-xl flex items-center justify-center hover:bg-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <Send size={15} />
               </button>
