@@ -44,7 +44,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
           <NavLink href="/accounts" icon={<Wallet size={18} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
           <NavLink href="/learn" icon={<BookOpen size={18} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
-          <NavLink href="/practice" icon={<TrendingUp size={18} strokeWidth={2.5} />} label="Practice Trading" badge="Virtual" colorClass="text-[var(--asset-cash)]" />
           <NavLink href="/time-machine" icon={<Clock size={18} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
         </nav>
 
