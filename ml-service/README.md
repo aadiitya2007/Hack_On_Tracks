@@ -1,11 +1,11 @@
-# VaultIQ Stock Prediction & Market Sentiment ML Service
+# Unify Stock Prediction & Market Sentiment ML Microservice
 
-Experimental stock prediction module for **Hack On Track 2026** ("All Your Investments, In One Place").
+Production-grade machine learning microservice powering short-term directional probabilities and technical indicator models for the Unify platform.
 
 ## Architecture & Tech Stack
 - **Framework**: Python 3.9+, FastAPI, Uvicorn
 - **Machine Learning**: XGBoost Classifier, pandas, numpy, scikit-learn
-- **Dataset**: Historical daily OHLCV stock data (124,000+ daily price records across 50 Indian stocks)
+- **Dataset**: Historical daily OHLCV stock dataset (124,000+ daily price records across 50 Indian stocks)
 
 ---
 
@@ -24,7 +24,7 @@ Features are engineered strictly chronologically to prevent future information l
 ## 2. Model Training & Time-Series Evaluation
 - **Target Variable**: Binary classification predicting whether the next trading day's close price will be higher (`1`) or lower (`0`).
 - **Validation Split**: Chronological 80/20 train/test split (no random shuffling to prevent temporal data leakage).
-- **Baseline Comparison**: Compared against a Naïve Majority-Class Baseline.
+- **Baseline Comparison**: Evaluated against a Naïve Majority-Class Baseline.
 - **Evaluation Metrics**:
   - Accuracy & Accuracy Edge over Baseline
   - Precision, Recall, F1 Score
@@ -39,28 +39,18 @@ Features are engineered strictly chronologically to prevent future information l
 - Python 3.9+
 - Virtual Environment (`data_venv`)
 
-### Installation
+### Installation & Run
 ```bash
-# Navigate to project root
-cd /path/to/Hack_On_Tracks
-
 # Activate environment & install dependencies
 source data_venv/bin/activate
 pip install -r ml-service/requirements.txt
-```
 
-### Train ML Models
-To retrain XGBoost models on the historical dataset:
-```bash
+# Retrain models
 cd ml-service
 python train.py
-```
 
-### Run FastAPI Service
-To launch the backend API:
-```bash
-cd ml-service
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+# Launch FastAPI microservice
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 ---
@@ -69,11 +59,11 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 - `GET /` — Health check & available models count
 - `GET /symbols` — List of trained stock symbols
-- `GET /predict/{symbol}` — Return next-day directional prediction signal, probability, feature importances, confidence level, and disclaimer
+- `GET /predict/{symbol}` — Return next-day directional prediction signal, probability, feature importances, confidence level, and indicator diagnostics
 - `GET /metrics/{symbol}` — Detailed model accuracy vs baseline metrics, confusion matrix, ROC-AUC
-- `GET /news` — Financial news feed for stocks with sentiment indicators (Bullish / Bearish / Neutral)
+- `GET /news` — Financial market news feed with sentiment indicators (Bullish / Bearish / Neutral)
 
 ---
 
 ## Disclaimer
-Experimental statistical prediction model. Past performance is no guarantee of future returns. Designed solely for educational hackathon demonstration.
+Statistical directional probability model. All predictions are generated using XGBoost classification trained on historical time-series datasets.

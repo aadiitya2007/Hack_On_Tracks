@@ -5,7 +5,7 @@ import os
 import random
 from typing import Optional
 
-app = FastAPI(title="VaultIQ ML Prediction & News Service")
+app = FastAPI(title="Unify ML Prediction & News Service")
 
 # Allow CORS for Next.js app
 app.add_middleware(
@@ -96,7 +96,7 @@ STOCK_NEWS = [
 def health_check():
     return {
         "status": "ok",
-        "service": "VaultIQ ML & Sentiment Engine",
+        "service": "Unify ML & Sentiment Engine",
         "available_models": len(metrics)
     }
 

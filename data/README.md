@@ -1,6 +1,6 @@
-# VaultIQ Data Processing
+# Unify Data Processing
 
-This folder contains the data engineering pipeline for processing raw financial data into optimized formats suitable for the VaultIQ Time Machine simulator.
+This folder contains the data engineering pipeline for processing raw financial data into optimized formats suitable for the Unify Time Machine simulator.
 
 ## Directory Structure
 - `/raw/` - Raw, uncompressed data files (e.g., `stocks_df.csv`). *Note: Ignored by git due to file size constraints.*
