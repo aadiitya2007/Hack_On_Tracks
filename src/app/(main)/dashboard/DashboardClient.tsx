@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { simulateTradeAction } from '@/lib/actions';
 import { RiskPanel } from '@/components/RiskPanel';
+import { StockInsightsCard } from '@/components/StockInsightsCard';
 
 const ASSET_COLORS: Record<string, string> = {
   EQUITY: 'var(--asset-stocks)',
@@ -208,6 +209,11 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Stock Insights Card */}
+      <div className="relative z-10">
+        <StockInsightsCard symbol="RELIANCE" />
       </div>
 
       {/* Middle Row */}

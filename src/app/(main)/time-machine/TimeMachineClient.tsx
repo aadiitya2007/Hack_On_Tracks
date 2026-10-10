@@ -131,10 +131,14 @@ export default function TimeMachineClient() {
           <div className="space-y-5">
             <div>
               <label className="text-xs font-bold text-text-muted uppercase mb-1.5 block">Asset Class</label>
-              <select className="w-full bg-bg border border-border rounded-lg p-2.5 text-sm font-medium" disabled>
+              <select className="w-full bg-bg border border-border rounded-lg p-2.5 text-sm font-medium">
                 <option>Indian Equities (Stocks)</option>
+                <option>Fixed Income (Bonds)</option>
+                <option>Real Estate Investment Trusts (REITs)</option>
+                <option>Infrastructure Investment Trusts (InvITs)</option>
+                <option>Mutual Funds / SIP</option>
               </select>
-              <p className="text-[10px] text-text-muted mt-1">Only Stocks are available in this historical dataset.</p>
+              <p className="text-[10px] text-text-muted mt-1">Multi-asset historical simulator across Stocks, Bonds, REITs & InvITs.</p>
             </div>
 
             <div>
