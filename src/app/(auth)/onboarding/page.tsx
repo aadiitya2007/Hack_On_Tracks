@@ -155,9 +155,9 @@ export default function Onboarding() {
         
         {/* Header */}
         <div className="mb-6 flex flex-col items-center">
-          <img src="/logos/unify.png" alt="Unify" className="h-12 object-contain" />
-          <div className="flex items-center gap-2 mt-2">
-            <span className="px-3 py-1 rounded-full bg-surface border border-border text-text-secondary text-[10px] font-bold tracking-widest uppercase">
+          <img src="/logos/unify.png" alt="Unify — PLAN / TRACK / GROW" className="h-16 md:h-20 object-contain drop-shadow-md" />
+          <div className="flex items-center gap-2 mt-3">
+            <span className="px-3 py-1 rounded-full bg-surface border border-border text-text-secondary text-[10px] font-extrabold tracking-widest uppercase shadow-sm">
               Identity & Skill Assessment Onboarding
             </span>
           </div>

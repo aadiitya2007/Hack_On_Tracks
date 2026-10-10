@@ -5,15 +5,15 @@ import MarketBackground from "./MarketBackground";
 
 function NavLink({ href, icon, label, badge, colorClass }: { href: string, icon: React.ReactNode, label: string, badge?: string, colorClass: string }) {
   return (
-    <Link href={href} className="flex items-center justify-between p-3 rounded-xl hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-all group font-medium">
-      <div className="flex items-center gap-3">
-        <div className={`transition-colors ${colorClass} opacity-70 group-hover:opacity-100 bg-surface-hover p-2 rounded-lg`}>
+    <Link href={href} className="flex items-center justify-between p-3.5 rounded-2xl hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-all group font-bold">
+      <div className="flex items-center gap-3.5">
+        <div className={`transition-all ${colorClass} bg-surface-hover p-2.5 rounded-xl group-hover:scale-105 shadow-sm shrink-0`}>
           {icon}
         </div>
-        <span className="text-sm font-bold group-hover:text-text-primary">{label}</span>
+        <span className="text-base font-extrabold text-text-primary group-hover:text-accent transition-colors">{label}</span>
       </div>
       {badge && (
-        <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-accent-bg text-accent">
+        <span className="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-md bg-accent-bg text-accent border border-accent/20">
           {badge}
         </span>
       )}
@@ -27,22 +27,28 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <MarketBackground />
       
       {/* Sidebar: Pure white, soft shadow instead of hard border */}
-      <aside className="w-64 bg-surface flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <div className="p-6 pb-4 border-b border-border">
+      <aside className="w-72 bg-surface flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] border-r border-border/50">
+        <div className="p-6 pb-5 border-b border-border">
           <div className="flex items-center gap-3">
-            <img src="/logos/unify.png" alt="Unify Logo" className="h-8 object-contain" />
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-accent/30 shrink-0">
+              U
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-text-primary tracking-tight leading-none">Unify</h1>
+              <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-1">PLAN • TRACK • GROW</p>
+            </div>
           </div>
         </div>
         
-        <nav className="flex-1 px-4 mt-6 space-y-2">
-          <NavLink href="/dashboard" icon={<LayoutDashboard size={18} strokeWidth={2.5} />} label="Dashboard" colorClass="text-accent" />
-          <NavLink href="/risk" icon={<ShieldAlert size={18} strokeWidth={2.5} />} label="Risk Profile" colorClass="text-[var(--asset-bonds)]" />
-          <NavLink href="/prediction" icon={<Sparkles size={18} strokeWidth={2.5} />} label="Stock Insights" badge="AI ML" colorClass="text-accent" />
-          <NavLink href="/news" icon={<Newspaper size={18} strokeWidth={2.5} />} label="Market News" badge="Live" colorClass="text-accent" />
+        <nav className="flex-1 px-4 mt-6 space-y-2.5">
+          <NavLink href="/dashboard" icon={<LayoutDashboard size={22} strokeWidth={2.5} />} label="Dashboard" colorClass="text-accent" />
+          <NavLink href="/risk" icon={<ShieldAlert size={22} strokeWidth={2.5} />} label="Risk Profile" colorClass="text-[var(--asset-bonds)]" />
+          <NavLink href="/prediction" icon={<Sparkles size={22} strokeWidth={2.5} />} label="Stock Insights" badge="AI ML" colorClass="text-accent" />
+          <NavLink href="/news" icon={<Newspaper size={22} strokeWidth={2.5} />} label="Market News" badge="Live" colorClass="text-accent" />
 
-          <NavLink href="/accounts" icon={<Wallet size={18} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
-          <NavLink href="/learn" icon={<BookOpen size={18} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
-          <NavLink href="/time-machine" icon={<Clock size={18} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
+          <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
+          <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
+          <NavLink href="/time-machine" icon={<Clock size={22} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
         </nav>
 
         <div className="p-6 border-t border-border">

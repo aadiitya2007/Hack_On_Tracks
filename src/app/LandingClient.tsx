@@ -18,8 +18,11 @@ export default function LandingClient() {
 
       {/* Navbar */}
       <nav className="relative z-50 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <img src="/logos/unify.png" alt="Unify" className="h-9 object-contain" />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center font-black text-xl shadow-md shadow-accent/20">
+            U
+          </div>
+          <img src="/logos/unify.png" alt="Unify" className="h-10 object-contain" />
         </div>
         <div className="hidden md:flex gap-8 font-medium text-sm text-text-secondary">
           <Link href="#features" className="hover:text-[var(--asset-stocks)] transition-colors">Features</Link>
@@ -33,12 +36,18 @@ export default function LandingClient() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 max-w-7xl mx-auto px-8 pt-20 pb-32 flex flex-col items-center text-center">
+      <section className="relative z-10 max-w-7xl mx-auto px-8 pt-12 pb-32 flex flex-col items-center text-center">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="flex flex-col items-center"
         >
+          {/* Big Center Logo Image */}
+          <div className="mb-6 p-4 rounded-3xl bg-surface/80 border border-border/80 shadow-2xl backdrop-blur-md">
+            <img src="/logos/unify.png" alt="Unify — PLAN / TRACK / GROW" className="h-20 md:h-28 object-contain drop-shadow-md" />
+          </div>
+
           <div className="sub-heading mb-6 justify-center">Unify Financial Engine</div>
           <h1 className="heading-hero text-6xl md:text-7xl max-w-4xl leading-tight mb-8">
             Master Your Wealth <br/> <span className="text-[var(--asset-stocks)]">Without the Complexity.</span>
