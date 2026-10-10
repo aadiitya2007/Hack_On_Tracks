@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     buildCommand: npm install && npx prisma generate && npx prisma db push --accept-data-loss && npx tsx scripts/seed-prod.ts && npm run build
-    startCommand: npm run start
+    startCommand: npx prisma db push --accept-data-loss && npx tsx scripts/seed-prod.ts && npm run start
     envVars:
       - key: DATABASE_URL
         value: file:./dev.db
