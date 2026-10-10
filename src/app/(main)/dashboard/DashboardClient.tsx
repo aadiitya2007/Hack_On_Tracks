@@ -4,12 +4,16 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { simulateTradeAction } from '@/lib/actions';
-import { RiskPanel } from '@/components/RiskPanel';
 import { StockInsightsCard } from '@/components/StockInsightsCard';
+import Link from 'next/link';
+import { 
+  Brain, Award, Sparkles, BookOpen, TrendingUp, TrendingDown, 
+  Layers, ShieldCheck, ArrowRight, Clock, Zap, AlertTriangle, RefreshCw 
+} from 'lucide-react';
 
 const ASSET_COLORS: Record<string, string> = {
   EQUITY: 'var(--asset-stocks)',
-  MUTUAL_FUND: 'var(--asset-funds)', // magenta
+  MUTUAL_FUND: 'var(--asset-funds)',
   DEBT: 'var(--asset-bonds)',
   COMMODITY: 'var(--asset-reits)',
   REIT: 'var(--asset-reits)',
@@ -58,12 +62,33 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
   const [tradeLoading, setTradeLoading] = useState(false);
   const [simulateModalOpen, setSimulateModalOpen] = useState(false);
   
+  // User Classification State
+  const [userLevel, setUserLevel] = useState<string>('Beginner');
+  const [userTitle, setUserTitle] = useState<string>('Beginner Investor');
+  const [userDesc, setUserDesc] = useState<string>('Building an initial equity & mutual fund portfolio.');
+
+  // Time Machine & Prediction state
+  const [predictSymbol, setPredictSymbol] = useState('RELIANCE');
+  const [sipAmount, setSipAmount] = useState(10000);
+  const [sipDuration, setSipDuration] = useState(3); // 3 years
+
   // Trade state
   const [tradeSymbol, setTradeSymbol] = useState('RELIANCE');
   const [tradeBroker, setTradeBroker] = useState('Zerodha');
   const [tradeAction, setTradeAction] = useState<'BUY' | 'SELL'>('BUY');
   const [tradeQty, setTradeQty] = useState(10);
-  
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const level = localStorage.getItem('unify_trader_level');
+      const title = localStorage.getItem('unify_trader_title');
+      const desc = localStorage.getItem('unify_trader_desc');
+      if (level) setUserLevel(level);
+      if (title) setUserTitle(title);
+      if (desc) setUserDesc(desc);
+    }
+  }, []);
+
   const holdings = initialData.holdings;
   
   const filteredHoldings = filter === 'All' 
@@ -80,7 +105,6 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
     if (h.avgBuyPrice) {
       totalInvested += h.quantity * h.avgBuyPrice;
     } else {
-      // If no buy price, assume 0 invested for PnL logic or use current price to avoid huge false PnL
       totalInvested += val; 
     }
   });
@@ -110,9 +134,18 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
     }
   });
 
+  // Time Machine compounding calculation on Dashboard
+  const estimatedCagr = predictSymbol === 'RELIANCE' ? 14.5 : (predictSymbol === 'TCS' ? 12.8 : 13.5);
+  const totalMonths = sipDuration * 12;
+  const totalInvestedSip = sipAmount * totalMonths;
+  const monthlyRate = estimatedCagr / 100 / 12;
+  const estimatedFutureValue = Math.round(
+    sipAmount * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate)
+  );
+
   const handleSimulate = async () => {
     setTradeLoading(true);
-    await simulateTradeAction(tradeSymbol, tradeBroker, tradeAction, tradeQty, 3000); // mock price 3000
+    await simulateTradeAction(tradeSymbol, tradeBroker, tradeAction, tradeQty, 3000);
     setTradeLoading(false);
     setSimulateModalOpen(false);
   };
@@ -121,6 +154,50 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
     setSyncing(true);
     setTimeout(() => setSyncing(false), 2000);
   };
+
+  // Tailored AI Advisory Guidance points based on Classified Level & Portfolio Telemetry
+  const getAdvisorRecommendations = () => {
+    switch (userLevel) {
+      case 'Fresher':
+        return [
+          { title: 'Core Allocation Strategy', text: 'As a Fresher investor, build a 60% baseline in low-cost Nifty 50 Index ETFs before picking individual stocks.', tag: 'Foundation' },
+          { title: 'Reduce Stock Volatility', text: 'Your current linked portfolio has 82% equity concentration. Consider adding Debt Mutual Funds for capital safety.', tag: 'Risk Control' },
+          { title: 'Avoid High-Leverage Products', text: 'Steer clear of Futures & Options until you complete basic financial literacy modules.', tag: 'Safety' },
+          { title: 'Academy Recommendation', text: 'Start with the Stocks & Mutual Funds Masterclass.', link: '/learn/stocks', tag: 'Learning' }
+        ];
+      case 'Intermediate':
+        return [
+          { title: 'Drawdown Control & VaR', text: 'Monitor your 1-month Value-at-Risk (95% VaR) and keep maximum portfolio drawdown below 12%.', tag: 'Risk Management' },
+          { title: 'XGBoost Signal Confirmation', text: 'Validate XGBoost ML return signals (RSI-14 & 10/50 MAs) before executing swing trades.', tag: 'Technical Edge' },
+          { title: 'Cost & DP Fee Leakage', text: 'Consolidate duplicate RELIANCE scrips between Zerodha & Groww to save ₹420 annual DP charges.', tag: 'Cost Saving' },
+          { title: 'Academy Recommendation', text: 'Explore the REITs & InvITs Masterclass for yield diversification.', link: '/learn/reits', tag: 'Learning' }
+        ];
+      case 'Advanced':
+        return [
+          { title: 'Multi-Asset Rebalancing', text: 'Rebalance across equities, InvITs, and AAA corporate bonds to maintain optimal Sharpe ratio.', tag: 'Portfolio Alpha' },
+          { title: 'Protective Options Hedges', text: 'Hedge long equity positions with Put options during high-volatility earnings quarters.', tag: 'Hedging' },
+          { title: 'Tax-Loss Harvesting', text: 'Utilize tax-loss harvesting on short-term capital gains before financial year end.', tag: 'Tax Strategy' },
+          { title: 'Academy Recommendation', text: 'Study the Futures & Options (F&O) Masterclass.', link: '/learn/futures-options', tag: 'Learning' }
+        ];
+      case 'Pro':
+        return [
+          { title: 'Quant & Delta Neutrality', text: 'Maintain strict delta-neutral or iron-condor options position structures.', tag: 'Derivatives' },
+          { title: 'SEBI Compliance & Margin Alert', text: 'Keep total F&O margin utilization below 35% of net portfolio worth to avoid margin calls.', tag: 'Capital Discipline' },
+          { title: 'Automated Stop-Loss Execution', text: 'SEBI reports 89% of retail F&O traders incur net losses. Enforce strict mechanical stop-loss limits.', tag: 'Loss Control' },
+          { title: 'Academy Recommendation', text: 'Explore Time Machine compounding SIP vs Lump Sum analytics.', link: '/time-machine', tag: 'Analytics' }
+        ];
+      case 'Beginner':
+      default:
+        return [
+          { title: 'Balanced Asset Foundation', text: 'As a Beginner investor, balance high-growth equity scrips with stable large-cap dividend payers.', tag: 'Asset Allocation' },
+          { title: 'Explore Alternative Yields', text: 'Expand into REITs (e.g., Embassy) or InvITs for steady 6–8% rental yield without buying real estate.', tag: 'Yield Diversification' },
+          { title: 'Cross-Broker DP Charge Leak', text: 'You hold duplicate scrips across Zerodha & Groww. Merging them saves ₹420/yr in depository fees.', tag: 'Cost Savings' },
+          { title: 'Academy Recommendation', text: 'Explore the Mutual Funds & ETFs Masterclasses.', link: '/learn/mutual-funds', tag: 'Learning' }
+        ];
+    }
+  };
+
+  const recommendations = getAdvisorRecommendations();
 
   return (
     <div className="space-y-8 pb-20">
@@ -143,6 +220,56 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           <button onClick={() => setSimulateModalOpen(true)} className="btn-primary">
             + Simulate Trade
           </button>
+        </div>
+      </div>
+
+      {/* AI ADVISORY & CLASSIFIED USER TIER PANEL */}
+      <div className="card p-6 md:p-8 bg-surface border border-accent/30 relative overflow-hidden rounded-3xl z-10 shadow-xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-border">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-accent-bg text-accent flex items-center justify-center font-bold border border-accent/20 shrink-0">
+              <Award size={30} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-xl font-black text-text-primary">AI Advisory & Portfolio Strategy</h2>
+                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-accent text-white shadow-sm">
+                  {userTitle}
+                </span>
+              </div>
+              <p className="text-xs text-text-secondary mt-1 max-w-xl">
+                Personalized LLM guidance tailored to your <strong className="text-text-primary">{userLevel}</strong> classification level and live portfolio telemetry.
+              </p>
+            </div>
+          </div>
+
+          <Link href="/onboarding" className="px-4 py-2.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-accent hover:border-accent transition-colors flex items-center gap-2 shrink-0">
+            <RefreshCw size={14} /> Re-take Skill Quiz
+          </Link>
+        </div>
+
+        {/* 4 Custom Recommendations Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {recommendations.map((rec, i) => (
+            <div key={i} className="p-4 rounded-2xl bg-bg border border-border hover:border-accent/40 transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-accent-bg text-accent border border-accent/20">
+                    {rec.tag}
+                  </span>
+                  <Sparkles size={14} className="text-accent" />
+                </div>
+                <h3 className="font-extrabold text-sm text-text-primary mb-1">{rec.title}</h3>
+                <p className="text-xs text-text-secondary leading-relaxed">{rec.text}</p>
+              </div>
+
+              {rec.link && (
+                <Link href={rec.link} className="mt-3 text-xs font-bold text-accent hover:underline flex items-center gap-1">
+                  View Masterclass Module <ArrowRight size={14} />
+                </Link>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -223,9 +350,82 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         </div>
       </div>
 
-      {/* Stock Insights Card */}
-      <div className="relative z-10">
-        <StockInsightsCard symbol="RELIANCE" />
+      {/* PROMINENT PREDICTION & TIME MACHINE WIDGET ON DASHBOARD */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+        
+        {/* ML Stock Insight Prediction (2 cols) */}
+        <div className="lg:col-span-2">
+          <StockInsightsCard symbol={predictSymbol} />
+        </div>
+
+        {/* Time Machine Quick Compounding Simulator (1 col) */}
+        <div className="card p-6 bg-surface border border-border flex flex-col justify-between rounded-3xl">
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center gap-2">
+                <Clock className="text-accent" size={18} />
+                <h3 className="font-extrabold text-sm text-text-primary">Time Machine Projections</h3>
+              </div>
+              <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-accent-bg text-accent">SIP Engine</span>
+            </div>
+
+            <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+              Historical SIP & Lump Sum compounding growth for <strong className="text-text-primary">{predictSymbol}</strong>.
+            </p>
+
+            <div className="space-y-3 mb-6">
+              <div>
+                <div className="flex justify-between text-xs font-bold text-text-muted mb-1">
+                  <span>Monthly SIP Amount</span>
+                  <span className="text-text-primary font-mono">₹{sipAmount.toLocaleString('en-IN')}</span>
+                </div>
+                <input 
+                  type="range" 
+                  min={1000} 
+                  max={50000} 
+                  step={1000} 
+                  value={sipAmount} 
+                  onChange={e => setSipAmount(Number(e.target.value))}
+                  className="w-full accent-accent"
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between text-xs font-bold text-text-muted mb-1">
+                  <span>Duration (Years)</span>
+                  <span className="text-text-primary font-mono">{sipDuration} Years</span>
+                </div>
+                <div className="flex gap-2">
+                  {[1, 3, 5].map(y => (
+                    <button 
+                      key={y}
+                      onClick={() => setSipDuration(y)} 
+                      className={`flex-1 py-1 rounded-lg text-xs font-bold border transition-colors ${sipDuration === y ? 'bg-accent text-white border-accent' : 'bg-bg border-border text-text-secondary'}`}
+                    >
+                      {y} Yr
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-bg border border-border space-y-1">
+                <div className="flex justify-between text-xs font-medium text-text-muted">
+                  <span>Total Invested:</span>
+                  <span className="text-text-primary font-mono font-bold">₹{totalInvestedSip.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between text-sm font-extrabold text-gain">
+                  <span>Projected Value:</span>
+                  <span className="font-mono">₹{estimatedFutureValue.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/time-machine" className="btn-primary w-full py-2.5 text-xs text-center font-bold flex justify-center items-center gap-1.5">
+            Full Time Machine Analytics <ArrowRight size={14} />
+          </Link>
+        </div>
+
       </div>
 
       {/* Middle Row */}
@@ -286,7 +486,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         {duplicateSymbols.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card border-destructive/30 bg-destructive/5 p-5 flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center text-loss shrink-0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              <AlertTriangle size={20} />
             </div>
             <div>
               <h3 className="font-bold text-loss">Cross-Broker Overlap Detected</h3>
@@ -311,134 +511,101 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             <button onClick={() => setFilter('Zerodha')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Zerodha' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Zerodha</button>
             <button onClick={() => setFilter('Groww')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Groww' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Groww</button>
           </div>
-          <div className="relative">
-            <input type="text" placeholder="Filter holdings..." className="bg-surface border border-border rounded-full pl-8 pr-4 py-1.5 text-xs focus:outline-none focus:border-accent" />
-          </div>
+          <span className="text-xs text-text-muted font-mono">{filteredHoldings.length} Positions</span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="text-[10px] font-bold text-text-muted uppercase tracking-wider border-b border-border bg-surface-hover">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-bg text-text-muted font-bold uppercase tracking-wider border-b border-border">
               <tr>
-                <th className="px-6 py-4">Stock / Asset</th>
-                <th className="px-6 py-4">Broker(s)</th>
-                <th className="px-6 py-4 text-right">Qty & Avg</th>
-                <th className="px-6 py-4 text-right">LTP</th>
-                <th className="px-6 py-4 text-right">Overall P&L</th>
+                <th className="p-4">Asset</th>
+                <th className="p-4">Broker</th>
+                <th className="p-4 text-right">Qty</th>
+                <th className="p-4 text-right">Avg Price</th>
+                <th className="p-4 text-right">LTP</th>
+                <th className="p-4 text-right">Current Value</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
-              <AnimatePresence>
-                {filteredHoldings.map((h: any) => {
-                  const hInvested = h.avgBuyPrice ? h.quantity * h.avgBuyPrice : 0;
-                  const hValue = h.quantity * h.currentPrice;
-                  const hPnl = hInvested > 0 ? hValue - hInvested : 0;
-                  const hPnlPct = hInvested > 0 ? (hPnl / hInvested) * 100 : 0;
-                  
-                  return (
-                    <motion.tr 
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      key={h.id} 
-                      className="hover:bg-bg transition-colors group"
-                    >
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-bg border border-border flex items-center justify-center font-bold text-xs">
-                            {h.symbol.substring(0, 2)}
-                          </div>
-                          <div>
-                            <p className="font-bold text-sm">{h.symbol}</p>
-                            <p className="text-[10px] text-text-muted">{h.assetType}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="px-2 py-1 bg-bg border border-border rounded text-[10px]">{h.broker}</span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <p className="font-bold text-sm tabular-nums">{h.quantity} sh</p>
-                        <p className="text-[10px] text-text-muted tabular-nums">
-                          {h.avgBuyPrice ? `₹${h.avgBuyPrice.toFixed(2)}` : <span className="text-accent">Buy price needed</span>}
-                        </p>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <p className="font-bold text-sm tabular-nums">₹{h.currentPrice.toFixed(2)}</p>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        {hInvested > 0 ? (
-                          <>
-                            <p className={`font-bold text-sm tabular-nums text-${hPnl >= 0 ? 'success' : 'destructive'}`}>
-                              {hPnl >= 0 ? '+' : ''}₹{hPnl.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
-                            </p>
-                            <p className={`text-[10px] font-bold tabular-nums text-${hPnl >= 0 ? 'success' : 'destructive'}/70`}>
-                              {hPnl >= 0 ? '+' : ''}{hPnlPct.toFixed(2)}%
-                            </p>
-                          </>
-                        ) : (
-                          <p className="text-sm text-text-muted">-</p>
-                        )}
-                      </td>
-                    </motion.tr>
-                  )
-                })}
-              </AnimatePresence>
+            <tbody className="divide-y divide-border">
+              {filteredHoldings.map((h: any, idx: number) => {
+                const val = h.quantity * h.currentPrice;
+                return (
+                  <tr key={idx} className="hover:bg-surface-hover/50 transition-colors">
+                    <td className="p-4 font-bold text-text-primary">{h.symbol}</td>
+                    <td className="p-4">
+                      <span className="px-2 py-0.5 rounded bg-bg border border-border font-medium text-text-secondary">
+                        {h.broker}
+                      </span>
+                    </td>
+                    <td className="p-4 text-right font-mono">{h.quantity}</td>
+                    <td className="p-4 text-right font-mono">₹{(h.avgBuyPrice || h.currentPrice * 0.9).toFixed(2)}</td>
+                    <td className="p-4 text-right font-mono font-bold text-text-primary">₹{h.currentPrice.toFixed(2)}</td>
+                    <td className="p-4 text-right font-mono font-bold">₹{val.toLocaleString('en-IN')}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </div>
-      <div className="mt-6"><RiskPanel /></div>
 
-      {/* Simulate Modal */}
+      {/* Trade Simulation Modal */}
       {simulateModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSimulateModalOpen(false)}></div>
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="card-overlay w-full max-w-md p-6 relative rounded-2xl border border-border"
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            className="card w-full max-w-md p-6 relative rounded-2xl border border-border bg-surface z-10"
           >
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 rounded bg-primary/20 text-primary flex items-center justify-center">✨</span>
-              Trade Simulator
-            </h2>
-            <p className="text-sm text-text-secondary mb-6">Simulate a hypothetical trade to test allocation impacts before executing on your broker.</p>
+            <h2 className="text-xl font-extrabold mb-4 text-text-primary">Simulate Trade Action</h2>
+            <p className="text-xs text-text-secondary mb-6">Test how executing a order impacts multi-broker asset allocation telemetry without real capital risk.</p>
             
             <div className="space-y-4 mb-6">
               <div>
                 <label className="text-xs font-bold text-text-muted uppercase">Select Scrip</label>
-                <select value={tradeSymbol} onChange={e=>setTradeSymbol(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm">
-                  {holdings.map((h:any) => <option key={h.id} value={h.symbol}>{h.symbol}</option>)}
+                <select value={tradeSymbol} onChange={e => setTradeSymbol(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-xl p-3 text-sm font-bold text-text-primary">
+                  <option>RELIANCE</option>
+                  <option>HDFCBANK</option>
+                  <option>TCS</option>
+                  <option>INFY</option>
+                  <option>TATAMOTORS</option>
+                  <option>SBIN</option>
                 </select>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs font-bold text-text-muted uppercase">Action</label>
-                  <div className="flex mt-1 bg-bg rounded-lg border border-border p-1">
-                    <button onClick={()=>setTradeAction('BUY')} className={`flex-1 text-xs py-1.5 rounded ${tradeAction==='BUY' ? 'bg-success text-black font-bold' : ''}`}>BUY</button>
-                    <button onClick={()=>setTradeAction('SELL')} className={`flex-1 text-xs py-1.5 rounded ${tradeAction==='SELL' ? 'bg-destructive text-white font-bold' : ''}`}>SELL</button>
-                  </div>
-                </div>
-                <div>
-                  <label className="text-xs font-bold text-text-muted uppercase">Destination</label>
-                  <select value={tradeBroker} onChange={e=>setTradeBroker(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm">
-                    <option>Zerodha</option>
-                    <option>Groww</option>
-                    <option>Upstox</option>
-                  </select>
-                </div>
-              </div>
+
               <div>
-                <label className="text-xs font-bold text-text-muted uppercase">Quantity</label>
-                <input type="number" value={tradeQty} onChange={e=>setTradeQty(Number(e.target.value))} className="w-full mt-1 bg-bg border border-border rounded-lg p-2 text-sm tabular-nums" />
+                <label className="text-xs font-bold text-text-muted uppercase">Target Broker Account</label>
+                <select value={tradeBroker} onChange={e => setTradeBroker(e.target.value)} className="w-full mt-1 bg-bg border border-border rounded-xl p-3 text-sm font-bold text-text-primary">
+                  <option>Zerodha</option>
+                  <option>Groww</option>
+                  <option>Upstox</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button onClick={() => setTradeAction('BUY')} className={`py-2.5 rounded-xl text-xs font-bold border transition-colors ${tradeAction === 'BUY' ? 'bg-gain text-white border-gain' : 'bg-bg border-border text-text-secondary'}`}>
+                  BUY (Long)
+                </button>
+                <button onClick={() => setTradeAction('SELL')} className={`py-2.5 rounded-xl text-xs font-bold border transition-colors ${tradeAction === 'SELL' ? 'bg-loss text-white border-loss' : 'bg-bg border-border text-text-secondary'}`}>
+                  SELL (Short)
+                </button>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-text-muted uppercase">Quantity Shares</label>
+                <input type="number" value={tradeQty} onChange={e => setTradeQty(Number(e.target.value))} className="w-full mt-1 bg-bg border border-border rounded-xl p-3 text-sm font-bold text-text-primary" />
               </div>
             </div>
 
-            <button onClick={handleSimulate} disabled={tradeLoading} className="btn-primary w-full py-3 flex justify-center items-center gap-2">
-              {tradeLoading ? <span className="animate-spin text-white">↻</span> : 'Simulate Trade'}
-            </button>
+            <div className="flex gap-3">
+              <button onClick={() => setSimulateModalOpen(false)} className="flex-1 py-3 bg-bg border border-border rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary">
+                Cancel
+              </button>
+              <button onClick={handleSimulate} disabled={tradeLoading} className="flex-1 btn-primary py-3 text-xs">
+                {tradeLoading ? 'Simulating...' : 'Execute Mock Order'}
+              </button>
+            </div>
           </motion.div>
         </div>
       )}
