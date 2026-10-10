@@ -12,7 +12,7 @@ export default function RiskPage() {
   const [shiftBonds, setShiftBonds] = useState(0);
 
   useEffect(() => {
-    getPortfolioRiskProfile().then(res => setData(res));
+    getPortfolioRiskProfile().then(res => setData(res)).catch(err => { console.error(err); setData({ error: true }); });
   }, []);
 
   if (!data) return (
@@ -21,6 +21,12 @@ export default function RiskPage() {
     </div>
   );
 
+  if (data.error) return (
+    <div className="p-8 text-center bg-red-50 text-red-500 rounded-2xl border border-red-200 mt-6">
+      <h3 className="font-bold">Error loading risk profile</h3>
+      <p className="text-sm">Please ensure the database is seeded and try again.</p>
+    </div>
+  );
   const { riskProfile, metrics, totalPortfolioValue } = data;
 
   // Basic What-If calculation approximation for demo
