@@ -3,6 +3,88 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, GripHorizontal, Move } from 'lucide-react';
+import Link from 'next/link';
+
+function parseInlineMarkdown(text: string) {
+  // Regex to split by **bold** or routes like /prediction, /risk, /learn, /dashboard, /news, /community
+  const regex = /(\*\*[^*]+\*\*|\/(?:prediction|risk|learn|dashboard|news|community)\b)/g;
+  const parts = text.split(regex);
+
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      const boldText = part.slice(2, -2);
+      return <strong key={i} className="font-extrabold text-text-primary">{boldText}</strong>;
+    }
+
+    if (part.startsWith('/')) {
+      return (
+        <Link
+          key={i}
+          href={part}
+          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 mx-0.5 rounded bg-accent/15 text-accent font-bold hover:bg-accent hover:text-white transition-colors text-[10px]"
+        >
+          {part}
+        </Link>
+      );
+    }
+
+    return part;
+  });
+}
+
+function FormattedMessageText({ text }: { text: string }) {
+  if (!text) return null;
+
+  const lines = text.split('\n');
+  const elements: React.ReactNode[] = [];
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      elements.push(<div key={`space-${idx}`} className="h-1.5" />);
+      return;
+    }
+
+    const isBullet = trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('* ');
+    const isNumbered = /^\d+\.\s/.test(trimmed);
+
+    const content = isBullet 
+      ? trimmed.replace(/^[•\-\*]\s*/, '') 
+      : isNumbered 
+        ? trimmed.replace(/^\d+\.\s*/, '') 
+        : trimmed;
+
+    const renderedContent = parseInlineMarkdown(content);
+
+    if (isBullet) {
+      elements.push(
+        <div key={idx} className="flex items-start gap-2 pl-1 py-0.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
+          <div className="flex-1 leading-relaxed">{renderedContent}</div>
+        </div>
+      );
+    } else if (isNumbered) {
+      const match = trimmed.match(/^(\d+)\./);
+      const num = match ? match[1] : (idx + 1);
+      elements.push(
+        <div key={idx} className="flex items-start gap-2 pl-1 py-0.5">
+          <span className="w-4 h-4 rounded-full bg-accent/15 text-accent text-[9px] font-black flex items-center justify-center mt-0.5 shrink-0 border border-accent/20">
+            {num}
+          </span>
+          <div className="flex-1 leading-relaxed">{renderedContent}</div>
+        </div>
+      );
+    } else {
+      elements.push(
+        <p key={idx} className="leading-relaxed">
+          {renderedContent}
+        </p>
+      );
+    }
+  });
+
+  return <div className="space-y-1">{elements}</div>;
+}
 
 export default function AssistantWidget() {
   const [open, setOpen] = useState(false);
@@ -139,7 +221,7 @@ export default function AssistantWidget() {
                       ? 'bg-accent text-white rounded-br-sm shadow-sm font-medium' 
                       : 'bg-surface border border-border text-text-primary shadow-sm rounded-bl-sm font-normal'
                   }`}>
-                    {m.text}
+                    {m.role === 'user' ? m.text : <FormattedMessageText text={m.text} />}
                   </div>
                 </motion.div>
               ))}
