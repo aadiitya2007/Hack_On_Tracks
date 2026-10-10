@@ -39,11 +39,22 @@ const ASSET_THEME_COLORS: Record<string, string> = {
 };
 
 const BROKER_LOGOS: Record<string, string> = {
+  'all': '/logos/unify.png',
   'zerodha': '/logos/zerodha.webp',
+  'zerodha kite': '/logos/zerodha.webp',
   'groww': '/logos/groww.png',
   'upstox': '/logos/upstox.png',
   'cdsl': '/logos/cdsl.webp',
+  'unify': '/logos/unify.png',
 };
+
+const BROKER_FILTERS = [
+  { id: 'All', label: 'All Accounts', logo: '/logos/unify.png' },
+  { id: 'Zerodha', label: 'Zerodha', logo: '/logos/zerodha.webp' },
+  { id: 'Groww', label: 'Groww', logo: '/logos/groww.png' },
+  { id: 'Upstox', label: 'Upstox', logo: '/logos/upstox.png' },
+  { id: 'CDSL', label: 'CDSL CAS', logo: '/logos/cdsl.webp' },
+];
 
 // Animated Number Component
 function AnimatedNumber({ value, prefix = '', suffix = '', isCurrency = false }: { value: number, prefix?: string, suffix?: string, isCurrency?: boolean }) {
@@ -591,13 +602,32 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
       {/* Holdings Table */}
       <div className="card overflow-hidden">
-        <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between items-center gap-4 bg-bg">
-          <div className="flex gap-2">
-            <button onClick={() => setFilter('All')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'All' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>All Brokers</button>
-            <button onClick={() => setFilter('Zerodha')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Zerodha' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Zerodha</button>
-            <button onClick={() => setFilter('Groww')} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === 'Groww' ? 'bg-primary text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]' : 'bg-surface border border-border text-text-secondary hover:text-text-primary'}`}>Groww</button>
+        <div className="p-5 border-b border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-bg">
+          <div className="flex items-center gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+            <span className="text-xs font-black uppercase text-text-muted tracking-wider shrink-0 mr-1">Filter Portfolio:</span>
+            {BROKER_FILTERS.map(b => {
+              const active = filter === b.id;
+              return (
+                <button 
+                  key={b.id}
+                  onClick={() => setFilter(b.id)} 
+                  className={`px-5 py-2.5 rounded-2xl text-sm font-extrabold transition-all flex items-center gap-2.5 shrink-0 border-2 cursor-pointer ${
+                    active 
+                      ? 'bg-accent text-white border-accent shadow-md shadow-accent/25 scale-[1.02]' 
+                      : 'bg-surface text-text-primary border-border hover:border-accent/40 hover:bg-surface-hover shadow-sm'
+                  }`}
+                >
+                  <div className={`w-6 h-6 rounded-full p-0.5 flex items-center justify-center shrink-0 ${active ? 'bg-white shadow-sm' : 'bg-bg border border-border'}`}>
+                    <img src={b.logo} alt={b.label} className="w-full h-full object-contain rounded-full" />
+                  </div>
+                  <span className={active ? 'text-white font-extrabold' : 'text-text-primary font-bold'}>{b.label}</span>
+                </button>
+              );
+            })}
           </div>
-          <span className="text-xs text-text-muted font-mono">{filteredHoldings.length} Positions</span>
+          <span className="text-xs font-black text-text-secondary bg-surface px-3.5 py-2 rounded-xl border border-border font-mono shrink-0 shadow-sm">
+            {filteredHoldings.length} Positions Shown
+          </span>
         </div>
 
         <div className="overflow-x-auto">
@@ -615,18 +645,21 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             <tbody className="divide-y divide-border">
               {filteredHoldings.map((h: any, idx: number) => {
                 const val = h.quantity * h.currentPrice;
+                const bKey = (h.broker || '').toLowerCase();
+                const logoSrc = BROKER_LOGOS[bKey] || BROKER_LOGOS[bKey.split(' ')[0]] || '/logos/unify.png';
                 return (
                   <tr key={idx} className="hover:bg-surface-hover/50 transition-colors">
-                    <td className="p-4 font-bold text-text-primary">{h.symbol}</td>
+                    <td className="p-4 font-bold text-text-primary text-sm">{h.symbol}</td>
                     <td className="p-4">
-                      <span className="px-2 py-0.5 rounded bg-bg border border-border font-medium text-text-secondary">
+                      <span className="px-3 py-1.5 rounded-xl bg-bg border border-border font-extrabold text-text-primary flex items-center gap-2 w-fit text-xs shadow-sm">
+                        <img src={logoSrc} alt={h.broker} className="w-4 h-4 object-contain rounded-full bg-white p-0.5 border border-border/50" />
                         {h.broker}
                       </span>
                     </td>
-                    <td className="p-4 text-right font-mono">{h.quantity}</td>
-                    <td className="p-4 text-right font-mono">₹{(h.avgBuyPrice || h.currentPrice * 0.9).toFixed(2)}</td>
-                    <td className="p-4 text-right font-mono font-bold text-text-primary">₹{h.currentPrice.toFixed(2)}</td>
-                    <td className="p-4 text-right font-mono font-bold">₹{val.toLocaleString('en-IN')}</td>
+                    <td className="p-4 text-right font-mono font-bold text-sm">{h.quantity}</td>
+                    <td className="p-4 text-right font-mono text-text-secondary font-medium">₹{(h.avgBuyPrice || h.currentPrice * 0.9).toFixed(2)}</td>
+                    <td className="p-4 text-right font-mono font-bold text-text-primary text-sm">₹{h.currentPrice.toFixed(2)}</td>
+                    <td className="p-4 text-right font-mono font-extrabold text-sm text-text-primary">₹{val.toLocaleString('en-IN')}</td>
                   </tr>
                 );
               })}
