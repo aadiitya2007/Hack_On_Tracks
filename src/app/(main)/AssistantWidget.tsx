@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send } from 'lucide-react';
-import { STOCKS_LESSON } from '@/lib/content/lessons';
+import { LESSON_MAP } from '@/lib/content/lessons';
 
 export default function AssistantWidget() {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function AssistantWidget() {
     if (query.includes('advice') || query.includes('should i buy') || query.includes('invest in')) {
       replyText = "I can provide educational information, but I cannot give personalized investment advice. Always consult a certified financial planner before making investment decisions.";
     } else if (query.includes('stock') || query.includes('shares')) {
-      replyText = `Based on our learning modules: ${STOCKS_LESSON.sections.whatIsIt.text.split('\n')[0]} Stocks offer high reward but carry high risk.`;
+      replyText = `Based on our learning modules: ${LESSON_MAP["stocks"].whatItIs[0]} Stocks offer high reward but carry high risk.`;
     } else if (query.includes('portfolio') || query.includes('holdings')) {
       replyText = "Looking at your simulated portfolio, I see you hold assets across Zerodha and Groww. You have a mix of Equities and Mutual Funds. If you'd like to simulate a trade to see how it affects your balance, you can use the 'Simulate Trade' button on the Dashboard!";
     } else if (query.includes('mail sync') || query.includes('pdf')) {

@@ -10,7 +10,7 @@ export type Message = {
   avatar?: string;
 };
 
-export function Dialogue({ messages }: { messages: Message[] }) {
+export default function Dialogue({ messages }: { messages: Message[] }) {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isTyping, setIsTyping] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
