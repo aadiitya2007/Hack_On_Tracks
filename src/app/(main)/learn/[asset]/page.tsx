@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LESSON_MAP } from '@/lib/content/lessons';
 import Dialogue from '@/components/Dialogue';
+import { InteractiveConceptCanvas } from '@/components/InteractiveConceptCanvas';
 import { 
   TrendingUp, TrendingDown, ArrowRight, ArrowLeft, CheckCircle2, XCircle, 
   HelpCircle, PieChart, ShieldCheck, Layers, Award, Sparkles, Sliders, BarChart3, Info 
@@ -84,6 +85,11 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
             </p>
           ))}
         </div>
+      </motion.section>
+
+      {/* Interactive Metaphor Canvas with Animated Face & Concept Animations */}
+      <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+        <InteractiveConceptCanvas assetId={resolvedParams.asset} title={lesson.title} />
       </motion.section>
 
       {/* Key Categories / Types (if present, e.g., Mutual Funds) */}
