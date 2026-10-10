@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Newspaper, ExternalLink, RefreshCw, TrendingUp, TrendingDown, Minus, Filter, Sparkles } from 'lucide-react';
-import { NewsArticle } from '@/app/api/news/route';
+import { MarketNewsIntroAnimation } from '@/components/MarketNewsIntroAnimation';
+import type { NewsArticle } from '@/app/api/news/route';
 
 const SOURCES = ['All', 'Times of India', 'Economic Times', 'Moneycontrol', 'Financial Express', 'Reuters'];
 
 export default function MarketNewsPage() {
+  const [showIntro, setShowIntro] = useState(true);
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeSource, setActiveSource] = useState('All');
@@ -37,6 +39,9 @@ export default function MarketNewsPage() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-20 relative z-10">
+      
+      {/* News Intelligence Intro Animation */}
+      {showIntro && <MarketNewsIntroAnimation onComplete={() => setShowIntro(false)} />}
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
