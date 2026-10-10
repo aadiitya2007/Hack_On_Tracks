@@ -1,7 +1,7 @@
+'use client';
 import Link from 'next/link';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
 import { useState, useEffect } from 'react';
 import { ShieldAlert, AlertTriangle, CheckCircle, Info } from 'lucide-react';
 import { getPortfolioRiskProfile } from '@/lib/actions.risk';

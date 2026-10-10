@@ -1,6 +1,6 @@
+'use client';
 import Link from 'next/link';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
