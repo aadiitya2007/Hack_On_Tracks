@@ -1,14 +1,22 @@
 services:
   - type: web
-    name: vaultiq-dashboard
+    name: vaultiq-web
     env: node
     plan: free
-    buildCommand: npm install && npx prisma generate && npx prisma db push && npm run build
-    startCommand: npm start
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
     envVars:
-      - key: NODE_VERSION
-        value: 20
-      # By default we use SQLite for the hackathon demo, so we don't strictly need a DATABASE_URL for Postgres,
-      # but if you switch to Postgres, Render will inject it here if linked.
       - key: DATABASE_URL
         value: file:./dev.db
+      - key: ML_SERVICE_URL
+        value: "https://vaultiq-ml.onrender.com"
+        
+  - type: web
+    name: vaultiq-ml
+    env: python
+    plan: free
+    buildCommand: pip install -r ml-service/requirements.txt
+    startCommand: uvicorn ml-service.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { AreaChart, Area, BarChart, Bar, Cell, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { getAvailableSymbols, getPriceHistory } from '@/lib/actions.time-machine';
+import { PredictionCard } from '@/components/PredictionCard';
 import { calculateCAGR, calculateDrawdown, calculateCalendarReturns, calculateVolatility, PricePoint } from '@/lib/analytics';
 
 export default function TimeMachineClient() {
@@ -303,6 +304,10 @@ export default function TimeMachineClient() {
               </div>
             </div>
 
+          
+            <div className="mt-6">
+              <PredictionCard symbol={selectedSymbol} />
+            </div>
           </motion.div>
         )}
       </div>
