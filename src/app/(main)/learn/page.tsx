@@ -5,13 +5,13 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2 } from 'lucide-react';
 
 const MODULES = [
-  { id: 'stocks', title: 'Stocks', subtitle: 'Own a Piece of a Company', color: 'var(--asset-stocks)', bg: 'rgba(109, 40, 217, 0.08)' },
-  { id: 'mutual-funds', title: 'Mutual Funds', subtitle: 'Invest Through a Basket', color: 'var(--asset-funds)', bg: 'rgba(249, 115, 22, 0.08)' },
-  { id: 'etfs', title: 'ETFs', subtitle: 'A Basket You Can Trade', color: 'var(--asset-stocks)', bg: 'rgba(37, 99, 235, 0.08)' },
-  { id: 'bonds', title: 'Bonds', subtitle: 'Become a Lender', color: 'var(--asset-bonds)', bg: 'rgba(217, 119, 6, 0.08)' },
-  { id: 'reits', title: 'REITs', subtitle: 'Real Estate Without the Building', color: 'var(--asset-reits)', bg: 'rgba(13, 148, 136, 0.08)' },
-  { id: 'invits', title: 'InvITs', subtitle: 'Infrastructure Behind Everyday Life', color: 'var(--asset-invits)', bg: 'rgba(124, 58, 237, 0.08)' },
-  { id: 'futures-options', title: 'Futures & Options', subtitle: 'Understand Price Movements & Leverage', color: 'var(--loss)', bg: 'rgba(239, 68, 68, 0.08)' }
+  { id: 'stocks', title: 'Stocks', subtitle: 'Own a Piece of a Company', color: 'var(--asset-stocks)', bg: 'rgba(109, 40, 217, 0.08)', logo: '/logos/stocks.jpg' },
+  { id: 'mutual-funds', title: 'Mutual Funds', subtitle: 'Invest Through a Basket', color: 'var(--asset-funds)', bg: 'rgba(249, 115, 22, 0.08)', logo: '/logos/mutual-funds.jpg' },
+  { id: 'etfs', title: 'ETFs', subtitle: 'A Basket You Can Trade', color: 'var(--asset-stocks)', bg: 'rgba(37, 99, 235, 0.08)', logo: '/logos/etfs.jpg' },
+  { id: 'bonds', title: 'Bonds', subtitle: 'Become a Lender', color: 'var(--asset-bonds)', bg: 'rgba(217, 119, 6, 0.08)', logo: '/logos/bonds.jpg' },
+  { id: 'reits', title: 'REITs', subtitle: 'Real Estate Without the Building', color: 'var(--asset-reits)', bg: 'rgba(13, 148, 136, 0.08)', logo: '/logos/reits.jpg' },
+  { id: 'invits', title: 'InvITs', subtitle: 'Infrastructure Behind Everyday Life', color: 'var(--asset-invits)', bg: 'rgba(124, 58, 237, 0.08)', logo: '/logos/invits.jpg' },
+  { id: 'futures-options', title: 'Futures & Options', subtitle: 'Understand Price Movements & Leverage', color: 'var(--loss)', bg: 'rgba(239, 68, 68, 0.08)', logo: '/logos/fno.jpg' }
 ];
 
 export default function LearnIndex() {
@@ -32,10 +32,10 @@ export default function LearnIndex() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="card p-8 flex flex-col items-start hover:-translate-y-1 h-full cursor-pointer group"
+              className="card p-8 flex flex-col items-start hover:-translate-y-1 h-full cursor-pointer group relative overflow-hidden"
             >
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110" style={{ backgroundColor: mod.bg, color: mod.color }}>
-                <BookOpen size={24} />
+              <div className="w-16 h-16 rounded-2xl mb-6 overflow-hidden border border-border/40 bg-card shadow-md transition-transform group-hover:scale-105 group-hover:shadow-lg flex items-center justify-center">
+                <img src={mod.logo} alt={mod.title} className="w-full h-full object-cover" />
               </div>
               <h2 className="text-2xl font-bold mb-2">{mod.title}</h2>
               <p className="text-text-secondary font-medium mb-8 flex-1">{mod.subtitle}</p>
