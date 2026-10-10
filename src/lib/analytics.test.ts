@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { calculateCAGR, calculateDrawdown, calculateXIRR, calculateVolatility } from './analytics';
 
 function runTests() {

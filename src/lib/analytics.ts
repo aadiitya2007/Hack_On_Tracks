@@ -34,7 +34,7 @@ export function calculateDrawdown(prices: PricePoint[]): { maxDrawdown: number, 
   if (prices.length === 0) return { maxDrawdown: 0, peakDate: null, troughDate: null };
   
   let maxDrawdown = 0;
-  let peak = prices[0].price;
+  const peak = prices[0].price;
   let peakDate = prices[0].date;
   
   let currentPeak = peak;

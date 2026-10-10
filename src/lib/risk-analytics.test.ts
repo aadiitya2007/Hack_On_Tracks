@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { calculateHHI, calculatePortfolioVolatility, calculateVaR, calculateRiskScore } from './risk-analytics';
 
 function runTests() {

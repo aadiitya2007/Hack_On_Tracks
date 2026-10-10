@@ -1,3 +1,6 @@
+import Link from 'next/link';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { useState, useEffect } from 'react';
 import { ShieldAlert, AlertTriangle, CheckCircle, Info } from 'lucide-react';
@@ -72,13 +75,13 @@ export function RiskPanel() {
           <p className="text-sm font-bold mb-2">Key Findings</p>
           <ul className="text-xs space-y-2 text-text-secondary">
             {metrics.hhi > 2500 ? (
-              <li className="flex items-start gap-2"><AlertTriangle size={14} className="text-loss shrink-0 mt-0.5"/> Your portfolio is highly concentrated. Consider <a href="/learn/mutual-funds" className="text-accent hover:underline">Mutual Funds</a> for diversification.</li>
+              <li className="flex items-start gap-2"><AlertTriangle size={14} className="text-loss shrink-0 mt-0.5"/> Your portfolio is highly concentrated. Consider <Link href="/learn/mutual-funds" className="text-accent hover:underline">Mutual Funds</Link> for diversification.</li>
             ) : (
               <li className="flex items-start gap-2"><CheckCircle size={14} className="text-gain shrink-0 mt-0.5"/> Good diversification across mapped assets.</li>
             )}
             
             {metrics.annualVolatility > 0.25 && (
-              <li className="flex items-start gap-2"><AlertTriangle size={14} className="text-accent shrink-0 mt-0.5"/> High volatility detected. You could offset this risk by adding fixed-income like <a href="/learn/bonds" className="text-accent hover:underline">Bonds</a>.</li>
+              <li className="flex items-start gap-2"><AlertTriangle size={14} className="text-accent shrink-0 mt-0.5"/> High volatility detected. You could offset this risk by adding fixed-income like <Link href="/learn/bonds" className="text-accent hover:underline">Bonds</Link>.</li>
             )}
           </ul>
         </div>

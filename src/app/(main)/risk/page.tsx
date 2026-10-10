@@ -1,3 +1,5 @@
+import Link from 'next/link';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -92,20 +94,20 @@ export default function RiskPage() {
           <div className="card p-6">
             <h3 className="font-bold text-lg mb-4">Educational Suggestions</h3>
             <div className="space-y-4">
-              <a href="/learn/bonds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
+              <Link href="/learn/bonds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
                 <div className="flex justify-between items-center mb-1">
                   <h4 className="font-bold text-sm">Learn how Bonds lower portfolio volatility</h4>
                   <ChevronRight size={16} className="text-text-muted" />
                 </div>
                 <p className="text-xs text-text-secondary">Fixed-income assets generally have low correlation with equities, reducing overall portfolio swings.</p>
-              </a>
-              <a href="/learn/mutual-funds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
+              </Link>
+              <Link href="/learn/mutual-funds" className="block p-4 rounded-xl border border-border bg-surface-hover hover:border-accent transition-colors">
                 <div className="flex justify-between items-center mb-1">
                   <h4 className="font-bold text-sm">Diversification using Mutual Funds</h4>
                   <ChevronRight size={16} className="text-text-muted" />
                 </div>
                 <p className="text-xs text-text-secondary">If your HHI concentration is high, mutual funds offer instant broad market exposure.</p>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

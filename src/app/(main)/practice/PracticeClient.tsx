@@ -61,7 +61,7 @@ export default function PracticeClient({ initialState }: { initialState: any }) 
     }
 
     let newHoldings = [...holdings];
-    let existing = newHoldings.find(h => h.symbol === tradeAsset);
+    const existing = newHoldings.find(h => h.symbol === tradeAsset);
 
     if (type === 'BUY') {
       setCash(c => c - cost);
@@ -90,8 +90,8 @@ export default function PracticeClient({ initialState }: { initialState: any }) 
 
   const simulateTime = (months: number, scenario?: string) => {
     let currentCash = cash;
-    let currentPrices = { ...prices };
-    let currentHoldings = JSON.parse(JSON.stringify(holdings));
+    const currentPrices = { ...prices };
+    const currentHoldings = JSON.parse(JSON.stringify(holdings));
     
     for (let m = 1; m <= months; m++) {
       // 1. Process SIP
@@ -99,7 +99,7 @@ export default function PracticeClient({ initialState }: { initialState: any }) 
         currentCash -= sipAmount;
         const pPrice = currentPrices['PPFAS'];
         const qty = sipAmount / pPrice;
-        let p = currentHoldings.find((h:any) => h.symbol === 'PPFAS');
+        const p = currentHoldings.find((h:any) => h.symbol === 'PPFAS');
         if (p) {
           const oldVal = p.quantity * p.avgBuyPrice;
           p.quantity += qty;
