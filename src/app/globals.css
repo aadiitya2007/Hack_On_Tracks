@@ -132,7 +132,7 @@
     box-shadow: none;
   }
 
-  /* Alizo sub-heading style (// TEXT) */
+  /* Alizo sub-heading style */
   .sub-heading {
     color: var(--accent);
     text-transform: uppercase;
@@ -142,12 +142,6 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-  }
-  
-  .sub-heading::before {
-    content: '//';
-    color: var(--accent);
-    opacity: 0.7;
   }
 
   /* Bold Main Headings */
