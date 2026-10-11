@@ -8,7 +8,15 @@ export const metadata: Metadata = {
   title: "Unify — Unified Investment Portfolio Engine",
   description: "Unified Multi-Broker Investment & ML Prediction Dashboard",
   icons: {
-    icon: '/logos/unify.png'
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/logos/unify-icon.png', type: 'image/png' },
+      { url: '/icon.png', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png' }
+    ],
+    shortcut: ['/favicon.ico']
   }
 };
 

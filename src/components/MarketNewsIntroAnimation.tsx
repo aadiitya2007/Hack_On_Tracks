@@ -65,18 +65,6 @@ export function MarketNewsIntroAnimation({ onComplete }: { onComplete?: () => vo
           />
         </div>
 
-        {/* Skip Animation Button */}
-        <button 
-          onClick={() => {
-            setPhase('done');
-            if (onComplete) onComplete();
-          }}
-          className="absolute top-6 right-6 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-extrabold text-white backdrop-blur-md transition-all flex items-center gap-1.5 z-50 shadow-lg cursor-pointer"
-        >
-          <span>Skip Animation</span>
-          <X size={14} />
-        </button>
-
         {/* CENTRAL NEWS & ALERT INTELLIGENCE BEACON */}
         <div className="relative z-20 flex flex-col items-center text-center px-4">
           

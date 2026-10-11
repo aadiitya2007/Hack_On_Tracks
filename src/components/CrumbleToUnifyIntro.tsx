@@ -53,18 +53,6 @@ export function CrumbleToUnifyIntro({ onComplete }: { onComplete?: () => void })
         {/* Background Grid Lines */}
         <div className="absolute inset-0 bg-[radial-gradient(#6D28D9_1px,transparent_1px)] [background-size:32px_32px] opacity-20 pointer-events-none"></div>
 
-        {/* Top Right Skip Button */}
-        <button 
-          onClick={() => {
-            setPhase('done');
-            if (onComplete) onComplete();
-          }}
-          className="absolute top-6 right-6 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-extrabold text-white backdrop-blur-md transition-all flex items-center gap-1.5 z-50"
-        >
-          <span>Skip Animation</span>
-          <X size={14} />
-        </button>
-
         {/* CENTRAL QUANTUM ENGINE CORE */}
         <div className="relative z-20 flex flex-col items-center text-center">
           

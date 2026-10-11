@@ -43,12 +43,6 @@ export default function LandingClient() {
           <Link href="#features" className="hover:text-[var(--asset-stocks)] transition-colors">Features</Link>
           <Link href="#solutions" className="hover:text-[var(--asset-stocks)] transition-colors">Solutions</Link>
           <Link href="#about" className="hover:text-[var(--asset-stocks)] transition-colors">About</Link>
-          <button 
-            onClick={handleReplayIntro} 
-            className="px-3 py-1 rounded-full bg-accent-bg text-accent text-xs font-bold border border-accent/20 hover:bg-accent hover:text-white transition-all flex items-center gap-1.5"
-          >
-            <Sparkles size={13} /> Replay Intro Animation
-          </button>
         </div>
         <div className="flex gap-4">
           <Link href="/dashboard" className="px-6 py-2.5 rounded-full font-bold text-sm text-text-primary hover:bg-surface-hover transition-colors border border-border">Login</Link>
