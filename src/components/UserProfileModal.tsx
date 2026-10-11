@@ -8,6 +8,7 @@ import {
   Mail, Phone, MapPin, Building, CreditCard, Sparkles, CheckCircle2
 } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage, LanguageCode } from '@/context/LanguageContext';
 
 interface UserProfileModalProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ const LINKED_BROKERS = [
 ];
 
 export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: UserProfileModalProps) {
+  const { language, setLanguage, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'profile' | 'languages' | 'settings' | 'brokers'>(defaultTab);
 
   // Profile data from storage or seed defaults
@@ -40,12 +42,16 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
   const [userEmail, setUserEmail] = useState('aditya.aggarwal@example.com');
   const [userPhone, setUserPhone] = useState('+91 98765 43210');
   const [userTier, setUserTier] = useState('Fresher Investor (Neophyte)');
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [selectedLanguage, setSelectedLanguage] = useState(language);
   const [currencyFormat, setCurrencyFormat] = useState<'lakh' | 'million'>('lakh');
   const [syncFreq, setSyncFreq] = useState('5s');
   const [mailSync, setMailSync] = useState(true);
   const [drawdownAlert, setDrawdownAlert] = useState('-5%');
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    setSelectedLanguage(language);
+  }, [language]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -62,7 +68,9 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
       if (storedEmail) setUserEmail(storedEmail);
       if (storedPhone) setUserPhone(storedPhone);
       if (storedTitle) setUserTier(storedTitle);
-      if (storedLang) setSelectedLanguage(storedLang);
+      if (storedLang && ['en', 'hi', 'mr', 'gu', 'ta', 'bn'].includes(storedLang)) {
+        setSelectedLanguage(storedLang as LanguageCode);
+      }
       if (storedCurr === 'million' || storedCurr === 'lakh') setCurrencyFormat(storedCurr);
     }
   }, [isOpen]);
@@ -82,9 +90,9 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
   const handleSaveSettings = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('unify_user_name', userName);
-      localStorage.setItem('unify_language', selectedLanguage);
       localStorage.setItem('unify_currency_format', currencyFormat);
     }
+    setLanguage(selectedLanguage as LanguageCode);
     setSaveSuccess(true);
     setTimeout(() => {
       setSaveSuccess(false);
@@ -279,9 +287,9 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
               {activeTab === 'languages' && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3.5">
                   <div>
-                    <h3 className="font-black text-sm text-text-primary">Regional Language & Localization</h3>
+                    <h3 className="font-black text-sm text-text-primary">{t('lang_regional_title', 'Regional Language & Localization')}</h3>
                     <p className="text-xs text-text-secondary mt-0.5">
-                      Select your preferred language for portfolio insights, ML predictions, and market summaries.
+                      {t('lang_regional_desc', 'Select your preferred language for portfolio insights, ML predictions, and market summaries.')}
                     </p>
                   </div>
 
@@ -292,10 +300,13 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
                         <button
                           key={lang.id}
                           type="button"
-                          onClick={() => setSelectedLanguage(lang.id)}
+                          onClick={() => {
+                            setSelectedLanguage(lang.id as LanguageCode);
+                            setLanguage(lang.id as LanguageCode);
+                          }}
                           className={`p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                             isSelected
-                              ? 'bg-accent-bg/40 border-accent shadow-sm'
+                              ? 'bg-accent-bg/40 border-accent shadow-sm ring-1 ring-accent'
                               : 'bg-bg border-border hover:border-accent/40 hover:bg-surface-hover'
                           }`}
                         >
@@ -494,10 +505,10 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
                 >
                   {saveSuccess ? (
                     <>
-                      <CheckCircle2 size={14} /> Saved Successfully!
+                      <CheckCircle2 size={14} /> {t('saved_successfully', 'Saved Successfully!')}
                     </>
                   ) : (
-                    <>Save Preferences →</>
+                    <>{t('save_preferences', 'Save Preferences')} →</>
                   )}
                 </button>
               </div>

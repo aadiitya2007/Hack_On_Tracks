@@ -9,6 +9,7 @@ import { TaxLossHarvestingCard } from '@/components/TaxLossHarvestingCard';
 import { PassiveIncomeCalendar } from '@/components/PassiveIncomeCalendar';
 import { GoalBasedPortfolioTracker } from '@/components/GoalBasedPortfolioTracker';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 import { 
   Brain, Award, Sparkles, BookOpen, TrendingUp, TrendingDown, 
   Layers, ShieldCheck, ArrowRight, Clock, Zap, AlertTriangle, RefreshCw,
@@ -102,6 +103,7 @@ function AnimatedNumber({ value, prefix = '', suffix = '', isCurrency = false }:
 }
 
 export default function DashboardClient({ initialData }: { initialData: any }) {
+  const { t } = useLanguage();
   const [filter, setFilter] = useState<string>('All');
   const [syncing, setSyncing] = useState(false);
   const [tradeLoading, setTradeLoading] = useState(false);
@@ -410,10 +412,10 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 relative z-10">
         <div>
           <h1 className="heading-hero text-4xl md:text-5xl text-gradient pb-2 drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
-            Portfolio Dashboard
+            {t('dashboard_title', 'Portfolio Dashboard')}
           </h1>
           <p className="text-text-secondary mt-1 flex items-center gap-2 font-medium">
-            Consolidated real-time telemetry across linked Indian brokerages
+            {t('dashboard_subtitle', 'Consolidated real-time telemetry across linked Indian brokerages')}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -424,14 +426,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             title="Fetch real-time LTP ticks from NSE/BSE"
           >
             <span className={`w-2.5 h-2.5 rounded-full ${syncing ? 'bg-success animate-ping' : 'bg-success animate-pulse'}`}></span>
-            {syncing ? 'Syncing Feeds...' : 'Live Feed'}
+            {syncing ? t('syncing_feeds', 'Syncing Feeds...') : t('live_feed', 'Live Feed')}
           </button>
           <button 
             onClick={() => setSimulateModalOpen(true)} 
             className="btn-primary flex items-center gap-2 shadow-md shadow-accent/25 active:scale-95 cursor-pointer"
           >
             <Sparkles size={16} />
-            + Simulate Trade
+            {t('simulate_trade', '+ Simulate Trade')}
           </button>
         </div>
       </div>
@@ -445,19 +447,19 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h2 className="text-xl font-black text-text-primary">AI Advisory & Portfolio Strategy</h2>
+                <h2 className="text-xl font-black text-text-primary">{t('ai_advisory_title', 'AI Advisory & Portfolio Strategy')}</h2>
                 <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-accent text-white shadow-sm">
                   {userTitle}
                 </span>
               </div>
               <p className="text-xs text-text-secondary mt-1 max-w-xl">
-                Personalized LLM guidance tailored to your <strong className="text-text-primary">{userLevel}</strong> classification level and live portfolio telemetry.
+                {t('ai_advisory_desc', 'Personalized LLM guidance tailored to your classification level and live portfolio telemetry.')}
               </p>
             </div>
           </div>
 
           <Link href="/onboarding" className="px-4 py-2.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-accent hover:border-accent transition-colors flex items-center gap-2 shrink-0">
-            <RefreshCw size={14} /> Re-take Skill Quiz
+            <RefreshCw size={14} /> {t('retake_quiz', 'Re-take Skill Quiz')}
           </Link>
         </div>
 
@@ -491,12 +493,12 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         
         {/* Net Portfolio */}
         <div className="card p-6 flex flex-col justify-between">
-          <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider mb-2">Total Net Portfolio</p>
+          <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider mb-2">{t('total_net_portfolio', 'Total Net Portfolio')}</p>
           <h2 className="text-4xl font-display font-bold text-gradient tabular-nums">
             <AnimatedNumber value={totalValue} prefix="₹" isCurrency />
           </h2>
           <div className="mt-6 flex justify-between text-[11px] font-medium text-text-secondary border-t border-border pt-3">
-            <span>Invested:</span>
+            <span>{t('invested', 'Invested')}:</span>
             <span className="text-text-primary">₹{totalInvested.toLocaleString('en-IN')}</span>
           </div>
         </div>
@@ -504,7 +506,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         {/* Realized & Unrealized PnL */}
         <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">Total Realized & Unrealized P&L</p>
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">{t('realized_unrealized_pnl', 'Total Realized & Unrealized P&L')}</p>
             <span className={`px-2 py-1 rounded bg-${totalPnl >= 0 ? 'success' : 'destructive'}/10 text-${totalPnl >= 0 ? 'success' : 'destructive'} text-[10px] font-bold border border-${totalPnl >= 0 ? 'success' : 'destructive'}/20`}>
               {totalPnl >= 0 ? '+' : ''}{totalPnlPercent.toFixed(2)}%
             </span>
@@ -522,7 +524,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         {/* Today's Movement */}
         <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">Today's Market Movement</p>
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider w-1/2 leading-relaxed">{t('today_market_movement', "Today's Market Movement")}</p>
             <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20">
               +{marketMovementPct.toFixed(2)}%
             </span>
@@ -539,14 +541,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         {/* Telemetry Status */}
         <div className="card p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start">
-            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider">Multi-Broker Telemetry</p>
+            <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider">{t('multi_broker_telemetry', 'Multi-Broker Telemetry')}</p>
             <span className="px-2 py-1 rounded bg-success/10 text-gain text-[10px] font-bold border border-success/20 flex gap-1 items-center">
               <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></div>
               Sync: {lastSyncTime}
             </span>
           </div>
           <h2 className="text-2xl font-display font-bold mt-2">
-            4 <span className="text-base font-sans font-medium text-text-primary/70">Brokers Live</span>
+            4 <span className="text-base font-sans font-medium text-text-primary/70">{t('brokers_live', 'Brokers Live')}</span>
           </h2>
           <div className="flex flex-wrap gap-2 mt-4">
             {['Zerodha', 'Groww', 'Upstox', 'CDSL'].map(b => (
@@ -577,19 +579,19 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center gap-2">
                 <Clock className="text-accent" size={18} />
-                <h3 className="font-extrabold text-sm text-text-primary">Time Machine Projections</h3>
+                <h3 className="font-extrabold text-sm text-text-primary">{t('time_machine_projections', 'Time Machine Projections')}</h3>
               </div>
               <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-accent-bg text-accent">SIP Engine</span>
             </div>
 
             <p className="text-xs text-text-secondary mb-4 leading-relaxed">
-              Historical SIP & Lump Sum compounding growth for <strong className="text-text-primary">{predictSymbol}</strong>.
+              {t('time_machine_desc', 'Historical SIP & Lump Sum compounding growth analytics.')} <strong className="text-text-primary">{predictSymbol}</strong>.
             </p>
 
             <div className="space-y-3 mb-6">
               <div>
                 <div className="flex justify-between text-xs font-bold text-text-muted mb-1">
-                  <span>Monthly SIP Amount</span>
+                  <span>{t('monthly_sip', 'Monthly SIP Amount')}</span>
                   <span className="text-text-primary font-mono">₹{sipAmount.toLocaleString('en-IN')}</span>
                 </div>
                 <input 
@@ -605,8 +607,8 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
               <div>
                 <div className="flex justify-between text-xs font-bold text-text-muted mb-1">
-                  <span>Duration (Years)</span>
-                  <span className="text-text-primary font-mono">{sipDuration} Years</span>
+                  <span>{t('time_horizon', 'Duration')} ({t('years', 'Years')})</span>
+                  <span className="text-text-primary font-mono">{sipDuration} {t('years', 'Years')}</span>
                 </div>
                 <div className="flex gap-2">
                   {[1, 3, 5].map(y => (
@@ -615,7 +617,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                       onClick={() => setSipDuration(y)} 
                       className={`flex-1 py-1 rounded-lg text-xs font-bold border transition-colors ${sipDuration === y ? 'bg-accent text-white border-accent' : 'bg-bg border-border text-text-secondary'}`}
                     >
-                      {y} Yr
+                      {y} {t('years', 'Yr')}
                     </button>
                   ))}
                 </div>
@@ -623,11 +625,11 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
               <div className="p-3 rounded-2xl bg-bg border border-border space-y-1">
                 <div className="flex justify-between text-xs font-medium text-text-muted">
-                  <span>Total Invested:</span>
+                  <span>{t('invested', 'Total Invested')}:</span>
                   <span className="text-text-primary font-mono font-bold">₹{totalInvestedSip.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between text-sm font-extrabold text-gain">
-                  <span>Projected Value:</span>
+                  <span>{t('expected_portfolio', 'Projected Value')}:</span>
                   <span className="font-mono">₹{estimatedFutureValue.toLocaleString('en-IN')}</span>
                 </div>
               </div>
@@ -635,7 +637,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </div>
 
           <Link href="/time-machine" className="btn-primary w-full py-2.5 text-xs text-center font-bold flex justify-center items-center gap-1.5">
-            Full Time Machine Analytics <ArrowRight size={14} />
+            {t('run_projection', 'Full Time Machine Analytics')} <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -649,14 +651,14 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 pb-4 border-b border-border">
             <div>
               <h3 className="text-xl font-extrabold text-text-primary flex items-center gap-2">
-                <Layers size={22} className="text-accent" /> Asset Allocation & Capital Invested
+                <Layers size={22} className="text-accent" /> {t('asset_allocation', 'Asset Allocation & Capital Invested')}
               </h3>
               <p className="text-xs text-text-secondary mt-1 font-medium">
                 Detailed capital distribution and portfolio percentage share across {allocData.length} asset classes
               </p>
             </div>
             <span className="px-3.5 py-1.5 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider self-start sm:self-auto border border-accent/20">
-              Total Invested: ₹{totalInvested.toLocaleString('en-IN')}
+              {t('invested', 'Total Invested')}: ₹{totalInvested.toLocaleString('en-IN')}
             </span>
           </div>
 
@@ -817,9 +819,10 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
       <div className="card overflow-hidden">
         <div className="p-5 border-b border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-bg">
           <div className="flex items-center gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
-            <span className="text-xs font-black uppercase text-text-muted tracking-wider shrink-0 mr-1">Filter Portfolio:</span>
+            <span className="text-xs font-black uppercase text-text-muted tracking-wider shrink-0 mr-1">{t('all_accounts', 'Filter')}:</span>
             {BROKER_FILTERS.map(b => {
               const active = filter === b.id;
+              const displayLabel = b.id === 'All' ? t('all_accounts', 'All Accounts') : b.label;
               return (
                 <button 
                   key={b.id}
@@ -831,15 +834,15 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                   }`}
                 >
                   <div className={`w-6 h-6 rounded-full p-0.5 flex items-center justify-center shrink-0 ${active ? 'bg-white shadow-sm' : 'bg-bg border border-border'}`}>
-                    <img src={b.logo} alt={b.label} className="w-full h-full object-contain rounded-full" />
+                    <img src={b.logo} alt={displayLabel} className="w-full h-full object-contain rounded-full" />
                   </div>
-                  <span className={active ? 'text-white font-extrabold' : 'text-text-primary font-bold'}>{b.label}</span>
+                  <span className={active ? 'text-white font-extrabold' : 'text-text-primary font-bold'}>{displayLabel}</span>
                 </button>
               );
             })}
           </div>
           <span className="text-xs font-black text-text-secondary bg-surface px-3.5 py-2 rounded-xl border border-border font-mono shrink-0 shadow-sm">
-            {filteredHoldings.length} Positions Shown
+            {filteredHoldings.length} {t('positions_shown', 'Positions Shown')}
           </span>
         </div>
 
@@ -847,12 +850,12 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           <table className="w-full text-left text-xs">
             <thead className="bg-bg text-text-muted font-bold uppercase tracking-wider border-b border-border">
               <tr>
-                <th className="p-4">Asset</th>
-                <th className="p-4">Broker</th>
-                <th className="p-4 text-right">Qty</th>
-                <th className="p-4 text-right">Avg Price</th>
-                <th className="p-4 text-right">LTP</th>
-                <th className="p-4 text-right">Current Value</th>
+                <th className="p-4">{t('col_asset', 'Asset')}</th>
+                <th className="p-4">{t('col_broker', 'Broker')}</th>
+                <th className="p-4 text-right">{t('col_qty', 'Qty')}</th>
+                <th className="p-4 text-right">{t('col_avg_price', 'Avg Price')}</th>
+                <th className="p-4 text-right">{t('col_ltp', 'LTP')}</th>
+                <th className="p-4 text-right">{t('col_current_value', 'Current Value')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">

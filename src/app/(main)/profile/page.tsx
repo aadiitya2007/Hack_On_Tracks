@@ -8,6 +8,7 @@ import {
   CreditCard, Sparkles, CheckCircle2, ChevronRight, Lock
 } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage, LanguageCode } from '@/context/LanguageContext';
 
 const LANGUAGES = [
   { id: 'en', name: 'English (India)', native: 'English', region: 'Default • National' },
@@ -26,17 +27,22 @@ const LINKED_BROKERS = [
 ];
 
 export default function ProfilePage() {
+  const { language, setLanguage, t } = useLanguage();
   const [userName, setUserName] = useState('Aditya Aggarwal');
   const [userPan, setUserPan] = useState('ABCDE1234F');
   const [userEmail, setUserEmail] = useState('aditya.aggarwal@example.com');
   const [userPhone, setUserPhone] = useState('+91 98765 43210');
   const [userTier, setUserTier] = useState('Fresher Investor (Neophyte)');
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [selectedLanguage, setSelectedLanguage] = useState(language);
   const [currencyFormat, setCurrencyFormat] = useState<'lakh' | 'million'>('lakh');
   const [syncFreq, setSyncFreq] = useState('5s');
   const [mailSync, setMailSync] = useState(true);
   const [drawdownAlert, setDrawdownAlert] = useState('-5%');
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    setSelectedLanguage(language);
+  }, [language]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -53,7 +59,9 @@ export default function ProfilePage() {
       if (storedEmail) setUserEmail(storedEmail);
       if (storedPhone) setUserPhone(storedPhone);
       if (storedTitle) setUserTier(storedTitle);
-      if (storedLang) setSelectedLanguage(storedLang);
+      if (storedLang && ['en', 'hi', 'mr', 'gu', 'ta', 'bn'].includes(storedLang)) {
+        setSelectedLanguage(storedLang as LanguageCode);
+      }
       if (storedCurr === 'million' || storedCurr === 'lakh') setCurrencyFormat(storedCurr);
     }
   }, []);
@@ -61,9 +69,9 @@ export default function ProfilePage() {
   const handleSave = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('unify_user_name', userName);
-      localStorage.setItem('unify_language', selectedLanguage);
       localStorage.setItem('unify_currency_format', currencyFormat);
     }
+    setLanguage(selectedLanguage as LanguageCode);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 2000);
   };
@@ -178,8 +186,8 @@ export default function ProfilePage() {
                 <Globe size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-black text-text-primary">Regional Language & Localization</h3>
-                <p className="text-[11px] text-text-muted">Choose your preferred Indian language for advisory & telemetry</p>
+                <h3 className="text-sm font-black text-text-primary">{t('lang_regional_title', 'Regional Language & Localization')}</h3>
+                <p className="text-[11px] text-text-muted">{t('lang_regional_desc', 'Choose your preferred Indian language for advisory & telemetry')}</p>
               </div>
             </div>
 
@@ -190,10 +198,13 @@ export default function ProfilePage() {
                   <button
                     key={lang.id}
                     type="button"
-                    onClick={() => setSelectedLanguage(lang.id)}
+                    onClick={() => {
+                      setSelectedLanguage(lang.id as LanguageCode);
+                      setLanguage(lang.id as LanguageCode);
+                    }}
                     className={`p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                       isSelected
-                        ? 'bg-accent-bg/40 border-accent shadow-sm'
+                        ? 'bg-accent-bg/40 border-accent shadow-sm ring-1 ring-accent'
                         : 'bg-bg border-border hover:border-accent/40 hover:bg-surface-hover'
                     }`}
                   >

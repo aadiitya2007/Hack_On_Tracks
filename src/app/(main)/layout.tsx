@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AssistantWidget from "./AssistantWidget";
 import MarketBackground from "./MarketBackground";
 import { UserProfileModal } from "@/components/UserProfileModal";
+import { useLanguage } from "@/context/LanguageContext";
 
 function NavLink({ href, icon, label, badge, colorClass, onClick }: { href: string, icon: React.ReactNode, label: string, badge?: string, colorClass: string, onClick?: () => void }) {
   return (
@@ -34,6 +35,7 @@ function NavLink({ href, icon, label, badge, colorClass, onClick }: { href: stri
 }
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [profileDefaultTab, setProfileDefaultTab] = useState<'profile' | 'languages' | 'settings' | 'brokers'>('profile');
@@ -137,16 +139,16 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </div>
 
               <nav className="flex-1 px-4 py-4 space-y-1.5">
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/dashboard" icon={<LayoutDashboard size={20} strokeWidth={2.5} />} label="Dashboard" colorClass="text-accent" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/risk" icon={<ShieldAlert size={20} strokeWidth={2.5} />} label="Risk Profile" colorClass="text-[var(--asset-bonds)]" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/prediction" icon={<Sparkles size={20} strokeWidth={2.5} />} label="Stock Insights" badge="AI ML" colorClass="text-accent" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/news" icon={<Newspaper size={20} strokeWidth={2.5} />} label="Market News" badge="Live" colorClass="text-accent" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/community" icon={<Users size={20} strokeWidth={2.5} />} label="Community Forum" badge="Network" colorClass="text-accent" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/dashboard" icon={<LayoutDashboard size={20} strokeWidth={2.5} />} label={t('nav_dashboard', 'Dashboard')} colorClass="text-accent" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/risk" icon={<ShieldAlert size={20} strokeWidth={2.5} />} label={t('nav_risk', 'Risk Profile')} colorClass="text-[var(--asset-bonds)]" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/prediction" icon={<Sparkles size={20} strokeWidth={2.5} />} label={t('nav_prediction', 'Stock Insights')} badge="AI ML" colorClass="text-accent" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/news" icon={<Newspaper size={20} strokeWidth={2.5} />} label={t('nav_news', 'Market News')} badge="Live" colorClass="text-accent" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/community" icon={<Users size={20} strokeWidth={2.5} />} label={t('nav_community', 'Community Forum')} badge="Network" colorClass="text-accent" />
 
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/accounts" icon={<Wallet size={20} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/profile" icon={<User size={20} strokeWidth={2.5} />} label="Profile & Settings" colorClass="text-accent" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/learn" icon={<BookOpen size={20} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/time-machine" icon={<Clock size={20} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/accounts" icon={<Wallet size={20} strokeWidth={2.5} />} label={t('nav_accounts', 'Accounts')} colorClass="text-[var(--asset-stocks)]" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/profile" icon={<User size={20} strokeWidth={2.5} />} label={t('nav_profile', 'Profile & Settings')} colorClass="text-accent" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/learn" icon={<BookOpen size={20} strokeWidth={2.5} />} label={t('nav_learn', 'Learn')} colorClass="text-[var(--asset-funds)]" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/time-machine" icon={<Clock size={20} strokeWidth={2.5} />} label={t('nav_time_machine', 'Time Machine')} colorClass="text-[var(--asset-reits)]" />
               </nav>
 
               <div className="p-4 border-t border-border">
@@ -165,10 +167,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                   <div className="flex-1 overflow-hidden">
                     <div className="flex items-center justify-between">
                       <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
-                      <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">CKYC</span>
+                      <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">{t('ckyc_verified', 'CKYC')}</span>
                     </div>
                     <p className="text-[10px] font-medium text-text-muted truncate flex items-center gap-1 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 Accounts Linked
+                      <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 {t('accounts_linked', 'Accounts Linked')}
                     </p>
                   </div>
                 </button>
@@ -187,22 +189,22 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             </div>
             <div>
               <h1 className="text-2xl font-black text-text-primary tracking-tight leading-none">Unify</h1>
-              <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-1">PLAN • TRACK • GROW</p>
+              <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-1">{t('plan_track_grow', 'PLAN • TRACK • GROW')}</p>
             </div>
           </div>
         </div>
         
         <nav className="flex-1 px-4 mt-6 space-y-2.5">
-          <NavLink href="/dashboard" icon={<LayoutDashboard size={22} strokeWidth={2.5} />} label="Dashboard" colorClass="text-accent" />
-          <NavLink href="/risk" icon={<ShieldAlert size={22} strokeWidth={2.5} />} label="Risk Profile" colorClass="text-[var(--asset-bonds)]" />
-          <NavLink href="/prediction" icon={<Sparkles size={22} strokeWidth={2.5} />} label="Stock Insights" badge="AI ML" colorClass="text-accent" />
-          <NavLink href="/news" icon={<Newspaper size={22} strokeWidth={2.5} />} label="Market News" badge="Live" colorClass="text-accent" />
-          <NavLink href="/community" icon={<Users size={22} strokeWidth={2.5} />} label="Community Forum" badge="Network" colorClass="text-accent" />
+          <NavLink href="/dashboard" icon={<LayoutDashboard size={22} strokeWidth={2.5} />} label={t('nav_dashboard', 'Dashboard')} colorClass="text-accent" />
+          <NavLink href="/risk" icon={<ShieldAlert size={22} strokeWidth={2.5} />} label={t('nav_risk', 'Risk Profile')} colorClass="text-[var(--asset-bonds)]" />
+          <NavLink href="/prediction" icon={<Sparkles size={22} strokeWidth={2.5} />} label={t('nav_prediction', 'Stock Insights')} badge="AI ML" colorClass="text-accent" />
+          <NavLink href="/news" icon={<Newspaper size={22} strokeWidth={2.5} />} label={t('nav_news', 'Market News')} badge="Live" colorClass="text-accent" />
+          <NavLink href="/community" icon={<Users size={22} strokeWidth={2.5} />} label={t('nav_community', 'Community Forum')} badge="Network" colorClass="text-accent" />
 
-          <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
-          <NavLink href="/profile" icon={<User size={22} strokeWidth={2.5} />} label="Profile & Settings" colorClass="text-accent" />
-          <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
-          <NavLink href="/time-machine" icon={<Clock size={22} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
+          <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label={t('nav_accounts', 'Accounts')} colorClass="text-[var(--asset-stocks)]" />
+          <NavLink href="/profile" icon={<User size={22} strokeWidth={2.5} />} label={t('nav_profile', 'Profile & Settings')} colorClass="text-accent" />
+          <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label={t('nav_learn', 'Learn')} colorClass="text-[var(--asset-funds)]" />
+          <NavLink href="/time-machine" icon={<Clock size={22} strokeWidth={2.5} />} label={t('nav_time_machine', 'Time Machine')} colorClass="text-[var(--asset-reits)]" />
         </nav>
 
         {/* Desktop Sidebar Bottom User Card (Clickable) */}
@@ -221,10 +223,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <div className="flex-1 overflow-hidden">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
-                <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">CKYC</span>
+                <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">{t('ckyc_verified', 'CKYC')}</span>
               </div>
               <p className="text-[10px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 Accounts Linked
+                <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 {t('accounts_linked', 'Accounts Linked')}
               </p>
             </div>
           </button>
@@ -240,7 +242,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               }}
               className="text-text-muted hover:text-loss transition-colors font-bold cursor-pointer"
             >
-              Sign Out
+              {t('nav_sign_out', 'Sign Out')}
             </Link>
           </div>
         </div>
@@ -252,7 +254,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <div className="flex items-center gap-3">
             <div className="text-xs font-bold text-text-primary flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gain animate-pulse"></span>
-              Live Sync Active
+              {t('live_sync_active', 'Live Sync Active')}
             </div>
 
             {/* Top-Right Clickable Profile & Settings Pill Button (Desktop) */}
@@ -272,7 +274,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                   {userName}
                 </p>
                 <p className="text-[10px] text-text-muted leading-tight font-medium flex items-center gap-1 mt-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> {userPan} • Profile & Settings
+                  <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> {userPan} • {t('nav_profile', 'Profile & Settings')}
                 </p>
               </div>
               <ChevronDown size={14} className="text-text-muted group-hover:text-accent transition-colors ml-0.5" />

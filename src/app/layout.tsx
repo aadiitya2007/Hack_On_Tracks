@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   }
 };
 
+import ClientProviders from "@/components/ClientProviders";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="min-h-screen flex flex-col relative z-10">
-          {children}
-        </div>
+        <ClientProviders>
+          <div className="min-h-screen flex flex-col relative z-10">
+            {children}
+          </div>
+        </ClientProviders>
       </body>
     </html>
   );
