@@ -358,6 +358,21 @@ export default function ProfilePage() {
               </span>
               <ChevronRight size={14} className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 transition-all" />
             </Link>
+
+            <Link
+              href="/login"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  localStorage.removeItem('unify_is_logged_in');
+                }
+              }}
+              className="w-full py-3 px-4 rounded-2xl bg-destructive/5 border border-destructive/20 hover:border-destructive/40 hover:bg-destructive/10 text-xs font-bold text-loss flex items-center justify-between transition-all group"
+            >
+              <span className="flex items-center gap-2">
+                <Lock size={14} className="text-loss" /> Sign Out / Switch User Account
+              </span>
+              <ChevronRight size={14} className="text-loss/60 group-hover:text-loss group-hover:translate-x-0.5 transition-all" />
+            </Link>
           </div>
         </div>
       </div>

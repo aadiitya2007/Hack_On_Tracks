@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { 
   Shield, CheckCircle2, UserCheck, Camera, Brain, Award, 
   ArrowRight, Sparkles, AlertCircle, RefreshCw, BarChart3, HelpCircle,
@@ -465,9 +466,17 @@ ICICIBANK,INE090A01021,2024-09-02,BUY,60,1180.00,1260.00,4800.00,0.00
                   onKeyDown={(e) => handleKeyDown(e, handleNext)}
                   className="space-y-4"
                 >
-                  <div>
-                    <h2 className="text-xl font-black text-text-primary">Step 1: Basic Investor Profile</h2>
-                    <p className="text-xs text-text-secondary mt-1">Enter your contact details to locate CKYC and depository records. Press <kbd className="px-1.5 py-0.5 rounded bg-bg border border-border font-mono text-[10px]">Enter</kbd> to advance.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <h2 className="text-xl font-black text-text-primary">Step 1: Basic Investor Profile</h2>
+                      <p className="text-xs text-text-secondary mt-1">Enter your contact details to locate CKYC and depository records.</p>
+                    </div>
+                    <Link 
+                      href="/login" 
+                      className="px-3 py-1.5 rounded-xl bg-bg border border-border hover:border-accent text-[11px] font-bold text-accent transition-all shrink-0 w-fit"
+                    >
+                      Already Registered? Log In →
+                    </Link>
                   </div>
 
                   <div className="space-y-3">

@@ -206,14 +206,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </nav>
 
         {/* Desktop Sidebar Bottom User Card (Clickable) */}
-        <div className="p-5 border-t border-border">
+        <div className="p-4 border-t border-border space-y-2">
           <button 
             type="button"
             onClick={() => {
               setProfileDefaultTab('profile');
               setProfileModalOpen(true);
             }}
-            className="w-full flex items-center gap-3.5 p-3.5 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover shadow-sm transition-all text-left cursor-pointer group"
+            className="w-full flex items-center gap-3.5 p-3 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover shadow-sm transition-all text-left cursor-pointer group"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-sm flex items-center justify-center shadow-md shadow-accent/20 shrink-0">
               {userInitials}
@@ -228,6 +228,21 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </p>
             </div>
           </button>
+
+          <div className="flex items-center justify-between px-2 text-[10px] text-text-muted">
+            <span className="font-mono">PAN: {userPan}</span>
+            <Link 
+              href="/login" 
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  localStorage.removeItem('unify_is_logged_in');
+                }
+              }}
+              className="text-text-muted hover:text-loss transition-colors font-bold cursor-pointer"
+            >
+              Sign Out
+            </Link>
+          </div>
         </div>
       </aside>
 

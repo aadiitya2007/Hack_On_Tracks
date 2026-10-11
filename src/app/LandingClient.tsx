@@ -107,9 +107,13 @@ export default function LandingClient() {
           <Link href="#contact" className="hover:text-accent transition-colors">Contact</Link>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="hidden sm:inline-block px-5 py-2.5 rounded-full font-bold text-xs text-text-primary hover:bg-surface-hover transition-colors border border-border shadow-sm">
-            View Live App
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <Link href="/login" className="px-4 py-2.5 rounded-full font-bold text-xs text-text-primary hover:text-accent hover:bg-surface-hover transition-colors border border-border shadow-sm flex items-center gap-1.5 cursor-pointer">
+            <Lock size={12} className="text-accent" />
+            <span>Log In</span>
+          </Link>
+          <Link href="/dashboard" className="hidden sm:inline-block px-4 py-2.5 rounded-full font-bold text-xs text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-colors border border-border shadow-sm">
+            Live App
           </Link>
           <Link href="/onboarding" className="px-5 py-2.5 rounded-full font-extrabold text-xs text-white bg-accent hover:bg-accent-hover transition-all shadow-[0_4px_14px_rgba(109,40,217,0.3)] hover:-translate-y-0.5">
             Get Started Free →

@@ -400,6 +400,26 @@ export function UserProfileModal({ isOpen, onClose, defaultTab = 'profile' }: Us
                       <option value="-8%">-8% Daily Drop</option>
                     </select>
                   </div>
+
+                  {/* Account Session & Sign Out */}
+                  <div className="p-4 rounded-2xl bg-destructive/5 border border-destructive/20 flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-black text-text-primary">Session Management</h4>
+                      <p className="text-[11px] text-text-secondary">Log out of this device or switch investor profile</p>
+                    </div>
+                    <Link
+                      href="/login"
+                      onClick={() => {
+                        if (typeof window !== 'undefined') {
+                          localStorage.removeItem('unify_is_logged_in');
+                        }
+                        onClose();
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-destructive/15 text-loss border border-destructive/30 hover:bg-destructive/25 text-xs font-extrabold transition-all"
+                    >
+                      Sign Out / Switch →
+                    </Link>
+                  </div>
                 </motion.div>
               )}
 
