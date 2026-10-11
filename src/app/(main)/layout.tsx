@@ -144,36 +144,26 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/prediction" icon={<Sparkles size={20} strokeWidth={2.5} />} label={t('nav_prediction', 'Stock Insights')} badge="AI ML" colorClass="text-accent" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/news" icon={<Newspaper size={20} strokeWidth={2.5} />} label={t('nav_news', 'Market News')} badge="Live" colorClass="text-accent" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/community" icon={<Users size={20} strokeWidth={2.5} />} label={t('nav_community', 'Community Forum')} badge="Network" colorClass="text-accent" />
-
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/accounts" icon={<Wallet size={20} strokeWidth={2.5} />} label={t('nav_accounts', 'Accounts')} colorClass="text-[var(--asset-stocks)]" />
-                <NavLink onClick={() => setMobileMenuOpen(false)} href="/profile" icon={<User size={20} strokeWidth={2.5} />} label={t('nav_profile', 'Profile & Settings')} colorClass="text-accent" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/learn" icon={<BookOpen size={20} strokeWidth={2.5} />} label={t('nav_learn', 'Learn')} colorClass="text-[var(--asset-funds)]" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/time-machine" icon={<Clock size={20} strokeWidth={2.5} />} label={t('nav_time_machine', 'Time Machine')} colorClass="text-[var(--asset-reits)]" />
               </nav>
 
-              <div className="p-4 border-t border-border">
-                <button 
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setProfileDefaultTab('profile');
-                    setProfileModalOpen(true);
-                  }}
-                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover transition-all text-left cursor-pointer group"
-                >
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
-                    {userInitials}
-                  </div>
-                  <div className="flex-1 overflow-hidden">
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
-                      <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">{t('ckyc_verified', 'CKYC')}</span>
-                    </div>
-                    <p className="text-[10px] font-medium text-text-muted truncate flex items-center gap-1 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 {t('accounts_linked', 'Accounts Linked')}
-                    </p>
-                  </div>
-                </button>
+              <div className="p-4 border-t border-border space-y-2">
+                <div className="flex items-center justify-between text-[11px] text-text-muted px-1">
+                  <span className="font-mono">PAN: <strong className="text-text-primary">{userPan}</strong></span>
+                  <Link 
+                    href="/login" 
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        localStorage.removeItem('unify_is_logged_in');
+                      }
+                    }}
+                    className="text-text-muted hover:text-loss transition-colors font-bold cursor-pointer"
+                  >
+                    {t('nav_sign_out', 'Sign Out')}
+                  </Link>
+                </div>
               </div>
             </motion.aside>
           </div>
@@ -202,37 +192,24 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <NavLink href="/community" icon={<Users size={22} strokeWidth={2.5} />} label={t('nav_community', 'Community Forum')} badge="Network" colorClass="text-accent" />
 
           <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label={t('nav_accounts', 'Accounts')} colorClass="text-[var(--asset-stocks)]" />
-          <NavLink href="/profile" icon={<User size={22} strokeWidth={2.5} />} label={t('nav_profile', 'Profile & Settings')} colorClass="text-accent" />
           <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label={t('nav_learn', 'Learn')} colorClass="text-[var(--asset-funds)]" />
           <NavLink href="/time-machine" icon={<Clock size={22} strokeWidth={2.5} />} label={t('nav_time_machine', 'Time Machine')} colorClass="text-[var(--asset-reits)]" />
         </nav>
 
-        {/* Desktop Sidebar Bottom User Card (Clickable) */}
-        <div className="p-4 border-t border-border space-y-2">
-          <button 
-            type="button"
-            onClick={() => {
-              setProfileDefaultTab('profile');
-              setProfileModalOpen(true);
-            }}
-            className="w-full flex items-center gap-3.5 p-3 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover shadow-sm transition-all text-left cursor-pointer group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-sm flex items-center justify-center shadow-md shadow-accent/20 shrink-0">
-              {userInitials}
+        {/* Desktop Sidebar Bottom Institutional & Security Footer */}
+        <div className="p-4 border-t border-border space-y-2.5">
+          <div className="p-3 rounded-2xl bg-bg/80 border border-border flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gain animate-pulse"></span>
+              <span className="text-[11px] font-extrabold text-text-primary">SEBI & AMFI Gateway</span>
             </div>
-            <div className="flex-1 overflow-hidden">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
-                <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">{t('ckyc_verified', 'CKYC')}</span>
-              </div>
-              <p className="text-[10px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 {t('accounts_linked', 'Accounts Linked')}
-              </p>
-            </div>
-          </button>
+            <span className="text-[9px] font-mono font-bold text-text-muted px-1.5 py-0.5 rounded bg-surface border border-border">v2.4.0</span>
+          </div>
 
           <div className="flex items-center justify-between px-2 text-[10px] text-text-muted">
-            <span className="font-mono">PAN: {userPan}</span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent"></span> 256-bit SSL Secure
+            </span>
             <Link 
               href="/login" 
               onClick={() => {
