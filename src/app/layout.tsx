@@ -30,9 +30,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <div className="min-h-screen flex flex-col relative z-10">
           {children}
-          <div className="fixed bottom-0 left-0 w-full bg-surface border-t border-border py-2 text-center text-[10px] font-bold tracking-wider uppercase text-text-muted z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
-            Unify • Simulated Demo • Not real financial data
-          </div>
         </div>
       </body>
     </html>

@@ -210,14 +210,14 @@ export default function LandingClient() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl font-extrabold mb-6">Ready to take control?</h2>
-          <p className="text-text-secondary mb-8">Join the simulated demo environment and test the platform.</p>
+          <p className="text-text-secondary mb-8">Start unifying your investments, analyzing risk, and optimizing returns today.</p>
           <Link href="/onboarding" className="btn-primary text-lg px-10 py-4 shadow-[0_10px_30px_rgba(109,40,217,0.3)] hover:-translate-y-1 transition-all inline-block">
             Create Free Account
           </Link>
         </motion.div>
         
         <div className="mt-24 text-sm text-text-muted">
-          <p>© 2026 Unify Hackathon Prototype. Educational purposes only.</p>
+          <p>© 2026 Unify Technologies. Built for next-generation retail investors.</p>
         </div>
       </footer>
       

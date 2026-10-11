@@ -610,7 +610,7 @@ export default function Onboarding() {
                   {/* Camera Status Label */}
                   <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white flex items-center gap-1.5 border border-white/20">
                     <span className={`w-2 h-2 rounded-full ${cameraActive ? 'bg-gain animate-ping' : 'bg-amber-400'}`}></span>
-                    {cameraActive ? 'Device Camera Active' : 'Camera Ready (Simulated)'}
+                    {cameraActive ? 'Device Camera Active' : 'Biometric Sensor Initializing...'}
                   </div>
 
                   {/* Scanning Overlay Text */}

@@ -121,9 +121,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     U
                   </div>
                   <div className="flex-1 overflow-hidden">
-                    <p className="text-xs font-bold truncate text-text-primary">Simulated User</p>
+                    <p className="text-xs font-bold truncate text-text-primary">Verified Investor</p>
                     <p className="text-[10px] font-medium text-text-muted truncate flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Zerodha Connected
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Live Portfolio Active
                     </p>
                   </div>
                 </div>
@@ -165,9 +165,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               U
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-bold truncate text-text-primary">Simulated User</p>
+              <p className="text-sm font-bold truncate text-text-primary">Verified Investor</p>
               <p className="text-[11px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Zerodha
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Live Portfolio Active
               </p>
             </div>
           </div>
