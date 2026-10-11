@@ -145,12 +145,12 @@ export default function AccountsClient({ initialAccounts }: { initialAccounts: a
     <div className="max-w-6xl mx-auto space-y-8 pb-20 relative z-10">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="heading-hero text-4xl text-gradient">Linked Accounts & Brokerages</h1>
-          <p className="text-text-secondary mt-1">Manage live API broker credentials, automated CAS parsing, and account synchronization.</p>
+          <h1 className="heading-hero text-3xl sm:text-4xl text-gradient">Linked Accounts & Brokerages</h1>
+          <p className="text-text-secondary mt-1 text-xs sm:text-sm font-medium">Manage live API broker credentials, automated CAS parsing, and account synchronization.</p>
         </div>
-        <button onClick={() => setConnectModalOpen(true)} className="btn-primary flex items-center gap-2">
+        <button onClick={() => setConnectModalOpen(true)} className="btn-primary flex items-center gap-2 self-start sm:self-auto shrink-0 shadow-md">
           <Plus size={18} /> Connect New Broker
         </button>
       </div>
@@ -158,64 +158,74 @@ export default function AccountsClient({ initialAccounts }: { initialAccounts: a
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Live Broker Accounts List */}
-        <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-lg font-bold flex items-center gap-2 text-text-primary">
-            <span className="w-2.5 h-2.5 rounded-full bg-gain"></span> Connected Live Accounts ({accounts.length})
-          </h2>
+        <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-4">
+            <h2 className="text-lg font-bold flex items-center gap-2 text-text-primary">
+              <span className="w-2.5 h-2.5 rounded-full bg-gain"></span> Connected Live Accounts ({accounts.length})
+            </h2>
 
-          {accounts.map(a => (
-            <div key={a.id} className="card p-5 bg-surface border border-border hover:border-accent/40 transition-all">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-border p-1.5 overflow-hidden shrink-0 shadow-sm">
-                    {BROKER_LOGOS[a.broker.toLowerCase()] ? (
-                      <img src={BROKER_LOGOS[a.broker.toLowerCase()]} alt={a.broker} className="w-full h-full object-contain" />
-                    ) : (
-                      <div className="w-full h-full rounded-xl bg-accent-bg text-accent flex items-center justify-center font-extrabold text-sm border border-accent/20">
-                        {a.broker.substring(0, 2).toUpperCase()}
+            {accounts.map(a => (
+              <div key={a.id} className="card p-5 bg-surface border border-border hover:border-accent/40 transition-all rounded-2xl">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-border p-1.5 overflow-hidden shrink-0 shadow-sm">
+                      {BROKER_LOGOS[a.broker.toLowerCase()] ? (
+                        <img src={BROKER_LOGOS[a.broker.toLowerCase()]} alt={a.broker} className="w-full h-full object-contain" />
+                      ) : (
+                        <div className="w-full h-full rounded-xl bg-accent-bg text-accent flex items-center justify-center font-extrabold text-sm border border-accent/20">
+                          {a.broker.substring(0, 2).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-extrabold text-text-primary text-base">{a.broker}</h3>
+                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-gain-bg text-gain border border-gain/20 flex items-center gap-1">
+                          <CheckCircle2 size={10} /> Live
+                        </span>
                       </div>
-                    )}
+                      <p className="text-xs text-text-muted mt-0.5 font-mono">
+                        Acc: {a.accountNumber} • {a.holdingsCount} Holdings • Synced {a.lastSynced}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-extrabold text-text-primary text-base">{a.broker}</h3>
-                      <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-gain-bg text-gain border border-gain/20 flex items-center gap-1">
-                        <CheckCircle2 size={10} /> Live
+
+                  <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
+                    <div className="text-left sm:text-right">
+                      <span className="text-[10px] text-text-muted font-bold block uppercase">Portfolio Value</span>
+                      <span className="font-mono font-black text-text-primary text-sm sm:text-base">
+                        ₹{Math.round(a.totalValue || 0).toLocaleString('en-IN')}
                       </span>
                     </div>
-                    <p className="text-xs text-text-muted mt-0.5 font-mono">
-                      Acc: {a.accountNumber} • {a.holdingsCount} Holdings • Synced {a.lastSynced}
-                    </p>
+
+                    <div className="flex items-center gap-1.5">
+                      <button 
+                        onClick={() => handleSyncAccount(a.id)}
+                        disabled={syncingId === a.id}
+                        className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+                        title="Sync Now"
+                      >
+                        <RefreshCw size={16} className={syncingId === a.id ? 'animate-spin text-accent' : ''} />
+                      </button>
+
+                      <button
+                        onClick={() => setExpandedAccount(expandedAccount === a.id ? null : a.id)}
+                        className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+                        title="Toggle Holdings"
+                      >
+                        {expandedAccount === a.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                      </button>
+
+                      <button
+                        onClick={() => handleDisconnect(a.id)}
+                        className="p-2 rounded-xl bg-loss-bg text-loss border border-loss/20 hover:bg-loss/20 transition-colors cursor-pointer"
+                        title="Disconnect"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <button 
-                    onClick={() => handleSyncAccount(a.id)}
-                    disabled={syncingId === a.id}
-                    className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-text-primary transition-colors"
-                    title="Sync Now"
-                  >
-                    <RefreshCw size={16} className={syncingId === a.id ? 'animate-spin text-accent' : ''} />
-                  </button>
-
-                  <button
-                    onClick={() => setExpandedAccount(expandedAccount === a.id ? null : a.id)}
-                    className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-text-primary transition-colors"
-                    title="Toggle Holdings"
-                  >
-                    {expandedAccount === a.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                  </button>
-
-                  <button
-                    onClick={() => handleDisconnect(a.id)}
-                    className="p-2 rounded-xl bg-loss-bg text-loss border border-loss/20 hover:bg-loss/20 transition-colors"
-                    title="Disconnect"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </div>
 
               {/* Expandable Holdings List */}
               <AnimatePresence>
@@ -243,10 +253,11 @@ export default function AccountsClient({ initialAccounts }: { initialAccounts: a
           ))}
         </div>
 
-        {/* UNIVERSAL BROKER TELEMETRY PARSER & ACCOUNT AGGREGATOR SYNC */}
+        {/* UNIVERSAL BROKER PARSER & ACCOUNT AGGREGATOR SYNC */}
         <CasPdfParserSync />
+      </div>
 
-        {/* Mail Sync Baseline Module */}
+      {/* Mail Sync Baseline Module */}
         <div className="space-y-4">
           <h2 className="text-lg font-bold flex items-center gap-2 text-text-primary">
             <span className="w-2.5 h-2.5 rounded-full bg-accent"></span> Automated Mail CAS Sync

@@ -66,40 +66,44 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
     <div className="card p-6 bg-surface border border-border rounded-3xl space-y-6 shadow-xl relative overflow-hidden">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-border">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-accent-bg text-accent flex items-center justify-center border border-accent/20 shadow-sm shrink-0">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-5 border-b border-border">
+        <div className="flex items-start sm:items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-accent-bg text-accent flex items-center justify-center border border-accent/20 shadow-sm shrink-0 mt-0.5 sm:mt-0">
             <FileText size={22} />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-accent-bg text-accent text-[10px] font-black uppercase tracking-wider border border-accent/20">
-                Universal Broker Data Sync
+          <div className="space-y-1.5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-accent-bg text-accent text-[10px] font-black uppercase tracking-wider border border-accent/20 whitespace-nowrap">
+                Universal Broker Sync
               </span>
-              <span className="text-[10px] font-bold text-gain flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-gain animate-pulse"></span> CDSL / NSDL / RBI AA Network
+              <span className="text-[10px] font-bold text-gain flex items-center gap-1.5 whitespace-nowrap bg-gain-bg px-2.5 py-0.5 rounded-full border border-gain/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-gain animate-pulse"></span> CDSL • NSDL • RBI AA Network
               </span>
             </div>
-            <h3 className="font-extrabold text-lg text-text-primary mt-0.5">
-              Angel One & Universal Broker Demat Telemetry Parser
+            <h3 className="font-extrabold text-lg text-text-primary">
+              Angel One & Multi-Broker Demat Portfolio Parser
             </h3>
           </div>
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex p-1 bg-bg rounded-2xl border border-border shrink-0">
+        <div className="w-full sm:w-auto grid grid-cols-2 sm:flex p-1 bg-bg rounded-2xl border border-border">
           <button
             onClick={() => setActiveTab('cas_pdf')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-              activeTab === 'cas_pdf' ? 'bg-accent text-white shadow-sm' : 'text-text-muted hover:text-text-primary'
+            className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer text-center whitespace-nowrap ${
+              activeTab === 'cas_pdf' 
+                ? 'bg-accent text-white shadow-sm font-black' 
+                : 'text-text-muted hover:text-text-primary'
             }`}
           >
             📄 e-CAS PDF Parser
           </button>
           <button
             onClick={() => setActiveTab('account_aggregator')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-              activeTab === 'account_aggregator' ? 'bg-accent text-white shadow-sm' : 'text-text-muted hover:text-text-primary'
+            className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer text-center whitespace-nowrap ${
+              activeTab === 'account_aggregator' 
+                ? 'bg-accent text-white shadow-sm font-black' 
+                : 'text-text-muted hover:text-text-primary'
             }`}
           >
             🏛️ RBI Account Aggregator
@@ -114,38 +118,58 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
             Upload your monthly password-protected <strong>CDSL or NSDL e-CAS PDF Statement</strong> to extract all holdings across <strong>Angel One, ICICI Direct, Kotak Securities, Motilal Oswal & Sharekhan</strong> automatically.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
             {/* File Dropzone */}
-            <div className="p-6 rounded-2xl border-2 border-dashed border-border hover:border-accent bg-bg flex flex-col items-center justify-center text-center space-y-2 transition-colors relative cursor-pointer">
+            <div className="p-6 rounded-2xl border-2 border-dashed border-border hover:border-accent bg-bg flex flex-col items-center justify-center text-center space-y-3 transition-colors relative cursor-pointer min-h-[170px]">
               <input 
                 type="file" 
                 accept=".pdf" 
                 onChange={handleFileDrop}
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className="absolute inset-0 opacity-0 cursor-pointer z-10"
               />
-              <UploadCloud size={32} className="text-accent" />
+              <div className="w-12 h-12 rounded-2xl bg-accent-bg text-accent flex items-center justify-center border border-accent/20">
+                <UploadCloud size={24} />
+              </div>
               <div>
                 <p className="text-xs font-extrabold text-text-primary">
                   {fileName ? fileName : 'Drag & Drop e-CAS PDF Statement'}
                 </p>
-                <p className="text-[10px] text-text-muted font-bold mt-0.5">Supports CDSL & NSDL Consolidated PDFs</p>
+                <p className="text-[10px] text-text-muted font-bold mt-1">Supports CDSL & NSDL Consolidated PDFs</p>
               </div>
+
+              {!fileName && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFileName('CDSL_CAS_FY24-25_Verified.pdf');
+                    setPanPassword('ABCDE1234F');
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-surface border border-border text-[10px] font-bold text-accent hover:border-accent transition-colors z-20 cursor-pointer"
+                >
+                  Load Sample e-CAS PDF
+                </button>
+              )}
             </div>
 
             {/* PAN Unlock Input */}
-            <div className="p-5 rounded-2xl bg-bg border border-border space-y-3 flex flex-col justify-between">
+            <div className="p-5 rounded-2xl bg-bg border border-border space-y-4 flex flex-col justify-between">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-text-primary flex items-center gap-1.5">
                   <Key size={14} className="text-accent" /> Enter PAN Number (PDF Password):
                 </label>
                 <input 
-                  type="password" 
+                  type="text" 
                   value={panPassword}
                   onChange={e => setPanPassword(e.target.value.toUpperCase())}
                   placeholder="e.g. ABCDE1234F"
-                  className="w-full bg-surface border border-border rounded-xl px-4 py-2 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent"
+                  maxLength={10}
+                  className="w-full bg-surface border border-border rounded-xl px-4 py-2.5 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent placeholder:text-text-muted"
                 />
+                <p className="text-[10px] text-text-muted leading-relaxed">
+                  CAS PDFs are encrypted by depositories using your 10-digit PAN in uppercase.
+                </p>
               </div>
 
               <button 
@@ -156,12 +180,12 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
                 {parsing ? (
                   <>
                     <RefreshCw size={14} className="animate-spin" />
-                    <span>Decrypting CAS & Extracting ISINs...</span>
+                    <span>Decrypting CAS & Importing Demat Holdings...</span>
                   </>
                 ) : (
                   <>
                     <Sparkles size={14} />
-                    <span>Parse CAS Statement & Sync Telemetry</span>
+                    <span>Decrypt & Import Demat Holdings</span>
                   </>
                 )}
               </button>
@@ -191,25 +215,25 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
             Connect via RBI-regulated <strong>Account Aggregator (AA) Network</strong> (Setu, Finvu, OneMoney). Authenticate via mobile OTP to pull live demat holdings across <strong>Angel One, ICICI Direct, HDFC Securities, Kotak, and SBI Cap</strong> with zero file uploads.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
             {/* AA Provider & Mobile Input */}
             <div className="p-5 rounded-2xl bg-bg border border-border space-y-3">
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-text-primary">Select Account Aggregator Provider:</label>
                 <select 
                   value={aaProvider}
                   onChange={e => setAaProvider(e.target.value)}
-                  className="w-full bg-surface border border-border rounded-xl px-3 py-2 text-xs font-bold text-text-primary focus:outline-none focus:border-accent"
+                  className="w-full bg-surface border border-border rounded-xl px-3 py-2.5 text-xs font-bold text-text-primary focus:outline-none focus:border-accent"
                 >
                   <option value="Setu Account Aggregator">Setu AA (RBI Regulated)</option>
                   <option value="Finvu AA">Finvu Financial Information User</option>
-                  <option value="OneMoney AA">OneMoney Telemetry Network</option>
+                  <option value="OneMoney AA">OneMoney Account Aggregator</option>
                   <option value="Anumati AA">Anumati Account Aggregator</option>
                 </select>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-text-primary flex items-center gap-1.5">
                   <Smartphone size={14} className="text-accent" /> PAN-Linked Mobile Number:
                 </label>
@@ -217,14 +241,14 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
                   type="text" 
                   value={mobileNumber}
                   onChange={e => setMobileNumber(e.target.value)}
-                  className="w-full bg-surface border border-border rounded-xl px-4 py-2 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent"
+                  className="w-full bg-surface border border-border rounded-xl px-4 py-2.5 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent"
                 />
               </div>
 
               {!otpSent && (
                 <button 
                   onClick={handleSendOtp}
-                  className="w-full py-2.5 px-4 rounded-xl bg-accent text-white font-extrabold text-xs hover:bg-accent/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-2.5 px-4 rounded-xl bg-accent text-white font-extrabold text-xs hover:bg-accent/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md mt-2"
                 >
                   <span>Request AA Consent OTP</span>
                   <ArrowRight size={14} />
@@ -245,7 +269,7 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
                       value={otpValue}
                       onChange={e => setOtpValue(e.target.value)}
                       placeholder="e.g. 558921"
-                      className="w-full bg-surface border border-border rounded-xl px-4 py-2 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent"
+                      className="w-full bg-surface border border-border rounded-xl px-4 py-2.5 text-xs font-mono font-bold text-text-primary focus:outline-none focus:border-accent"
                     />
                     <span className="text-[10px] text-gain font-bold block">✓ Demo OTP Sent to +91 {mobileNumber}</span>
                   </div>
@@ -258,7 +282,7 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
                     {aaConnecting ? (
                       <>
                         <RefreshCw size={14} className="animate-spin" />
-                        <span>Pulling Telemetry across All Brokers...</span>
+                        <span>Syncing Demat Holdings across Brokers...</span>
                       </>
                     ) : (
                       <>
@@ -270,9 +294,9 @@ export function CasPdfParserSync({ onSyncComplete }: { onSyncComplete?: (data: a
                 </>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-center p-4 space-y-2 text-text-muted">
-                  <Smartphone size={32} />
-                  <p className="text-xs font-bold">Waiting for AA Consent Request</p>
-                  <p className="text-[10px]">Click 'Request AA Consent OTP' to trigger live authorization.</p>
+                  <Smartphone size={32} className="text-accent" />
+                  <p className="text-xs font-bold text-text-primary">Waiting for AA Consent Request</p>
+                  <p className="text-[10px] text-text-muted">Click 'Request AA Consent OTP' to trigger live authorization.</p>
                 </div>
               )}
             </div>
