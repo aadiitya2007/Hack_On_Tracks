@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LESSON_MAP } from '@/lib/content/lessons';
 import Dialogue from '@/components/Dialogue';
 import { InteractiveConceptCanvas } from '@/components/InteractiveConceptCanvas';
+import { ExternalKnowledgeVault } from '@/components/ExternalKnowledgeVault';
 import { 
   TrendingUp, TrendingDown, ArrowRight, ArrowLeft, CheckCircle2, XCircle, 
   HelpCircle, PieChart, ShieldCheck, Layers, Award, Sparkles, Sliders, BarChart3, Info 
@@ -329,6 +330,15 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
           "{lesson.takeaway}"
         </p>
       </motion.div>
+
+      {/* Official & Globally Recognised Deep-Dive Modules */}
+      <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-border">
+        <ExternalKnowledgeVault 
+          filterAssetId={resolvedParams.asset} 
+          title={`Official & In-Depth Resources: ${lesson.title}`}
+          subtitle={`Vetted video masterclasses and official regulatory portals for ${lesson.title.toLowerCase()} from SEBI, NSE, RBI, and institutional researchers.`}
+        />
+      </motion.section>
 
       {/* Navigation Footer */}
       <div className="flex justify-between items-center pt-6 border-t border-border">
