@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { 
   Shield, CheckCircle2, UserCheck, Camera, Brain, Award, 
   ArrowRight, Sparkles, AlertCircle, RefreshCw, BarChart3, HelpCircle,
-  FileText, Upload, Mail, ExternalLink, Check, User, Phone, MapPin
+  FileText, Upload, Mail, ExternalLink, Check, User, Phone, MapPin,
+  BookOpen, Download, KeyRound, X
 } from 'lucide-react';
 
 const SKILL_QUESTIONS = [
@@ -61,47 +62,97 @@ const BROKER_OPTIONS = [
   { id: 'icici', name: 'ICICI Direct / HDFC Sec', logo: '/logos/unify.png', isPartnered: false, autoFound: false },
 ];
 
-const BROKER_GUIDES: Record<string, { title: string; steps: string[] }> = {
+const BROKER_GUIDES: Record<string, {
+  name: string;
+  title: string;
+  logo: string;
+  portalUrl: string;
+  portalLabel: string;
+  passwordTip?: string;
+  steps: string[];
+}> = {
   'zerodha': {
-    title: 'Zerodha Kite P&L Download Guide',
+    name: 'Zerodha Kite',
+    title: 'Zerodha Kite Tax P&L Statement',
+    logo: '/logos/zerodha.webp',
+    portalUrl: 'https://console.zerodha.com/reports/tax-pnl',
+    portalLabel: 'Open Zerodha Console',
+    passwordTip: 'Zerodha P&L Excel & CSV downloads are unencrypted and ready for direct upload.',
     steps: [
-      'Login to console.zerodha.com or open the Kite mobile app.',
+      'Log in to console.zerodha.com or open the Kite mobile app.',
       'Go to Profile / Account → Reports → Tax P&L.',
-      'Select the Financial Year (e.g. FY 2024-25) & Segment (Equity / F&O).',
-      'Click "Download P&L" (PDF or Excel) and save to device.'
+      'Select Financial Year (e.g. FY 2024-25) & Segment (Equity / F&O / Mutual Funds).',
+      'Click "Download P&L" (Excel or CSV) and upload it here.'
     ]
   },
   'groww': {
-    title: 'Groww Tax P&L Download Guide',
+    name: 'Groww',
+    title: 'Groww Tax P&L & Capital Gains Statement',
+    logo: '/logos/groww.png',
+    portalUrl: 'https://groww.in/user/reports',
+    portalLabel: 'Open Groww Reports',
+    passwordTip: 'If your Groww statement PDF is password-protected, the password is your PAN in UPPERCASE.',
     steps: [
-      'Open the Groww App or web portal at groww.in.',
-      'Click your Profile Avatar → Reports.',
-      'Select "Stocks P&L" or "Mutual Fund P&L".',
-      'Choose Financial Year and click "Download PDF".'
+      'Open the Groww App or log in at groww.in.',
+      'Click your Profile Avatar (top right) → Reports.',
+      'Select "Stocks P&L" or "Mutual Fund Capital Gains".',
+      'Choose the Financial Year and click "Download PDF" or "Download Excel".'
     ]
   },
   'upstox': {
-    title: 'Upstox Pro P&L Download Guide',
+    name: 'Upstox Pro',
+    title: 'Upstox Pro Tax P&L Statement',
+    logo: '/logos/upstox.png',
+    portalUrl: 'https://my.upstox.com',
+    portalLabel: 'Open Upstox Portal',
+    passwordTip: 'Upstox Tax P&L statements require no password when exported from web ledger.',
     steps: [
-      'Login to my.upstox.com or open the Upstox Pro app.',
+      'Log in to my.upstox.com or open the Upstox Pro app.',
       'Navigate to Account → Reports & Ledgers → Tax P&L.',
-      'Select Financial Year & click "Export PDF Statement".'
+      'Select Financial Year & click "Export PDF Statement" or "Download CSV".',
+      'Save the statement file to your device and upload here.'
     ]
   },
   'angel': {
-    title: 'Angel One P&L Download Guide',
+    name: 'Angel One',
+    title: 'Angel One Gain/Loss & Tax P&L Statement',
+    logo: '/logos/unify.png',
+    portalUrl: 'https://www.angelone.in/trade',
+    portalLabel: 'Open Angel One',
+    passwordTip: 'Angel One PDF password (if prompted) is your PAN in uppercase or DOB (DDMMYYYY).',
     steps: [
-      'Login to Angel One app or web portal.',
-      'Go to Account → Statements → Gain/Loss & Tax P&L.',
-      'Select Date Range and tap "Download PDF".'
+      'Log in to the Angel One app or web trading portal.',
+      'Navigate to Account / Profile → Statements & Reports.',
+      'Select "Gain / Loss Statement" or "Tax P&L" for the financial year.',
+      'Click "Download PDF / CSV" and upload it to Unify.'
     ]
   },
   'icici': {
-    title: 'ICICI Direct / HDFC / CAMS CAS Guide',
+    name: 'ICICI / HDFC',
+    title: 'ICICI Direct / HDFC Sec Statement',
+    logo: '/logos/unify.png',
+    portalUrl: 'https://secure.icicidirect.com',
+    portalLabel: 'Open ICICI Direct',
+    passwordTip: 'Protected by your PAN in UPPERCASE or Date of Birth in DDMMYYYY format.',
     steps: [
-      'Visit camsonline.com or cdslindia.com for Consolidated Account Statement (CAS).',
-      'Select CAS - Detailed statement with portfolio holdings.',
-      'Enter your PAN & Email address to receive statement via email.'
+      'Log in to ICICI Direct or HDFC Securities customer portal.',
+      'Navigate to Statements → Capital Gains / Realized P&L.',
+      'Select Financial Year & Equity/Mutual Funds asset classes.',
+      'Download statement as PDF or Excel spreadsheet and upload.'
+    ]
+  },
+  'cdsl': {
+    name: 'CDSL CAS',
+    title: 'Consolidated Account Statement (CAS)',
+    logo: '/logos/cdsl.webp',
+    portalUrl: 'https://www.cdslindia.com/cas/',
+    portalLabel: 'Open CDSL CAS Portal',
+    passwordTip: 'CAS PDFs are protected by your 10-digit PAN in UPPERCASE or DOB (DDMMYYYY).',
+    steps: [
+      'Visit cdslindia.com/cas or camsonline.com to generate your CAS.',
+      'Enter your 10-digit PAN and registered mobile or email.',
+      'Authenticate with OTP to receive the complete consolidated portfolio statement via email.',
+      'Download the attached PDF/Excel and upload it directly to Unify.'
     ]
   }
 };
@@ -141,8 +192,49 @@ export default function Onboarding() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [showGuideModal, setShowGuideModal] = useState(false);
-  const [activeGuideBroker, setActiveGuideBroker] = useState<'zerodha' | 'groww' | 'upstox' | 'angel' | 'icici'>('zerodha');
+  const [activeGuideBroker, setActiveGuideBroker] = useState<'zerodha' | 'groww' | 'upstox' | 'angel' | 'icici' | 'cdsl'>('zerodha');
   const [gmailSyncEnabled, setGmailSyncEnabled] = useState(true);
+
+  // Close guide modal on Escape key press
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showGuideModal) {
+        setShowGuideModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showGuideModal]);
+
+  // Load Verified Demo Tax P&L Statement for rapid hackathon testing
+  const loadDemoPnlStatement = () => {
+    setUploadError(null);
+    setPnlFileName('Unify_Tax_PnL_FY24-25_Verified.csv');
+    setPnlFileUploaded(true);
+    setUploadSuccess(true);
+    setShowGuideModal(false);
+  };
+
+  // Download Realistic Sample P&L CSV File
+  const downloadSamplePnlFile = () => {
+    const sampleCsvContent = `Symbol,ISIN,Trade Date,Type,Quantity,Buy Price (INR),Sell Price (INR),Realized P&L (INR),Unrealized P&L (INR)
+RELIANCE,INE002A01018,2024-04-15,BUY,50,2850.00,3010.00,8000.00,0.00
+TCS,INE467B01029,2024-05-10,BUY,30,3780.00,3920.00,4200.00,0.00
+INFY,INE009A01021,2024-06-05,BUY,100,1420.00,1540.00,12000.00,0.00
+HDFCBANK,INE040A01034,2024-07-22,BUY,80,1510.00,1650.00,11200.00,0.00
+TATAMOTORS,INE155A01022,2024-08-14,BUY,120,980.00,920.00,-7200.00,0.00
+ICICIBANK,INE090A01021,2024-09-02,BUY,60,1180.00,1260.00,4800.00,0.00
+`;
+    const blob = new Blob([sampleCsvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'Unify_Sample_Broker_Tax_PnL.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // File Upload Validation Handler
   const handleFileUpload = (file: File) => {
@@ -679,6 +771,9 @@ export default function Onboarding() {
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setSelectedBrokers(prev => [...prev, b.id]);
+                                  if (b.id in BROKER_GUIDES) {
+                                    setActiveGuideBroker(b.id as any);
+                                  }
                                 } else {
                                   setSelectedBrokers(prev => prev.filter(id => id !== b.id));
                                 }
@@ -713,8 +808,12 @@ export default function Onboarding() {
                     </div>
                     <button 
                       type="button" 
-                      onClick={() => setShowGuideModal(true)} 
-                      className="text-[10px] font-extrabold text-accent bg-accent-bg px-2.5 py-1 rounded-lg border border-accent/20 flex items-center gap-1 hover:underline shrink-0"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowGuideModal(true);
+                      }} 
+                      className="text-[10px] font-extrabold text-accent bg-accent-bg px-2.5 py-1 rounded-lg border border-accent/20 flex items-center gap-1 hover:underline hover:bg-accent/15 transition-all shrink-0 cursor-pointer shadow-sm"
                     >
                       <HelpCircle size={12} /> How to get P&L?
                     </button>
@@ -740,6 +839,18 @@ export default function Onboarding() {
                       <Upload size={15} className="text-accent" />
                       {pnlFileName ? `Uploaded: ${pnlFileName}` : 'Choose P&L / CAS File (.pdf, .csv)'}
                     </label>
+                  </div>
+
+                  {/* 1-Click Demo Testing Helper */}
+                  <div className="flex items-center justify-between px-1 text-[11px]">
+                    <span className="text-text-muted">No broker file on hand?</span>
+                    <button
+                      type="button"
+                      onClick={loadDemoPnlStatement}
+                      className="text-accent font-bold hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                    >
+                      <Sparkles size={11} /> Load Demo P&L Statement
+                    </button>
                   </div>
 
                   {/* Upload Validation Error Alert */}
@@ -888,52 +999,161 @@ export default function Onboarding() {
       </div>
 
       {/* Step-by-Step P&L Download Guide Modal */}
-      {showGuideModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowGuideModal(false)}></div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="card w-full max-w-lg p-6 relative rounded-3xl border border-border bg-surface z-10 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl"
-          >
-            <div className="flex justify-between items-center pb-3 border-b border-border">
-              <h3 className="font-extrabold text-base text-text-primary flex items-center gap-2">
-                <BookOpen size={18} className="text-accent" /> How to Download Your P&L Statement
-              </h3>
-              <button onClick={() => setShowGuideModal(false)} className="text-text-muted hover:text-text-primary text-sm font-bold w-7 h-7 rounded-full bg-bg border border-border flex items-center justify-center">✕</button>
-            </div>
+      <AnimatePresence>
+        {showGuideModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" 
+              onClick={() => setShowGuideModal(false)}
+            />
 
-            {/* Broker Guide Selector Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-              {Object.keys(BROKER_GUIDES).map(key => (
-                <button
-                  key={key}
-                  onClick={() => setActiveGuideBroker(key as any)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider shrink-0 transition-all ${
-                    activeGuideBroker === key ? 'bg-accent text-white shadow-sm' : 'bg-bg text-text-secondary border border-border hover:text-text-primary'
-                  }`}
+            {/* Modal Dialog Card */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg p-5 sm:p-6 relative rounded-3xl border border-border bg-surface text-text-primary z-10 space-y-4 max-h-[88vh] overflow-y-auto shadow-2xl my-auto"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-start pb-3 border-b border-border">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-accent-bg text-accent flex items-center justify-center border border-accent/20 shrink-0">
+                    <BookOpen size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-base text-text-primary leading-tight">
+                      How to Get Your P&L Statement
+                    </h3>
+                    <p className="text-[11px] text-text-muted mt-0.5">
+                      Instructions for all major Indian brokerages & depositories
+                    </p>
+                  </div>
+                </div>
+                <button 
+                  type="button"
+                  onClick={() => setShowGuideModal(false)} 
+                  className="text-text-muted hover:text-text-primary hover:bg-surface-hover text-sm font-bold w-8 h-8 rounded-full bg-bg border border-border flex items-center justify-center transition-all cursor-pointer shrink-0"
+                  aria-label="Close guide"
                 >
-                  {key}
+                  <X size={15} />
                 </button>
-              ))}
-            </div>
+              </div>
 
-            {/* Guide Step-by-Step Instructions */}
-            <div className="p-4 rounded-2xl bg-bg border border-border space-y-3">
-              <h4 className="font-black text-sm text-text-primary">{BROKER_GUIDES[activeGuideBroker].title}</h4>
-              <ol className="space-y-2 text-xs text-text-secondary list-decimal pl-4">
-                {BROKER_GUIDES[activeGuideBroker].steps.map((st, i) => (
-                  <li key={i} className="leading-relaxed font-medium">{st}</li>
-                ))}
-              </ol>
-            </div>
+              {/* Broker Guide Selector Tabs */}
+              <div>
+                <p className="text-[10px] font-extrabold uppercase text-text-muted tracking-wider mb-2">Select Your Broker</p>
+                <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+                  {Object.keys(BROKER_GUIDES).map(key => {
+                    const guide = BROKER_GUIDES[key];
+                    const isActive = activeGuideBroker === key;
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setActiveGuideBroker(key as any)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
+                          isActive 
+                            ? 'bg-accent text-white shadow-sm' 
+                            : 'bg-bg text-text-secondary border border-border hover:text-text-primary hover:bg-surface-hover'
+                        }`}
+                      >
+                        <img src={guide.logo} alt={guide.name} className="w-4 h-4 object-contain rounded-sm" />
+                        <span>{guide.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-            <button onClick={() => setShowGuideModal(false)} className="btn-primary w-full py-3 text-xs font-bold">
-              Understood — Back to Statement Upload →
-            </button>
-          </motion.div>
-        </div>
-      )}
+              {/* Guide Step-by-Step Instructions */}
+              <div className="p-4 rounded-2xl bg-bg border border-border space-y-3.5">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <img 
+                      src={BROKER_GUIDES[activeGuideBroker]?.logo || '/logos/unify.png'} 
+                      alt={BROKER_GUIDES[activeGuideBroker]?.name} 
+                      className="w-5 h-5 object-contain" 
+                    />
+                    <h4 className="font-black text-sm text-text-primary">
+                      {BROKER_GUIDES[activeGuideBroker]?.title}
+                    </h4>
+                  </div>
+                  {BROKER_GUIDES[activeGuideBroker]?.portalUrl && (
+                    <a
+                      href={BROKER_GUIDES[activeGuideBroker].portalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-bold text-accent hover:underline flex items-center gap-1 bg-accent-bg px-2 py-1 rounded-lg border border-accent/20 shrink-0"
+                    >
+                      <span>{BROKER_GUIDES[activeGuideBroker].portalLabel}</span>
+                      <ExternalLink size={11} />
+                    </a>
+                  )}
+                </div>
+
+                {/* Steps with numerical badges */}
+                <div className="space-y-2.5">
+                  {BROKER_GUIDES[activeGuideBroker]?.steps.map((st, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-text-secondary font-medium">
+                      <span className="w-5 h-5 rounded-full bg-accent-bg text-accent font-extrabold text-[10px] flex items-center justify-center shrink-0 mt-0.5 border border-accent/20">
+                        {i + 1}
+                      </span>
+                      <p className="leading-relaxed">{st}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Password tip */}
+                {BROKER_GUIDES[activeGuideBroker]?.passwordTip && (
+                  <div className="p-2.5 rounded-xl bg-surface border border-border text-[11px] text-text-muted flex items-start gap-2">
+                    <KeyRound size={13} className="text-accent shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-text-secondary">Password Tip: </span>
+                      <span>{BROKER_GUIDES[activeGuideBroker].passwordTip}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Actions */}
+              <div className="space-y-2 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <button 
+                    type="button" 
+                    onClick={downloadSamplePnlFile}
+                    className="py-2.5 px-3 rounded-xl bg-bg border border-border hover:bg-surface-hover text-xs font-bold text-text-primary flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <Download size={13} className="text-accent" />
+                    <span>Download Sample (.csv)</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    onClick={loadDemoPnlStatement}
+                    className="py-2.5 px-3 rounded-xl bg-accent-bg border border-accent/30 hover:bg-accent/15 text-xs font-extrabold text-accent flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <Sparkles size={13} />
+                    <span>Auto-Load Demo P&L</span>
+                  </button>
+                </div>
+
+                <button 
+                  type="button"
+                  onClick={() => setShowGuideModal(false)} 
+                  className="btn-primary w-full py-3 text-xs font-bold cursor-pointer"
+                >
+                  Understood — Back to Statement Upload →
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
