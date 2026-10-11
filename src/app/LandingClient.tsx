@@ -229,6 +229,29 @@ function getFeatureIcon(type: CoreFeature['iconType']) {
   }
 }
 
+const INVESTOR_TESTIMONIAL_AVATARS = [
+  { 
+    src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    fallbackBg: 'bg-gradient-to-tr from-purple-500 to-indigo-600',
+    initial: 'A'
+  },
+  { 
+    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    fallbackBg: 'bg-gradient-to-tr from-blue-500 to-cyan-600',
+    initial: 'R'
+  },
+  { 
+    src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    fallbackBg: 'bg-gradient-to-tr from-emerald-500 to-teal-600',
+    initial: 'P'
+  },
+  { 
+    src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    fallbackBg: 'bg-gradient-to-tr from-amber-500 to-orange-600',
+    initial: 'V'
+  },
+];
+
 export default function LandingClient() {
   const [introKey, setIntroKey] = useState(1);
   const [playIntro, setPlayIntro] = useState(true);
@@ -364,26 +387,44 @@ export default function LandingClient() {
           {/* User Avatars & Rating Banner */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 rounded-3xl bg-surface/90 border border-border shadow-xl backdrop-blur-md mb-8 gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="flex -space-x-3 overflow-hidden">
-                {['#7C3AED', '#EC4899', '#059669', '#F59E0B', '#2563EB'].map((bg, idx) => (
+              <div className="flex -space-x-2 items-center shrink-0">
+                {INVESTOR_TESTIMONIAL_AVATARS.map((av, idx) => (
                   <div 
                     key={idx} 
-                    style={{ backgroundColor: bg }} 
-                    className="inline-block h-9 w-9 rounded-full ring-2 ring-surface text-white text-[11px] font-black flex items-center justify-center shadow-sm"
+                    className="relative w-8 h-8 rounded-full ring-2 ring-surface overflow-hidden shadow-sm shrink-0 bg-surface-hover"
                   >
-                    {['AA', 'RS', 'PK', 'NK', 'VS'][idx]}
+                    <img 
+                      src={av.src} 
+                      alt={`Verified Investor ${idx + 1}`} 
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                    <div className={`absolute inset-0 ${av.fallbackBg} flex items-center justify-center text-white text-[10px] font-black -z-10`}>
+                      {av.initial}
+                    </div>
                   </div>
                 ))}
+                <div className="w-8 h-8 rounded-full ring-2 ring-surface bg-accent text-white text-[10px] font-black flex items-center justify-center shadow-md shrink-0">
+                  +18k
+                </div>
               </div>
               <div className="text-left">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
-                  ))}
-                  <span className="text-xs font-black text-text-primary ml-1">4.9 / 5</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs font-black text-text-primary">4.9 / 5</span>
+                  <span className="text-[10px] font-extrabold text-gain px-1.5 py-0.2 rounded-md bg-gain-bg border border-gain/20 flex items-center gap-0.5">
+                    <Check size={10} strokeWidth={3} /> Verified
+                  </span>
                 </div>
                 <p className="text-[11px] text-text-muted font-bold mt-0.5">
-                  Trusted by <strong>18,500+ Indian Retail Investors</strong> across NSE & BSE
+                  Trusted by <strong className="text-text-primary">18,500+ Indian Retail Investors</strong> across NSE & BSE
                 </p>
               </div>
             </div>
