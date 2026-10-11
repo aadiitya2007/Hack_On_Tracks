@@ -5,7 +5,7 @@ export interface ExternalResource {
   youtubeId?: string;
   source: string;
   sourceType: 'Official Exchange' | 'Statutory Regulator' | 'Central Bank Portal' | 'Institutional Research' | 'Industry Leader' | 'Financial Authority';
-  category: 'Stocks & Trading' | 'Mutual Funds & Regulations' | 'Bonds & Fixed Income' | 'REITs & Real Estate' | 'ETFs & Indexing';
+  category: 'Stocks & Trading' | 'Mutual Funds & Regulations' | 'Bonds & Fixed Income' | 'REITs & Real Estate' | 'ETFs & Indexing' | 'InvITs & Infrastructure' | 'Futures & Options';
   assetId: 'stocks' | 'mutual-funds' | 'etfs' | 'bonds' | 'reits' | 'invits' | 'futures-options';
   mediaType: 'Official Web Portal' | 'Regulator Video Portal' | 'Institutional Guide' | 'Research Paper' | 'Video Masterclass' | 'Interactive Video';
   description: string;
@@ -118,6 +118,86 @@ export const EXTERNAL_RESOURCES: ExternalResource[] = [
     durationOrReadTime: '18 min video'
   },
   {
+    id: 'nse-invits-investor-portal',
+    title: 'NSE Infrastructure Investment Trusts (InvITs) Guide',
+    url: 'https://www.nseindia.com/products-services/equity-market-invits',
+    source: 'National Stock Exchange of India (NSE)',
+    sourceType: 'Official Exchange',
+    category: 'InvITs & Infrastructure',
+    assetId: 'invits',
+    mediaType: 'Official Web Portal',
+    description: 'Official framework and listed repository of Infrastructure Investment Trusts on the National Stock Exchange of India, outlining toll roads, telecom towers, and transmission grids.',
+    keyTopics: [
+      'Operational Cash Flows from National Highway Tolls & Power Transmission',
+      'SEBI InvIT Regulations & 90% Distributable Cash Flow Mandate',
+      'Trading Lot Sizes & Demat Liquidity on NSE',
+      'Comparative Yield Performance against 10-Year G-Sec Benchmarks'
+    ],
+    authority: 'National Stock Exchange of India (NSE Official)',
+    badge: 'NSE InvIT Portal',
+    durationOrReadTime: 'Official Portal'
+  },
+  {
+    id: 'sebi-invits-framework',
+    title: 'SEBI (Infrastructure Investment Trusts) Regulations & Investor Charter',
+    url: 'https://www.sebi.gov.in/legal/regulations/sep-2014/securities-and-exchange-board-of-india-infrastructure-investment-trusts-regulations-2014_28038.html',
+    source: 'Securities & Exchange Board of India (SEBI)',
+    sourceType: 'Statutory Regulator',
+    category: 'InvITs & Infrastructure',
+    assetId: 'invits',
+    mediaType: 'Research Paper',
+    description: 'Statutory regulatory provisions governing leverage limits (49% to 70% with credit rating requirements), independent valuations, and investor distribution safety.',
+    keyTopics: [
+      'Cap on Leverage: 49% Debt Cap expandable to 70% with AAA Rating',
+      'Independent Semi-Annual NAV & Asset Valuation Mandates',
+      'Public vs Privately Placed InvIT Governance Differences',
+      'Retail Investor Protection & Grievance Redressal Mechanisms'
+    ],
+    authority: 'Statutory Capital Markets Regulator of India (SEBI)',
+    badge: 'SEBI Statutory',
+    durationOrReadTime: 'Statutory Regulatory Act'
+  },
+  {
+    id: 'sebi-derivatives-study-report',
+    title: 'SEBI Study on F&O: Retail Traders in Equity Derivatives Segment',
+    url: 'https://www.sebi.gov.in/reports-and-statistics/research/jan-2023/study-analysis-of-profit-and-loss-in-equity-derivatives-segment-among-individual-investors_67525.html',
+    source: 'Securities & Exchange Board of India (SEBI)',
+    sourceType: 'Statutory Regulator',
+    category: 'Futures & Options',
+    assetId: 'futures-options',
+    mediaType: 'Research Paper',
+    description: 'Landmark empirical research study by SEBI revealing that 9 out of 10 individual traders suffered net trading losses in equity F&O, analyzing turnover costs, transaction friction, and risk management.',
+    keyTopics: [
+      'Empirical Analysis: 89% Individual F&O Traders Incur Net Losses',
+      'Transaction Drag: Brokerage, STT, and Exchange Turnover Charges',
+      'Theta Time Decay in Out-of-the-Money (OTM) Options Buying',
+      'Statistical Survivorship in Leveraged Index Derivatives (Nifty / Bank Nifty)'
+    ],
+    authority: 'SEBI Research Department (Empirical Regulatory Study)',
+    badge: 'SEBI Official Report',
+    durationOrReadTime: '15 min read'
+  },
+  {
+    id: 'nse-fno-mechanics-guide',
+    title: 'NSE Equity Derivatives (F&O) Trading Manual & Margins',
+    url: 'https://www.nseindia.com/products-services/equity-derivatives-faqs',
+    source: 'National Stock Exchange of India (NSE)',
+    sourceType: 'Official Exchange',
+    category: 'Futures & Options',
+    assetId: 'futures-options',
+    mediaType: 'Official Web Portal',
+    description: 'Comprehensive official guide on SPAN margins, Extreme Loss Margin (ELM), lot sizes, contract expiries, cash settlement procedures, and circuit filters in the derivative segment.',
+    keyTopics: [
+      'SPAN + Extreme Loss Margin (ELM) Real-Time Upfront Requirement',
+      'Standardized Monthly & Weekly Contract Cycles and Expiry Settlement',
+      'Physical Delivery vs Cash Settlement Mechanics in Stock Options',
+      'Protective Put & Covered Call Hedging vs Pure Directional Speculation'
+    ],
+    authority: 'National Stock Exchange of India (NSE Derivatives Segment)',
+    badge: 'NSE Derivatives',
+    durationOrReadTime: 'Official FAQ & Guide'
+  },
+  {
     id: 'nse-swing-trading-secrets',
     title: 'NSE Website Secrets: Identify Strong Stocks for Swing Trading',
     url: 'https://youtu.be/H7x_abGlDaA?si=5PsnyCtb3gYwRU29',
@@ -200,6 +280,26 @@ export const EXTERNAL_RESOURCES: ExternalResource[] = [
     authority: 'Passive Indexing & ETF Analysis',
     badge: 'ETF vs Index Fund',
     durationOrReadTime: '17 min video'
+  },
+  {
+    id: 'nse-etf-masterguide',
+    title: 'NSE India Exchange Traded Funds (ETFs) Handbook & Live Market Watch',
+    url: 'https://www.nseindia.com/products-services/equity-market-etf',
+    source: 'National Stock Exchange of India (NSE)',
+    sourceType: 'Official Exchange',
+    category: 'ETFs & Indexing',
+    assetId: 'etfs',
+    mediaType: 'Official Web Portal',
+    description: 'The official exchange portal tracking all listed Equity, Debt, and Commodity ETFs, live indicative iNAV updates, Market Maker quoting obligations, and trading turnover.',
+    keyTopics: [
+      'Live iNAV (Indicative Net Asset Value) Calculation every 10 seconds',
+      'Authorized Participants (AP) & Market Maker Quoting Obligations',
+      'Equity ETFs (Nifty 50, Nifty Bank), Liquid ETFs & Gold/Silver ETFs',
+      'Settlement via T+1 Rolling Cycle in Demat Account'
+    ],
+    authority: 'National Stock Exchange of India (NSE Official)',
+    badge: 'NSE ETF Handbook',
+    durationOrReadTime: 'Official Exchange Portal'
   },
   {
     id: 'amit-bond-masterclass',

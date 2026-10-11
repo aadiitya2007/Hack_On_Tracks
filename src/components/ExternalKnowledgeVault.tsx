@@ -42,6 +42,8 @@ export function ExternalKnowledgeVault({
     'Mutual Funds & Regulations',
     'Bonds & Fixed Income',
     'REITs & Real Estate',
+    'InvITs & Infrastructure',
+    'Futures & Options',
     'ETFs & Indexing'
   ];
 
@@ -114,51 +116,58 @@ export function ExternalKnowledgeVault({
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="card p-5 sm:p-6 bg-surface border border-border hover:border-accent/50 rounded-3xl flex flex-col justify-between transition-all group shadow-sm hover:shadow-xl relative overflow-hidden"
+              className="card p-6 bg-surface border border-border hover:border-accent/40 rounded-3xl flex flex-col justify-between transition-all group shadow-sm hover:shadow-lg relative overflow-hidden"
             >
               {/* Card Header & Badges */}
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-lg border flex items-center gap-1 ${
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-xl border inline-flex items-center gap-1.5 shadow-sm ${
                     isGovOrRegulator
-                      ? 'bg-gain-bg text-gain border-gain/20 shadow-sm'
-                      : 'bg-accent-bg text-accent border-accent/20'
+                      ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/30'
+                      : 'bg-accent/15 text-accent border-accent/30'
                   }`}>
-                    {isGovOrRegulator ? <ShieldCheck size={12} /> : <Award size={12} />}
-                    {res.badge}
+                    {isGovOrRegulator ? <ShieldCheck size={13} className="shrink-0" /> : <Award size={13} className="shrink-0" />}
+                    <span>{res.badge}</span>
                   </span>
 
-                  <span className="text-[10px] font-mono font-bold text-text-muted flex items-center gap-1 bg-bg px-2 py-0.5 rounded-md border border-border">
-                    <Clock size={11} /> {res.durationOrReadTime}
+                  <span className="text-[11px] font-mono font-bold text-text-muted flex items-center gap-1.5 bg-bg/90 px-2.5 py-1 rounded-xl border border-border shrink-0 shadow-xs">
+                    {isYouTube ? <Play size={11} className="text-destructive shrink-0" fill="currentColor" /> : <BookOpen size={11} className="text-accent shrink-0" />}
+                    <span>{res.durationOrReadTime}</span>
                   </span>
                 </div>
 
                 {/* Resource Title */}
-                <h3 className="text-base font-black text-text-primary group-hover:text-accent transition-colors leading-snug mb-2">
-                  {res.title}
-                </h3>
-
-                {/* Authority & Source Tag */}
-                <div className="text-[11px] text-text-muted font-semibold flex items-center gap-1.5 mb-3">
-                  <span className="text-text-primary font-bold">{res.source}</span>
-                  <span>•</span>
-                  <span className="text-accent">{res.sourceType}</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-text-primary group-hover:text-accent transition-colors leading-snug">
+                    {res.title}
+                  </h3>
+                  
+                  {/* Source & Authority Tag */}
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <span className="text-xs font-extrabold text-text-primary">
+                      {res.source}
+                    </span>
+                    <span className="inline-block w-1 h-1 rounded-full bg-border" />
+                    <span className="text-[11px] font-bold text-accent bg-accent-bg px-2 py-0.5 rounded-md border border-accent/20">
+                      {res.sourceType}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-xs text-text-secondary leading-relaxed mb-4">
+                {/* Plain-Language Synopsis */}
+                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed pt-1 border-t border-border/50">
                   {res.description}
                 </p>
 
-                {/* What info it contains (Key Topics) */}
-                <div className="space-y-2 mb-5 p-3 rounded-2xl bg-bg border border-border">
-                  <span className="text-[10px] font-extrabold uppercase text-text-muted tracking-wider block">
+                {/* Key Concepts / Syllabus Checklist */}
+                <div className="p-3.5 rounded-2xl bg-bg/80 border border-border space-y-2.5">
+                  <span className="text-[10px] font-black uppercase text-text-muted tracking-wider block">
                     Core Knowledge Covered:
                   </span>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2">
                     {res.keyTopics.map((topic, i) => (
-                      <li key={i} className="text-[11px] text-text-secondary flex items-start gap-1.5 leading-snug">
-                        <CheckCircle2 size={12} className="text-gain shrink-0 mt-0.5" />
+                      <li key={i} className="text-xs text-text-secondary flex items-start gap-2 leading-snug font-medium">
+                        <CheckCircle2 size={13} className="text-gain shrink-0 mt-0.5" />
                         <span>{topic}</span>
                       </li>
                     ))}
@@ -166,20 +175,20 @@ export function ExternalKnowledgeVault({
                 </div>
               </div>
 
-              {/* Card Footer: Authority Callout & Action Buttons */}
-              <div className="pt-3 border-t border-border space-y-3">
-                <div className="text-[10px] text-text-muted flex items-center gap-1.5 font-medium">
-                  <ShieldCheck size={12} className="text-accent shrink-0" />
-                  <span className="truncate">Source Authority: <strong className="text-text-primary">{res.authority}</strong></span>
+              {/* Card Footer: Source Authority & Action Buttons */}
+              <div className="pt-4 mt-5 border-t border-border space-y-3">
+                <div className="text-[11px] text-text-muted flex items-center gap-1.5 font-medium">
+                  <ShieldCheck size={13} className="text-accent shrink-0" />
+                  <span className="truncate">Source Authority: <strong className="text-text-primary font-bold">{res.authority}</strong></span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 pt-1">
                   {isYouTube ? (
                     <>
                       <button
                         type="button"
                         onClick={() => setActiveVideoModal(res)}
-                        className="btn-primary flex-1 py-2 text-xs font-extrabold flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                        className="btn-primary flex-1 py-2.5 text-xs font-black flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow"
                       >
                         <Play size={13} fill="currentColor" /> Watch Inside App
                       </button>
@@ -187,7 +196,7 @@ export function ExternalKnowledgeVault({
                         href={res.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-bg border border-border hover:bg-surface-hover text-text-muted hover:text-text-primary transition-colors cursor-pointer"
+                        className="p-2.5 rounded-2xl bg-bg border border-border hover:bg-surface-hover hover:border-accent/40 text-text-muted hover:text-text-primary transition-all cursor-pointer flex items-center justify-center"
                         title="Open on YouTube in new tab"
                       >
                         <ExternalLink size={14} />
@@ -198,9 +207,9 @@ export function ExternalKnowledgeVault({
                       href={res.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-primary w-full py-2 text-xs font-extrabold flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                      className="btn-primary w-full py-2.5 text-xs font-black flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow"
                     >
-                      <Globe size={13} /> Open Official Portal <ExternalLink size={12} />
+                      <Globe size={13} /> Open Official Portal <ExternalLink size={13} />
                     </a>
                   )}
                 </div>
