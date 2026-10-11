@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   LayoutDashboard, Wallet, BookOpen, Clock, 
-  ShieldAlert, Sparkles, Newspaper, Users, Menu, X 
+  ShieldAlert, Sparkles, Newspaper, Users, Menu, X, ChevronDown, User, Globe, Settings
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import AssistantWidget from "./AssistantWidget";
 import MarketBackground from "./MarketBackground";
+import { UserProfileModal } from "@/components/UserProfileModal";
 
 function NavLink({ href, icon, label, badge, colorClass, onClick }: { href: string, icon: React.ReactNode, label: string, badge?: string, colorClass: string, onClick?: () => void }) {
   return (
@@ -34,6 +35,25 @@ function NavLink({ href, icon, label, badge, colorClass, onClick }: { href: stri
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [profileDefaultTab, setProfileDefaultTab] = useState<'profile' | 'languages' | 'settings' | 'brokers'>('profile');
+
+  const [userName, setUserName] = useState('Aditya Aggarwal');
+  const [userPan, setUserPan] = useState('ABCDE1234F');
+  const [userTier, setUserTier] = useState('Fresher Investor');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedName = localStorage.getItem('unify_user_name');
+      const storedPan = localStorage.getItem('unify_user_pan');
+      const storedTitle = localStorage.getItem('unify_trader_title');
+      if (storedName) setUserName(storedName);
+      if (storedPan) setUserPan(storedPan);
+      if (storedTitle) setUserTier(storedTitle);
+    }
+  }, []);
+
+  const userInitials = userName.split(' ').map(n => n[0]).join('').slice(0, 2) || 'AA';
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen relative overflow-hidden bg-bg">
@@ -54,15 +74,28 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <div className="flex items-center gap-2">
           <div className="text-[10px] font-bold text-text-primary flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface border border-border shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-gain animate-pulse"></span>
-            Live Sync
+            Live
           </div>
+
+          {/* Top-Right Clickable Profile Button (Mobile) */}
+          <button 
+            type="button"
+            onClick={() => {
+              setProfileDefaultTab('profile');
+              setProfileModalOpen(true);
+            }}
+            className="w-8 h-8 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-xs flex items-center justify-center shadow-sm border border-border cursor-pointer shrink-0"
+            aria-label="Open profile and settings"
+          >
+            {userInitials}
+          </button>
           
           <button 
             onClick={() => setMobileMenuOpen(prev => !prev)}
-            className="w-10 h-10 rounded-xl bg-bg border border-border flex items-center justify-center text-text-primary hover:bg-surface-hover transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-xl bg-bg border border-border flex items-center justify-center text-text-primary hover:bg-surface-hover transition-colors cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </header>
@@ -111,22 +144,34 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/community" icon={<Users size={20} strokeWidth={2.5} />} label="Community Forum" badge="Network" colorClass="text-accent" />
 
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/accounts" icon={<Wallet size={20} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
+                <NavLink onClick={() => setMobileMenuOpen(false)} href="/profile" icon={<User size={20} strokeWidth={2.5} />} label="Profile & Settings" colorClass="text-accent" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/learn" icon={<BookOpen size={20} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
                 <NavLink onClick={() => setMobileMenuOpen(false)} href="/time-machine" icon={<Clock size={20} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
               </nav>
 
               <div className="p-4 border-t border-border">
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-bg border border-border">
-                  <div className="w-8 h-8 rounded-full bg-accent-bg flex items-center justify-center text-accent font-bold text-xs shadow-sm">
-                    U
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setProfileDefaultTab('profile');
+                    setProfileModalOpen(true);
+                  }}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover transition-all text-left cursor-pointer group"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
+                    {userInitials}
                   </div>
                   <div className="flex-1 overflow-hidden">
-                    <p className="text-xs font-bold truncate text-text-primary">Verified Investor</p>
-                    <p className="text-[10px] font-medium text-text-muted truncate flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Live Portfolio Active
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
+                      <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">CKYC</span>
+                    </div>
+                    <p className="text-[10px] font-medium text-text-muted truncate flex items-center gap-1 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 Accounts Linked
                     </p>
                   </div>
-                </div>
+                </button>
               </div>
             </motion.aside>
           </div>
@@ -155,33 +200,68 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <NavLink href="/community" icon={<Users size={22} strokeWidth={2.5} />} label="Community Forum" badge="Network" colorClass="text-accent" />
 
           <NavLink href="/accounts" icon={<Wallet size={22} strokeWidth={2.5} />} label="Accounts" colorClass="text-[var(--asset-stocks)]" />
+          <NavLink href="/profile" icon={<User size={22} strokeWidth={2.5} />} label="Profile & Settings" colorClass="text-accent" />
           <NavLink href="/learn" icon={<BookOpen size={22} strokeWidth={2.5} />} label="Learn" colorClass="text-[var(--asset-funds)]" />
           <NavLink href="/time-machine" icon={<Clock size={22} strokeWidth={2.5} />} label="Time Machine" colorClass="text-[var(--asset-reits)]" />
         </nav>
 
-        <div className="p-6 border-t border-border">
-          <div className="flex items-center gap-4 p-4 rounded-2xl bg-bg border border-border shadow-inner">
-            <div className="w-10 h-10 rounded-full bg-accent-bg flex items-center justify-center text-accent font-bold shadow-sm">
-              U
+        {/* Desktop Sidebar Bottom User Card (Clickable) */}
+        <div className="p-5 border-t border-border">
+          <button 
+            type="button"
+            onClick={() => {
+              setProfileDefaultTab('profile');
+              setProfileModalOpen(true);
+            }}
+            className="w-full flex items-center gap-3.5 p-3.5 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover shadow-sm transition-all text-left cursor-pointer group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-black text-sm flex items-center justify-center shadow-md shadow-accent/20 shrink-0">
+              {userInitials}
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-bold truncate text-text-primary">Verified Investor</p>
-              <p className="text-[11px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--asset-stocks)]"></span> Live Portfolio Active
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-black truncate text-text-primary group-hover:text-accent transition-colors">{userName}</p>
+                <span className="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gain-bg text-gain border border-gain/20">CKYC</span>
+              </div>
+              <p className="text-[10px] font-medium text-text-muted mt-0.5 truncate flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> 4 Accounts Linked
               </p>
             </div>
-          </div>
+          </button>
         </div>
       </aside>
 
       {/* MAIN CONTENT AREA */}
       <main className="flex-1 flex flex-col relative z-20 min-h-screen lg:h-screen lg:overflow-y-auto">
         <header className="hidden lg:flex sticky top-0 z-40 bg-surface/80 backdrop-blur-xl h-16 items-center justify-end px-10 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border-b border-border/50">
-          <div className="flex items-center gap-4">
-            <div className="text-xs font-bold text-text-primary flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="text-xs font-bold text-text-primary flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gain animate-pulse"></span>
               Live Sync Active
             </div>
+
+            {/* Top-Right Clickable Profile & Settings Pill Button (Desktop) */}
+            <button 
+              type="button"
+              onClick={() => {
+                setProfileDefaultTab('profile');
+                setProfileModalOpen(true);
+              }}
+              className="flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-surface border border-border hover:border-accent hover:bg-surface-hover shadow-sm transition-all cursor-pointer group"
+            >
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+                {userInitials}
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-black text-text-primary group-hover:text-accent transition-colors leading-tight">
+                  {userName}
+                </p>
+                <p className="text-[10px] text-text-muted leading-tight font-medium flex items-center gap-1 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gain"></span> {userPan} • Profile & Settings
+                </p>
+              </div>
+              <ChevronDown size={14} className="text-text-muted group-hover:text-accent transition-colors ml-0.5" />
+            </button>
           </div>
         </header>
         
@@ -190,6 +270,13 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </div>
         
         <AssistantWidget />
+
+        {/* Global User Profile, Languages & Settings Modal */}
+        <UserProfileModal 
+          isOpen={profileModalOpen} 
+          onClose={() => setProfileModalOpen(false)} 
+          defaultTab={profileDefaultTab} 
+        />
       </main>
     </div>
   );
