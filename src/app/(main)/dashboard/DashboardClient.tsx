@@ -151,6 +151,64 @@ const BROKER_FILTERS = [
   { id: 'CDSL', label: 'CDSL CAS', logo: '/logos/cdsl.webp' },
 ];
 
+const TIMEFRAME_CONFIG: Record<string, {
+  labels: string[];
+  portfolio: number[];
+  benchmark: Record<string, number[]>;
+}> = {
+  '1M': {
+    labels: ['4w ago', '3w ago', '2w ago', 'Last week', '3d ago', 'Today'],
+    portfolio: [0.972, 0.981, 0.976, 0.989, 0.995, 1.000],
+    benchmark: {
+      NIFTY50: [0.972, 0.976, 0.979, 0.983, 0.987, 0.991],
+      SENSEX: [0.972, 0.975, 0.978, 0.982, 0.986, 0.990],
+      MIDCAP: [0.972, 0.979, 0.974, 0.986, 0.992, 0.994],
+    }
+  },
+  '3M': {
+    labels: ['Mar W1', 'Mar W3', 'Apr W1', 'Apr W3', 'May W1', 'May W3', 'Current'],
+    portfolio: [0.935, 0.948, 0.962, 0.974, 0.986, 0.994, 1.000],
+    benchmark: {
+      NIFTY50: [0.935, 0.942, 0.950, 0.958, 0.966, 0.972, 0.978],
+      SENSEX: [0.935, 0.941, 0.949, 0.957, 0.964, 0.970, 0.976],
+      MIDCAP: [0.935, 0.945, 0.956, 0.968, 0.978, 0.984, 0.988],
+    }
+  },
+  '6M': {
+    labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    portfolio: [0.880, 0.902, 0.925, 0.952, 0.978, 1.000],
+    benchmark: {
+      NIFTY50: [0.880, 0.889, 0.905, 0.920, 0.938, 0.948],
+      SENSEX: [0.880, 0.887, 0.902, 0.918, 0.935, 0.945],
+      MIDCAP: [0.880, 0.895, 0.916, 0.934, 0.955, 0.965],
+    }
+  },
+  '1Y': {
+    labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    portfolio: [0.805, 0.824, 0.816, 0.838, 0.862, 0.886, 0.912, 0.905, 0.938, 0.962, 0.984, 1.000],
+    benchmark: {
+      NIFTY50: [0.805, 0.814, 0.819, 0.826, 0.842, 0.856, 0.872, 0.864, 0.882, 0.896, 0.908, 0.914],
+      SENSEX: [0.805, 0.812, 0.817, 0.824, 0.839, 0.853, 0.868, 0.860, 0.878, 0.892, 0.904, 0.910],
+      MIDCAP: [0.805, 0.828, 0.815, 0.840, 0.868, 0.880, 0.900, 0.888, 0.918, 0.942, 0.958, 0.968],
+    }
+  },
+  'ALL': {
+    labels: ['Q1 \'22', 'Q2 \'22', 'Q3 \'22', 'Q4 \'22', 'Q1 \'23', 'Q2 \'23', 'Q3 \'23', 'Q4 \'23', 'Q1 \'24', 'Q2 \'24', 'Q3 \'24', 'Current'],
+    portfolio: [0.550, 0.585, 0.620, 0.665, 0.710, 0.760, 0.815, 0.850, 0.895, 0.935, 0.970, 1.000],
+    benchmark: {
+      NIFTY50: [0.550, 0.570, 0.598, 0.630, 0.665, 0.700, 0.742, 0.770, 0.805, 0.838, 0.865, 0.884],
+      SENSEX: [0.550, 0.568, 0.595, 0.626, 0.660, 0.695, 0.736, 0.764, 0.798, 0.831, 0.858, 0.876],
+      MIDCAP: [0.550, 0.580, 0.612, 0.650, 0.690, 0.735, 0.785, 0.818, 0.860, 0.902, 0.938, 0.955],
+    }
+  }
+};
+
+const BENCHMARK_METAS: Record<string, { label: string; short: string; color: string; desc: string }> = {
+  NIFTY50: { label: 'NIFTY 50 (TRI)', short: 'NIFTY 50', color: '#06B6D4', desc: 'NSE Benchmark (Large Cap Top 50)' },
+  SENSEX: { label: 'BSE SENSEX 30', short: 'SENSEX', color: '#38BDF8', desc: 'BSE Benchmark (Top 30 Indian Bluechips)' },
+  MIDCAP: { label: 'NIFTY Midcap 150', short: 'Midcap 150', color: '#F59E0B', desc: 'NSE Midcap High-Beta Benchmark' },
+};
+
 // Animated Number Component
 function AnimatedNumber({ value, prefix = '', suffix = '', isCurrency = false }: { value: number, prefix?: string, suffix?: string, isCurrency?: boolean }) {
   const [displayValue, setDisplayValue] = useState(0);
@@ -196,6 +254,11 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
   const [predictSymbol, setPredictSymbol] = useState('RELIANCE');
   const [sipAmount, setSipAmount] = useState(10000);
   const [sipDuration, setSipDuration] = useState(3); // 3 years
+
+  // Trajectory Chart State
+  const [chartTimeframe, setChartTimeframe] = useState<'1M' | '3M' | '6M' | '1Y' | 'ALL'>('1Y');
+  const [benchmarkType, setBenchmarkType] = useState<'NIFTY50' | 'SENSEX' | 'MIDCAP'>('NIFTY50');
+  const [chartMode, setChartMode] = useState<'VALUE' | 'PERCENT'>('VALUE');
 
   // Trade state
   const [tradeSymbol, setTradeSymbol] = useState('RELIANCE');
@@ -319,13 +382,43 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
     };
   }).sort((a, b) => b.amount - a.amount);
 
-  // Growth Chart Mock Data
-  const mockHistory = Array.from({ length: 7 }).map((_, i) => {
-    return {
-      month: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'][i],
-      value: totalValue * (0.8 + (i * 0.05) + (Math.random() * 0.02))
-    }
-  });
+  // Growth Chart & Benchmark Trajectory Data
+  const baseVal = Math.max(10000, Math.round(totalValue));
+  const activeBenchmarkMeta = BENCHMARK_METAS[benchmarkType] || BENCHMARK_METAS['NIFTY50'];
+
+  const chartData = useMemo(() => {
+    const config = TIMEFRAME_CONFIG[chartTimeframe] || TIMEFRAME_CONFIG['1Y'];
+    const pMults = config.portfolio;
+    const bMults = config.benchmark[benchmarkType] || config.benchmark['NIFTY50'];
+    const initialP = pMults[0];
+    const initialB = bMults[0];
+
+    return config.labels.map((lbl, idx) => {
+      const pRaw = baseVal * pMults[idx];
+      const bRaw = baseVal * bMults[idx];
+      const pVal = Math.round(pRaw);
+      const bVal = Math.round(bRaw);
+
+      const pPct = +(((pMults[idx] - initialP) / initialP) * 100).toFixed(2);
+      const bPct = +(((bMults[idx] - initialB) / initialB) * 100).toFixed(2);
+
+      return {
+        label: lbl,
+        portfolio: chartMode === 'VALUE' ? pVal : pPct,
+        benchmark: chartMode === 'VALUE' ? bVal : bPct,
+        portfolioVal: pVal,
+        benchmarkVal: bVal,
+        portfolioPct: pPct,
+        benchmarkPct: bPct,
+      };
+    });
+  }, [baseVal, chartTimeframe, benchmarkType, chartMode]);
+
+  const latestPoint = chartData[chartData.length - 1] || { portfolioPct: 0, benchmarkPct: 0, portfolioVal: 0, benchmarkVal: 0 };
+  const currentPortfolioPct = latestPoint.portfolioPct;
+  const currentBenchmarkPct = latestPoint.benchmarkPct;
+  const currentAlphaPct = +(currentPortfolioPct - currentBenchmarkPct).toFixed(2);
+  const netAlphaValue = Math.max(0, latestPoint.portfolioVal - latestPoint.benchmarkVal);
 
   // Time Machine compounding calculation on Dashboard
   const estimatedCagr = predictSymbol === 'RELIANCE' ? 14.5 : (predictSymbol === 'TCS' ? 12.8 : 13.5);
@@ -868,32 +961,275 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </div>
         </div>
 
-        {/* Growth Chart */}
-        <div className="card p-6 md:p-8 col-span-1 lg:col-span-3 h-[360px] flex flex-col">
-          <div className="flex justify-between items-center mb-6">
+        {/* Growth & Benchmark Trajectory Analytics Card */}
+        <div className="card p-6 md:p-8 col-span-1 lg:col-span-3 min-h-[520px] flex flex-col justify-between rounded-3xl bg-surface border border-border space-y-6">
+          {/* Card Header */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-5 border-b border-border">
             <div>
-              <h3 className="font-extrabold text-lg text-text-primary">Portfolio Trajectory vs NIFTY 50 Benchmark</h3>
-              <p className="text-xs text-text-secondary mt-0.5 font-medium">12-month consolidated compounded growth trajectory</p>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h3 className="text-xl font-black text-text-primary flex items-center gap-2">
+                  <TrendingUp size={22} className="text-accent" /> Portfolio Trajectory vs Benchmark
+                </h3>
+                <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                  currentAlphaPct >= 0 
+                    ? 'bg-success/15 text-gain border border-success/30' 
+                    : 'bg-destructive/15 text-loss border border-destructive/30'
+                }`}>
+                  {currentAlphaPct >= 0 ? `+${currentAlphaPct}% Benchmark Alpha` : `${currentAlphaPct}% Benchmark Lag`}
+                </span>
+              </div>
+              <p className="text-xs text-text-secondary mt-1 font-medium">
+                Tracking your consolidated {userTitle} capital growth against {activeBenchmarkMeta.desc}
+              </p>
             </div>
-            <span className="px-3 py-1 rounded-full bg-success/10 text-gain text-xs font-bold border border-success/20">
-              +8.64% Benchmark Alpha
-            </span>
+
+            {/* Quick Mode Toggle (Value in INR vs % Return) */}
+            <div className="flex items-center gap-1.5 bg-bg p-1 rounded-2xl border border-border self-start lg:self-auto">
+              <button
+                onClick={() => setChartMode('VALUE')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  chartMode === 'VALUE' 
+                    ? 'bg-accent text-white shadow-sm font-black' 
+                    : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                ₹ Capital Value
+              </button>
+              <button
+                onClick={() => setChartMode('PERCENT')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  chartMode === 'PERCENT' 
+                    ? 'bg-accent text-white shadow-sm font-black' 
+                    : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                % Cumulative Return
+              </button>
+            </div>
           </div>
-          <div className="flex-1 -ml-4">
+
+          {/* Actionable Filter Controls Row */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            {/* Benchmark Selection Pills */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-extrabold uppercase text-text-muted tracking-wider mr-1">Benchmark:</span>
+              {(['NIFTY50', 'SENSEX', 'MIDCAP'] as const).map(bKey => {
+                const bMeta = BENCHMARK_METAS[bKey];
+                const isActive = benchmarkType === bKey;
+                return (
+                  <button
+                    key={bKey}
+                    onClick={() => setBenchmarkType(bKey)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                      isActive
+                        ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/40 font-black shadow-sm'
+                        : 'bg-bg text-text-secondary hover:text-text-primary hover:bg-surface border border-border'
+                    }`}
+                  >
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: bMeta.color }}></span>
+                    <span>{bMeta.short}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Timeframe Pills */}
+            <div className="flex items-center gap-1 bg-bg p-1 rounded-2xl border border-border">
+              {(['1M', '3M', '6M', '1Y', 'ALL'] as const).map(tf => {
+                const isActive = chartTimeframe === tf;
+                return (
+                  <button
+                    key={tf}
+                    onClick={() => setChartTimeframe(tf)}
+                    className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-accent text-white shadow-sm font-black'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-surface'
+                    }`}
+                  >
+                    {tf}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Chart Display Container */}
+          <div className="h-[290px] w-full relative">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={mockHistory}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                 <defs>
-                  <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--accent)" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="var(--accent)" stopOpacity={0}/>
+                  <linearGradient id="colorPortfolio" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.45}/>
+                    <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0.02}/>
+                  </linearGradient>
+                  <linearGradient id="colorBenchmark" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={activeBenchmarkMeta.color} stopOpacity={0.25}/>
+                    <stop offset="95%" stopColor={activeBenchmarkMeta.color} stopOpacity={0.01}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.5} />
-                <XAxis dataKey="month" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-primary)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)' }} itemStyle={{ color: 'var(--accent)', fontWeight: 'bold' }} />
-                <Area type="monotone" dataKey="value" stroke="var(--accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.4} />
+                <XAxis 
+                  dataKey="label" 
+                  stroke="var(--text-muted)" 
+                  fontSize={11} 
+                  tickLine={false} 
+                  axisLine={false} 
+                />
+                <YAxis 
+                  stroke="var(--text-muted)" 
+                  fontSize={11} 
+                  tickLine={false} 
+                  axisLine={false}
+                  domain={['auto', 'auto']}
+                  tickFormatter={(v: number) => {
+                    if (chartMode === 'PERCENT') return `${v >= 0 ? '+' : ''}${v.toFixed(0)}%`;
+                    if (v >= 100000) return `₹${(v / 100000).toFixed(1)}L`;
+                    if (v >= 1000) return `₹${(v / 1000).toFixed(0)}k`;
+                    return `₹${v}`;
+                  }}
+                />
+                <Tooltip 
+                  content={({ active, payload, label }: any) => {
+                    if (active && payload && payload.length) {
+                      const pItem = payload.find((p: any) => p.dataKey === 'portfolio');
+                      const bItem = payload.find((p: any) => p.dataKey === 'benchmark');
+                      const pVal = pItem ? pItem.payload.portfolioVal : 0;
+                      const bVal = bItem ? bItem.payload.benchmarkVal : 0;
+                      const pPct = pItem ? pItem.payload.portfolioPct : 0;
+                      const bPct = bItem ? bItem.payload.benchmarkPct : 0;
+                      const alphaPct = +(pPct - bPct).toFixed(2);
+                      const alphaVal = pVal - bVal;
+
+                      return (
+                        <div className="p-4 rounded-2xl bg-surface/95 border border-border shadow-2xl backdrop-blur-md text-xs space-y-3 min-w-[240px]">
+                          <div className="flex justify-between items-center pb-2 border-b border-border/80">
+                            <span className="font-black text-text-primary uppercase tracking-wider">{label}</span>
+                            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${
+                              alphaPct >= 0 
+                                ? 'bg-success/15 text-gain border border-success/30' 
+                                : 'bg-destructive/15 text-loss border border-destructive/30'
+                            }`}>
+                              {alphaPct >= 0 ? `+${alphaPct}% Alpha` : `${alphaPct}% Drag`}
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="flex items-center gap-2 text-text-secondary font-medium">
+                                <span className="w-2.5 h-2.5 rounded-full bg-accent shadow-sm"></span>
+                                Your Portfolio:
+                              </span>
+                              <div className="text-right">
+                                <span className="font-mono font-black text-text-primary">
+                                  ₹{Math.round(pVal).toLocaleString('en-IN')}
+                                </span>
+                                <span className="text-[10px] text-gain ml-1.5 font-mono font-bold">
+                                  ({pPct >= 0 ? '+' : ''}{pPct}%)
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex justify-between items-center">
+                              <span className="flex items-center gap-2 text-text-secondary font-medium">
+                                <span className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: activeBenchmarkMeta.color }}></span>
+                                {activeBenchmarkMeta.short}:
+                              </span>
+                              <div className="text-right">
+                                <span className="font-mono font-bold text-text-secondary">
+                                  ₹{Math.round(bVal).toLocaleString('en-IN')}
+                                </span>
+                                <span className="text-[10px] text-text-muted ml-1.5 font-mono">
+                                  ({bPct >= 0 ? '+' : ''}{bPct}%)
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="pt-2 border-t border-border/80 flex justify-between items-center text-[11px]">
+                            <span className="text-text-muted font-bold">Net Outperformance:</span>
+                            <span className="font-mono font-extrabold text-gain">
+                              {alphaVal >= 0 ? `+₹${Math.round(alphaVal).toLocaleString('en-IN')}` : `-₹${Math.round(Math.abs(alphaVal)).toLocaleString('en-IN')}`}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="portfolio" 
+                  name="Your Portfolio" 
+                  stroke="#8B5CF6" 
+                  strokeWidth={3} 
+                  fillOpacity={1} 
+                  fill="url(#colorPortfolio)" 
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="benchmark" 
+                  name={activeBenchmarkMeta.label} 
+                  stroke={activeBenchmarkMeta.color} 
+                  strokeWidth={2} 
+                  strokeDasharray="4 4" 
+                  fillOpacity={1} 
+                  fill="url(#colorBenchmark)" 
+                />
               </AreaChart>
             </ResponsiveContainer>
+          </div>
+
+          {/* Bottom Telemetry Performance Metric Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-border">
+            {/* Metric 1: Portfolio Return */}
+            <div className="p-3.5 rounded-2xl bg-bg border border-border space-y-1">
+              <span className="text-[10px] uppercase font-bold text-text-muted flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-accent"></span> Your Portfolio
+              </span>
+              <div className="text-lg font-black text-text-primary font-mono">
+                {currentPortfolioPct >= 0 ? '+' : ''}{currentPortfolioPct}%
+              </div>
+              <p className="text-[10px] text-text-secondary font-medium">Return in {chartTimeframe} window</p>
+            </div>
+
+            {/* Metric 2: Benchmark Return */}
+            <div className="p-3.5 rounded-2xl bg-bg border border-border space-y-1">
+              <span className="text-[10px] uppercase font-bold text-text-muted flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeBenchmarkMeta.color }}></span> {activeBenchmarkMeta.short}
+              </span>
+              <div className="text-lg font-black text-text-secondary font-mono">
+                {currentBenchmarkPct >= 0 ? '+' : ''}{currentBenchmarkPct}%
+              </div>
+              <p className="text-[10px] text-text-secondary font-medium">TRI Index return</p>
+            </div>
+
+            {/* Metric 3: Generated Alpha */}
+            <div className="p-3.5 rounded-2xl bg-bg border border-border space-y-1">
+              <span className="text-[10px] uppercase font-bold text-text-muted flex items-center gap-1.5">
+                <Sparkles size={11} className="text-gain" /> Net Alpha
+              </span>
+              <div className={`text-lg font-black font-mono ${currentAlphaPct >= 0 ? 'text-gain' : 'text-loss'}`}>
+                {currentAlphaPct >= 0 ? `+${currentAlphaPct}%` : `${currentAlphaPct}%`}
+              </div>
+              <p className="text-[10px] text-gain font-mono font-semibold">
+                +₹{Math.round(netAlphaValue).toLocaleString('en-IN')} value lead
+              </p>
+            </div>
+
+            {/* Metric 4: Max Drawdown */}
+            <div className="p-3.5 rounded-2xl bg-bg border border-border space-y-1">
+              <span className="text-[10px] uppercase font-bold text-text-muted flex items-center gap-1.5">
+                <ShieldCheck size={11} className="text-emerald-400" /> Max Drawdown
+              </span>
+              <div className="text-lg font-black text-text-primary font-mono">
+                -4.12%
+              </div>
+              <p className="text-[10px] text-emerald-400 font-semibold">
+                vs {activeBenchmarkMeta.short} -7.85%
+              </p>
+            </div>
           </div>
         </div>
 
