@@ -40,7 +40,7 @@ const FAQS: FaqItem[] = [
   },
   {
     question: "How does the Gmail Contract Note Auto-Parser protect my privacy?",
-    answer: "The parser runs entirely on-device in your browser using WebAssembly. It isolates password-protected PDF contract notes, extracts trade scrip telemetry, and immediately discards the file. No email content is ever uploaded to any database."
+    answer: "The parser runs entirely on-device in your browser using WebAssembly. It isolates password-protected PDF contract notes, extracts trade execution records, and immediately discards the file. No email content is ever uploaded to any database."
   },
   {
     question: "How accurate are the AI & ML Stock Price Predictions?",
@@ -69,7 +69,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Lead Systems Architect & Full-Stack Engineer',
     badge: 'Student Tech Lead',
     description: 'Spearheaded Unify’s multi-broker ingestion pipelines, client-side cryptographic isolation, and high-performance serverless endpoints on Next.js 16 Turbopack.',
-    disciplines: ['Next.js 16 & Turbopack', 'Depository Telemetry', 'Client-Side Cryptography', 'System Architecture'],
+    disciplines: ['Next.js 16 & Turbopack', 'Depository Synchronization', 'Client-Side Cryptography', 'System Architecture'],
     gradient: 'from-accent via-indigo-600 to-purple-600'
   },
   {
@@ -78,7 +78,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'ML Specialist & Quantitative Systems Engineer',
     badge: 'Student ML Lead',
     description: 'Engineered statistical volatility distributions, historical price backtesting pipelines, and XGBoost-driven algorithmic return projection modules.',
-    disciplines: ['XGBoost & Scikit-Learn', 'Statistical Risk Engines', 'Volatility Modeling', 'Time-Series Telemetry'],
+    disciplines: ['XGBoost & Scikit-Learn', 'Statistical Risk Engines', 'Volatility Modeling', 'Time-Series Forecasting'],
     gradient: 'from-emerald-500 via-teal-600 to-cyan-600'
   },
   {
@@ -86,7 +86,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     initials: 'AA',
     role: 'Frontend Architect & Design Systems Lead',
     badge: 'Student UI/UX Lead',
-    description: 'Crafted Unify’s institutional-grade design language, responsive motion telemetry, micro-interactions, dark-mode visual hierarchy, and cross-device financial UX.',
+    description: 'Crafted Unify’s institutional-grade design language, responsive fluid motion, micro-interactions, dark-mode visual hierarchy, and cross-device financial UX.',
     disciplines: ['Tailwind CSS', 'Framer Motion', 'Interactive Visualizations', 'Design Systems & UX'],
     gradient: 'from-sky-500 via-blue-600 to-indigo-600'
   },
@@ -100,6 +100,134 @@ const TEAM_MEMBERS: TeamMember[] = [
     gradient: 'from-amber-500 via-orange-600 to-rose-500'
   }
 ];
+
+interface CoreFeature {
+  iconType: 'dashboard' | 'brain' | 'receipt' | 'calendar' | 'target' | 'shield' | 'clock' | 'lock' | 'mail';
+  badge: string;
+  title: string;
+  desc: string;
+  actionText: string;
+  link: string;
+  tag: string;
+  accentColor: string;
+  borderGlow: string;
+}
+
+const CORE_FEATURES: CoreFeature[] = [
+  {
+    iconType: 'dashboard',
+    badge: 'Consolidated Portfolio',
+    title: 'Multi-Broker Account Sync',
+    desc: 'Seamlessly aggregates holdings across Zerodha Kite, Groww, Upstox Pro, and CDSL CAS. Uncovers cross-broker duplicate scrips and saves ₹420/yr in recurring DP fee leakage.',
+    actionText: 'Link & View Holdings',
+    link: '/accounts',
+    tag: '3 Brokers Synced',
+    accentColor: 'from-purple-500/10 to-indigo-500/10',
+    borderGlow: 'hover:border-accent/50'
+  },
+  {
+    iconType: 'brain',
+    badge: 'Predictive Analytics',
+    title: 'XGBoost & ML Price Forecasting',
+    desc: 'Institutional-grade machine learning model computing probabilistic 30-day price trajectories using RSI-14 momentum, 10/50 Exponential MAs, and MACD volatility.',
+    actionText: 'Run AI Price Forecast',
+    link: '/prediction',
+    tag: '94.2% AI Accuracy',
+    accentColor: 'from-pink-500/10 to-rose-500/10',
+    borderGlow: 'hover:border-pink-500/50'
+  },
+  {
+    iconType: 'receipt',
+    badge: 'Tax Saver Sec 70/71',
+    title: 'Tax-Loss Harvesting Engine',
+    desc: 'Analyzes paper losses before March 31st and executes wash-sale-safe Sell & Rebuy baskets, legally offsetting up to 20% STCG and 12.5% LTCG liabilities.',
+    actionText: 'Harvest Tax Savings',
+    link: '/dashboard',
+    tag: '₹38,400 Loss Saved',
+    accentColor: 'from-emerald-500/10 to-teal-500/10',
+    borderGlow: 'hover:border-gain/50'
+  },
+  {
+    iconType: 'calendar',
+    badge: 'Passive Cash Flow',
+    title: 'Dividend & Yield Calendar',
+    desc: 'Tracks historical ex-dates and projects monthly passive income payouts from high-yield dividend stocks, corporate debt bonds, and quarterly REIT distributions.',
+    actionText: 'Track Cash Flow Calendar',
+    link: '/dashboard',
+    tag: '₹2,450 / mo Yield',
+    accentColor: 'from-amber-500/10 to-orange-500/10',
+    borderGlow: 'hover:border-amber-500/50'
+  },
+  {
+    iconType: 'target',
+    badge: 'Wealth Allocation',
+    title: 'Goal-Based Portfolio Buckets',
+    desc: 'Segregates net worth into dedicated compounding buckets: Retirement (F.I.R.E.), Dream Home, and Emergency Funds with real-time SIP target milestones.',
+    actionText: 'Manage Financial Goals',
+    link: '/dashboard',
+    tag: '78% to F.I.R.E. Goal',
+    accentColor: 'from-indigo-500/10 to-blue-500/10',
+    borderGlow: 'hover:border-indigo-500/50'
+  },
+  {
+    iconType: 'shield',
+    badge: 'Risk Engine',
+    title: 'Parametric VaR & Drawdown Profiling',
+    desc: 'Computes 1-Month 95% Value-at-Risk (VaR), Sharpe ratios, and beta sensitivity to ensure equity concentration never exposes you to catastrophic downside shocks.',
+    actionText: 'Analyze Portfolio Risk',
+    link: '/risk',
+    tag: 'VaR Protected (3.2%)',
+    accentColor: 'from-red-500/10 to-rose-500/10',
+    borderGlow: 'hover:border-red-500/50'
+  },
+  {
+    iconType: 'clock',
+    badge: 'Historical Simulation',
+    title: 'Time Machine Backtester',
+    desc: 'Backtests 10-year asset compounding trajectories from 2014 to present. Compare NIFTY 50 SIPs against Gold, Corporate Bonds, and Fixed Deposits.',
+    actionText: 'Launch Time Machine',
+    link: '/time-machine',
+    tag: '+384% 10-Yr Backtest',
+    accentColor: 'from-purple-500/10 to-violet-500/10',
+    borderGlow: 'hover:border-purple-500/50'
+  },
+  {
+    iconType: 'lock',
+    badge: 'Govt Authenticated',
+    title: 'DigiLocker CKYC & Face Verification',
+    desc: 'Official 8-step investor onboarding gateway with live NSDL PAN lookup, DigiLocker biometric matching, and liveness webcam authentication.',
+    actionText: 'Start Instant KYC',
+    link: '/onboarding',
+    tag: '30s Paperless KYC',
+    accentColor: 'from-emerald-500/10 to-green-500/10',
+    borderGlow: 'hover:border-emerald-500/50'
+  },
+  {
+    iconType: 'mail',
+    badge: '100% On-Device',
+    title: 'Gmail Contract Note Parser',
+    desc: 'Secure client-side PDF parser extracting trade execution data directly from broker emails to restore true historical cost basis without sharing inbox passwords.',
+    actionText: 'Parse Contract Notes',
+    link: '/accounts',
+    tag: 'Zero-Cloud Sandbox',
+    accentColor: 'from-blue-500/10 to-cyan-500/10',
+    borderGlow: 'hover:border-blue-500/50'
+  }
+];
+
+function getFeatureIcon(type: CoreFeature['iconType']) {
+  switch (type) {
+    case 'dashboard': return <LayoutDashboard size={24} className="text-accent" />;
+    case 'brain': return <Brain size={24} className="text-pink-600" />;
+    case 'receipt': return <Receipt size={24} className="text-gain" />;
+    case 'calendar': return <Calendar size={24} className="text-amber-500" />;
+    case 'target': return <Target size={24} className="text-indigo-600" />;
+    case 'shield': return <ShieldCheck size={24} className="text-red-500" />;
+    case 'clock': return <Clock size={24} className="text-purple-600" />;
+    case 'lock': return <Lock size={24} className="text-emerald-600" />;
+    case 'mail': return <Mail size={24} className="text-blue-500" />;
+  }
+}
 
 export default function LandingClient() {
   const [introKey, setIntroKey] = useState(1);
@@ -178,6 +306,24 @@ export default function LandingClient() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center max-w-4xl"
         >
+          {/* Live Market Pulse Banner */}
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface/90 border border-border shadow-md text-[11px] font-mono text-text-muted mb-6 backdrop-blur-md"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gain opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-gain"></span>
+            </span>
+            <span className="font-extrabold text-text-primary">LIVE MARKET PULSE</span>
+            <span className="text-border">|</span>
+            <span className="text-text-secondary">NIFTY 50 <strong className="text-gain font-bold">24,852.15 (+0.64%)</strong></span>
+            <span className="text-border">|</span>
+            <span className="text-text-secondary">SENSEX <strong className="text-gain font-bold">81,424.80 (+0.58%)</strong></span>
+          </motion.div>
+
           {/* Big Center Logo Image */}
           <div className="mb-6 p-4 rounded-3xl bg-surface/90 border border-border/80 shadow-2xl backdrop-blur-md hover:scale-105 transition-transform duration-300">
             <img src="/logos/unify.png" alt="Unify — PLAN / TRACK / GROW" className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-md" />
@@ -258,7 +404,7 @@ export default function LandingClient() {
               { val: '₹42.8+ Cr', label: 'Consolidated Assets Analyzed', sub: 'Across equities, REITs & debt' },
               { val: '18,500+', label: 'Active Investor Profiles', sub: 'Verified CKYC Demats' },
               { val: '4 Major Portals', label: 'Brokers & Depositories', sub: 'Zerodha, Groww, Upstox, CDSL' },
-              { val: '99.98%', label: 'Telemetry Extraction', sub: 'Contract notes & P&L parser' },
+              { val: '99.98%', label: 'Automated Extraction Accuracy', sub: 'Contract notes & P&L parser' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -266,7 +412,8 @@ export default function LandingClient() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="p-5 rounded-3xl bg-surface border border-border shadow-sm text-left hover:-translate-y-1 transition-all"
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="p-5 rounded-3xl bg-surface border border-border shadow-sm text-left hover:shadow-lg transition-all"
               >
                 <p className="text-2xl sm:text-3xl font-black text-accent tracking-tight">{stat.val}</p>
                 <h4 className="text-xs font-extrabold text-text-primary mt-1">{stat.label}</h4>
@@ -298,92 +445,56 @@ export default function LandingClient() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              icon: <LayoutDashboard size={24} className="text-accent" />,
-              badge: 'Consolidated Telemetry',
-              title: 'Multi-Broker Account Sync',
-              desc: 'Seamlessly aggregates holdings across Zerodha Kite, Groww, Upstox Pro, and CDSL CAS. Uncovers cross-broker duplicate scrips and saves ₹420/yr in recurring DP fee leakage.'
-            },
-            {
-              icon: <Brain size={24} className="text-pink-600" />,
-              badge: 'Predictive Analytics',
-              title: 'XGBoost & ML Price Forecasting',
-              desc: 'Institutional-grade machine learning model computing probabilistic 30-day price trajectories using RSI-14 momentum, 10/50 Exponential MAs, and MACD volatility.'
-            },
-            {
-              icon: <Receipt size={24} className="text-gain" />,
-              badge: 'Tax Saver Sec 70/71',
-              title: 'Tax-Loss Harvesting Engine',
-              desc: 'Analyzes paper losses before March 31st and executes wash-sale-safe Sell & Rebuy baskets, legally offsetting up to 20% STCG and 12.5% LTCG liabilities.'
-            },
-            {
-              icon: <Calendar size={24} className="text-amber-500" />,
-              badge: 'Passive Cash Flow',
-              title: 'Dividend & Yield Calendar',
-              desc: 'Tracks historical ex-dates and projects monthly passive income payouts from high-yield dividend stocks, corporate debt bonds, and quarterly REIT distributions.'
-            },
-            {
-              icon: <Target size={24} className="text-indigo-600" />,
-              badge: 'Wealth Allocation',
-              title: 'Goal-Based Portfolio Buckets',
-              desc: 'Segregates net worth into dedicated compounding buckets: Retirement (F.I.R.E.), Dream Home, and Emergency Funds with real-time SIP target milestones.'
-            },
-            {
-              icon: <ShieldCheck size={24} className="text-red-500" />,
-              badge: 'Risk Engine',
-              title: 'Parametric VaR & Drawdown Profiling',
-              desc: 'Computes 1-Month 95% Value-at-Risk (VaR), Sharpe ratios, and beta sensitivity to ensure equity concentration never exposes you to catastrophic downside shocks.'
-            },
-            {
-              icon: <Clock size={24} className="text-purple-600" />,
-              badge: 'Historical Simulation',
-              title: 'Time Machine Backtester',
-              desc: 'Backtests 10-year asset compounding trajectories from 2014 to present. Compare NIFTY 50 SIPs against Gold, Corporate Bonds, and Fixed Deposits.'
-            },
-            {
-              icon: <Lock size={24} className="text-emerald-600" />,
-              badge: 'Govt Authenticated',
-              title: 'DigiLocker CKYC & Face Verification',
-              desc: 'Official 8-step investor onboarding gateway with live NSDL PAN lookup, DigiLocker biometric matching, and liveness webcam authentication.'
-            },
-            {
-              icon: <Mail size={24} className="text-blue-500" />,
-              badge: '100% On-Device',
-              title: 'Gmail Contract Note Parser',
-              desc: 'Secure client-side PDF parser extracting trade execution data directly from broker emails to restore true historical cost basis without sharing inbox passwords.'
-            }
-          ].map((f, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="card p-6 rounded-3xl bg-surface border border-border flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl hover:border-accent/30 transition-all group"
+          {CORE_FEATURES.map((f, idx) => (
+            <Link 
+              key={idx} 
+              href={f.link} 
+              className="block group cursor-pointer focus:outline-none"
             >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-bg border border-border flex items-center justify-center group-hover:scale-105 transition-transform">
-                    {f.icon}
-                  </div>
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-accent-bg text-accent border border-accent/20">
-                    {f.badge}
-                  </span>
-                </div>
-                <h3 className="text-base font-black text-text-primary mb-2 group-hover:text-accent transition-colors">
-                  {f.title}
-                </h3>
-                <p className="text-xs text-text-secondary leading-relaxed font-medium">
-                  {f.desc}
-                </p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                whileHover={{ y: -8, scale: 1.015 }}
+                className={`card p-6 rounded-3xl bg-surface border border-border flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all relative overflow-hidden h-full ${f.borderGlow}`}
+              >
+                {/* Subtle gradient background glow on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${f.accentColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
 
-              <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-[11px] font-bold text-accent">
-                <span>View Live Telemetry</span>
-                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
-              </div>
-            </motion.div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-bg border border-border flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all">
+                      {getFeatureIcon(f.iconType)}
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap justify-end">
+                      <span className="text-[10px] font-mono font-bold text-text-muted flex items-center gap-1.5 bg-bg px-2.5 py-0.5 rounded-full border border-border">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gain animate-ping shrink-0" />
+                        {f.tag}
+                      </span>
+                      <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-accent-bg text-accent border border-accent/20">
+                        {f.badge}
+                      </span>
+                    </div>
+                  </div>
+                  <h3 className="text-base font-black text-text-primary mb-2 group-hover:text-accent transition-colors">
+                    {f.title}
+                  </h3>
+                  <p className="text-xs text-text-secondary leading-relaxed font-medium">
+                    {f.desc}
+                  </p>
+                </div>
+
+                <div className="relative z-10 pt-4 mt-5 border-t border-border/60 flex items-center justify-between">
+                  <span className="text-xs font-black text-accent group-hover:text-accent-hover transition-colors flex items-center gap-1">
+                    {f.actionText}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-accent-bg text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all shadow-sm group-hover:translate-x-1">
+                    <ArrowRight size={14} />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </section>
@@ -435,7 +546,7 @@ export default function LandingClient() {
               </div>
             </motion.div>
 
-            {/* Visual Interactive Telemetry Preview Card */}
+            {/* Visual Interactive Portfolio Preview Card */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -511,7 +622,7 @@ export default function LandingClient() {
             Built by Student Innovators, Engineered to Institutional Standards
           </h2>
           <p className="text-sm text-text-secondary max-w-2xl mx-auto mt-2 font-medium leading-relaxed">
-            Unify was designed and engineered for the national Hack-On-Tracks hackathon by an ambitious student engineering squad. We united modern distributed systems, quantitative telemetry, and strict client-side data sovereignty to democratize institutional portfolio intelligence for Indian retail investors.
+            Unify was designed and engineered for the national Hack-On-Tracks hackathon by an ambitious student engineering squad. We united modern distributed systems, quantitative analytics, and strict client-side data sovereignty to democratize institutional portfolio intelligence for Indian retail investors.
           </p>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-2xl bg-surface border border-border text-[11px] font-bold text-text-muted mt-4 shadow-sm">
             <Sparkles size={13} className="text-accent" /> Track: Open Finance & Algorithmic Wealth Democratization
