@@ -9,7 +9,8 @@ import { InteractiveConceptCanvas } from '@/components/InteractiveConceptCanvas'
 import { ExternalKnowledgeVault } from '@/components/ExternalKnowledgeVault';
 import { 
   TrendingUp, TrendingDown, ArrowRight, ArrowLeft, CheckCircle2, XCircle, 
-  HelpCircle, PieChart, ShieldCheck, Layers, Award, Sparkles, Sliders, BarChart3, Info 
+  HelpCircle, PieChart, ShieldCheck, Layers, Award, Sparkles, Sliders, BarChart3, Info,
+  RotateCcw, Trophy, Check, ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,9 +18,13 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
   const resolvedParams = use(params);
   const lesson = LESSON_MAP[resolvedParams.asset];
 
-  // Interactive MCQ state
+  // 5-Question Interactive Challenge State
+  const questions = lesson ? (lesson.challenges && lesson.challenges.length > 0 ? lesson.challenges : [lesson.challenge]) : [];
+  const [currentQIndex, setCurrentQIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [userAnswers, setUserAnswers] = useState<Record<number, { selected: number; isCorrect: boolean }>>({});
+  const [quizFinished, setQuizFinished] = useState(false);
 
   // Return Simulator state
   const [customAmount, setCustomAmount] = useState<number>(lesson ? lesson.returnsExample.initial : 10000);
@@ -29,15 +34,42 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
     notFound();
   }
 
+  const activeQuestion = questions[currentQIndex] || lesson.challenge;
+
   const handleOptionSelect = (idx: number) => {
     if (submitted) return;
     setSelectedOption(idx);
   };
 
   const handleQuizSubmit = () => {
-    if (selectedOption === null) return;
+    if (selectedOption === null || !activeQuestion) return;
+    const isCorrect = selectedOption === activeQuestion.correctIndex;
+    setUserAnswers(prev => ({
+      ...prev,
+      [currentQIndex]: { selected: selectedOption, isCorrect }
+    }));
     setSubmitted(true);
   };
+
+  const handleNextQuestion = () => {
+    if (currentQIndex < questions.length - 1) {
+      setCurrentQIndex(prev => prev + 1);
+      setSelectedOption(null);
+      setSubmitted(false);
+    } else {
+      setQuizFinished(true);
+    }
+  };
+
+  const handleRestartQuiz = () => {
+    setCurrentQIndex(0);
+    setSelectedOption(null);
+    setSubmitted(false);
+    setUserAnswers({});
+    setQuizFinished(false);
+  };
+
+  const correctAnswersCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
 
   // Math calculation for interactive return simulator
   const gainVal = customAmount * (1 + (lesson.returnsExample.gainPct / 100));
@@ -263,60 +295,178 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
         </motion.section>
       )}
 
-      {/* 6. Interactive Challenge / MCQ Quiz */}
+      {/* 6. Interactive Knowledge Challenge (5 Questions) */}
       <motion.section id="challenge" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-        <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
-          <HelpCircle className="text-accent" size={24} />
-          Interactive Knowledge Challenge
-        </h2>
-
-        <div className="card p-8 bg-surface border border-border rounded-3xl space-y-6">
-          <h3 className="font-bold text-base text-text-primary leading-relaxed">
-            {lesson.challenge.question}
-          </h3>
-
-          <div className="space-y-3">
-            {lesson.challenge.options.map((opt, i) => {
-              const isSelected = selectedOption === i;
-              const isCorrect = i === lesson.challenge.correctIndex;
-              
-              let btnStyle = "bg-bg border-border text-text-secondary hover:border-accent";
-              if (submitted) {
-                if (isCorrect) btnStyle = "bg-gain-bg border-gain text-gain font-bold";
-                else if (isSelected) btnStyle = "bg-loss-bg border-loss text-loss font-bold";
-              } else if (isSelected) {
-                btnStyle = "bg-accent-bg border-accent text-accent font-bold";
-              }
-
-              return (
-                <button
-                  key={i}
-                  onClick={() => handleOptionSelect(i)}
-                  className={`w-full text-left p-4 rounded-2xl border text-xs transition-all flex justify-between items-center ${btnStyle}`}
-                >
-                  <span>{opt}</span>
-                  {submitted && isCorrect && <CheckCircle2 size={18} className="text-gain shrink-0" />}
-                  {submitted && isSelected && !isCorrect && <XCircle size={18} className="text-loss shrink-0" />}
-                </button>
-              );
-            })}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="flex items-center gap-2">
+            <HelpCircle className="text-accent" size={24} />
+            <div>
+              <h2 className="text-2xl font-extrabold text-text-primary">
+                Interactive Knowledge Challenge
+              </h2>
+              <p className="text-xs text-text-secondary">
+                5 comprehensive questions testing mastery of {lesson.title} concepts.
+              </p>
+            </div>
           </div>
 
-          {!submitted ? (
-            <button
-              onClick={handleQuizSubmit}
-              disabled={selectedOption === null}
-              className="btn-primary w-full py-3 text-xs"
-            >
-              Submit Answer
-            </button>
+          {!quizFinished && (
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider border border-accent/20">
+                Question {currentQIndex + 1} of {questions.length}
+              </span>
+              <span className="px-2.5 py-1 rounded-full bg-bg border border-border text-xs font-bold text-text-muted">
+                Score: {correctAnswersCount}/{Object.keys(userAnswers).length}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Progress Bar */}
+        {!quizFinished && (
+          <div className="w-full bg-bg rounded-full h-2.5 overflow-hidden border border-border">
+            <motion.div 
+              className="bg-accent h-full rounded-full transition-all duration-300"
+              style={{ width: `${((currentQIndex + (submitted ? 1 : 0)) / questions.length) * 100}%` }}
+            />
+          </div>
+        )}
+
+        <div className="card p-6 sm:p-8 bg-surface border border-border rounded-3xl space-y-6 shadow-md">
+          {!quizFinished ? (
+            <>
+              {/* Question */}
+              <div className="space-y-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-text-muted block">
+                  Question #{currentQIndex + 1}
+                </span>
+                <h3 className="font-extrabold text-base sm:text-lg text-text-primary leading-relaxed">
+                  {activeQuestion.question}
+                </h3>
+              </div>
+
+              {/* Options */}
+              <div className="space-y-3">
+                {activeQuestion.options.map((opt, i) => {
+                  const isSelected = selectedOption === i;
+                  const isCorrect = i === activeQuestion.correctIndex;
+                  
+                  let btnStyle = "bg-bg border-border text-text-primary hover:border-accent hover:bg-surface-hover";
+                  if (submitted) {
+                    if (isCorrect) btnStyle = "bg-gain-bg border-gain text-gain font-bold ring-1 ring-gain/30";
+                    else if (isSelected) btnStyle = "bg-loss-bg border-loss text-loss font-bold ring-1 ring-loss/30";
+                    else btnStyle = "bg-bg border-border text-text-muted opacity-60";
+                  } else if (isSelected) {
+                    btnStyle = "bg-accent-bg border-accent text-accent font-bold ring-2 ring-accent/30";
+                  }
+
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => handleOptionSelect(i)}
+                      disabled={submitted}
+                      className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex justify-between items-center cursor-pointer ${btnStyle}`}
+                    >
+                      <span className="leading-relaxed">{opt}</span>
+                      {submitted && isCorrect && <CheckCircle2 size={18} className="text-gain shrink-0 ml-2" />}
+                      {submitted && isSelected && !isCorrect && <XCircle size={18} className="text-loss shrink-0 ml-2" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Submit or Next Button */}
+              {!submitted ? (
+                <button
+                  onClick={handleQuizSubmit}
+                  disabled={selectedOption === null}
+                  className="btn-primary w-full py-3 text-xs sm:text-sm font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
+                >
+                  Submit Answer
+                </button>
+              ) : (
+                <div className="space-y-4">
+                  {/* Learning Explanation */}
+                  <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-accent-bg border border-accent/30 text-accent text-xs sm:text-sm space-y-1.5">
+                    <p className="font-extrabold flex items-center gap-1.5">
+                      <Award size={16} /> Learning Explanation:
+                    </p>
+                    <p className="text-text-secondary leading-relaxed font-medium">{activeQuestion.explanation}</p>
+                  </motion.div>
+
+                  <button
+                    onClick={handleNextQuestion}
+                    className="w-full py-3 rounded-2xl bg-accent hover:bg-accent/90 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>{currentQIndex < questions.length - 1 ? `Next Question (${currentQIndex + 2}/${questions.length}) →` : 'Complete Challenge & View Results 🎉'}</span>
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
-            <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-accent-bg border border-accent/30 text-accent text-xs space-y-1">
-              <p className="font-bold flex items-center gap-1.5">
-                <Award size={16} /> Learning Explanation:
-              </p>
-              <p className="text-text-secondary leading-relaxed">{lesson.challenge.explanation}</p>
-            </motion.div>
+            /* Quiz Completed Screen */
+            <div className="text-center space-y-6 py-4">
+              <div className="w-16 h-16 rounded-3xl bg-accent-bg text-accent mx-auto flex items-center justify-center shadow-lg border border-accent/30">
+                <Trophy size={32} />
+              </div>
+
+              <div className="space-y-2">
+                <span className="px-3 py-1 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider border border-accent/20">
+                  Challenge Completed
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-text-primary">
+                  You scored {correctAnswersCount} / {questions.length} ({Math.round((correctAnswersCount / questions.length) * 100)}%)
+                </h3>
+                <p className="text-xs sm:text-sm text-text-secondary max-w-md mx-auto">
+                  {correctAnswersCount === questions.length 
+                    ? `🏆 Perfect score! You have thoroughly mastered all core mechanics of ${lesson.title}.`
+                    : correctAnswersCount >= 3
+                    ? `🎉 Solid performance! You understand the foundational principles of ${lesson.title}.`
+                    : `📚 Good effort! Review the questions below to master all key concepts.`
+                  }
+                </p>
+              </div>
+
+              {/* Review All 5 Questions */}
+              <div className="text-left space-y-3 pt-4 border-t border-border">
+                <h4 className="text-xs font-black uppercase text-text-muted">Masterclass Questions Review:</h4>
+                {questions.map((q, idx) => {
+                  const ans = userAnswers[idx];
+                  return (
+                    <div key={idx} className="p-4 rounded-2xl bg-bg border border-border space-y-2">
+                      <div className="flex justify-between items-start gap-2">
+                        <span className="font-extrabold text-xs text-text-primary">
+                          #{idx + 1}. {q.question}
+                        </span>
+                        {ans?.isCorrect ? (
+                          <span className="px-2 py-0.5 rounded-md bg-gain-bg text-gain text-[10px] font-black uppercase border border-gain/20 shrink-0">
+                            Correct
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-md bg-loss-bg text-loss text-[10px] font-black uppercase border border-loss/20 shrink-0">
+                            Incorrect
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-gain font-bold">
+                        ✓ Correct Answer: {q.options[q.correctIndex]}
+                      </p>
+                      <p className="text-[11px] text-text-secondary leading-relaxed">
+                        💡 {q.explanation}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={handleRestartQuiz}
+                className="px-6 py-3 rounded-2xl bg-bg border border-border text-xs sm:text-sm font-extrabold text-text-primary hover:bg-surface-hover transition-all cursor-pointer inline-flex items-center gap-2"
+              >
+                <RotateCcw size={16} />
+                <span>Retake Knowledge Challenge</span>
+              </button>
+            </div>
           )}
         </div>
       </motion.section>
