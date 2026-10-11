@@ -92,9 +92,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🍕 PIZZA & ASSET BASKET ANIMATION (For Stocks, Mutual Funds, ETFs) */}
       {(assetKey.includes('stock') || assetKey.includes('fund') || assetKey.includes('etf')) && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium flex items-center gap-2">
-            <Sparkles size={16} className="shrink-0" />
-            <span>
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 text-xs font-semibold flex items-center gap-2.5">
+            <Sparkles size={18} className="text-amber-700 dark:text-amber-400 shrink-0" />
+            <span className="leading-relaxed">
               {assetKey.includes('fund') 
                 ? '🍕 Mutual Fund Pizza Metaphor: Multiple investors pool money to purchase a full pizza packed with diverse company toppings!'
                 : assetKey.includes('etf')
@@ -151,7 +151,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Pizza Slice Allocation</span>
-                  <span className="font-mono text-accent">{sliceCount} Slices</span>
+                  <span className="font-mono font-black text-accent text-sm">{sliceCount} Slices</span>
                 </div>
                 <input 
                   type="range" 
@@ -170,13 +170,13 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="flex gap-2">
                 <button 
                   onClick={() => setSliceCount(prev => Math.min(12, prev + 2))}
-                  className="flex-1 py-2 rounded-xl bg-accent-bg text-accent font-extrabold border border-accent/20 hover:bg-accent/20 transition-all text-[11px]"
+                  className="flex-1 py-2.5 rounded-xl bg-accent text-white font-black hover:bg-accent/90 transition-all text-xs shadow-sm cursor-pointer"
                 >
                   🍕 Add Slice (+2)
                 </button>
                 <button 
                   onClick={() => setSliceCount(8)}
-                  className="py-2 px-3 rounded-xl bg-bg text-text-muted font-bold border border-border hover:text-text-primary transition-all text-[11px]"
+                  className="py-2.5 px-3 rounded-xl bg-bg text-text-muted font-bold border border-border hover:text-text-primary transition-all text-xs cursor-pointer"
                 >
                   Reset
                 </button>
@@ -189,9 +189,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🏢 REITS SKYSCRAPER TOWER ANIMATION (For REITs) */}
       {assetKey.includes('reit') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-medium flex items-center gap-2">
-            <Building2 size={16} className="shrink-0" />
-            <span>
+          <div className="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-950 dark:text-teal-200 text-xs font-semibold flex items-center gap-2.5">
+            <Building2 size={18} className="text-teal-700 dark:text-teal-300 shrink-0" />
+            <span className="leading-relaxed">
               🏢 REIT Skyscraper Metaphor: Own fractionated floors of prime commercial IT parks without needing ₹50 Crore to buy the entire tower!
             </span>
           </div>
@@ -199,23 +199,23 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
           <div className="flex flex-col md:flex-row items-center justify-around gap-6 p-6 bg-bg rounded-3xl border border-border">
             
             {/* Animated Stacking Building Tower */}
-            <div className="flex flex-col-reverse gap-1.5 w-44">
+            <div className="flex flex-col-reverse gap-1.5 w-48">
               {Array.from({ length: floors }).map((_, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: -20, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.3, delay: idx * 0.08 }}
-                  className="h-9 rounded-xl bg-teal-600/30 border border-teal-400/50 flex items-center justify-between px-3 text-[10px] font-black text-teal-200 shadow-md"
+                  className="h-10 rounded-xl bg-teal-600/15 border border-teal-500/40 dark:bg-teal-700/40 dark:border-teal-400/50 flex items-center justify-between px-3 text-xs font-black shadow-sm"
                 >
-                  <div className="flex items-center gap-1.5">
-                    <Building2 size={12} className="text-teal-400" />
-                    <span>Floor #{idx + 1} Rent</span>
+                  <div className="flex items-center gap-2 text-teal-950 dark:text-teal-100">
+                    <Building2 size={14} className="text-teal-700 dark:text-teal-300" />
+                    <span className="font-extrabold">Floor #{idx + 1} Rent</span>
                   </div>
-                  <span className="font-mono text-gain">₹{(idx + 1) * 1250}</span>
+                  <span className="font-mono font-black text-emerald-800 dark:text-emerald-300 text-xs">₹{(idx + 1) * 1250}</span>
                 </motion.div>
               ))}
-              <div className="h-3 rounded-t-lg bg-slate-700 text-[8px] font-bold text-center text-slate-300 uppercase">
+              <div className="py-1.5 rounded-t-xl bg-slate-800 text-[9px] font-black text-center text-slate-100 uppercase tracking-wider shadow-sm">
                 Shopping Mall & Tech Park Tower
               </div>
             </div>
@@ -225,7 +225,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Commercial Building Floors</span>
-                  <span className="font-mono text-teal-400">{floors} Floors</span>
+                  <span className="font-mono font-black text-teal-800 dark:text-teal-300 text-sm">{floors} Floors</span>
                 </div>
                 <input 
                   type="range" 
@@ -234,18 +234,18 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   step="1"
                   value={floors}
                   onChange={e => setFloors(Number(e.target.value))}
-                  className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-teal-500"
+                  className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-teal-600"
                 />
-                <p className="text-[10px] text-text-muted">
-                  Quarterly tenant rental yield generated: <strong className="text-gain font-mono">₹{(floors * 1250 * 4).toLocaleString('en-IN')}/yr</strong>
+                <p className="text-[10px] text-text-secondary">
+                  Quarterly tenant rental yield generated: <strong className="font-mono font-black text-emerald-700 dark:text-emerald-400">₹{(floors * 1250 * 4).toLocaleString('en-IN')}/yr</strong>
                 </p>
               </div>
 
               <button 
                 onClick={() => setFloors(prev => (prev >= 8 ? 2 : prev + 1))}
-                className="w-full py-2.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 font-extrabold hover:bg-teal-500/30 transition-all text-xs"
+                className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500/25 dark:text-teal-100 dark:border dark:border-teal-400/40 font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
               >
-                🏢 Build Another REIT Floor (+1)
+                <span>🏢 Build Another REIT Floor (+1)</span>
               </button>
             </div>
 
@@ -256,9 +256,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 📜 BONDS GOLDEN TREASURY CERTIFICATE & YIELD COINS ANIMATION */}
       {assetKey.includes('bond') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium flex items-center gap-2">
-            <Landmark size={16} className="shrink-0" />
-            <span>
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 text-xs font-semibold flex items-center gap-2.5">
+            <Landmark size={18} className="text-amber-700 dark:text-amber-400 shrink-0" />
+            <span className="leading-relaxed">
               📜 Bond IOU Metaphor: Become a lender to governments & AAA corporations! Receive guaranteed periodic interest coupon payments.
             </span>
           </div>
@@ -305,7 +305,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Interest Coupon Coins</span>
-                  <span className="font-mono text-amber-500">{coinsCount} Payouts</span>
+                  <span className="font-mono font-black text-amber-800 dark:text-amber-300 text-sm">{coinsCount} Payouts</span>
                 </div>
                 <input 
                   type="range" 
@@ -316,16 +316,16 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   onChange={e => setCoinsCount(Number(e.target.value))}
                   className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
-                <p className="text-[10px] text-text-muted">
-                  Guaranteed Annual Income: <strong className="text-gain font-mono">₹7,500/yr</strong>
+                <p className="text-[10px] text-text-secondary">
+                  Guaranteed Annual Income: <strong className="font-mono font-black text-emerald-700 dark:text-emerald-400">₹7,500/yr</strong>
                 </p>
               </div>
 
               <button 
                 onClick={() => setCoinsCount(prev => (prev >= 6 ? 2 : prev + 1))}
-                className="w-full py-2.5 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 font-extrabold hover:bg-amber-500/30 transition-all text-xs"
+                className="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white dark:bg-amber-500/25 dark:text-amber-100 dark:border dark:border-amber-400/40 font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
               >
-                🪙 Simulate Interest Coupon Payout
+                <span>🪙 Simulate Interest Coupon Payout</span>
               </button>
             </div>
 
@@ -336,9 +336,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🌉 INVIT HIGHWAY & INFRASTRUCTURE TOWER ANIMATION */}
       {assetKey.includes('invit') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-medium flex items-center gap-2">
-            <Landmark size={16} className="shrink-0" />
-            <span>
+          <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-950 dark:text-purple-200 text-xs font-semibold flex items-center gap-2.5">
+            <Landmark size={18} className="text-purple-700 dark:text-purple-400 shrink-0" />
+            <span className="leading-relaxed">
               🌉 InvIT Infrastructure Metaphor: Own a share of national highways, toll plazas & power transmission lines that generate constant toll cashflows!
             </span>
           </div>
@@ -376,8 +376,8 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
             </div>
 
             <div className="text-center space-y-1">
-              <span className="text-xs font-black text-purple-300">National Highway Toll Plaza Cashflow</span>
-              <p className="text-[11px] text-text-muted">Vehicles passing through toll gates generate quarterly cash payouts directly into your bank account!</p>
+              <span className="text-xs font-black text-purple-950 dark:text-purple-200">National Highway Toll Plaza Cashflow</span>
+              <p className="text-[11px] text-text-secondary">Vehicles passing through toll gates generate quarterly cash payouts directly into your bank account!</p>
             </div>
           </div>
         </div>
@@ -386,9 +386,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🚀 FUTURES & OPTIONS LEVERAGE SHIELD ANIMATION */}
       {assetKey.includes('future') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-medium flex items-center gap-2">
-            <ShieldAlert size={16} className="shrink-0" />
-            <span>
+          <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-950 dark:text-rose-200 text-xs font-semibold flex items-center gap-2.5">
+            <ShieldAlert size={18} className="text-rose-700 dark:text-rose-400 shrink-0" />
+            <span className="leading-relaxed">
               ⚡ F&O Leverage Metaphor: Make financial contracts on directional price moves. Call Options bet UP ↗; Put Options bet DOWN ↘. High multiplier leverage!
             </span>
           </div>
@@ -399,9 +399,11 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
             <div className="flex items-center gap-4">
               <motion.button 
                 onClick={() => setPositionType('CALL')}
-                animate={{ scale: positionType === 'CALL' ? 1.08 : 0.95 }}
+                animate={{ scale: positionType === 'CALL' ? 1.05 : 0.95 }}
                 className={`p-5 rounded-3xl border-2 text-center space-y-2 cursor-pointer transition-all ${
-                  positionType === 'CALL' ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.4)]' : 'bg-surface border-border text-text-muted'
+                  positionType === 'CALL' 
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg dark:bg-emerald-950 dark:border-emerald-500 dark:text-emerald-200' 
+                    : 'bg-surface border-border text-text-secondary hover:text-text-primary'
                 }`}
               >
                 <div className="text-3xl font-black">↗ CALL</div>
@@ -410,9 +412,11 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
 
               <motion.button 
                 onClick={() => setPositionType('PUT')}
-                animate={{ scale: positionType === 'PUT' ? 1.08 : 0.95 }}
+                animate={{ scale: positionType === 'PUT' ? 1.05 : 0.95 }}
                 className={`p-5 rounded-3xl border-2 text-center space-y-2 cursor-pointer transition-all ${
-                  positionType === 'PUT' ? 'bg-rose-950/80 border-rose-500 text-rose-300 shadow-[0_0_25px_rgba(244,63,94,0.4)]' : 'bg-surface border border-border text-text-muted'
+                  positionType === 'PUT' 
+                    ? 'bg-rose-600 text-white border-rose-600 shadow-lg dark:bg-rose-950 dark:border-rose-500 dark:text-rose-200' 
+                    : 'bg-surface border border-border text-text-secondary hover:text-text-primary'
                 }`}
               >
                 <div className="text-3xl font-black">↘ PUT</div>
@@ -425,7 +429,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Derivatives Leverage Multiplier</span>
-                  <span className="font-mono text-red-400">{leverage}x Leverage</span>
+                  <span className="font-mono font-black text-rose-700 dark:text-rose-400 text-sm">{leverage}x Leverage</span>
                 </div>
                 <input 
                   type="range" 
@@ -434,10 +438,10 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   step="1"
                   value={leverage}
                   onChange={e => setLeverage(Number(e.target.value))}
-                  className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-red-500"
+                  className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-rose-600"
                 />
-                <p className="text-[10px] font-mono text-text-muted">
-                  ₹10,000 Margin Controls <strong className="text-text-primary">₹{(10000 * leverage).toLocaleString('en-IN')}</strong> Market Exposure!
+                <p className="text-[10px] font-mono text-text-secondary">
+                  ₹10,000 Margin Controls <strong className="text-text-primary font-black">₹{(10000 * leverage).toLocaleString('en-IN')}</strong> Market Exposure!
                 </p>
               </div>
             </div>
