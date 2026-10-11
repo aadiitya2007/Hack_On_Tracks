@@ -19,13 +19,15 @@ export type Message = {
 };
 
 export default function Dialogue({ messages }: { messages: Message[] }) {
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  // Start with the first message visible so dialogue never freezes on an empty box
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
   const [playbackSpeed, setPlaybackSpeed] = useState<1 | 1.5 | 0.8>(1);
   const [soundEnabled, setSoundEnabled] = useState(false);
   
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const readingTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const typingTimerRef = useRef<NodeJS.Timeout | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Soft conversational sound generator (Web Audio API)
@@ -58,72 +60,60 @@ export default function Dialogue({ messages }: { messages: Message[] }) {
     }
   }, [currentIndex, isTyping]);
 
-  // Initial Auto-Play Trigger
+  // Robust Sequential Auto-Play Engine
   useEffect(() => {
-    if (messages.length > 0 && currentIndex === -1) {
-      setIsTyping(true);
-      timerRef.current = setTimeout(() => {
-        setIsTyping(false);
-        setCurrentIndex(0);
-        playPopSound(messages[0]?.sender === 'mentor');
-      }, 700 / playbackSpeed);
+    // If paused, completed, or no messages, ensure typing indicator is off and exit
+    if (!autoPlay || currentIndex >= messages.length - 1 || messages.length === 0) {
+      setIsTyping(false);
+      return;
     }
 
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [messages.length]);
+    const currentMsg = messages[currentIndex];
+    const charCount = currentMsg?.text?.length || 40;
+    // Comfortable reading time before next reply starts typing (1.5s - 3.2s)
+    const readingDelay = Math.max(1500, Math.min(3200, charCount * 26)) / playbackSpeed;
+    const typingDuration = 700 / playbackSpeed;
 
-  // Sequential Auto-Play Engine
-  useEffect(() => {
-    if (!autoPlay) return;
+    readingTimerRef.current = setTimeout(() => {
+      setIsTyping(true);
 
-    if (currentIndex >= 0 && currentIndex < messages.length - 1 && !isTyping) {
-      // Calculate realistic reading pause based on text length
-      const currentMsg = messages[currentIndex];
-      const charCount = currentMsg?.text.length || 40;
-      const readingDelay = Math.max(1600, Math.min(3200, charCount * 32)) / playbackSpeed;
-
-      timerRef.current = setTimeout(() => {
-        setIsTyping(true);
-        const typingDuration = 900 / playbackSpeed;
-
-        timerRef.current = setTimeout(() => {
-          setIsTyping(false);
-          setCurrentIndex(prev => {
+      typingTimerRef.current = setTimeout(() => {
+        setIsTyping(false);
+        setCurrentIndex(prev => {
+          if (prev < messages.length - 1) {
             const nextIdx = prev + 1;
             playPopSound(messages[nextIdx]?.sender === 'mentor');
             return nextIdx;
-          });
-        }, typingDuration);
-
-      }, readingDelay);
-    }
+          }
+          return prev;
+        });
+      }, typingDuration);
+    }, readingDelay);
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (readingTimerRef.current) clearTimeout(readingTimerRef.current);
+      if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
     };
-  }, [currentIndex, isTyping, autoPlay, playbackSpeed, messages]);
+  }, [currentIndex, autoPlay, playbackSpeed, messages]);
 
   // Manual Step Forward
   const advance = () => {
-    if (currentIndex < messages.length - 1 && !isTyping) {
-      setIsTyping(true);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        setIsTyping(false);
-        setCurrentIndex(prev => {
-          const nextIdx = prev + 1;
-          playPopSound(messages[nextIdx]?.sender === 'mentor');
-          return nextIdx;
-        });
-      }, 600 / playbackSpeed);
+    if (currentIndex < messages.length - 1) {
+      if (readingTimerRef.current) clearTimeout(readingTimerRef.current);
+      if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+      setIsTyping(false);
+      setCurrentIndex(prev => {
+        const nextIdx = Math.min(prev + 1, messages.length - 1);
+        playPopSound(messages[nextIdx]?.sender === 'mentor');
+        return nextIdx;
+      });
     }
   };
 
   // Show All Messages Immediately
   const showAll = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
+    if (readingTimerRef.current) clearTimeout(readingTimerRef.current);
+    if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
     setIsTyping(false);
     setAutoPlay(false);
     setCurrentIndex(messages.length - 1);
@@ -131,15 +121,12 @@ export default function Dialogue({ messages }: { messages: Message[] }) {
 
   // Replay from Beginning with Auto-Play
   const replay = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setCurrentIndex(-1);
+    if (readingTimerRef.current) clearTimeout(readingTimerRef.current);
+    if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+    setIsTyping(false);
+    setCurrentIndex(0);
     setAutoPlay(true);
-    setIsTyping(true);
-    timerRef.current = setTimeout(() => {
-      setIsTyping(false);
-      setCurrentIndex(0);
-      playPopSound(messages[0]?.sender === 'mentor');
-    }, 700 / playbackSpeed);
+    playPopSound(messages[0]?.sender === 'mentor');
   };
 
   // Smooth scroll to an interactive target element
@@ -347,8 +334,7 @@ export default function Dialogue({ messages }: { messages: Message[] }) {
           <button 
             type="button"
             onClick={advance}
-            disabled={isTyping}
-            className="btn-primary py-2 px-4 text-xs font-extrabold flex items-center gap-1.5 shadow-md shadow-accent/20 cursor-pointer disabled:opacity-50"
+            className="btn-primary py-2 px-4 text-xs font-extrabold flex items-center gap-1.5 shadow-md shadow-accent/20 cursor-pointer hover:shadow-lg transition-all"
           >
             <span>{nextSender === 'learner' ? 'Your Reply' : 'Next Insight'}</span>
             <ArrowRight size={13} />
