@@ -26,7 +26,15 @@ export type LessonContent = {
   takeaway: string;
   nextLesson: string | null;
   prevLesson: string | null;
-  dialogue: { id: string; sender: 'mentor' | 'learner'; text: string }[];
+  dialogue: { 
+    id: string; 
+    sender: 'mentor' | 'learner'; 
+    text: string;
+    expression?: 'neutral' | 'thinking' | 'happy' | 'surprised';
+    tag?: string;
+    actionText?: string;
+    actionTarget?: string;
+  }[];
 };
 
 const dialogueDefaults = [
@@ -91,7 +99,56 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "Revenue growth alone does not guarantee profitability or a rising share price.",
     nextLesson: 'mutual-funds',
     prevLesson: null,
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 's-1',
+        sender: 'mentor',
+        text: 'Hey Aditya! Welcome to the Stocks Masterclass. When you buy a share of Reliance, TCS, or Tata Motors, what do you think actually happens?',
+        expression: 'happy',
+        tag: 'Welcome'
+      },
+      {
+        id: 's-2',
+        sender: 'learner',
+        text: 'Do I actually become a co-owner of the company, or am I just speculating on daily chart tickers?',
+        expression: 'thinking'
+      },
+      {
+        id: 's-3',
+        sender: 'mentor',
+        text: 'You become a real partial shareholder! That equity gives you legal voting rights at AGMs and an entitlement to dividend distributions.',
+        expression: 'happy',
+        tag: 'Ownership'
+      },
+      {
+        id: 's-4',
+        sender: 'learner',
+        text: 'What causes share prices to swing so aggressively every second on NSE and BSE?',
+        expression: 'surprised'
+      },
+      {
+        id: 's-5',
+        sender: 'mentor',
+        text: 'Demand and supply! When quarterly profits beat analyst estimates, buyers outbid sellers. In the short run it is a voting machine, but in the long run it is a weighing machine.',
+        expression: 'neutral',
+        tag: 'Pricing Edge'
+      },
+      {
+        id: 's-6',
+        sender: 'learner',
+        text: 'How can I simulate the potential gain vs downside risk of holding stocks over market cycles?',
+        expression: 'happy'
+      },
+      {
+        id: 's-7',
+        sender: 'mentor',
+        text: 'Try our interactive Return Simulator right below! Move the slider to see how compounding drives multi-year returns.',
+        expression: 'happy',
+        tag: 'Actionable',
+        actionText: 'Open Return Simulator',
+        actionTarget: 'return-simulator'
+      }
+    ]
   },
 
   'mutual-funds': {
@@ -166,7 +223,49 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "Mutual funds can provide convenient access to a portfolio, but the right fund depends on its strategy, costs and risks.",
     nextLesson: 'etfs',
     prevLesson: 'stocks',
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 'mf-1',
+        sender: 'mentor',
+        text: 'Welcome to Mutual Funds! Imagine you want a 50-dish culinary feast, but you only have budget to buy one plate. What do you do?',
+        expression: 'happy',
+        tag: 'Analogy'
+      },
+      {
+        id: 'mf-2',
+        sender: 'learner',
+        text: 'Pool funds together with 50 friends so everyone gets a portion of the entire feast!',
+        expression: 'thinking'
+      },
+      {
+        id: 'mf-3',
+        sender: 'mentor',
+        text: 'Bingo! A Mutual Fund pools capital from millions of investors into an AMC managed by a SEBI-registered professional fund manager.',
+        expression: 'happy',
+        tag: 'Pooling Power'
+      },
+      {
+        id: 'mf-4',
+        sender: 'learner',
+        text: 'What is the real difference between an Active Equity Fund and a Passive Index Fund?',
+        expression: 'thinking'
+      },
+      {
+        id: 'mf-5',
+        sender: 'mentor',
+        text: 'Active funds charge ~1.5% expense ratios to pick winners. Passive Index funds charge <0.15% to simply mirror Nifty 50 with zero human bias!',
+        expression: 'neutral',
+        tag: 'Fee Alpha'
+      },
+      {
+        id: 'mf-6',
+        sender: 'mentor',
+        text: 'Check out the interactive Fund Basket comparison canvas right below to see how risk is diversified.',
+        expression: 'happy',
+        actionText: 'Explore Basket Canvas',
+        actionTarget: 'concept-canvas'
+      }
+    ]
   },
 
   'etfs': {
@@ -224,7 +323,42 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "ETFs combine fund-based investing with exchange trading. They are not automatically safer or better than other funds.",
     nextLesson: 'bonds',
     prevLesson: 'mutual-funds',
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 'etf-1',
+        sender: 'mentor',
+        text: 'ETFs are the modern hybrid between Mutual Funds and Stocks. Have you traded NIFTYBEES or GOLDBEES on Zerodha or Groww?',
+        expression: 'neutral',
+        tag: 'Hybrid Edge'
+      },
+      {
+        id: 'etf-2',
+        sender: 'learner',
+        text: 'I know they track indices, but how are they different from standard mutual funds?',
+        expression: 'thinking'
+      },
+      {
+        id: 'etf-3',
+        sender: 'mentor',
+        text: 'Mutual funds settle NAV once daily at 3:30 PM. ETFs trade live on NSE/BSE every single second just like ordinary shares!',
+        expression: 'happy',
+        tag: 'Live Liquidity'
+      },
+      {
+        id: 'etf-4',
+        sender: 'learner',
+        text: 'So I get real-time price discovery, ultra-low expense ratios, and zero lock-in exit loads?',
+        expression: 'surprised'
+      },
+      {
+        id: 'etf-5',
+        sender: 'mentor',
+        text: 'Exactly! Most Nifty 50 ETFs have expense ratios below 0.05%—one-thirtieth the cost of active funds. Let us simulate ETF returns below!',
+        expression: 'happy',
+        actionText: 'Simulate ETF Growth',
+        actionTarget: 'return-simulator'
+      }
+    ]
   },
 
   'bonds': {
@@ -282,7 +416,49 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "Existing fixed-coupon bonds often become less attractive when new bonds offer higher interest rates, which can push their market prices down.",
     nextLesson: 'reits',
     prevLesson: 'etfs',
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 'b-1',
+        sender: 'mentor',
+        text: 'Welcome to Bonds! When you buy equity, you are an owner. But when you buy a Bond, what role do you play?',
+        expression: 'happy',
+        tag: 'Fixed Income'
+      },
+      {
+        id: 'b-2',
+        sender: 'learner',
+        text: 'Am I lending capital to the company or the Government of India?',
+        expression: 'thinking'
+      },
+      {
+        id: 'b-3',
+        sender: 'mentor',
+        text: 'Correct! You become a debt lender. The issuer is legally bound to pay periodic coupon interest and refund your principal on maturity.',
+        expression: 'happy',
+        tag: 'Legal Claim'
+      },
+      {
+        id: 'b-4',
+        sender: 'learner',
+        text: 'Can a bond ever default or lose value?',
+        expression: 'thinking'
+      },
+      {
+        id: 'b-5',
+        sender: 'mentor',
+        text: 'Central Government G-Secs have zero credit risk. For corporate bonds, always check the credit rating: AAA is safest, while BBB or lower carries credit spread risk.',
+        expression: 'neutral',
+        tag: 'Credit Ratings'
+      },
+      {
+        id: 'b-6',
+        sender: 'mentor',
+        text: 'Notice how bond yields move inversely to interest rates. Let us test the calculator below!',
+        expression: 'happy',
+        actionText: 'View Fixed Yield Calculations',
+        actionTarget: 'return-simulator'
+      }
+    ]
   },
 
   'reits': {
@@ -341,7 +517,42 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "REITs offer an alternative route to real-estate exposure, but they are not equivalent to owning a property directly.",
     nextLesson: 'invits',
     prevLesson: 'bonds',
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 'r-1',
+        sender: 'mentor',
+        text: 'Real Estate Investment Trusts (REITs)! Ever wanted steady commercial rental income from Cyber City or Tech Parks without needing ₹50 Crores?',
+        expression: 'happy',
+        tag: 'Commercial Yield'
+      },
+      {
+        id: 'r-2',
+        sender: 'learner',
+        text: 'Can I really own commercial real estate with just ₹300–₹400 on the stock exchange?',
+        expression: 'surprised'
+      },
+      {
+        id: 'r-3',
+        sender: 'mentor',
+        text: 'Yes! India has premier listed REITs like Embassy Office Parks and Mindspace. SEBI mandates they distribute 90% of net distributable cash flows directly to unit holders!',
+        expression: 'happy',
+        tag: 'Mandated Payouts'
+      },
+      {
+        id: 'r-4',
+        sender: 'learner',
+        text: 'What kind of quarterly dividend yield and capital appreciation can I anticipate?',
+        expression: 'thinking'
+      },
+      {
+        id: 'r-5',
+        sender: 'mentor',
+        text: 'Typically 6.5% to 8.2% annual cash distribution yields, plus Grade-A commercial asset valuation growth. Explore the rental building metaphor below!',
+        expression: 'happy',
+        actionText: 'Inspect REIT Building Metaphor',
+        actionTarget: 'concept-canvas'
+      }
+    ]
   },
 
   'invits': {
@@ -400,7 +611,42 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     takeaway: "InvITs provide an investment route into infrastructure-related assets, but their returns and risks depend on the trust's underlying assets and structure.",
     nextLesson: 'futures-options',
     prevLesson: 'reits',
-    dialogue: [...dialogueDefaults]
+    dialogue: [
+      {
+        id: 'i-1',
+        sender: 'mentor',
+        text: 'Infrastructure Investment Trusts (InvITs) are the industrial powerhouse siblings of REITs. What infrastructure assets do they own?',
+        expression: 'neutral',
+        tag: 'National Assets'
+      },
+      {
+        id: 'i-2',
+        sender: 'learner',
+        text: 'Do they hold toll expressways, power transmission grids, and telecom optic fiber?',
+        expression: 'thinking'
+      },
+      {
+        id: 'i-3',
+        sender: 'mentor',
+        text: 'Exactly! Like IRB InvIT and PowerGrid InvIT. Every vehicle paying toll on National Highways or kilowatt of power transmitted generates steady dividend cash flows.',
+        expression: 'happy',
+        tag: 'Toll Revenue'
+      },
+      {
+        id: 'i-4',
+        sender: 'learner',
+        text: 'Are they meant for aggressive capital growth or steady passive cash yield?',
+        expression: 'thinking'
+      },
+      {
+        id: 'i-5',
+        sender: 'mentor',
+        text: 'They are cash-flow machines with 8% to 11% pre-tax distribution yields, making them ideal for compounding passive income portfolios.',
+        expression: 'happy',
+        actionText: 'View Infrastructure Pipeline',
+        actionTarget: 'concept-canvas'
+      }
+    ]
   },
 
   'futures-options': {
@@ -479,9 +725,47 @@ export const LESSON_MAP: Record<string, LessonContent> = {
     nextLesson: null,
     prevLesson: 'invits',
     dialogue: [
-      { id: '1', sender: 'mentor', text: 'Welcome to Futures & Options (F&O)! Did you know SEBI reported 9 out of 10 individual traders in equity F&O incurred net losses?' },
-      { id: '2', sender: 'learner', text: 'That is eye-opening! Why is derivative trading so high risk?' },
-      { id: '3', sender: 'mentor', text: 'Because leverage magnifies losses as well as gains, and options experience continuous time decay. Let us study how Futures, Calls, Puts, and hedging work!' }
+      {
+        id: 'f-1',
+        sender: 'mentor',
+        text: 'Welcome to Derivatives. Before we start, a sobering statutory warning from SEBI: 89% of retail F&O traders incur net financial losses.',
+        expression: 'surprised',
+        tag: 'SEBI Alert'
+      },
+      {
+        id: 'f-2',
+        sender: 'learner',
+        text: 'Why do so many retail traders blow up their accounts in Futures and Options?',
+        expression: 'thinking'
+      },
+      {
+        id: 'f-3',
+        sender: 'mentor',
+        text: 'High leverage and theta time decay! Buying naked out-of-the-money Call options without mathematical edge erodes 100% of capital as expiry approaches.',
+        expression: 'neutral',
+        tag: 'Leverage Risk'
+      },
+      {
+        id: 'f-4',
+        sender: 'learner',
+        text: 'How should smart investors actually use Options as intended?',
+        expression: 'thinking'
+      },
+      {
+        id: 'f-5',
+        sender: 'mentor',
+        text: 'As Portfolio Insurance! Just like health or car insurance, institutional managers buy Put options to protect equity portfolios against sudden market crashes.',
+        expression: 'happy',
+        tag: 'Hedging Alpha'
+      },
+      {
+        id: 'f-6',
+        sender: 'mentor',
+        text: 'Let us study how delta, theta, and position sizing work before placing any derivative trades!',
+        expression: 'happy',
+        actionText: 'Test Knowledge Challenge Below',
+        actionTarget: 'challenge'
+      }
     ]
   }
 };

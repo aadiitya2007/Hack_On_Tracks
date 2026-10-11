@@ -67,7 +67,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
 
       {/* Mentor Dialogue */}
       {lesson.dialogue && lesson.dialogue.length > 0 && (
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="h-[380px]">
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="min-h-[460px] h-[480px] md:h-[520px]">
           <Dialogue messages={lesson.dialogue} />
         </motion.div>
       )}
@@ -88,7 +88,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       </motion.section>
 
       {/* Interactive Metaphor Canvas with Animated Face & Concept Animations */}
-      <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.section id="concept-canvas" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
         <InteractiveConceptCanvas assetId={resolvedParams.asset} title={lesson.title} />
       </motion.section>
 
@@ -139,7 +139,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       )}
 
       {/* 3. Interactive Return Simulator */}
-      <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+      <motion.section id="return-simulator" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
         <div className="flex items-center gap-2">
           <Sliders className="text-accent" size={24} />
           <h2 className="text-2xl font-extrabold text-text-primary">How much return can they generate?</h2>
@@ -263,7 +263,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       )}
 
       {/* 6. Interactive Challenge / MCQ Quiz */}
-      <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+      <motion.section id="challenge" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
         <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
           <HelpCircle className="text-accent" size={24} />
           Interactive Knowledge Challenge
