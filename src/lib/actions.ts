@@ -30,7 +30,7 @@ export async function getDashboardData() {
       { id: 'h2', userId: 'demo', accountId: 'a1', symbol: 'HDFCBANK', isin: 'INE040A01034', assetType: 'EQUITY', quantity: 120, avgBuyPrice: 1510, currentPrice: 1680.50, createdAt: new Date(), updatedAt: new Date(), broker: 'Zerodha' },
       { id: 'h3', userId: 'demo', accountId: 'a1', symbol: 'TCS', isin: 'INE467B01029', assetType: 'EQUITY', quantity: 20, avgBuyPrice: 3410, currentPrice: 4120, createdAt: new Date(), updatedAt: new Date(), broker: 'Zerodha' },
       { id: 'h4', userId: 'demo', accountId: 'a2', symbol: 'RELIANCE', isin: 'INE002A01018', assetType: 'EQUITY', quantity: 25, avgBuyPrice: 2310, currentPrice: 2985.40, createdAt: new Date(), updatedAt: new Date(), broker: 'Groww' },
-      { id: 'h5', userId: 'demo', accountId: 'a2', symbol: 'PPFAS', isin: 'INF179KC1DP4', assetType: 'MUTUAL_FUND', quantity: 1500.45, avgBuyPrice: 50.12, currentPrice: 68.40, createdAt: new Date(), updatedAt: new Date(), broker: 'Groww' },
+      { id: 'h5', userId: 'demo', accountId: 'a2', symbol: 'PPFAS', isin: 'INF179KC1DP4', assetType: 'MUTUAL_FUND', quantity: 1500, avgBuyPrice: 50, currentPrice: 68.40, createdAt: new Date(), updatedAt: new Date(), broker: 'Groww' },
     ]
   };
 }

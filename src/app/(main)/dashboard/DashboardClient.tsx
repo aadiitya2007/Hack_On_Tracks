@@ -26,6 +26,84 @@ export const SCRIP_METADATA: Record<string, { name: string; price: number; asset
   'ITC': { name: 'ITC Ltd', price: 475.20, assetType: 'EQUITY', isin: 'INE154A01025' },
   'BHARTIARTL': { name: 'Bharti Airtel Ltd', price: 1290.00, assetType: 'EQUITY', isin: 'INE397D01024' },
   'PPFAS': { name: 'Parag Parikh Flexi Cap Fund', price: 68.40, assetType: 'MUTUAL_FUND', isin: 'INF179KC1DP4' },
+  'NIFTYBEES': { name: 'Nippon India Nifty 50 BeES ETF', price: 268.50, assetType: 'MUTUAL_FUND', isin: 'INF732E01015' },
+  'EMBASSY': { name: 'Embassy Office Parks REIT', price: 382.50, assetType: 'REIT', isin: 'INE041025011' },
+  'GS2033': { name: 'Government of India 7.18% GS 2033', price: 101.40, assetType: 'DEBT', isin: 'IN0020230085' },
+  'GOLDBEES': { name: 'Nippon India ETF Gold BeES', price: 64.20, assetType: 'COMMODITY', isin: 'INF732E01037' },
+  'LIQUIDBEES': { name: 'Nippon India ETF Liquid BeES', price: 1000.00, assetType: 'CASH', isin: 'INF732E01049' },
+};
+
+export const TIER_DETAILS: Record<string, { title: string; desc: string; badgeColor: string }> = {
+  Fresher: {
+    title: 'Fresher Investor (Neophyte)',
+    desc: 'New to financial markets. Focus on low-cost index funds, basic asset allocation, and fundamental financial concepts.',
+    badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+  },
+  Beginner: {
+    title: 'Beginner Investor',
+    desc: 'Building an initial direct equity & mutual fund portfolio. Needs guidance on asset allocation and cost leakage.',
+    badgeColor: 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+  },
+  Intermediate: {
+    title: 'Intermediate Investor & Swing Trader',
+    desc: 'Familiar with direct stocks, chart analysis, and quarterly earnings. Working on risk diversification.',
+    badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+  },
+  Advanced: {
+    title: 'Advanced Multi-Asset Investor',
+    desc: 'Solid experience across equities, REITs, bonds, and technical indicators. Active portfolio rebalancer.',
+    badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+  },
+  Pro: {
+    title: 'Pro Trader & Quant Specialist',
+    desc: 'High expertise in financial derivatives, options hedging, delta neutrality, and algorithmic trading models.',
+    badgeColor: 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+  }
+};
+
+export const TIER_PORTFOLIOS: Record<string, any[]> = {
+  Fresher: [
+    { id: 'f1', symbol: 'PPFAS', isin: 'INF179KC1DP4', assetType: 'MUTUAL_FUND', quantity: 1200, avgBuyPrice: 55, currentPrice: 68.40, broker: 'Groww' },
+    { id: 'f2', symbol: 'NIFTYBEES', isin: 'INF732E01015', assetType: 'MUTUAL_FUND', quantity: 130, avgBuyPrice: 245, currentPrice: 268.50, broker: 'Zerodha' },
+    { id: 'f3', symbol: 'GS2033', isin: 'IN0020230085', assetType: 'DEBT', quantity: 600, avgBuyPrice: 98, currentPrice: 101.40, broker: 'CDSL' },
+    { id: 'f4', symbol: 'HDFCBANK', isin: 'INE040A01034', assetType: 'EQUITY', quantity: 30, avgBuyPrice: 1520, currentPrice: 1680.50, broker: 'Zerodha' },
+    { id: 'f5', symbol: 'LIQUIDBEES', isin: 'INF732E01049', assetType: 'CASH', quantity: 22, avgBuyPrice: 1000, currentPrice: 1000.00, broker: 'Groww' },
+  ],
+  Beginner: [
+    { id: 'b1', symbol: 'RELIANCE', isin: 'INE002A01018', assetType: 'EQUITY', quantity: 50, avgBuyPrice: 2600, currentPrice: 2985.40, broker: 'Zerodha' },
+    { id: 'b2', symbol: 'TCS', isin: 'INE467B01029', assetType: 'EQUITY', quantity: 20, avgBuyPrice: 3650, currentPrice: 4120.00, broker: 'Zerodha' },
+    { id: 'b3', symbol: 'INFY', isin: 'INE009A01021', assetType: 'EQUITY', quantity: 25, avgBuyPrice: 1510, currentPrice: 1720.10, broker: 'Groww' },
+    { id: 'b4', symbol: 'PPFAS', isin: 'INF179KC1DP4', assetType: 'MUTUAL_FUND', quantity: 1800, avgBuyPrice: 52, currentPrice: 68.40, broker: 'Groww' },
+    { id: 'b5', symbol: 'GOLDBEES', isin: 'INF732E01037', assetType: 'COMMODITY', quantity: 700, avgBuyPrice: 56, currentPrice: 64.20, broker: 'Zerodha' },
+    { id: 'b6', symbol: 'LIQUIDBEES', isin: 'INF732E01049', assetType: 'CASH', quantity: 38, avgBuyPrice: 1000, currentPrice: 1000.00, broker: 'Upstox' },
+  ],
+  Intermediate: [
+    { id: 'i1', symbol: 'RELIANCE', isin: 'INE002A01018', assetType: 'EQUITY', quantity: 60, avgBuyPrice: 2580, currentPrice: 2985.40, broker: 'Zerodha' },
+    { id: 'i2', symbol: 'TATAMOTORS', isin: 'INE155A01022', assetType: 'EQUITY', quantity: 150, avgBuyPrice: 750, currentPrice: 890.00, broker: 'Groww' },
+    { id: 'i3', symbol: 'SBIN', isin: 'INE062A01020', assetType: 'EQUITY', quantity: 120, avgBuyPrice: 680, currentPrice: 785.60, broker: 'Upstox' },
+    { id: 'i4', symbol: 'TCS', isin: 'INE467B01029', assetType: 'EQUITY', quantity: 20, avgBuyPrice: 3700, currentPrice: 4120.00, broker: 'Zerodha' },
+    { id: 'i5', symbol: 'PPFAS', isin: 'INF179KC1DP4', assetType: 'MUTUAL_FUND', quantity: 2000, avgBuyPrice: 54, currentPrice: 68.40, broker: 'Groww' },
+    { id: 'i6', symbol: 'EMBASSY', isin: 'INE041025011', assetType: 'REIT', quantity: 350, avgBuyPrice: 330, currentPrice: 382.50, broker: 'Zerodha' },
+    { id: 'i7', symbol: 'GOLDBEES', isin: 'INF732E01037', assetType: 'COMMODITY', quantity: 1500, avgBuyPrice: 57, currentPrice: 64.20, broker: 'Zerodha' },
+  ],
+  Advanced: [
+    { id: 'a1', symbol: 'RELIANCE', isin: 'INE002A01018', assetType: 'EQUITY', quantity: 100, avgBuyPrice: 2500, currentPrice: 2985.40, broker: 'Zerodha' },
+    { id: 'a2', symbol: 'BHARTIARTL', isin: 'INE397D01024', assetType: 'EQUITY', quantity: 150, avgBuyPrice: 1050, currentPrice: 1290.00, broker: 'Groww' },
+    { id: 'a3', symbol: 'INFY', isin: 'INE009A01021', assetType: 'EQUITY', quantity: 80, avgBuyPrice: 1500, currentPrice: 1720.10, broker: 'Upstox' },
+    { id: 'a4', symbol: 'EMBASSY', isin: 'INE041025011', assetType: 'REIT', quantity: 700, avgBuyPrice: 340, currentPrice: 382.50, broker: 'Zerodha' },
+    { id: 'a5', symbol: 'GS2033', isin: 'IN0020230085', assetType: 'DEBT', quantity: 2200, avgBuyPrice: 97, currentPrice: 101.40, broker: 'CDSL' },
+    { id: 'a6', symbol: 'GOLDBEES', isin: 'INF732E01037', assetType: 'COMMODITY', quantity: 3000, avgBuyPrice: 55, currentPrice: 64.20, broker: 'Zerodha' },
+    { id: 'a7', symbol: 'LIQUIDBEES', isin: 'INF732E01049', assetType: 'CASH', quantity: 135, avgBuyPrice: 1000, currentPrice: 1000.00, broker: 'Upstox' },
+  ],
+  Pro: [
+    { id: 'p1', symbol: 'RELIANCE', isin: 'INE002A01018', assetType: 'EQUITY', quantity: 150, avgBuyPrice: 2550, currentPrice: 2985.40, broker: 'Zerodha' },
+    { id: 'p2', symbol: 'TCS', isin: 'INE467B01029', assetType: 'EQUITY', quantity: 50, avgBuyPrice: 3600, currentPrice: 4120.00, broker: 'Zerodha' },
+    { id: 'p3', symbol: 'TATAMOTORS', isin: 'INE155A01022', assetType: 'EQUITY', quantity: 250, avgBuyPrice: 720, currentPrice: 890.00, broker: 'Groww' },
+    { id: 'p4', symbol: 'LIQUIDBEES', isin: 'INF732E01049', assetType: 'CASH', quantity: 500, avgBuyPrice: 1000, currentPrice: 1000.00, broker: 'Zerodha' },
+    { id: 'p5', symbol: 'EMBASSY', isin: 'INE041025011', assetType: 'REIT', quantity: 1200, avgBuyPrice: 345, currentPrice: 382.50, broker: 'Zerodha' },
+    { id: 'p6', symbol: 'GS2033', isin: 'IN0020230085', assetType: 'DEBT', quantity: 3700, avgBuyPrice: 98, currentPrice: 101.40, broker: 'CDSL' },
+    { id: 'p7', symbol: 'GOLDBEES', isin: 'INF732E01037', assetType: 'COMMODITY', quantity: 4200, avgBuyPrice: 58, currentPrice: 64.20, broker: 'Groww' },
+  ],
 };
 
 const ASSET_COLORS: Record<string, string> = {
@@ -125,19 +203,48 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
   const [tradeAction, setTradeAction] = useState<'BUY' | 'SELL'>('BUY');
   const [tradeQty, setTradeQty] = useState(10);
 
+  // Holdings state (reactive to simulated trades, live feeds, and trader tier selection)
+  const [holdings, setHoldings] = useState<any[]>(() => {
+    return initialData?.holdings?.length > 0 ? initialData.holdings : TIER_PORTFOLIOS['Beginner'];
+  });
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const level = localStorage.getItem('unify_trader_level');
-      const title = localStorage.getItem('unify_trader_title');
-      const desc = localStorage.getItem('unify_trader_desc');
-      if (level) setUserLevel(level);
-      if (title) setUserTitle(title);
-      if (desc) setUserDesc(desc);
+      const savedLevel = localStorage.getItem('unify_trader_level');
+      const level = savedLevel && TIER_DETAILS[savedLevel] ? savedLevel : 'Beginner';
+      const meta = TIER_DETAILS[level];
+      
+      setUserLevel(level);
+      setUserTitle(meta.title);
+      setUserDesc(meta.desc);
+
+      // Initialize holdings to match classified test tier
+      if (TIER_PORTFOLIOS[level]) {
+        setHoldings(TIER_PORTFOLIOS[level]);
+      }
     }
   }, []);
 
-  // Holdings state (reactive to simulated trades & live feeds)
-  const [holdings, setHoldings] = useState<any[]>(initialData?.holdings || []);
+  const handleSelectTier = (tier: string) => {
+    const meta = TIER_DETAILS[tier] || TIER_DETAILS['Beginner'];
+    setUserLevel(tier);
+    setUserTitle(meta.title);
+    setUserDesc(meta.desc);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('unify_trader_level', tier);
+      localStorage.setItem('unify_trader_title', meta.title);
+      localStorage.setItem('unify_trader_desc', meta.desc);
+    }
+    if (TIER_PORTFOLIOS[tier]) {
+      setHoldings(TIER_PORTFOLIOS[tier]);
+    }
+    setTradeToast({
+      show: true,
+      type: 'info',
+      title: `Portfolio Switched to ${tier} Level`,
+      message: `Asset allocation, scrips, and AI advisory reconfigured for ${meta.title}.`
+    });
+  };
   const [recentTrades, setRecentTrades] = useState<Array<{
     id: string;
     symbol: string;
@@ -440,27 +547,67 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
       {/* AI ADVISORY & CLASSIFIED USER TIER PANEL */}
       <div className="card p-6 md:p-8 bg-surface border border-accent/30 relative overflow-hidden rounded-3xl z-10 shadow-xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5 pb-5 border-b border-border">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-accent-bg text-accent flex items-center justify-center font-bold border border-accent/20 shrink-0">
               <Award size={30} />
             </div>
             <div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex flex-wrap items-center gap-2.5">
                 <h2 className="text-xl font-black text-text-primary">{t('ai_advisory_title', 'AI Advisory & Portfolio Strategy')}</h2>
                 <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-accent text-white shadow-sm">
                   {userTitle}
                 </span>
               </div>
-              <p className="text-xs text-text-secondary mt-1 max-w-xl">
-                {t('ai_advisory_desc', 'Personalized LLM guidance tailored to your classification level and live portfolio telemetry.')}
+              <p className="text-xs text-text-secondary mt-1 max-w-xl font-medium">
+                {userDesc}
               </p>
             </div>
           </div>
 
-          <Link href="/onboarding" className="px-4 py-2.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-accent hover:border-accent transition-colors flex items-center gap-2 shrink-0">
+          <Link href="/onboarding" className="px-4 py-2.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-accent hover:border-accent transition-colors flex items-center gap-2 shrink-0 shadow-sm">
             <RefreshCw size={14} /> {t('retake_quiz', 'Re-take Skill Quiz')}
           </Link>
+        </div>
+
+        {/* Interactive Trader Category Level Switcher Bar */}
+        <div className="mb-6 p-4 rounded-2xl bg-bg/80 border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+          <div className="flex items-center gap-2.5">
+            <Activity size={18} className="text-accent shrink-0 animate-pulse" />
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-text-primary">
+                  Classified Trader Profile:
+                </span>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-accent/15 text-accent border border-accent/25">
+                  Live Portfolio Synced
+                </span>
+              </div>
+              <p className="text-[11px] text-text-muted mt-0.5">
+                Switch level below to preview real-time asset allocations, scrips, and risk advisory for that trader tier.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {(['Fresher', 'Beginner', 'Intermediate', 'Advanced', 'Pro'] as const).map(tier => {
+              const isActive = userLevel === tier;
+              return (
+                <button
+                  key={tier}
+                  onClick={() => handleSelectTier(tier)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isActive
+                      ? 'bg-accent text-white shadow-md shadow-accent/30 ring-2 ring-accent/40 font-black scale-105'
+                      : 'bg-surface text-text-secondary hover:text-text-primary hover:bg-surface-hover border border-border'
+                  }`}
+                  title={`Switch portfolio and advisory to ${tier} profile`}
+                >
+                  <span>{tier}</span>
+                  {isActive && <CheckCircle2 size={12} className="text-white" />}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 4 Custom Recommendations Grid */}
@@ -499,7 +646,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
           </h2>
           <div className="mt-6 flex justify-between text-[11px] font-medium text-text-secondary border-t border-border pt-3">
             <span>{t('invested', 'Invested')}:</span>
-            <span className="text-text-primary">₹{totalInvested.toLocaleString('en-IN')}</span>
+            <span className="text-text-primary">₹{Math.round(totalInvested).toLocaleString('en-IN')}</span>
           </div>
         </div>
 
@@ -658,7 +805,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
               </p>
             </div>
             <span className="px-3.5 py-1.5 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider self-start sm:self-auto border border-accent/20">
-              {t('invested', 'Total Invested')}: ₹{totalInvested.toLocaleString('en-IN')}
+              {t('invested', 'Total Invested')}: ₹{Math.round(totalInvested).toLocaleString('en-IN')}
             </span>
           </div>
 
@@ -681,7 +828,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                   </Pie>
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px', color: 'var(--text-primary)', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }}
-                    formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Invested Amount']}
+                    formatter={(value: any) => [`₹${Math.round(Number(value)).toLocaleString('en-IN')}`, 'Invested Amount']}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -689,7 +836,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
                 <p className="text-[10px] text-text-muted uppercase tracking-widest font-black">Net Portfolio Value</p>
                 <p className="text-3xl font-black text-text-primary tracking-tight font-display">₹{(totalValue/100000).toFixed(2)}L</p>
-                <p className="text-xs font-bold text-gain mt-0.5">₹{totalValue.toLocaleString('en-IN')}</p>
+                <p className="text-xs font-bold text-gain mt-0.5">₹{Math.round(totalValue).toLocaleString('en-IN')}</p>
               </div>
             </div>
 
@@ -703,7 +850,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                       <span className="font-extrabold text-text-primary text-sm">{item.label}</span>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono font-black text-text-primary text-base">₹{item.amount.toLocaleString('en-IN')}</span>
+                      <span className="font-mono font-black text-text-primary text-base">₹{Math.round(item.amount).toLocaleString('en-IN')}</span>
                       <span className="text-xs font-bold text-accent ml-2 font-mono">({item.pct.toFixed(1)}%)</span>
                     </div>
                   </div>
