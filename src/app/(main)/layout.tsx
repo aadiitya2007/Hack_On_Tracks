@@ -63,15 +63,15 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
       {/* MOBILE / TABLET HEADER */}
       <header className="lg:hidden sticky top-0 z-50 bg-surface/90 backdrop-blur-xl h-16 flex items-center justify-between px-4 border-b border-border/50 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-md shrink-0">
+        <Link href="/" className="flex items-center gap-3 cursor-pointer group hover:opacity-90 transition-opacity" title="Back to Home">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-md shrink-0 group-hover:scale-105 transition-transform">
             U
           </div>
           <div>
-            <h1 className="text-lg font-black text-text-primary tracking-tight leading-none">Unify</h1>
+            <h1 className="text-lg font-black text-text-primary tracking-tight leading-none group-hover:text-accent transition-colors">Unify</h1>
             <p className="text-[8px] font-black text-accent uppercase tracking-widest mt-0.5">PLAN • TRACK • GROW</p>
           </div>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-2">
           <div className="text-[10px] font-bold text-text-primary flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface border border-border shadow-sm">
@@ -124,15 +124,20 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               className="w-4/5 max-w-xs bg-surface h-full relative z-10 flex flex-col shadow-2xl border-r border-border overflow-y-auto"
             >
               <div className="p-5 border-b border-border flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-md shrink-0">
+                <Link 
+                  href="/" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 cursor-pointer group hover:opacity-90 transition-opacity"
+                  title="Back to Home"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-md shrink-0 group-hover:scale-105 transition-transform">
                     U
                   </div>
                   <div>
-                    <h1 className="text-xl font-black text-text-primary tracking-tight leading-none">Unify Navigation</h1>
-                    <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-0.5">MOBILE & TABLET MENU</p>
+                    <h1 className="text-xl font-black text-text-primary tracking-tight leading-none group-hover:text-accent transition-colors">Unify</h1>
+                    <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-0.5">PLAN • TRACK • GROW</p>
                   </div>
-                </div>
+                </Link>
                 <button onClick={() => setMobileMenuOpen(false)} className="text-text-muted hover:text-text-primary p-1">
                   <X size={20} />
                 </button>
@@ -173,15 +178,15 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       {/* DESKTOP SIDEBAR */}
       <aside className="hidden lg:flex lg:w-72 bg-surface flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] border-r border-border/50 shrink-0">
         <div className="p-6 pb-5 border-b border-border">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-accent/30 shrink-0">
+          <Link href="/" className="flex items-center gap-3 cursor-pointer group hover:opacity-90 transition-opacity" title="Back to Home">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-accent/30 shrink-0 group-hover:scale-105 transition-transform">
               U
             </div>
             <div>
-              <h1 className="text-2xl font-black text-text-primary tracking-tight leading-none">Unify</h1>
+              <h1 className="text-2xl font-black text-text-primary tracking-tight leading-none group-hover:text-accent transition-colors">Unify</h1>
               <p className="text-[9px] font-black text-accent uppercase tracking-widest mt-1">{t('plan_track_grow', 'PLAN • TRACK • GROW')}</p>
             </div>
-          </div>
+          </Link>
         </div>
         
         <nav className="flex-1 px-4 mt-6 space-y-2.5">
