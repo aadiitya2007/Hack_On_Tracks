@@ -52,6 +52,55 @@ const FAQS: FaqItem[] = [
   }
 ];
 
+interface TeamMember {
+  name: string;
+  initials: string;
+  role: string;
+  badge: string;
+  description: string;
+  disciplines: string[];
+  gradient: string;
+}
+
+const TEAM_MEMBERS: TeamMember[] = [
+  {
+    name: 'Aadiitya Agarrwal',
+    initials: 'AA',
+    role: 'Lead Systems Architect & Full-Stack Engineer',
+    badge: 'Student Tech Lead',
+    description: 'Spearheaded Unify’s multi-broker ingestion pipelines, client-side cryptographic isolation, and high-performance serverless endpoints on Next.js 16 Turbopack.',
+    disciplines: ['Next.js 16 & Turbopack', 'Depository Telemetry', 'Client-Side Cryptography', 'System Architecture'],
+    gradient: 'from-accent via-indigo-600 to-purple-600'
+  },
+  {
+    name: 'Aryan Amilkanthwar',
+    initials: 'AA',
+    role: 'ML Specialist & Quantitative Systems Engineer',
+    badge: 'Student ML Lead',
+    description: 'Engineered statistical volatility distributions, historical price backtesting pipelines, and XGBoost-driven algorithmic return projection modules.',
+    disciplines: ['XGBoost & Scikit-Learn', 'Statistical Risk Engines', 'Volatility Modeling', 'Time-Series Telemetry'],
+    gradient: 'from-emerald-500 via-teal-600 to-cyan-600'
+  },
+  {
+    name: 'Advait Ambarkar',
+    initials: 'AA',
+    role: 'Frontend Architect & Design Systems Lead',
+    badge: 'Student UI/UX Lead',
+    description: 'Crafted Unify’s institutional-grade design language, responsive motion telemetry, micro-interactions, dark-mode visual hierarchy, and cross-device financial UX.',
+    disciplines: ['Tailwind CSS', 'Framer Motion', 'Interactive Visualizations', 'Design Systems & UX'],
+    gradient: 'from-sky-500 via-blue-600 to-indigo-600'
+  },
+  {
+    name: 'Tanay Bhutada',
+    initials: 'TB',
+    role: 'Financial Logic & Regulatory Systems Engineer',
+    badge: 'Student Systems Lead',
+    description: 'Designed the mathematical tax-harvesting engine under Indian Income Tax Act Sections 70 & 71, CAS statement parsers, and SEBI-aligned investor guardrails.',
+    disciplines: ['Income Tax Act Sec 70/71', 'CAS Ingestion Parser', 'SEBI Investor Framework', 'Financial Logic'],
+    gradient: 'from-amber-500 via-orange-600 to-rose-500'
+  }
+];
+
 export default function LandingClient() {
   const [introKey, setIntroKey] = useState(1);
   const [playIntro, setPlayIntro] = useState(true);
@@ -446,7 +495,7 @@ export default function LandingClient() {
         </div>
       </section>
 
-      {/* ABOUT & THE ENGINEERING TEAM SECTION */}
+      {/* ABOUT & THE STUDENT ENGINEERING TEAM SECTION */}
       <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 border-b border-border">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -455,67 +504,86 @@ export default function LandingClient() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider mb-3">
-            Origin & Engineering Team
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-bg text-accent text-xs font-black uppercase tracking-wider mb-3 border border-accent/20 shadow-sm">
+            <Award size={14} /> Hack-On-Tracks 2026 • Student Engineering Squad
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-text-primary tracking-tight">
-            Built by Engineers, Designed for Retail Investors
+            Built by Student Innovators, Engineered to Institutional Standards
           </h2>
           <p className="text-sm text-text-secondary max-w-2xl mx-auto mt-2 font-medium leading-relaxed">
-            Unify was forged with one simple premise: Indian retail investors deserve institutional portfolio clarity, quantitative edge, and true data privacy without exorbitant financial advisory fees.
+            Unify was designed and engineered for the national Hack-On-Tracks hackathon by an ambitious student engineering squad. We united modern distributed systems, quantitative telemetry, and strict client-side data sovereignty to democratize institutional portfolio intelligence for Indian retail investors.
           </p>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-2xl bg-surface border border-border text-[11px] font-bold text-text-muted mt-4 shadow-sm">
+            <Sparkles size={13} className="text-accent" /> Track: Open Finance & Algorithmic Wealth Democratization
+          </div>
         </motion.div>
 
-        {/* Creator & Lead Architect Card */}
-        <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl bg-surface border border-border shadow-xl mb-12">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-3xl sm:text-4xl shadow-xl shadow-accent/30 shrink-0">
-              AA
-            </div>
+        {/* 4 Student Engineering Team Members Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-14">
+          {TEAM_MEMBERS.map((member, i) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              className="p-6 sm:p-7 rounded-3xl bg-surface border border-border hover:border-accent/40 transition-all shadow-lg hover:shadow-xl group flex flex-col justify-between relative overflow-hidden"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr ${member.gradient} text-white flex items-center justify-center font-black text-xl sm:text-2xl shadow-lg shadow-black/10 shrink-0`}>
+                      {member.initials}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-lg sm:text-xl font-black text-text-primary group-hover:text-accent transition-colors">
+                          {member.name}
+                        </h3>
+                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-accent-bg text-accent border border-accent/20">
+                          {member.badge}
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-text-muted mt-0.5">
+                        {member.role}
+                      </p>
+                    </div>
+                  </div>
 
-            <div className="space-y-3 flex-1">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <h3 className="text-2xl font-black text-text-primary">Aadiitya Agarrwal</h3>
-                  <p className="text-xs font-bold text-accent uppercase tracking-wider mt-0.5">
-                    Founder & Lead Systems Architect • Full-Stack & ML Specialist
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center gap-2">
                   <a 
                     href="https://github.com/aadiitya2007/Hack_On_Tracks" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-accent hover:border-accent transition-colors"
-                    aria-label="GitHub Repository"
+                    className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-accent hover:border-accent transition-colors shrink-0"
+                    title="View Hackathon Repository"
                   >
                     <GithubIcon size={16} />
                   </a>
-                  <a 
-                    href="mailto:adityavagarwal9@gmail.com" 
-                    className="p-2 rounded-xl bg-bg border border-border text-text-secondary hover:text-accent hover:border-accent transition-colors"
-                    aria-label="Email Lead Architect"
-                  >
-                    <Mail size={16} />
-                  </a>
+                </div>
+
+                <p className="text-xs text-text-secondary leading-relaxed font-medium mb-5">
+                  {member.description}
+                </p>
+              </div>
+
+              {/* Disciplines / Tech Stack Pills */}
+              <div className="pt-3 border-t border-border/60">
+                <span className="text-[10px] font-bold uppercase text-text-muted tracking-wider block mb-2">
+                  Specialized Focus:
+                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {member.disciplines.map((tag, idx) => (
+                    <span 
+                      key={idx} 
+                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-bg border border-border text-text-secondary"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
-                Passionate about financial technology, algorithmic telemetry, and high-performance web systems. Spearheaded Unify's multi-broker ingestion pipelines, client-side cryptographic isolation, and machine learning prediction engines to democratize algorithmic investing across India.
-              </p>
-
-              {/* Core Disciplines Badges */}
-              <div className="flex items-center gap-2 flex-wrap pt-1 justify-center sm:justify-start">
-                {['Next.js 16 & Turbopack', 'XGBoost & Scikit-Learn', 'Depository Telemetry', 'Client-Side Cryptography', 'Indian Tax Act Sec 70/71'].map((tag, i) => (
-                  <span key={i} className="text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-bg border border-border text-text-secondary">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* 3 Core Architecture Pillars */}
@@ -626,13 +694,11 @@ export default function LandingClient() {
               <div className="space-y-3 pt-2 text-xs font-medium">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-bg border border-border flex items-center justify-center text-accent shrink-0">
-                    <Mail size={16} />
+                    <Users size={16} />
                   </div>
                   <div>
-                    <span className="text-[10px] text-text-muted uppercase font-bold block">Direct Developer Email</span>
-                    <a href="mailto:adityavagarwal9@gmail.com" className="font-bold text-text-primary hover:text-accent transition-colors">
-                      adityavagarwal9@gmail.com
-                    </a>
+                    <span className="text-[10px] text-text-muted uppercase font-bold block">Engineering Team</span>
+                    <span className="font-bold text-text-primary">Hack-On-Tracks Student Team</span>
                   </div>
                 </div>
 
@@ -748,7 +814,7 @@ export default function LandingClient() {
           <p className="leading-relaxed">
             <strong>Regulatory & Compliance Notice:</strong> Unify is an algorithmic portfolio analytics and educational platform. Unify does not execute orders on discretion or provide SEBI registered investment advice. Securities market investments are subject to market risks. Past performance and machine learning predictive trajectories are not indicative of future returns.
           </p>
-          <p>© 2026 Unify Financial Technologies. Built by Aadiitya Agarrwal for next-generation retail investors.</p>
+          <p>© 2026 Unify Financial Technologies. Built for Hack-On-Tracks 2026 by Aadiitya Agarrwal, Aryan Amilkanthwar, Advait Ambarkar & Tanay Bhutada.</p>
         </div>
       </footer>
       
