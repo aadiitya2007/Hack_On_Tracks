@@ -292,12 +292,11 @@ export default function LandingClient() {
 
       {/* Navbar */}
       <nav className="relative z-50 flex items-center justify-between px-6 sm:px-8 py-5 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-accent/25 shrink-0">
+        <Link href="/" className="flex items-center gap-3 group cursor-pointer" aria-label="Unify Home">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-accent via-purple-600 to-indigo-500 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-accent/25 shrink-0 transition-transform group-hover:scale-105">
             U
           </div>
-          <img src="/logos/unify.png" alt="Unify" className="h-9 object-contain drop-shadow-sm" />
-        </div>
+        </Link>
 
         <div className="hidden lg:flex gap-7 font-bold text-sm text-text-secondary items-center">
           <Link href="#features" className="hover:text-accent transition-colors">Features</Link>
@@ -347,10 +346,19 @@ export default function LandingClient() {
             <span className="text-text-secondary">SENSEX <strong className="text-gain font-bold">81,424.80 (+0.58%)</strong></span>
           </motion.div>
 
-          {/* Big Center Logo Image */}
-          <div className="mb-6 p-4 rounded-3xl bg-surface/90 border border-border/80 shadow-2xl backdrop-blur-md hover:scale-105 transition-transform duration-300">
-            <img src="/logos/unify.png" alt="Unify — PLAN / TRACK / GROW" className="h-20 sm:h-24 md:h-28 object-contain drop-shadow-md" />
-          </div>
+          {/* Big Center Brand Logo (Borderless, Large & Clearly Readable) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mb-8 flex items-center justify-center hover:scale-105 transition-transform duration-300"
+          >
+            <img 
+              src="/logos/unify-hero.png" 
+              alt="Unify — PLAN • TRACK • GROW" 
+              className="h-28 sm:h-36 md:h-44 w-auto object-contain drop-shadow-xl select-none" 
+            />
+          </motion.div>
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-bg border border-accent/20 text-accent text-xs font-black uppercase tracking-wider mb-6 shadow-sm">
             <Sparkles size={14} /> Official Unified Investment Intelligence Platform
@@ -947,7 +955,7 @@ export default function LandingClient() {
           viewport={{ once: true }}
           className="max-w-2xl mx-auto px-6 space-y-4"
         >
-          <img src="/logos/unify.png" alt="Unify" className="h-10 mx-auto object-contain drop-shadow-sm" />
+          <img src="/logos/unify-hero.png" alt="Unify" className="h-12 mx-auto object-contain drop-shadow-md" />
           <h2 className="text-2xl sm:text-3xl font-black text-text-primary tracking-tight">
             Ready to Unify Your Multi-Asset Portfolio?
           </h2>
