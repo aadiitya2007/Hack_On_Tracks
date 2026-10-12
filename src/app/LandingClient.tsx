@@ -231,24 +231,29 @@ function getFeatureIcon(type: CoreFeature['iconType']) {
 
 const INVESTOR_TESTIMONIAL_AVATARS = [
   { 
-    src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    src: '/avatars/investor-1.jpg',
     fallbackBg: 'bg-gradient-to-tr from-purple-500 to-indigo-600',
     initial: 'A'
   },
   { 
-    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    src: '/avatars/investor-2.jpg',
     fallbackBg: 'bg-gradient-to-tr from-blue-500 to-cyan-600',
     initial: 'R'
   },
   { 
-    src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    src: '/avatars/investor-3.jpg',
     fallbackBg: 'bg-gradient-to-tr from-emerald-500 to-teal-600',
     initial: 'P'
   },
   { 
-    src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces&auto=format&q=80',
+    src: '/avatars/investor-4.jpg',
     fallbackBg: 'bg-gradient-to-tr from-amber-500 to-orange-600',
     initial: 'V'
+  },
+  { 
+    src: '/avatars/investor-5.jpg',
+    fallbackBg: 'bg-gradient-to-tr from-rose-500 to-pink-600',
+    initial: 'S'
   },
 ];
 
@@ -395,11 +400,11 @@ export default function LandingClient() {
           {/* User Avatars & Rating Banner */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 rounded-3xl bg-surface/90 border border-border shadow-xl backdrop-blur-md mb-8 gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="flex -space-x-2 items-center shrink-0">
+              <div className="flex -space-x-2.5 items-center shrink-0">
                 {INVESTOR_TESTIMONIAL_AVATARS.map((av, idx) => (
                   <div 
                     key={idx} 
-                    className="relative w-8 h-8 rounded-full ring-2 ring-surface overflow-hidden shadow-sm shrink-0 bg-surface-hover"
+                    className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full ring-2 ring-surface border border-border/60 overflow-hidden shadow-md shrink-0 bg-surface-hover"
                   >
                     <img 
                       src={av.src} 
@@ -410,12 +415,12 @@ export default function LandingClient() {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
-                    <div className={`absolute inset-0 ${av.fallbackBg} flex items-center justify-center text-white text-[10px] font-black -z-10`}>
+                    <div className={`absolute inset-0 ${av.fallbackBg} flex items-center justify-center text-white text-[11px] font-black -z-10`}>
                       {av.initial}
                     </div>
                   </div>
                 ))}
-                <div className="w-8 h-8 rounded-full ring-2 ring-surface bg-accent text-white text-[10px] font-black flex items-center justify-center shadow-md shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full ring-2 ring-surface bg-gradient-to-tr from-accent to-purple-700 text-white text-[11px] font-black flex items-center justify-center shadow-lg shrink-0">
                   +18k
                 </div>
               </div>
