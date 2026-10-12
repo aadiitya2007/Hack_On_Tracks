@@ -233,7 +233,7 @@ flowchart TD
 
 ## 📐 Risk Engine Mathematics & Regulatory Guardrails
 
-The composite Portfolio Risk Score ($0 \le R \le 100$) is computed in [`src/lib/risk-analytics.ts`](file:///Users/aadiityaagarrwal/Desktop/Hack_On_Tracks/src/lib/risk-analytics.ts):
+The composite Portfolio Risk Score ($0 \le R \le 100$) is computed in [`src/lib/risk-analytics.ts`](src/lib/risk-analytics.ts):
 
 $$R = 0.40 \cdot S_{\text{vol}} + 0.30 \cdot S_{\text{conc}} + 0.30 \cdot S_{\text{drawdown}} + P_{\text{leverage}}$$
 
@@ -254,10 +254,10 @@ Weighted historical stress decline computed from historical crash profiles (e.g.
 
 $$\text{MDD} = \sum_{i=1}^{7} w_i \cdot \text{MDD}_i$$
 
-### 4. Parametric 95% 1-Month Value-at-Risk ($\text{VaR}_{95\%}$)
+### 4. Parametric 95% 1-Month Value-at-Risk ($\text{VaR}_{0.95}$)
 Estimated 30-day maximum capital loss at a 95% confidence interval ($z = 1.645$):
 
-$$\text{VaR}_{95\%} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\text{ann}}}{\sqrt{12}}$$
+$$\text{VaR}_{0.95} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\text{ann}}}{\sqrt{12}}$$
 
 ---
 
