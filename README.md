@@ -1,44 +1,79 @@
 <div align="center">
 
-<img src="public/logos/unify-hero.png" alt="Unify Logo" width="380" />
+<img src="public/logos/unify-hero.png" alt="Unify Hero Banner" width="480" />
 
-### **All Your Investments, In One Place 🚀**
+# **Unify — All Your Investments, In One Place 🚀**
 
-**An Institutional-Grade Multi-Broker Wealth Telemetry, Machine Learning Forecasting & Risk Advisory Engine**
+### **Institutional-Grade Multi-Broker Portfolio Telemetry, Quantitative Risk Lab & ML Forecasting Platform**
 
+[![Hack-On-Tracks 2026](https://img.shields.io/badge/Hackathon-Hack--On--Tracks_2026-6D28D9?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/aadiitya2007/Hack_On_Tracks)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.4.0_(Turbopack)-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.3.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TypeScript 5](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Python_3.9+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![XGBoost](https://img.shields.io/badge/ML-XGBoost_Classifier-FF6F00?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-SQLite-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
 
-*Engineered for **Hack-On-Tracks** by a 4-member student engineering team.*
+*Engineered with precision for **Hack-On-Tracks 2026** by **Team Unify**.*
 
-[Features](#-core-platform-capabilities) • [System Architecture](#-system-architecture) • [Live Video & Modules](#-complete-module-walkthrough) • [Mathematical Formulations](#-risk-engine-mathematics--regulatory-guardrails) • [Local Setup](#-local-installation--quickstart-guide) • [Team](#-engineering-team)
+[Executive Summary](#-executive-summary--the-indian-retail-investing-gap) • [System Architecture](#-system-architecture) • [Visual Showcase](#-platform-visual-showcase) • [Core Capabilities](#-core-platform-capabilities) • [Mathematical Formulations](#-risk-engine-mathematics--regulatory-guardrails) • [Local Setup](#-local-installation--quickstart-guide) • [Team Unify](#-team-unify)
 
 ---
 
 </div>
 
-## 📌 Executive Summary & Problem Statement
+## 📌 Executive Summary & The Indian Retail Investing Gap
 
-Indian retail investors face severe portfolio fragmentation across segregated brokerage ecosystems (**Zerodha Kite, Groww, Upstox Pro, Angel One, ICICI Direct**). This fragmentation introduces structural friction, hidden fee leakages, and opaque risk exposure:
+In India's fast-growing retail financial markets, investors maintain accounts across multiple segregated brokerages (**Zerodha Kite, Groww, Upstox Pro, Angel One, ICICI Direct**). This creates severe operational fragmentation, hidden recurring costs, and hazardous blind spots:
 
-1. **Depository Fee Leakage**: Holding identical scrips across multiple brokers drains investment capital via duplicate annual Depository Participant (DP) charges (~₹420/year per duplicated stock holding).
-2. **Opaque Multi-Asset Risk Exposure**: Retail investors cannot calculate their true portfolio-level annualized volatility ($\sigma$), Herfindahl-Hirschman asset concentration (HHI), or 95% Value-at-Risk (VaR) across segregated accounts.
-3. **Speculative Decision Making**: Over-reliance on social media noise and unverified tips rather than statistical machine learning directional probabilities, cross-asset correlations, and macroeconomic stress-testing.
-4. **Complex Asset Knowledge Gap**: High-yield and defensive asset classes (REITs, InvITs, G-Sec/SDL Bonds, Gold/Index ETFs, Derivatives) remain largely misunderstood or ignored by retail investors.
+1. **Recurring Depository Participant (DP) Charge Leakages**: Holding overlapping scrips across 2 to 3 brokerages bleeds capital through redundant annual DP fees and debit transaction charges (~₹420/year per duplicated stock holding across CDSL/NSDL).
+2. **Blind Multi-Asset Risk Exposure**: Retail investors have no unified system to calculate their true consolidated Annualized Volatility ($\sigma_{\text{ann}}$), Herfindahl-Hirschman asset concentration (HHI), or 95% 1-Month Value-at-Risk (VaR) across segregated accounts.
+3. **Severe Knowledge Deficit in Defensive & High-Yield Assets**: Despite India's booming infrastructure and commercial real estate markets, less than **3% of retail portfolios** allocate to **REITs**, **InvITs**, **Sovereign Green/G-Sec Bonds**, or **Gold/Index ETFs**, often due to complex jargon and lack of visual learning.
+4. **Dangerous Derivatives Over-Exposure**: As highlighted by SEBI's landmark empirical study, **9 out of 10 individual retail traders in equity Futures & Options (F&O) incur net financial losses**, primarily driven by reckless leverage and gambling mentalities rather than statistical machine learning and hedging.
 
 ### 💡 The Unify Solution
-**Unify** consolidates multi-broker telemetry into a single, real-time operating system. The platform integrates:
-- **Government CKYC & WebRTC Live Biometric Authentication**: Verified against NSDL, DigiLocker, and UIDAI Aadhaar.
-- **Client-Side Financial P&L Validator**: Real-time contract-note & CAS statement parsing with automatic duplicate scrip detection.
-- **Trader Classification Synchronization**: Instant profile-matching across *Fresher*, *Beginner*, *Intermediate*, *Advanced*, and *Pro* tiers.
-- **Institutional Multi-Scenario Risk Lab**: Value-at-Risk (VaR), 7×7 cross-asset correlation matrix, macro shock testing (RBI repo rate hike, tech correction, crude spike), and 1-click defensive basket rebalancing.
-- **XGBoost Machine Learning Stock Prediction Microservice**: Trained on 124,000+ daily OHLCV historical records across 50 Indian equities.
-- **Interactive Financial Masterclasses with Visual Metaphors**: 7 modules (Stocks, MFs, ETFs, Bonds, REITs, InvITs, F&O) equipped with dynamic concept simulators, 5-question mastery quizzes, and vetted SEBI/NSE/RBI knowledge vaults.
+**Unify** bridges this gap by unifying cross-broker portfolio data into an institutional-grade operating system with real-time risk telemetry, automated duplicate scrip detection, machine learning directional forecasts, and interactive visual masterclasses.
+
+---
+
+## 📸 Platform Visual Showcase
+
+### 1. Trusted Multi-Broker Ingestion & Regulatory CKYC
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="25%"><img src="public/logos/zerodha.webp" width="90" alt="Zerodha" /><br /><b>Zerodha Kite</b></td>
+      <td align="center" width="25%"><img src="public/logos/groww.png" width="90" alt="Groww" /><br /><b>Groww</b></td>
+      <td align="center" width="25%"><img src="public/logos/upstox.png" width="90" alt="Upstox" /><br /><b>Upstox Pro</b></td>
+      <td align="center" width="25%"><img src="public/logos/cdsl.webp" width="90" alt="CDSL" /><br /><b>CDSL / NSDL CAS</b></td>
+    </tr>
+    <tr>
+      <td align="center" width="25%"><img src="public/logos/aadhaar.png" width="80" alt="Aadhaar UIDAI" /><br /><b>UIDAI Aadhaar CKYC</b></td>
+      <td align="center" width="25%"><img src="public/logos/digilocker.svg" width="90" alt="DigiLocker" /><br /><b>DigiLocker Gateway</b></td>
+      <td align="center" width="25%"><img src="public/logos/nsdl.png" width="80" alt="NSDL" /><br /><b>NSDL PAN Verification</b></td>
+      <td align="center" width="25%"><img src="public/logos/unify-app-icon.png" width="80" alt="Unify Engine" /><br /><b>Biometric WebRTC Auth</b></td>
+    </tr>
+  </table>
+</div>
+
+### 2. 7 Asset Class Masterclasses with Real-World Imagery
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="25%"><img src="public/logos/stocks.jpg" width="180" style="border-radius: 12px;" /><br /><b>Equities & Bluechips</b></td>
+      <td align="center" width="25%"><img src="public/logos/mutual-funds.jpg" width="180" style="border-radius: 12px;" /><br /><b>Mutual Fund Baskets</b></td>
+      <td align="center" width="25%"><img src="public/logos/etfs.jpg" width="180" style="border-radius: 12px;" /><br /><b>Exchange Traded Funds</b></td>
+      <td align="center" width="25%"><img src="public/logos/bonds.jpg" width="180" style="border-radius: 12px;" /><br /><b>G-Sec & Corporate Bonds</b></td>
+    </tr>
+    <tr>
+      <td align="center" width="25%"><img src="public/logos/reits.jpg" width="180" style="border-radius: 12px;" /><br /><b>Commercial REIT IT Parks</b></td>
+      <td align="center" width="25%"><img src="public/logos/invits.jpg" width="180" style="border-radius: 12px;" /><br /><b>Highway & Power InvITs</b></td>
+      <td align="center" width="25%"><img src="public/logos/fno.jpg" width="180" style="border-radius: 12px;" /><br /><b>Futures & Options Leverage</b></td>
+      <td align="center" width="25%"><img src="public/logos/unify-icon.png" width="140" style="border-radius: 12px;" /><br /><b>Verified Financial Vault</b></td>
+    </tr>
+  </table>
+</div>
 
 ---
 
@@ -46,38 +81,38 @@ Indian retail investors face severe portfolio fragmentation across segregated br
 
 ```mermaid
 flowchart TD
-    subgraph Client ["Client Layer (Next.js 16 + React 19)"]
-        UI["Landing & Nav (`/`, `LandingClient.tsx`)"]
-        Onboarding["CKYC & Biometric Onboarding (`/onboarding`)"]
+    subgraph Client ["Client Layer (Next.js 16 Turbopack + React 19)"]
+        Landing["Landing Gateway (`/`, `LandingClient.tsx`)"]
+        Onboarding["Gov CKYC & Biometric Onboarding (`/onboarding`)"]
         Dashboard["Unified Dashboard (`/dashboard`)"]
-        Accounts["Accounts & Broker Sync (`/accounts`)"]
+        Accounts["Multi-Broker Ingestion (`/accounts`)"]
         Risk["Risk Diagnostics & Macro Lab (`/risk`)"]
         Learn["Interactive Academy (`/learn`, `/learn/[asset]`)"]
         PredictUI["ML Prediction Terminal (`/prediction`)"]
-        NewsUI["Live Market News Stream (`/news`)"]
+        NewsUI["Live Sentiment News Stream (`/news`)"]
         TimeMach["Multi-Asset Time Machine (`/time-machine`)"]
-        Assistant["Draggable AI Copilot (`AssistantWidget.tsx`)"]
+        Assistant["Draggable AI Financial Copilot (`AssistantWidget.tsx`)"]
     end
 
     subgraph Backend ["Serverless & Application Backend"]
-        NextAPI["Next.js Route Handlers (`/api/chat`, `/api/diagnostics`, `/api/news`)"]
-        PrismaORM["Prisma Client ORM"]
-        LocalDB[(SQLite Database `dev.db`)]
+        NextAPI["Next.js App Router API Routes (`/api/chat`, `/api/diagnostics`, `/api/news`)"]
+        PrismaORM["Prisma ORM (Schema Engine)"]
+        LocalDB[(SQLite Relational Database `dev.db`)]
     end
 
-    subgraph MLService ["Machine Learning Engine (FastAPI :8000)"]
+    subgraph MLService ["Machine Learning Microservice (FastAPI :8000)"]
         FastAPIApp["FastAPI Microservice (`main.py`)"]
-        XGBoostModel["Trained XGBoost Classifier Models"]
+        XGBoostModel["Trained XGBoost Classifier Ensemble"]
         ParquetData[("124,000+ Daily OHLCV Records (`stocks_processed.parquet`)")]
     end
 
-    subgraph External ["External Services & Regulators"]
-        UIDAI["DigiLocker / UIDAI CKYC Gateway"]
+    subgraph External ["External Services & Apex Regulators"]
+        UIDAI["DigiLocker / UIDAI Aadhaar CKYC Gateway"]
         NSE_SEBI["SEBI, NSE, RBI Knowledge Repositories"]
-        MarketRSS["Real-Time Financial News Feeds"]
+        MarketRSS["Real-Time Financial News Feeds (ET, Moneycontrol, Reuters)"]
     end
 
-    UI --> Onboarding
+    Landing --> Onboarding
     Onboarding --> UIDAI
     Onboarding --> Accounts
     Accounts --> Dashboard
@@ -86,7 +121,7 @@ flowchart TD
     Dashboard --> PredictUI
 
     Risk --> NextAPI
-    PredictUI -->|HTTP Fetch| FastAPIApp
+    PredictUI -->|Asynchronous Fetch| FastAPIApp
     FastAPIApp --> XGBoostModel
     XGBoostModel --> ParquetData
     Learn --> NSE_SEBI
@@ -100,103 +135,99 @@ flowchart TD
 
 ## ⚡ Core Platform Capabilities
 
-### 1. 🆔 Government CKYC & WebRTC Live Biometric Authentication (`/onboarding`)
-- **8-Step Frictionless Identity Pipeline**:
-  1. **Investor Profile**: Collects personal details with keyboard `<Enter>` rapid navigation.
-  2. **NSDL Depository PAN Verification**: Live NSDL verification with official branding.
-  3. **Mobile OTP Verification**: 6-digit OTP verification with instant demo-testing bypass.
-  4. **DigiLocker & UIDAI Aadhaar CKYC**: Redirects to verified `digilocker.gov.in` retrieval gateway with Aadhaar branding.
-  5. **WebRTC Camera Biometric Face Auth**: Real camera feed integration, face mesh alignment ring, active laser scanner animation, and biometric hash match.
-  6. **Multi-Broker Connection & P&L File Ingestion**:
-     - Connect Zerodha Kite, Groww, Upstox Pro, Angel One, and CDSL CAS.
-     - **Client-Side Financial P&L Validator**: Inspects uploaded files (`.pdf`, `.csv`, `.xlsx`) against financial contract note keywords (`P&L`, `Tax`, `CAS`, `Holdings`, `ISIN`), blocking non-financial files.
-     - **Interactive P&L Download Guides**: Step-by-step instructions for extracting verified statements from each broker.
-  7. **Trader Classification Assessment**: Automatically assesses risk profile and categorizes investor as **Fresher**, **Beginner**, **Intermediate**, **Advanced**, or **Pro Trader**.
+### 1. 🆔 Government CKYC & WebRTC Live Biometric Onboarding (`/onboarding`)
+* **8-Step Frictionless Identity Pipeline**:
+  1. **Personal Information**: Collects full name, email, and phone number with instant keyboard `<Enter>` rapid advance.
+  2. **NSDL Depository PAN Verification**: Live PAN format parsing with simulated NSDL verification.
+  3. **Mobile OTP Verification**: 6-digit OTP verification with instant testing bypass (`123456`).
+  4. **DigiLocker & UIDAI Aadhaar CKYC**: Redirects to verified DigiLocker gateway simulation with official Aadhaar branding.
+  5. **WebRTC Biometric Face Auth**: Real camera feed integration, face alignment mesh, active laser scanner animation, and biometric hash match.
+  6. **Multi-Broker Connection**: Connects Zerodha Kite, Groww, Upstox Pro, Angel One, and CDSL CAS.
+  7. **Client-Side Financial P&L Validator**: Inspects uploaded files (`.pdf`, `.csv`, `.xlsx`) against financial contract note keywords (`P&L`, `Tax`, `CAS`, `Holdings`, `ISIN`), blocking non-financial documents.
+  8. **Trader Classification Assessment**: Automatically assesses risk profile and categorizes investor as **Fresher**, **Beginner**, **Intermediate**, **Advanced**, or **Pro Trader**.
 
 ---
 
 ### 2. 📊 Consolidated Multi-Broker Telemetry Dashboard (`/dashboard`)
-- **Cross-Broker Aggregation**: Aggregates net portfolio valuation, unrealized P&L, day change, and asset allocations across all connected brokerages.
-- **Active Trader Tier Synchronization**: Synchronizes live telemetry with the user's selected trader classification level (`Fresher`, `Beginner`, `Intermediate`, `Advanced`, `Pro`).
-- **Interactive Trajectory Benchmark Graph**: Interactive multi-timeframe chart (`1M`, `6M`, `1Y`, `3Y`, `ALL`) allowing live alpha benchmarking against **Nifty 50**, **Sensex**, or **Gold**.
-- **Scrip Overlap & DP Fee Leak Detection**: Scans multi-broker portfolios for duplicate stock holdings (e.g., holding Reliance on both Zerodha and Groww) and computes annual Depository Participant (DP) fee savings.
-- **Granular Asset Allocation**: Recharts interactive donut visualization breaking down holdings across Stocks, Mutual Funds, ETFs, Bonds, REITs, InvITs, and Cash.
+* **Multi-Broker Portfolio Aggregation**: Merges net portfolio valuation, day's change, and unrealized returns across all connected brokers in one unified view.
+* **Active Trader Classification Tier**: Synchronizes live telemetry with the user's assessed tier (`Fresher`, `Beginner`, `Intermediate`, `Advanced`, `Pro`).
+* **Multi-Timeframe Benchmark Engine**: Interactive chart (`1M`, `6M`, `1Y`, `3Y`, `ALL`) allowing live alpha benchmarking against **Nifty 50**, **Sensex**, or **Gold**.
+* **Scrip Overlap & DP Fee Leak Detection**: Scans multi-broker portfolios for duplicate stock holdings (e.g., holding Reliance on both Zerodha and Groww) and computes annual Depository Participant (DP) fee savings.
+* **Granular Asset Allocation**: Recharts interactive donut visualization breaking down holdings across Stocks, Mutual Funds, ETFs, Bonds, REITs, InvITs, and Cash.
 
 ---
 
-### 3. 🛡️ Portfolio Risk Diagnostic & Macro Stress-Testing Lab (`/risk`)
-- **Composite Risk Score (0–100)**: Evaluates weighted portfolio risk based on Annualized Volatility ($\sigma$), Herfindahl Concentration Index (HHI), Maximum Historical Drawdown (MDD), and derivative leverage penalties.
-- **6 Core Quantitative Risk Metrics**:
-  - **Annualized Volatility ($\sigma_{\text{ann}}$)**: Standard deviation over 252 trading days.
-  - **95% 1-Month Value-at-Risk (VaR in ₹)**: Maximum expected rupee drawdown at a 95% confidence interval.
-  - **Maximum Historical Drawdown (MDD %)**: Peak-to-trough crash decline percentage.
-  - **Herfindahl Concentration Index (HHI)**: Asset class over-concentration metric.
-  - **Sharpe Ratio Efficiency**: Risk-adjusted excess return over the 6.5% risk-free rate.
-- **Live Unify AI Risk Copilot**: Context-aware assistant integrated into `/api/chat` with 1-click prompt pills for:
-  - *"Simulate an RBI 50 bps repo hike"*
-  - *"How does a 15% tech sector correction impact my holdings?"*
-  - *"Recommend a defensive hedging basket"*
-  - *"Explain my 95% 1-Month Value-at-Risk in plain English"*
-- **Macroeconomic Stress-Testing Lab**: Run instant scenario shocks calculating projected portfolio valuation, rupee P&L loss, and stressed VaR:
-  - 📉 *Tech Bubble Correction (-18.4% Tech, +3.1% Bonds)*
-  - 🏦 *RBI 50 bps Repo Rate Hike (-4.2% Equities, -1.8% Long Bonds, +0.8% Liquid Funds)*
-  - 🛢️ *Global Crude Oil Spike (+22% Energy, -6.8% Financials & FMCG)*
-  - 🛡️ *1-Click Defensive Rebalancing Basket Deployment* modal linked to execution.
+### 3. 🛡️ Quantitative Risk Diagnostic & Macro Stress-Testing Lab (`/risk`)
+* **Composite Risk Score (0–100)**: Evaluates weighted portfolio risk based on Annualized Volatility ($\sigma$), Herfindahl Concentration Index (HHI), Maximum Historical Drawdown (MDD), and derivative leverage penalties.
+* **6 Core Quantitative Risk Metrics**:
+  * **Annualized Volatility ($\sigma_{\text{ann}}$)**: Standard deviation over 252 trading days.
+  * **95% 1-Month Value-at-Risk (VaR in ₹)**: Maximum expected rupee drawdown at a 95% confidence interval.
+  * **Maximum Historical Drawdown (MDD %)**: Peak-to-trough crash decline percentage.
+  * **Herfindahl Concentration Index (HHI)**: Asset class over-concentration metric.
+  * **Sharpe Ratio Efficiency**: Risk-adjusted excess return over the 6.5% risk-free rate.
+* **Interactive Macroeconomic Stress-Testing**:
+  * 📉 *Tech Bubble Correction (-18.4% Tech, +3.1% Bonds)*
+  * 🏦 *RBI 50 bps Repo Rate Hike (-4.2% Equities, -1.8% Long Bonds, +0.8% Liquid Funds)*
+  * 🛢️ *Global Crude Oil Spike (+22% Energy, -6.8% Financials & FMCG)*
+  * 🛡️ *1-Click Defensive Rebalancing Basket Deployment* modal linked to execution.
+* **Actionable Risk Mitigation Buttons**:
+  * 🛡️ *Deploy Defensive Rebalancing Basket* modal with one-click portfolio stabilization.
+  * 🔄 *Rebalance to Balanced Risk Profile* with simulated risk-score normalization.
 
 ---
 
 ### 4. 🤖 XGBoost ML Stock Directional Prediction Engine (`/prediction`)
-- **FastAPI Machine Learning Microservice**: Python backend trained on **124,000+ daily OHLCV historical records** across 50 top Indian equities.
-- **Strict Chronological Data Split**: 80/20 train/test split with zero future lookahead data leakage.
-- **Feature Engineering Pipeline**:
-  - 14-day Relative Strength Index (RSI)
-  - 10-day and 50-day Exponential Moving Average (EMA) ratios
-  - 20-day rolling annualized volatility
-  - Lagged price returns (`return_1d`, `return_5d`)
-  - Volume momentum and OBV indicators
-- **Institutional Telemetry Output**: Directional prediction (*Bullish* vs. *Bearish*), probability confidence percentage, test set accuracy vs. naïve baseline, precision, recall, F1-score, feature importance rankings, and confusion matrix.
+* **FastAPI Machine Learning Microservice**: Python backend trained on **124,000+ daily OHLCV historical records** across 50 top Indian equities.
+* **Strict Chronological Data Split**: 80/20 train/test split with zero future lookahead data leakage.
+* **Feature Engineering Pipeline**:
+  * 14-day Relative Strength Index (RSI)
+  * 10-day and 50-day Exponential Moving Average (EMA) ratios
+  * 20-day rolling annualized volatility
+  * Lagged price returns (`return_1d`, `return_5d`)
+  * Volume momentum and OBV indicators
+* **Institutional Telemetry Output**: Directional prediction (*Bullish* vs. *Bearish*), probability confidence percentage, test set accuracy vs. naïve baseline, precision, recall, F1-score, feature importance rankings, and confusion matrix.
 
 ---
 
 ### 5. 📚 Interactive Financial Masterclasses & Knowledge Academy (`/learn`, `/learn/[asset]`)
-- **7 Asset Class Curriculum**: Dedicated modules for **Stocks**, **Mutual Funds**, **ETFs**, **Bonds**, **REITs**, **InvITs**, and **Futures & Options (F&O)**.
-- **Interactive Visual Concept Simulators**:
-  - 🏢 **REIT Skyscraper Simulator**: Build commercial Grade-A office floors and watch rental yield dividends accrue with high-contrast UI.
-  - 🍕 **Pizza Diversification Visualizer**: Slice allocator illustrating equity risk vs. mutual fund basket diversification.
-  - 🪙 **Bond Certificate & Coupon Streamer**: Simulate sovereign G-Sec yield drops and coupon cash distributions.
-  - 🚗 **InvIT Toll Highway Plaza**: Toll revenue collection simulator demonstrating infrastructure cash flows.
-  - 🛡️ **F&O Leverage Shield**: Call/Put position multiplier demonstrating asymmetric risk and theta time decay.
-- **Interactive Knowledge Challenges (5 Questions Per Module)**:
-  - 5 comprehensive, content-grounded multiple choice questions for every single module.
-  - Step-by-step interactive quiz stepper with live progress bar and instant score counter.
-  - High-contrast immediate answer feedback with detailed educational explanations.
-  - Completion trophy screen with percentage score and full review breakdown.
-- **Curated Official Knowledge Vault**:
-  - High-contrast, structured knowledge cards linking to official regulatory resources:
-  - **SEBI Official Portals**: SCORES 2.0, Investor Charter, and F&O Retail Loss Empirical Study (9/10 traders study).
-  - **NSE India Portals**: Order book matching guides, swing trading telemetry, ETF handbooks, and InvIT portals.
-  - **RBI Retail Direct**: Gilt account walkthroughs, Treasury Bills, and Sovereign Green Bonds.
-  - **Institutional Masterclasses**: In-app YouTube video modal player with zero distractions.
+* **7 Asset Class Curriculum**: Dedicated modules for **Stocks**, **Mutual Funds**, **ETFs**, **Bonds**, **REITs**, **InvITs**, and **Futures & Options (F&O)**.
+* **Interactive Visual Concept Simulators**:
+  * 🏢 **REIT Skyscraper Simulator**: Build commercial Grade-A office floors and watch rental yield dividends accrue with high-contrast UI.
+  * 🍕 **Pizza Diversification Visualizer**: Slice allocator illustrating equity risk vs. mutual fund basket diversification.
+  * 🪙 **Bond Certificate & Coupon Streamer**: Simulate sovereign G-Sec yield drops and coupon cash distributions.
+  * 🚗 **InvIT Toll Highway Plaza**: Toll revenue collection simulator demonstrating infrastructure cash flows.
+  * ⚡ **F&O Leverage Shield**: Call/Put position multiplier demonstrating asymmetric risk and theta time decay.
+* **Interactive Knowledge Challenges (5 Questions Per Module)**:
+  * 5 comprehensive, content-grounded multiple choice questions for every single module (35 questions total).
+  * Step-by-step interactive quiz stepper with live progress bar and instant score counter.
+  * High-contrast immediate answer feedback with detailed educational explanations.
+  * Completion trophy screen with percentage score and full review breakdown.
+* **Curated Official Knowledge Vault**:
+  * High-contrast, structured knowledge cards linking to official regulatory resources:
+  * **SEBI Official Portals**: SCORES 2.0, Investor Charter, and F&O Retail Loss Empirical Study.
+  * **NSE India Portals**: Order book matching guides, swing trading telemetry, ETF handbooks, and InvIT portals.
+  * **RBI Retail Direct**: Gilt account walkthroughs, Treasury Bills, and Sovereign Green Bonds.
+  * **Institutional Masterclasses**: In-app YouTube video modal player with zero distractions.
 
 ---
 
 ### 6. 📰 Animated Financial Market News Stream (`/news`)
-- **Live Financial News Aggregator**: Real-time business updates ingested from **The Economic Times, Times of India (Business), Moneycontrol, Financial Express, and Reuters**.
-- **Automated Sentiment Classification**: Filter headlines by sentiment tag (*BULLISH / BEARISH / NEUTRAL*), market impact, and publisher category.
-- **Fluid Animation**: Framer Motion staggered entrance animations with live market ticker indicators.
+* **Live Financial News Aggregator**: Real-time business updates ingested from **The Economic Times, Times of India (Business), Moneycontrol, Financial Express, and Reuters**.
+* **Automated Sentiment Classification**: Filter headlines by sentiment tag (*BULLISH / BEARISH / NEUTRAL*), market impact, and publisher category.
+* **Fluid Animation**: Framer Motion staggered entrance animations with live market ticker indicators.
 
 ---
 
 ### 7. ⏰ Multi-Asset Time Machine Historical SIP Simulator (`/time-machine`)
-- **Historical Backtesting Engine**: Simulate Lump Sum and Monthly SIP compounding growth across Equities, Bonds, REITs, InvITs, and Mutual Funds over custom date ranges.
-- **Drawdown & Pain Index Analytics**: Calculates historical CAGR, Maximum Historical Drawdown, and rolling calendar year returns.
+* **Historical Backtesting Engine**: Simulate Lump Sum and Monthly SIP compounding growth across Equities, Bonds, REITs, InvITs, and Mutual Funds over custom date ranges.
+* **Drawdown & Pain Index Analytics**: Calculates historical CAGR, Maximum Historical Drawdown, and rolling calendar year returns.
 
 ---
 
 ### 8. 💬 Draggable Unify AI Financial Assistant (`AssistantWidget.tsx`, `/api/chat`)
-- **Viewport-Free Draggable Panel**: Floating assistant window with drag handles that can be freely positioned anywhere on the screen.
-- **Structured Typography & Markdown Parser**: Renders formatted markdown, numbered badges, bullet points, and clickable in-app navigation pills (`/risk`, `/prediction`, `/learn`).
-- **Conversational Awareness**: Contextually understands user portfolio metrics, answered quizzes, and macro scenarios.
+* **Viewport-Free Draggable Panel**: Floating assistant window with drag handles that can be freely positioned anywhere on the screen.
+* **Structured Typography & Markdown Parser**: Renders formatted markdown, numbered badges, bullet points, and clickable in-app navigation pills (`/risk`, `/prediction`, `/learn`).
+* **Conversational Awareness**: Contextually understands user portfolio metrics, answered quizzes, and macro scenarios.
 
 ---
 
@@ -235,7 +266,7 @@ $$\text{VaR}_{95\%} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\
 | Layer | Technologies |
 | :--- | :--- |
 | **Frontend Framework** | **Next.js 16.4.0 (Turbopack)**, **React 19.3.0**, **TypeScript 5** |
-| **Styling & Design System** | **Tailwind CSS v4.0**, CSS Variables, Dark/Light Theme Switching |
+| **Styling & Design System** | **Tailwind CSS v4.0**, CSS Variables, High-Contrast Typography |
 | **Animation & Motion** | **Framer Motion 14.0**, Custom SVG Canvas Visualizers |
 | **Data Visualization** | **Recharts 3.10.1**, Custom Canvas Visualizers, SVG Gauges |
 | **Backend & APIs** | Next.js App Router API Routes (`/api/chat`, `/api/diagnostics`, `/api/news`) |
@@ -249,9 +280,9 @@ $$\text{VaR}_{95\%} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\
 ## 🚀 Local Installation & Quickstart Guide
 
 ### Prerequisites
-- **Node.js**: `v18.0.0` or higher (Recommended: Node `v20+`)
-- **npm**: `v9.0.0` or higher
-- **Python**: `v3.9` or higher
+* **Node.js**: `v18.0.0` or higher (Recommended: Node `v20+`)
+* **npm**: `v9.0.0` or higher
+* **Python**: `v3.9` or higher
 
 ---
 
@@ -305,7 +336,7 @@ source data_venv/bin/activate
 cd ml-service
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
-> The FastAPI service will be live at: **`http://localhost:8000`** (Docs at `/docs`)
+> The FastAPI service will be live at: **`http://localhost:8000`** (Interactive docs at `/docs`)
 
 ---
 
