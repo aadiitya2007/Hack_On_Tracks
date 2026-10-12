@@ -21,10 +21,10 @@ export default function LearnIndex() {
       {/* Academy Hero Header */}
       <div className="flex flex-col gap-2">
         <div className="sub-heading">Financial Engine Modules</div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-text-primary tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-black text-text-primary tracking-tight">
           Learn & Simulate
         </h1>
-        <p className="text-text-secondary text-base sm:text-lg max-w-2xl mt-1 leading-relaxed">
+        <p className="text-text-secondary text-base sm:text-lg max-w-2xl mt-1 leading-relaxed font-medium">
           Master the mechanics of 7 core asset classes. Read plain-language breakdowns, chat with virtual mentors, and experiment with risk-free interactive simulations.
         </p>
       </div>
@@ -43,7 +43,7 @@ export default function LearnIndex() {
                 <img src={mod.logo} alt={mod.title} className="w-full h-full object-cover" />
               </div>
               <h2 className="text-2xl font-black mb-1.5 text-text-primary group-hover:text-accent transition-colors">{mod.title}</h2>
-              <p className="text-text-secondary font-medium text-xs sm:text-sm mb-6 flex-1 leading-relaxed">{mod.subtitle}</p>
+              <p className="text-text-secondary font-semibold text-sm sm:text-base mb-6 flex-1 leading-relaxed">{mod.subtitle}</p>
               
               <div className="w-full flex items-center justify-between pt-5 border-t border-border">
                 <div className="flex items-center gap-2">
@@ -51,7 +51,7 @@ export default function LearnIndex() {
                     <circle cx="10" cy="10" r="8" stroke="var(--border)" strokeWidth="2.5" fill="none" />
                     <circle cx="10" cy="10" r="8" stroke={mod.color} strokeWidth="2.5" fill="none" strokeDasharray="50.2" strokeDashoffset="50.2" />
                   </svg>
-                  <span className="text-[11px] font-bold text-text-muted">Interactive Module</span>
+                  <span className="text-xs font-bold text-text-muted">Interactive Module</span>
                 </div>
                 {mod.id === 'stocks' && (
                   <span className="text-[10px] uppercase font-extrabold text-accent bg-accent-bg px-2.5 py-1 rounded-md border border-accent/20">Recommended</span>

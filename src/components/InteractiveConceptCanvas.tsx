@@ -92,9 +92,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🍕 PIZZA & ASSET BASKET ANIMATION (For Stocks, Mutual Funds, ETFs) */}
       {(assetKey.includes('stock') || assetKey.includes('fund') || assetKey.includes('etf')) && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 text-xs font-semibold flex items-center gap-2.5">
-            <Sparkles size={18} className="text-amber-700 dark:text-amber-400 shrink-0" />
-            <span className="leading-relaxed">
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-500/50 text-amber-950 text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs">
+            <Sparkles size={20} className="text-amber-700 shrink-0" />
+            <span className="leading-relaxed font-bold">
               {assetKey.includes('fund') 
                 ? '🍕 Mutual Fund Pizza Metaphor: Multiple investors pool money to purchase a full pizza packed with diverse company toppings!'
                 : assetKey.includes('etf')
@@ -189,9 +189,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🏢 REITS SKYSCRAPER TOWER ANIMATION (For REITs) */}
       {assetKey.includes('reit') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-950 dark:text-teal-200 text-xs font-semibold flex items-center gap-2.5">
-            <Building2 size={18} className="text-teal-700 dark:text-teal-300 shrink-0" />
-            <span className="leading-relaxed">
+          <div className="p-4 sm:p-5 rounded-2xl bg-teal-50 border-2 border-teal-500/50 text-teal-950 text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs">
+            <Building2 size={20} className="text-teal-700 shrink-0" />
+            <span className="leading-relaxed font-bold">
               🏢 REIT Skyscraper Metaphor: Own fractionated floors of prime commercial IT parks without needing ₹50 Crore to buy the entire tower!
             </span>
           </div>
@@ -206,13 +206,13 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   initial={{ opacity: 0, y: -20, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.3, delay: idx * 0.08 }}
-                  className="h-10 rounded-xl bg-teal-600/15 border border-teal-500/40 dark:bg-teal-700/40 dark:border-teal-400/50 flex items-center justify-between px-3 text-xs font-black shadow-sm"
+                  className="h-10 rounded-xl bg-teal-50 border border-teal-500/40 flex items-center justify-between px-3 text-xs font-black shadow-xs"
                 >
-                  <div className="flex items-center gap-2 text-teal-950 dark:text-teal-100">
-                    <Building2 size={14} className="text-teal-700 dark:text-teal-300" />
+                  <div className="flex items-center gap-2 text-teal-950">
+                    <Building2 size={14} className="text-teal-700" />
                     <span className="font-extrabold">Floor #{idx + 1} Rent</span>
                   </div>
-                  <span className="font-mono font-black text-emerald-800 dark:text-emerald-300 text-xs">₹{(idx + 1) * 1250}</span>
+                  <span className="font-mono font-black text-emerald-800 text-xs">₹{(idx + 1) * 1250}</span>
                 </motion.div>
               ))}
               <div className="py-1.5 rounded-t-xl bg-slate-800 text-[9px] font-black text-center text-slate-100 uppercase tracking-wider shadow-sm">
@@ -225,7 +225,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Commercial Building Floors</span>
-                  <span className="font-mono font-black text-teal-800 dark:text-teal-300 text-sm">{floors} Floors</span>
+                  <span className="font-mono font-black text-teal-800 text-sm">{floors} Floors</span>
                 </div>
                 <input 
                   type="range" 
@@ -237,13 +237,13 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-teal-600"
                 />
                 <p className="text-[10px] text-text-secondary">
-                  Quarterly tenant rental yield generated: <strong className="font-mono font-black text-emerald-700 dark:text-emerald-400">₹{(floors * 1250 * 4).toLocaleString('en-IN')}/yr</strong>
+                  Quarterly tenant rental yield generated: <strong className="font-mono font-black text-emerald-700">₹{(floors * 1250 * 4).toLocaleString('en-IN')}/yr</strong>
                 </p>
               </div>
 
               <button 
                 onClick={() => setFloors(prev => (prev >= 8 ? 2 : prev + 1))}
-                className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500/25 dark:text-teal-100 dark:border dark:border-teal-400/40 font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>🏢 Build Another REIT Floor (+1)</span>
               </button>
@@ -256,9 +256,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 📜 BONDS GOLDEN TREASURY CERTIFICATE & YIELD COINS ANIMATION */}
       {assetKey.includes('bond') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-950 dark:text-amber-200 text-xs font-semibold flex items-center gap-2.5">
-            <Landmark size={18} className="text-amber-700 dark:text-amber-400 shrink-0" />
-            <span className="leading-relaxed">
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-500/50 text-amber-950 text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs">
+            <Landmark size={20} className="text-amber-700 shrink-0" />
+            <span className="leading-relaxed font-bold">
               📜 Bond IOU Metaphor: Become a lender to governments & AAA corporations! Receive guaranteed periodic interest coupon payments.
             </span>
           </div>
@@ -305,7 +305,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Interest Coupon Coins</span>
-                  <span className="font-mono font-black text-amber-800 dark:text-amber-300 text-sm">{coinsCount} Payouts</span>
+                  <span className="font-mono font-black text-amber-800 text-sm">{coinsCount} Payouts</span>
                 </div>
                 <input 
                   type="range" 
@@ -317,13 +317,13 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                   className="w-full h-2 bg-bg rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
                 <p className="text-[10px] text-text-secondary">
-                  Guaranteed Annual Income: <strong className="font-mono font-black text-emerald-700 dark:text-emerald-400">₹7,500/yr</strong>
+                  Guaranteed Annual Income: <strong className="font-mono font-black text-emerald-700">₹7,500/yr</strong>
                 </p>
               </div>
 
               <button 
                 onClick={() => setCoinsCount(prev => (prev >= 6 ? 2 : prev + 1))}
-                className="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white dark:bg-amber-500/25 dark:text-amber-100 dark:border dark:border-amber-400/40 font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black shadow-md transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>🪙 Simulate Interest Coupon Payout</span>
               </button>
@@ -336,9 +336,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🌉 INVIT HIGHWAY & INFRASTRUCTURE TOWER ANIMATION */}
       {assetKey.includes('invit') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-950 dark:text-purple-200 text-xs font-semibold flex items-center gap-2.5">
-            <Landmark size={18} className="text-purple-700 dark:text-purple-400 shrink-0" />
-            <span className="leading-relaxed">
+          <div className="p-4 sm:p-5 rounded-2xl bg-purple-50 border-2 border-purple-500/50 text-purple-950 text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs">
+            <Landmark size={20} className="text-purple-700 shrink-0" />
+            <span className="leading-relaxed font-bold">
               🌉 InvIT Infrastructure Metaphor: Own a share of national highways, toll plazas & power transmission lines that generate constant toll cashflows!
             </span>
           </div>
@@ -376,8 +376,8 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
             </div>
 
             <div className="text-center space-y-1">
-              <span className="text-xs font-black text-purple-950 dark:text-purple-200">National Highway Toll Plaza Cashflow</span>
-              <p className="text-[11px] text-text-secondary">Vehicles passing through toll gates generate quarterly cash payouts directly into your bank account!</p>
+              <span className="text-xs font-black text-purple-950">National Highway Toll Plaza Cashflow</span>
+              <p className="text-[11px] text-text-secondary font-medium">Vehicles passing through toll gates generate quarterly cash payouts directly into your bank account!</p>
             </div>
           </div>
         </div>
@@ -386,9 +386,9 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
       {/* 🚀 FUTURES & OPTIONS LEVERAGE SHIELD ANIMATION */}
       {assetKey.includes('future') && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-950 dark:text-rose-200 text-xs font-semibold flex items-center gap-2.5">
-            <ShieldAlert size={18} className="text-rose-700 dark:text-rose-400 shrink-0" />
-            <span className="leading-relaxed">
+          <div className="p-4 sm:p-5 rounded-2xl bg-rose-50 border-2 border-rose-500/50 text-rose-950 text-xs sm:text-sm font-bold flex items-center gap-3 shadow-xs">
+            <ShieldAlert size={20} className="text-rose-700 shrink-0" />
+            <span className="leading-relaxed font-bold">
               ⚡ F&O Leverage Metaphor: Make financial contracts on directional price moves. Call Options bet UP ↗; Put Options bet DOWN ↘. High multiplier leverage!
             </span>
           </div>
@@ -402,7 +402,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                 animate={{ scale: positionType === 'CALL' ? 1.05 : 0.95 }}
                 className={`p-5 rounded-3xl border-2 text-center space-y-2 cursor-pointer transition-all ${
                   positionType === 'CALL' 
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg dark:bg-emerald-950 dark:border-emerald-500 dark:text-emerald-200' 
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg font-bold' 
                     : 'bg-surface border-border text-text-secondary hover:text-text-primary'
                 }`}
               >
@@ -415,7 +415,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
                 animate={{ scale: positionType === 'PUT' ? 1.05 : 0.95 }}
                 className={`p-5 rounded-3xl border-2 text-center space-y-2 cursor-pointer transition-all ${
                   positionType === 'PUT' 
-                    ? 'bg-rose-600 text-white border-rose-600 shadow-lg dark:bg-rose-950 dark:border-rose-500 dark:text-rose-200' 
+                    ? 'bg-rose-600 text-white border-rose-600 shadow-lg font-bold' 
                     : 'bg-surface border border-border text-text-secondary hover:text-text-primary'
                 }`}
               >
@@ -429,7 +429,7 @@ export function InteractiveConceptCanvas({ assetId, title }: { assetId: ConceptT
               <div className="p-4 rounded-2xl bg-surface border border-border space-y-2">
                 <div className="flex justify-between font-extrabold text-text-primary">
                   <span>Derivatives Leverage Multiplier</span>
-                  <span className="font-mono font-black text-rose-700 dark:text-rose-400 text-sm">{leverage}x Leverage</span>
+                  <span className="font-mono font-black text-rose-700 text-sm">{leverage}x Leverage</span>
                 </div>
                 <input 
                   type="range" 

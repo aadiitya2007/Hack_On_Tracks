@@ -121,9 +121,9 @@ export function ExternalKnowledgeVault({
               {/* Card Header & Badges */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-xl border inline-flex items-center gap-1.5 shadow-sm ${
+                  <span className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-xl border inline-flex items-center gap-1.5 shadow-xs ${
                     isGovOrRegulator
-                      ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/30'
+                      ? 'bg-emerald-50 text-emerald-900 border-emerald-500/40'
                       : 'bg-accent/15 text-accent border-accent/30'
                   }`}>
                     {isGovOrRegulator ? <ShieldCheck size={13} className="shrink-0" /> : <Award size={13} className="shrink-0" />}

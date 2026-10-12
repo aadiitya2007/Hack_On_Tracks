@@ -236,22 +236,22 @@ export default function Dialogue({ messages }: { messages: Message[] }) {
                 {/* Message Bubble */}
                 <div className={`max-w-[82%] sm:max-w-[75%] space-y-1.5 ${!isMentor ? 'items-end' : ''}`}>
                   <div className={`flex items-center gap-2 ${!isMentor ? 'justify-end' : ''}`}>
-                    <span className="text-[10px] font-extrabold text-text-muted">
+                    <span className="text-xs font-black text-text-secondary">
                       {isMentor ? 'Meera • SEBI Certified Wealth Mentor' : 'Aditya • You'}
                     </span>
                     {msg.tag && (
-                      <span className="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-surface border border-border text-accent">
+                      <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-surface border border-border text-accent">
                         {msg.tag}
                       </span>
                     )}
                   </div>
 
-                  <div className={`p-4 rounded-3xl text-sm leading-relaxed shadow-sm font-medium ${
+                  <div className={`p-4 sm:p-5 rounded-3xl text-sm sm:text-base leading-relaxed shadow-sm font-medium ${
                     !isMentor
                       ? 'bg-accent text-white rounded-tr-none shadow-accent/20'
                       : 'bg-bg border border-border/80 text-text-primary rounded-tl-none'
                   }`}>
-                    <p>{msg.text}</p>
+                    <p className="leading-relaxed">{msg.text}</p>
 
                     {/* Actionable jump button inside dialogue */}
                     {msg.actionText && (

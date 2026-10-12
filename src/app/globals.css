@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-background: var(--bg);
   --color-surface: var(--surface);
@@ -28,7 +30,7 @@
   --color-asset-funds: var(--asset-funds);
   --color-asset-cash: var(--asset-cash);
 
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -37,15 +39,15 @@
 
 @layer base {
   :root {
-    /* VIBRANT LIGHT THEME (Alizo-inspired) */
-    --bg: #FAFAFA;          /* Very light grey almost white */
+    /* VIBRANT HIGH-CONTRAST LIGHT THEME */
+    --bg: #FAFAFA;          /* Very light grey */
     --surface: #FFFFFF;      /* Pure white cards */
     --surface-hover: #F8F9FA;/* Barely there hover */
-    --border: #F1F5F9;       /* Ultra-faint border */
+    --border: #E2E8F0;       /* Crisp clean border */
     
-    --text-primary: #111827;   /* Bold black/dark-grey */
-    --text-secondary: #4B5563; /* Medium grey for readability */
-    --text-muted: #9CA3AF;     /* Light grey */
+    --text-primary: #0F172A;   /* Deep slate-900: Razor-sharp legibility */
+    --text-secondary: #334155; /* Slate-700: High-contrast comfortable reading */
+    --text-muted: #64748B;     /* Slate-500: Clear accessible subtle text (WCAG AA) */
     
     /* ALIZO PURPLE ACCENT */
     --accent: #6D28D9;       /* Vibrant Purple */

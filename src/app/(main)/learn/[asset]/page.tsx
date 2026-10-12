@@ -90,10 +90,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
           </span>
         </div>
         
-        <h1 className="text-4xl md:text-5xl font-extrabold text-text-primary font-sans tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-text-primary font-sans tracking-tight mb-3">
           {lesson.title}
         </h1>
-        <p className="text-xl text-text-secondary font-medium leading-relaxed">
+        <p className="text-lg sm:text-xl text-text-secondary font-semibold leading-relaxed">
           {lesson.subtitle}
         </p>
       </div>
@@ -107,13 +107,13 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
 
       {/* 1. What is it? */}
       <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-        <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
+        <h2 className="text-2xl font-black text-text-primary flex items-center gap-2">
           <Sparkles className="text-accent" size={24} />
           What are {lesson.title.toLowerCase()}?
         </h2>
-        <div className="card p-8 bg-surface border border-border space-y-4 rounded-3xl">
+        <div className="card p-6 sm:p-8 bg-surface border border-border space-y-4 rounded-3xl">
           {lesson.whatItIs.map((paragraph, i) => (
-            <p key={i} className="text-text-secondary text-base leading-relaxed">
+            <p key={i} className="text-text-primary text-base sm:text-lg leading-relaxed font-normal">
               {paragraph}
             </p>
           ))}
@@ -128,7 +128,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       {/* Key Categories / Types (if present, e.g., Mutual Funds) */}
       {lesson.keyTypes && lesson.keyTypes.length > 0 && (
         <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-          <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
+          <h2 className="text-2xl font-black text-text-primary flex items-center gap-2">
             <Layers className="text-accent" size={24} />
             Key Types of {lesson.title}
           </h2>
@@ -136,10 +136,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
             {lesson.keyTypes.map((kt, i) => (
               <div key={i} className="card p-6 bg-surface border border-border rounded-2xl flex flex-col justify-between">
                 <div>
-                  <h3 className="font-extrabold text-sm text-text-primary mb-2">{kt.title}</h3>
-                  <p className="text-xs text-text-secondary mb-4 leading-relaxed">{kt.desc}</p>
+                  <h3 className="font-black text-base text-text-primary mb-2">{kt.title}</h3>
+                  <p className="text-sm text-text-secondary mb-4 leading-relaxed font-medium">{kt.desc}</p>
                 </div>
-                <div className="p-3 rounded-xl bg-bg border border-border text-[11px] font-bold text-accent">
+                <div className="p-3 rounded-xl bg-bg border border-border text-xs font-bold text-accent">
                   🎯 Goal: {kt.goal}
                 </div>
               </div>
@@ -151,19 +151,19 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       {/* 2. How it works */}
       {lesson.howItWorks && lesson.howItWorks.length > 0 && (
         <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-          <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
+          <h2 className="text-2xl font-black text-text-primary flex items-center gap-2">
             <BarChart3 className="text-accent" size={24} />
             How do they work?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {lesson.howItWorks.map((step, i) => (
               <div key={i} className="card p-6 bg-surface border border-border rounded-2xl flex gap-4 items-start">
-                <div className="w-9 h-9 rounded-2xl bg-accent-bg text-accent flex items-center justify-center font-extrabold text-sm shrink-0 border border-accent/20">
+                <div className="w-10 h-10 rounded-2xl bg-accent-bg text-accent flex items-center justify-center font-black text-base shrink-0 border border-accent/20">
                   {i + 1}
                 </div>
                 <div>
-                  <h3 className="font-bold text-text-primary text-sm mb-1">{step.step}</h3>
-                  <p className="text-text-secondary text-xs leading-relaxed">{step.desc}</p>
+                  <h3 className="font-black text-text-primary text-base mb-1">{step.step}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed font-medium">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -175,11 +175,11 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       <motion.section id="return-simulator" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
         <div className="flex items-center gap-2">
           <Sliders className="text-accent" size={24} />
-          <h2 className="text-2xl font-extrabold text-text-primary">How much return can they generate?</h2>
+          <h2 className="text-2xl font-black text-text-primary">How much return can they generate?</h2>
         </div>
 
-        <div className="card p-8 bg-surface border border-border rounded-3xl space-y-6">
-          <p className="text-sm text-text-secondary">
+        <div className="card p-6 sm:p-8 bg-surface border border-border rounded-3xl space-y-6">
+          <p className="text-sm sm:text-base text-text-secondary font-medium leading-relaxed">
             {lesson.title} do not offer guaranteed returns. Your outcome depends on asset performance, market conditions, and entry price. Use the interactive controls below to simulate gains and losses:
           </p>
 
@@ -244,14 +244,14 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
         
         {/* Advantages */}
         <motion.section initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-          <h2 className="text-xl font-extrabold text-gain flex items-center gap-2">
-            <TrendingUp size={20} /> Key Advantages
+          <h2 className="text-xl font-black text-gain flex items-center gap-2">
+            <TrendingUp size={22} /> Key Advantages
           </h2>
           <div className="space-y-3">
             {lesson.advantages.map((adv, i) => (
               <div key={i} className="card p-4 bg-surface border border-gain/20 rounded-2xl flex gap-3 items-start">
-                <CheckCircle2 className="text-gain shrink-0 mt-0.5" size={18} />
-                <span className="text-text-secondary text-xs leading-relaxed font-medium">{adv}</span>
+                <CheckCircle2 className="text-gain shrink-0 mt-0.5" size={20} />
+                <span className="text-text-primary text-sm leading-relaxed font-medium">{adv}</span>
               </div>
             ))}
           </div>
@@ -259,14 +259,14 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
 
         {/* Risks */}
         <motion.section initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-          <h2 className="text-xl font-extrabold text-loss flex items-center gap-2">
-            <TrendingDown size={20} /> Key Risks
+          <h2 className="text-xl font-black text-loss flex items-center gap-2">
+            <TrendingDown size={22} /> Key Risks
           </h2>
           <div className="space-y-3">
             {lesson.risks.map((risk, i) => (
               <div key={i} className="card p-4 bg-surface border border-loss/20 rounded-2xl flex gap-3 items-start">
-                <XCircle className="text-loss shrink-0 mt-0.5" size={18} />
-                <span className="text-text-secondary text-xs leading-relaxed font-medium">{risk}</span>
+                <XCircle className="text-loss shrink-0 mt-0.5" size={20} />
+                <span className="text-text-primary text-sm leading-relaxed font-medium">{risk}</span>
               </div>
             ))}
           </div>
@@ -277,7 +277,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
       {/* 5. India Context Statistics */}
       {lesson.snapshotStats && lesson.snapshotStats.length > 0 && (
         <motion.section initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-          <h2 className="text-2xl font-extrabold text-text-primary flex items-center gap-2">
+          <h2 className="text-2xl font-black text-text-primary flex items-center gap-2">
             <BarChart3 className="text-accent" size={24} />
             Asset Class Performance & Industry Statistics (India Context)
           </h2>
@@ -285,10 +285,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
             {lesson.snapshotStats.map((stat, i) => (
               <div key={i} className="card p-5 bg-surface border border-border rounded-2xl flex flex-col justify-between">
                 <div>
-                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">{stat.label}</p>
-                  <p className="text-2xl font-black text-text-primary">{stat.value}</p>
+                  <p className="text-[11px] font-extrabold text-text-muted uppercase tracking-wider mb-1">{stat.label}</p>
+                  <p className="text-2xl sm:text-3xl font-black text-text-primary font-mono">{stat.value}</p>
                 </div>
-                <p className="text-[11px] text-text-secondary mt-3 pt-2 border-t border-border leading-relaxed">{stat.desc}</p>
+                <p className="text-xs text-text-secondary mt-3 pt-2 border-t border-border leading-relaxed font-medium">{stat.desc}</p>
               </div>
             ))}
           </div>
@@ -301,10 +301,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
           <div className="flex items-center gap-2">
             <HelpCircle className="text-accent" size={24} />
             <div>
-              <h2 className="text-2xl font-extrabold text-text-primary">
+              <h2 className="text-2xl sm:text-3xl font-black text-text-primary">
                 Interactive Knowledge Challenge
               </h2>
-              <p className="text-xs text-text-secondary">
+              <p className="text-sm text-text-secondary font-medium">
                 5 comprehensive questions testing mastery of {lesson.title} concepts.
               </p>
             </div>
@@ -337,10 +337,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
             <>
               {/* Question */}
               <div className="space-y-2">
-                <span className="text-[11px] font-black uppercase tracking-wider text-text-muted block">
+                <span className="text-xs font-black uppercase tracking-wider text-text-muted block">
                   Question #{currentQIndex + 1}
                 </span>
-                <h3 className="font-extrabold text-base sm:text-lg text-text-primary leading-relaxed">
+                <h3 className="font-black text-base sm:text-lg text-text-primary leading-relaxed">
                   {activeQuestion.question}
                 </h3>
               </div>
@@ -365,11 +365,11 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
                       key={i}
                       onClick={() => handleOptionSelect(i)}
                       disabled={submitted}
-                      className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex justify-between items-center cursor-pointer ${btnStyle}`}
+                      className={`w-full text-left p-4 sm:p-5 rounded-2xl border text-sm sm:text-base font-medium transition-all flex justify-between items-center cursor-pointer ${btnStyle}`}
                     >
-                      <span className="leading-relaxed">{opt}</span>
-                      {submitted && isCorrect && <CheckCircle2 size={18} className="text-gain shrink-0 ml-2" />}
-                      {submitted && isSelected && !isCorrect && <XCircle size={18} className="text-loss shrink-0 ml-2" />}
+                      <span className="leading-relaxed font-medium">{opt}</span>
+                      {submitted && isCorrect && <CheckCircle2 size={20} className="text-gain shrink-0 ml-2" />}
+                      {submitted && isSelected && !isCorrect && <XCircle size={20} className="text-loss shrink-0 ml-2" />}
                     </button>
                   );
                 })}
@@ -380,23 +380,23 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
                 <button
                   onClick={handleQuizSubmit}
                   disabled={selectedOption === null}
-                  className="btn-primary w-full py-3 text-xs sm:text-sm font-extrabold shadow-md disabled:opacity-50 cursor-pointer"
+                  className="btn-primary w-full py-3.5 text-sm font-black shadow-md disabled:opacity-50 cursor-pointer"
                 >
                   Submit Answer
                 </button>
               ) : (
                 <div className="space-y-4">
                   {/* Learning Explanation */}
-                  <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-accent-bg border border-accent/30 text-accent text-xs sm:text-sm space-y-1.5">
-                    <p className="font-extrabold flex items-center gap-1.5">
-                      <Award size={16} /> Learning Explanation:
+                  <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="p-4 sm:p-5 rounded-2xl bg-accent-bg border border-accent/30 text-accent text-sm space-y-2">
+                    <p className="font-extrabold flex items-center gap-1.5 text-accent">
+                      <Award size={18} /> Learning Explanation:
                     </p>
-                    <p className="text-text-secondary leading-relaxed font-medium">{activeQuestion.explanation}</p>
+                    <p className="text-text-primary leading-relaxed font-medium">{activeQuestion.explanation}</p>
                   </motion.div>
 
                   <button
                     onClick={handleNextQuestion}
-                    className="w-full py-3 rounded-2xl bg-accent hover:bg-accent/90 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-2xl bg-accent hover:bg-accent/90 text-white font-black text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     <span>{currentQIndex < questions.length - 1 ? `Next Question (${currentQIndex + 2}/${questions.length}) →` : 'Complete Challenge & View Results 🎉'}</span>
                   </button>
@@ -417,7 +417,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
                 <h3 className="text-2xl sm:text-3xl font-black text-text-primary">
                   You scored {correctAnswersCount} / {questions.length} ({Math.round((correctAnswersCount / questions.length) * 100)}%)
                 </h3>
-                <p className="text-xs sm:text-sm text-text-secondary max-w-md mx-auto">
+                <p className="text-sm text-text-secondary max-w-md mx-auto font-medium">
                   {correctAnswersCount === questions.length 
                     ? `🏆 Perfect score! You have thoroughly mastered all core mechanics of ${lesson.title}.`
                     : correctAnswersCount >= 3
@@ -435,7 +435,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
                   return (
                     <div key={idx} className="p-4 rounded-2xl bg-bg border border-border space-y-2">
                       <div className="flex justify-between items-start gap-2">
-                        <span className="font-extrabold text-xs text-text-primary">
+                        <span className="font-extrabold text-xs sm:text-sm text-text-primary">
                           #{idx + 1}. {q.question}
                         </span>
                         {ans?.isCorrect ? (
@@ -448,10 +448,10 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] text-gain font-bold">
+                      <p className="text-xs text-gain font-bold">
                         ✓ Correct Answer: {q.options[q.correctIndex]}
                       </p>
-                      <p className="text-[11px] text-text-secondary leading-relaxed">
+                      <p className="text-xs text-text-secondary leading-relaxed font-medium">
                         💡 {q.explanation}
                       </p>
                     </div>
@@ -476,7 +476,7 @@ export default function AssetLesson({ params }: { params: Promise<{ asset: strin
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-accent px-3 py-1 rounded-full bg-surface border border-accent/20">
           Core Masterclass Takeaway
         </span>
-        <p className="text-xl font-bold text-text-primary italic leading-relaxed pt-2">
+        <p className="text-xl sm:text-2xl font-bold text-text-primary italic leading-relaxed pt-2">
           "{lesson.takeaway}"
         </p>
       </motion.div>
