@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/logos/unify-hero.png" alt="Unify Hero Banner" width="480" />
+<img src="public/logos/unify-hero.png" alt="Unify — Plan / Track / Grow" width="620" />
 
 # **Unify — All Your Investments, In One Place 🚀**
 
