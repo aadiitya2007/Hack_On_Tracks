@@ -66,37 +66,37 @@ const TEAM_MEMBERS: TeamMember[] = [
   {
     name: 'Aadiitya Agarrwal',
     initials: 'AA',
-    role: 'Lead Systems Architect & Full-Stack Engineer',
-    badge: 'Student Tech Lead',
-    description: 'Spearheaded Unify’s multi-broker ingestion pipelines, client-side cryptographic isolation, and high-performance serverless endpoints on Next.js 16 Turbopack.',
-    disciplines: ['Next.js 16 & Turbopack', 'Depository Synchronization', 'Client-Side Cryptography', 'System Architecture'],
+    role: 'Team Member',
+    badge: 'Hack-On-Tracks Team',
+    description: 'Member of the student engineering team behind Unify at Hack-On-Tracks 2026.',
+    disciplines: ['Full-Stack', 'Next.js', 'System Architecture'],
     gradient: 'from-accent via-indigo-600 to-purple-600'
   },
   {
     name: 'Aryan Amilkanthwar',
     initials: 'AA',
-    role: 'ML Specialist & Quantitative Systems Engineer',
-    badge: 'Student ML Lead',
-    description: 'Engineered statistical volatility distributions, historical price backtesting pipelines, and XGBoost-driven algorithmic return projection modules.',
-    disciplines: ['XGBoost & Scikit-Learn', 'Statistical Risk Engines', 'Volatility Modeling', 'Time-Series Forecasting'],
+    role: 'Team Member',
+    badge: 'Hack-On-Tracks Team',
+    description: 'Member of the student engineering team behind Unify at Hack-On-Tracks 2026.',
+    disciplines: ['Machine Learning', 'Quantitative Analytics', 'Python'],
     gradient: 'from-emerald-500 via-teal-600 to-cyan-600'
   },
   {
     name: 'Advait Ambarkar',
     initials: 'AA',
-    role: 'Frontend Architect & Design Systems Lead',
-    badge: 'Student UI/UX Lead',
-    description: 'Crafted Unify’s institutional-grade design language, responsive fluid motion, micro-interactions, dark-mode visual hierarchy, and cross-device financial UX.',
-    disciplines: ['Tailwind CSS', 'Framer Motion', 'Interactive Visualizations', 'Design Systems & UX'],
+    role: 'Team Member',
+    badge: 'Hack-On-Tracks Team',
+    description: 'Member of the student engineering team behind Unify at Hack-On-Tracks 2026.',
+    disciplines: ['Frontend Architecture', 'UI/UX Design', 'Interactive Motion'],
     gradient: 'from-sky-500 via-blue-600 to-indigo-600'
   },
   {
     name: 'Tanay Bhutada',
     initials: 'TB',
-    role: 'Financial Logic & Regulatory Systems Engineer',
-    badge: 'Student Systems Lead',
-    description: 'Designed the mathematical tax-harvesting engine under Indian Income Tax Act Sections 70 & 71, CAS statement parsers, and SEBI-aligned investor guardrails.',
-    disciplines: ['Income Tax Act Sec 70/71', 'CAS Ingestion Parser', 'SEBI Investor Framework', 'Financial Logic'],
+    role: 'Team Member',
+    badge: 'Hack-On-Tracks Team',
+    description: 'Member of the student engineering team behind Unify at Hack-On-Tracks 2026.',
+    disciplines: ['Financial Systems', 'Data Ingestion', 'Logic Engines'],
     gradient: 'from-amber-500 via-orange-600 to-rose-500'
   }
 ];
@@ -726,26 +726,15 @@ export default function LandingClient() {
                   </a>
                 </div>
 
-                <p className="text-xs text-text-secondary leading-relaxed font-medium mb-5">
+                <p className="text-xs text-text-secondary leading-relaxed font-medium">
                   {member.description}
                 </p>
               </div>
 
-              {/* Disciplines / Tech Stack Pills */}
-              <div className="pt-3 border-t border-border/60">
-                <span className="text-[10px] font-bold uppercase text-text-muted tracking-wider block mb-2">
-                  Specialized Focus:
-                </span>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {member.disciplines.map((tag, idx) => (
-                    <span 
-                      key={idx} 
-                      className="text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-bg border border-border text-text-secondary"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              {/* Team Pill */}
+              <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[11px] font-bold text-text-muted">
+                <span>Team Unify</span>
+                <span className="text-accent font-extrabold">Hack-On-Tracks 2026</span>
               </div>
             </motion.div>
           ))}

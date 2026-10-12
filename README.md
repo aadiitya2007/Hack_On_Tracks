@@ -328,16 +328,14 @@ Expected output:
 
 ---
 
-## 👥 Engineering Team
+## 👥 Team Unify
 
-Engineered with passion for **Hack-On-Tracks**:
+Engineered with passion for **Hack-On-Tracks 2026**:
 
-| Name | Role & Core Contribution | Focus Disciplines |
-| :--- | :--- | :--- |
-| **Aadiitya Agarrwal** | **Lead Systems Architect & Full-Stack Engineer**<br>Spearheaded multi-broker ingestion pipelines, client-side cryptographic isolation, and Next.js 16 Turbopack serverless architecture. | Next.js 16, Depository Ingestion, Cryptographic Isolation, Architecture |
-| **Aryan Amilkanthwar** | **ML Specialist & Quantitative Systems Engineer**<br>Engineered statistical volatility distributions, backtesting pipelines, and XGBoost algorithmic return projection models. | XGBoost, Scikit-Learn, Statistical Risk Engines, Volatility Modeling |
-| **Advait Ambarkar** | **Frontend Architect & Design Systems Lead**<br>Crafted Unify’s design language, responsive motion, micro-interactions, dark-mode visual hierarchy, and cross-device financial UX. | Tailwind CSS, Framer Motion, Interactive Canvas, Design Systems |
-| **Tanay Bhutada** | **Financial Logic & Regulatory Systems Engineer**<br>Designed the mathematical tax-harvesting engine under Indian Income Tax Act Sections 70 & 71, CAS statement parsers, and SEBI guardrails. | Income Tax Act Sec 70/71, CAS Ingestion, SEBI Regulatory Framework |
+* **Aadiitya Agarrwal**
+* **Aryan Amilkanthwar**
+* **Advait Ambarkar**
+* **Tanay Bhutada**
 
 ---
 
