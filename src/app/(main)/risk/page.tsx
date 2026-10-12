@@ -391,36 +391,36 @@ export default function RiskPage() {
           </div>
         </div>
 
-        {/* Dynamic Trader Tier Selector Bar */}
+        {/* Classified Trader Tier Bar (Auto-Synced & Read-Only) */}
         <div className="card p-4 bg-surface border border-border rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-3 shadow-sm">
-          <div className="flex items-center gap-2">
-            <Activity size={16} className="text-accent" />
-            <span className="text-xs font-extrabold text-text-primary">Active Classified Trader Level:</span>
-            <span className={`px-2.5 py-0.5 rounded-full text-xs font-black border ${
-              userLevel === 'Fresher' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
-              userLevel === 'Beginner' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' :
-              userLevel === 'Intermediate' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
-              userLevel === 'Advanced' ? 'bg-purple-500/10 text-purple-400 border-purple-500/30' :
-              'bg-rose-500/10 text-rose-400 border-rose-500/30'
-            }`}>
-              {userLevel}
-            </span>
+          <div className="flex items-center gap-2.5">
+            <Activity size={18} className="text-accent shrink-0 animate-pulse" />
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-text-primary">
+                  Active Classified Trader Level:
+                </span>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-gain-bg text-gain border border-gain/20 flex items-center gap-1">
+                  <CheckCircle2 size={11} /> Auto-Calibrated
+                </span>
+              </div>
+              <p className="text-[11px] text-text-muted mt-0.5">
+                Automatically locked to your assessed onboarding diagnostic tier. To re-calibrate, retake the assessment in your Profile.
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 md:pb-0">
-            {(['Fresher', 'Beginner', 'Intermediate', 'Advanced', 'Pro'] as const).map(tier => (
-              <button
-                key={tier}
-                onClick={() => handleSwitchTier(tier)}
-                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer shrink-0 ${
-                  userLevel === tier 
-                    ? 'bg-accent text-white shadow-sm' 
-                    : 'bg-bg text-text-muted hover:text-text-primary hover:bg-border/40 border border-border'
-                }`}
-              >
-                {tier}
-              </button>
-            ))}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className={`px-3.5 py-1.5 rounded-xl text-xs font-black border flex items-center gap-1.5 shadow-sm ${
+              userLevel === 'Fresher' ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/30' :
+              userLevel === 'Beginner' ? 'bg-blue-500/10 text-blue-800 dark:text-blue-300 border-blue-500/30' :
+              userLevel === 'Intermediate' ? 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/30' :
+              userLevel === 'Advanced' ? 'bg-purple-500/10 text-purple-800 dark:text-purple-300 border-purple-500/30' :
+              'bg-rose-500/10 text-rose-800 dark:text-rose-300 border-rose-500/30'
+            }`}>
+              <ShieldCheck size={13} />
+              <span>{userLevel} Investor</span>
+            </span>
           </div>
         </div>
       </div>

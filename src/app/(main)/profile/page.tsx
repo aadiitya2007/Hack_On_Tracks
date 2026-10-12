@@ -350,15 +350,26 @@ export default function ProfilePage() {
           <div className="card p-6 bg-surface border border-border rounded-3xl space-y-3 shadow-sm">
             <h4 className="text-xs font-black uppercase tracking-wider text-text-muted">Profile Actions</h4>
 
-            <Link
-              href="/onboarding"
-              className="w-full py-3 px-4 rounded-2xl bg-bg border border-border hover:border-accent hover:bg-surface-hover text-xs font-bold text-text-primary flex items-center justify-between transition-all group"
-            >
-              <span className="flex items-center gap-2">
-                <RefreshCw size={14} className="text-accent" /> Re-take Investor Skill Quiz
-              </span>
-              <ChevronRight size={14} className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 transition-all" />
-            </Link>
+            {/* Dedicated Re-take Diagnostic Skill Test */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-accent/10 to-accent-bg border border-accent/30 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-wider text-accent px-2 py-0.5 rounded bg-surface border border-accent/20">
+                  Assessment Lab
+                </span>
+                <span className="text-[10px] font-bold text-text-muted">Takes ~2 mins</span>
+              </div>
+              <h5 className="text-xs font-black text-text-primary">Recalibrate Trader Classification</h5>
+              <p className="text-[11px] text-text-secondary leading-relaxed">
+                Take the comprehensive 7-question investor assessment to automatically update your risk profile tier, portfolio allocations, and AI advisory.
+              </p>
+              <Link
+                href="/onboarding"
+                className="mt-2 w-full py-2.5 px-4 rounded-xl bg-accent text-white hover:bg-accent-hover text-xs font-black flex items-center justify-center gap-2 transition-all shadow-md shadow-accent/25 cursor-pointer"
+              >
+                <RefreshCw size={13} />
+                <span>Re-take Investor Skill Quiz</span>
+              </Link>
+            </div>
 
             <Link
               href="/accounts"

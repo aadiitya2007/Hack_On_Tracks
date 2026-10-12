@@ -658,12 +658,13 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             </div>
           </div>
 
-          <Link href="/onboarding" className="px-4 py-2.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-accent hover:border-accent transition-colors flex items-center gap-2 shrink-0 shadow-sm">
-            <RefreshCw size={14} /> {t('retake_quiz', 'Re-take Skill Quiz')}
-          </Link>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-muted shrink-0 shadow-xs">
+            <Lock size={13} className="text-accent" />
+            <span>Assigned via Diagnostic Quiz</span>
+          </div>
         </div>
 
-        {/* Interactive Trader Category Level Switcher Bar */}
+        {/* Automatic Classified Trader Profile Status Bar (Read-Only & Synced) */}
         <div className="mb-6 p-4 rounded-2xl bg-bg/80 border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
           <div className="flex items-center gap-2.5">
             <Activity size={18} className="text-accent shrink-0 animate-pulse" />
@@ -672,34 +673,22 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                 <span className="text-xs font-black uppercase tracking-wider text-text-primary">
                   Classified Trader Profile:
                 </span>
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-accent/15 text-accent border border-accent/25">
-                  Live Portfolio Synced
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-gain-bg text-gain border border-gain/20 flex items-center gap-1">
+                  <CheckCircle2 size={11} /> Auto-Calibrated
                 </span>
               </div>
               <p className="text-[11px] text-text-muted mt-0.5">
-                Switch level below to preview real-time asset allocations, scrips, and risk advisory for that trader tier.
+                Your portfolio telemetry, risk advisory, and scrips are automatically calibrated to your assessed risk profile.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-1.5">
-            {(['Fresher', 'Beginner', 'Intermediate', 'Advanced', 'Pro'] as const).map(tier => {
-              const isActive = userLevel === tier;
-              return (
-                <button
-                  key={tier}
-                  onClick={() => handleSelectTier(tier)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    isActive
-                      ? 'bg-accent text-white shadow-md shadow-accent/30 ring-2 ring-accent/40 font-black scale-105'
-                      : 'bg-surface text-text-secondary hover:text-text-primary hover:bg-surface-hover border border-border'
-                  }`}
-                  title={`Switch portfolio and advisory to ${tier} profile`}
-                >
-                  <span>{tier}</span>
-                  {isActive && <CheckCircle2 size={12} className="text-white" />}
-                </button>
-              );
-            })}
+
+          {/* Locked Badge Display of Current User Level */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="px-3.5 py-1.5 rounded-xl bg-accent text-white text-xs font-black shadow-md shadow-accent/20 flex items-center gap-2 border border-accent/40">
+              <Sparkles size={13} />
+              <span>{userLevel} Profile</span>
+            </div>
           </div>
         </div>
 
