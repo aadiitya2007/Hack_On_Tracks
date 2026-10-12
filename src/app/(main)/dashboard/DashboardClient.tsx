@@ -13,7 +13,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { 
   Brain, Award, Sparkles, BookOpen, TrendingUp, TrendingDown, 
   Layers, ShieldCheck, ArrowRight, Clock, Zap, AlertTriangle, RefreshCw,
-  CheckCircle2, X, Activity, History
+  CheckCircle2, X, Activity, History, Lock
 } from 'lucide-react';
 
 export const SCRIP_METADATA: Record<string, { name: string; price: number; assetType: string; isin: string }> = {
