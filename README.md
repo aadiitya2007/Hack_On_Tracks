@@ -15,9 +15,9 @@
 [![XGBoost](https://img.shields.io/badge/ML-XGBoost_Classifier-FF6F00?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-SQLite-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
 
-*Engineered with precision for **Hack-On-Tracks 2026** by **Team Unify**.*
+*Engineered with precision for **Hack-On-Tracks 2026** by **Team God's Plan**.*
 
-[Executive Summary](#-executive-summary--the-indian-retail-investing-gap) • [System Architecture](#-system-architecture) • [Visual Showcase](#-platform-visual-showcase) • [Core Capabilities](#-core-platform-capabilities) • [Mathematical Formulations](#-risk-engine-mathematics--regulatory-guardrails) • [Local Setup](#-local-installation--quickstart-guide) • [Team Unify](#-team-unify)
+[Executive Summary](#-executive-summary--the-indian-retail-investing-gap) • [System Architecture](#-system-architecture) • [Visual Showcase](#-platform-visual-showcase) • [Core Capabilities](#-core-platform-capabilities) • [Mathematical Formulations](#-risk-engine-mathematics--regulatory-guardrails) • [Local Setup](#-local-installation--quickstart-guide) • [Team God's Plan](#-team-gods-plan)
 
 ---
 
@@ -359,7 +359,7 @@ Expected output:
 
 ---
 
-## 👥 Team Unify
+## 👥 Team God's Plan
 
 Engineered with passion for **Hack-On-Tracks 2026**:
 
@@ -377,5 +377,5 @@ Engineered with passion for **Hack-On-Tracks 2026**:
 ---
 
 <div align="center">
-  <b>Built with ❤️ by Team Unify for Hack-On-Tracks</b>
+  <b>Built with ❤️ by Team God's Plan for Hack-On-Tracks</b>
 </div>

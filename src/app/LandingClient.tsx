@@ -733,7 +733,7 @@ export default function LandingClient() {
 
               {/* Team Pill */}
               <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[11px] font-bold text-text-muted">
-                <span>Team Unify</span>
+                <span>Team God's Plan</span>
                 <span className="text-accent font-extrabold">Hack-On-Tracks 2026</span>
               </div>
             </motion.div>
