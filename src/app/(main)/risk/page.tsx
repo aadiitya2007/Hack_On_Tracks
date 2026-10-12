@@ -213,17 +213,35 @@ export default function RiskPage() {
     return calculateMultiAssetRiskProfile(targetWeights, portfolioValue);
   }, [targetWeights, portfolioValue]);
 
+  const [appliedNotice, setAppliedNotice] = useState<string | null>(null);
+
   // Handle Strategy Preset Selection
   const applyPreset = (presetKey: string) => {
     setActiveStrategyPreset(presetKey);
+    let label = 'Current Profile';
     if (presetKey === 'current') {
       setTargetWeights({ ...initialWeights });
+      label = 'Current Profile Reset';
     } else if (presetKey === 'neutralizer') {
       setTargetWeights({ stocks: 20, mutualFunds: 40, etfs: 20, bonds: 10, reits: 10, invits: 0, fno: 0 });
+      label = 'Volatility Neutralizer Strategy Applied';
     } else if (presetKey === 'preservation') {
       setTargetWeights({ stocks: 10, mutualFunds: 20, etfs: 10, bonds: 35, reits: 15, invits: 10, fno: 0 });
+      label = 'Fixed Income Shield Strategy Applied';
     } else if (presetKey === 'balanced7') {
       setTargetWeights({ stocks: 30, mutualFunds: 25, etfs: 15, bonds: 15, reits: 10, invits: 5, fno: 0 });
+      label = '7-Domain Master Strategy Applied';
+    }
+
+    setAppliedNotice(label);
+    setTimeout(() => setAppliedNotice(null), 3000);
+
+    // Smooth scroll down to the Blueprint & Impact forecast
+    if (typeof window !== 'undefined') {
+      const blueprintElem = document.getElementById('strategy-blueprint');
+      if (blueprintElem) {
+        blueprintElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
@@ -234,6 +252,17 @@ export default function RiskPage() {
       ...prev,
       [key]: Math.max(0, Math.min(100, val))
     }));
+
+    if (key === 'fno' && val === 0) {
+      setAppliedNotice('F&O Leverage Zeroed-Out: 15-Point Penalty Removed');
+      setTimeout(() => setAppliedNotice(null), 3000);
+      if (typeof window !== 'undefined') {
+        const blueprintElem = document.getElementById('strategy-blueprint');
+        if (blueprintElem) {
+          blueprintElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
   };
 
   // Deltas between Current (Before) and Target (After)
@@ -801,16 +830,21 @@ export default function RiskPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border">
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
               <button
                 onClick={() => applyPreset('neutralizer')}
-                className="px-3 py-1.5 rounded-xl bg-accent text-white text-xs font-extrabold hover:bg-accent/90 transition-all cursor-pointer"
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                  activeStrategyPreset === 'neutralizer'
+                    ? 'bg-accent text-white ring-2 ring-accent/40 shadow-md'
+                    : 'bg-accent hover:bg-accent-hover text-white'
+                }`}
               >
-                Apply Volatility Neutralizer
+                <ShieldCheck size={14} />
+                <span>{activeStrategyPreset === 'neutralizer' ? '✓ Applied Volatility Neutralizer' : 'Apply Volatility Neutralizer'}</span>
               </button>
               <Link
                 href="/learn/mutual-funds"
-                className="px-3 py-1.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-text-primary flex items-center gap-1"
+                className="px-3 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-text-secondary hover:text-text-primary hover:border-accent/40 flex items-center gap-1 transition-colors"
               >
                 <span>MF Masterclass</span>
                 <ChevronRight size={14} />
@@ -833,16 +867,21 @@ export default function RiskPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border">
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
               <button
                 onClick={() => applyPreset('preservation')}
-                className="px-3 py-1.5 rounded-xl bg-gain text-white text-xs font-extrabold hover:bg-gain/90 transition-all cursor-pointer"
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                  activeStrategyPreset === 'preservation'
+                    ? 'bg-gain text-white ring-2 ring-gain/40 shadow-md'
+                    : 'bg-gain hover:bg-gain/90 text-white'
+                }`}
               >
-                Apply Fixed Income Shield
+                <Zap size={14} />
+                <span>{activeStrategyPreset === 'preservation' ? '✓ Applied Fixed Income Shield' : 'Apply Fixed Income Shield'}</span>
               </button>
               <Link
                 href="/learn/reits"
-                className="px-3 py-1.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-text-primary flex items-center gap-1"
+                className="px-3 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-text-secondary hover:text-text-primary hover:border-accent/40 flex items-center gap-1 transition-colors"
               >
                 <span>REITs Masterclass</span>
                 <ChevronRight size={14} />
@@ -865,16 +904,21 @@ export default function RiskPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border">
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
               <button
                 onClick={() => handleCustomWeightChange('fno', 0)}
-                className="px-3 py-1.5 rounded-xl bg-loss text-white text-xs font-extrabold hover:bg-loss/90 transition-all cursor-pointer"
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                  (targetWeights.fno || 0) === 0
+                    ? 'bg-loss text-white ring-2 ring-loss/40 shadow-md'
+                    : 'bg-loss hover:bg-loss/90 text-white'
+                }`}
               >
-                Zero-Out F&O Leverage
+                <AlertTriangle size={14} />
+                <span>{(targetWeights.fno || 0) === 0 ? '✓ F&O Leverage Zeroed-Out' : 'Zero-Out F&O Leverage'}</span>
               </button>
               <Link
                 href="/learn/futures-options"
-                className="px-3 py-1.5 rounded-xl bg-bg border border-border text-xs font-bold text-text-secondary hover:text-text-primary flex items-center gap-1"
+                className="px-3 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-text-secondary hover:text-text-primary hover:border-accent/40 flex items-center gap-1 transition-colors"
               >
                 <span>SEBI F&O Study</span>
                 <ChevronRight size={14} />
@@ -897,11 +941,12 @@ export default function RiskPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border">
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
               <Link
                 href="/accounts"
-                className="px-3 py-1.5 rounded-xl bg-accent text-white text-xs font-extrabold hover:bg-accent/90 transition-all cursor-pointer flex items-center gap-1"
+                className="px-3.5 py-2 rounded-xl bg-accent hover:bg-accent-hover text-white text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
               >
+                <Layers size={14} />
                 <span>Audit Multi-Broker Accounts</span>
                 <ChevronRight size={14} />
               </Link>
@@ -912,7 +957,27 @@ export default function RiskPage() {
       </div>
 
       {/* SECTION 5: INTERACTIVE STRATEGY REBALANCER & PERSONAL CHOICE CARDS */}
-      <div className="card p-6 md:p-8 bg-surface border border-border rounded-3xl space-y-8 shadow-xl">
+      <div id="strategy-blueprint" className="card p-6 md:p-8 bg-surface border border-border rounded-3xl space-y-8 shadow-xl scroll-mt-20 relative">
+        {/* Applied Strategy Feedback Toast */}
+        <AnimatePresence>
+          {appliedNotice && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              className="p-3.5 rounded-2xl bg-gradient-to-r from-accent/20 via-accent-bg to-accent/10 border-2 border-accent text-text-primary text-xs font-black flex items-center justify-between shadow-lg"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles size={16} className="text-accent animate-spin" />
+                <span>⚡ {appliedNotice}</span>
+              </div>
+              <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-accent text-white">
+                Active in Simulator
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-border">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-text-primary flex items-center gap-2.5">
