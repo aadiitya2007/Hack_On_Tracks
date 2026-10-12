@@ -351,7 +351,7 @@ export default function LandingClient() {
             <span className="text-text-secondary">SENSEX <strong className="text-gain font-bold">81,424.80 (+0.58%)</strong></span>
           </motion.div>
 
-          {/* Big Center Brand Logo (Borderless, Large & Clearly Readable) */}
+          {/* Big Center Brand Logo (Borderless, Large & Seamlessly Embedded) */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -359,9 +359,9 @@ export default function LandingClient() {
             className="mb-8 flex items-center justify-center hover:scale-105 transition-transform duration-300"
           >
             <img 
-              src="/logos/unify-hero.png" 
+              src="/logos/unify-hero-transparent.png" 
               alt="Unify — PLAN • TRACK • GROW" 
-              className="h-28 sm:h-36 md:h-44 w-auto object-contain drop-shadow-xl select-none" 
+              className="h-32 sm:h-40 md:h-48 w-auto object-contain select-none drop-shadow-md" 
             />
           </motion.div>
 
@@ -949,7 +949,7 @@ export default function LandingClient() {
           viewport={{ once: true }}
           className="max-w-2xl mx-auto px-6 space-y-4"
         >
-          <img src="/logos/unify-hero.png" alt="Unify" className="h-12 mx-auto object-contain drop-shadow-md" />
+          <img src="/logos/unify-hero-transparent.png" alt="Unify" className="h-16 mx-auto object-contain drop-shadow-sm" />
           <h2 className="text-2xl sm:text-3xl font-black text-text-primary tracking-tight">
             Ready to Unify Your Multi-Asset Portfolio?
           </h2>
