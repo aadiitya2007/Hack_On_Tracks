@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="24" fill="#FFFFFF"/>
+  <defs>
+    <linearGradient id="ao_flame" x1="25" y1="20" x2="95" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF5226"/>
+      <stop offset="50%" stop-color="#EB144C"/>
+      <stop offset="100%" stop-color="#4A148C"/>
+    </linearGradient>
+  </defs>
+  <!-- Angel One stylized flame icon -->
+  <path d="M60 20 C42 42 32 60 32 76 C32 91 44 100 60 100 C76 100 88 91 88 76 C88 60 78 42 60 20 Z" fill="url(#ao_flame)"/>
+  <circle cx="60" cy="70" r="16" fill="#FFFFFF"/>
+  <circle cx="60" cy="70" r="8" fill="url(#ao_flame)"/>
+</svg>

@@ -139,6 +139,9 @@ const BROKER_LOGOS: Record<string, string> = {
   'zerodha kite': '/logos/zerodha.webp',
   'groww': '/logos/groww.png',
   'upstox': '/logos/upstox.png',
+  'upstox pro': '/logos/upstox.png',
+  'angel one': '/logos/angelone.svg',
+  'angel': '/logos/angelone.svg',
   'cdsl': '/logos/cdsl.webp',
   'unify': '/logos/unify.png',
 };
@@ -148,6 +151,7 @@ const BROKER_FILTERS = [
   { id: 'Zerodha', label: 'Zerodha', logo: '/logos/zerodha.webp' },
   { id: 'Groww', label: 'Groww', logo: '/logos/groww.png' },
   { id: 'Upstox', label: 'Upstox', logo: '/logos/upstox.png' },
+  { id: 'Angel One', label: 'Angel One', logo: '/logos/angelone.svg' },
   { id: 'CDSL', label: 'CDSL CAS', logo: '/logos/cdsl.webp' },
 ];
 

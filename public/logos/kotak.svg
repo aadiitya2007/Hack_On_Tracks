@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="24" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="80" height="80" rx="16" fill="#ED1C24"/>
+  <!-- Kotak Infinity Curve -->
+  <path d="M42 42 C48 34 60 34 66 45 C72 56 80 56 86 48 C88 45 88 42 88 42" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M42 78 C48 86 60 86 66 75 C72 64 80 64 86 72 C88 75 88 78 88 78" stroke="#003366" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <circle cx="66" cy="60" r="5" fill="#FFFFFF"/>
+</svg>
