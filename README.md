@@ -17,12 +17,13 @@
 
 *Engineered with precision for **Hack-On-Tracks 2026** by **Team God's Plan**.*
 
-[Executive Summary](#-executive-summary--the-indian-retail-investing-gap) • [System Architecture](#-system-architecture) • [Visual Showcase](#-platform-visual-showcase) • [Core Capabilities](#-core-platform-capabilities) • [Mathematical Formulations](#-risk-engine-mathematics--regulatory-guardrails) • [Local Setup](#-local-installation--quickstart-guide) • [Team God's Plan](#-team-gods-plan)
+[Executive Summary](#executive-summary) • [Visual Showcase](#visual-showcase) • [System Architecture](#system-architecture) • [Core Capabilities](#core-capabilities) • [Mathematical Formulations](#mathematical-formulations) • [Tech Stack](#tech-stack) • [Local Setup](#local-setup) • [Team God's Plan](#team-gods-plan)
 
 ---
 
 </div>
 
+<a id="executive-summary"></a>
 ## 📌 Executive Summary & The Indian Retail Investing Gap
 
 In India's fast-growing retail financial markets, investors maintain accounts across multiple segregated brokerages (**Zerodha Kite, Groww, Upstox Pro, Angel One, ICICI Direct**). This creates severe operational fragmentation, hidden recurring costs, and hazardous blind spots:
@@ -36,7 +37,7 @@ In India's fast-growing retail financial markets, investors maintain accounts ac
 **Unify** bridges this gap by unifying cross-broker portfolio data into an institutional-grade operating system with real-time risk telemetry, automated duplicate scrip detection, machine learning directional forecasts, and interactive visual masterclasses.
 
 ---
-
+<a id="visual-showcase"></a>
 ## 📸 Platform Visual Showcase
 
 ### 1. Trusted Multi-Broker Ingestion & Regulatory CKYC
@@ -77,6 +78,7 @@ In India's fast-growing retail financial markets, investors maintain accounts ac
 
 ---
 
+<a id="system-architecture"></a>
 ## 🏗️ System Architecture
 
 ```mermaid
@@ -133,6 +135,7 @@ flowchart TD
 
 ---
 
+<a id="core-capabilities"></a>
 ## ⚡ Core Platform Capabilities
 
 ### 1. 🆔 Government CKYC & WebRTC Live Biometric Onboarding (`/onboarding`)
@@ -231,6 +234,7 @@ flowchart TD
 
 ---
 
+<a id="mathematical-formulations"></a>
 ## 📐 Risk Engine Mathematics & Regulatory Guardrails
 
 The composite Portfolio Risk Score ($0 \le R \le 100$) is computed in [`src/lib/risk-analytics.ts`](src/lib/risk-analytics.ts):
@@ -261,6 +265,7 @@ $$\text{VaR}_{0.95} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\
 
 ---
 
+<a id="tech-stack"></a>
 ## 💻 Tech Stack & Dependencies
 
 | Layer | Technologies |
@@ -277,6 +282,7 @@ $$\text{VaR}_{0.95} = \text{Portfolio Value} \times 1.645 \times \frac{\sigma_{\
 
 ---
 
+<a id="local-setup"></a>
 ## 🚀 Local Installation & Quickstart Guide
 
 ### Prerequisites
@@ -359,6 +365,7 @@ Expected output:
 
 ---
 
+<a id="team-gods-plan"></a>
 ## 👥 Team God's Plan
 
 Engineered with passion for **Hack-On-Tracks 2026**:
